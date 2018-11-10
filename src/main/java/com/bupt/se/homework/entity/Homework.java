@@ -18,9 +18,6 @@ public class Homework {
     private Date deadline;
     private Timestamp releasetime;
 
-    public void setDeadline(Timestamp deadline) {
-        this.deadline = deadline;
-    }
 
     @Id
     @Column(name = "HOMEWORK_ID")

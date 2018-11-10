@@ -25,4 +25,9 @@ public class TeacherBoImpl implements TeacherBo {
         return teacherDAO.listTeacher();
 
     }
+
+    @Override
+    public String login(String account, String password) {
+        return null;
+    }
 }

@@ -19,4 +19,9 @@ public class StudentBoImpl implements StudentBo {
     public void addStudent(Student student) {
         studentDAO.addStudent(student);
     }
+
+    @Override
+    public String login(String account, String password) {
+        return null;
+    }
 }

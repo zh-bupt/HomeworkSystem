@@ -4,11 +4,11 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "group_course", schema = "homeworksystem", catalog = "")
+@Table(name = "group_course", schema = "homeworksystem")
 public class GroupCourse {
     private int groupId;
     private int courseId;
-    private Integer capacity;
+    private Integer num;
     private String name;
     private String leaderId;
     private Double groupScore;
@@ -34,13 +34,13 @@ public class GroupCourse {
     }
 
     @Basic
-    @Column(name = "CAPACITY")
-    public Integer getCapacity() {
-        return capacity;
+    @Column(name = "NUM")
+    public Integer getNum() {
+        return num;
     }
 
-    public void setCapacity(Integer capacity) {
-        this.capacity = capacity;
+    public void setNum(Integer num) {
+        this.num= num;
     }
 
     @Basic
@@ -80,7 +80,7 @@ public class GroupCourse {
         GroupCourse that = (GroupCourse) o;
         return groupId == that.groupId &&
                 courseId == that.courseId &&
-                Objects.equals(capacity, that.capacity) &&
+                Objects.equals(num, that.num) &&
                 Objects.equals(name, that.name) &&
                 Objects.equals(leaderId, that.leaderId) &&
                 Objects.equals(groupScore, that.groupScore);
@@ -88,6 +88,6 @@ public class GroupCourse {
 
     @Override
     public int hashCode() {
-        return Objects.hash(groupId, courseId, capacity, name, leaderId, groupScore);
+        return Objects.hash(groupId, courseId, num, name, leaderId, groupScore);
     }
 }

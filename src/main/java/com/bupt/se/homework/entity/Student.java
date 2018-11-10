@@ -20,9 +20,6 @@ public class Student implements Serializable {
     private String email;
     private String id;
 
-    public void setEntranceDate(java.sql.Date entranceDate) {
-        this.entranceDate = entranceDate;
-    }
 
     @Basic
     @Column(name = "STUDENT_NAME")
