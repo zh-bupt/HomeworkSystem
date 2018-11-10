@@ -41,8 +41,8 @@ public class LoginAction {
 
 
         }
-        ActionContext.getContext().getSession().clear();
-        
+        //ActionContext.getContext().getSession().clear();
+
         return response;//TODO 根据不同的返回来提醒用户
     }
 }

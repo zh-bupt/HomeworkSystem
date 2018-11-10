@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+
+<struts>
+    <constant name="struts.devMode" value="true"/>
+    <package name="login" namespace="/" extends="struts-default">
+        <action name="loginAction"
+                class="com.bupt.se.homework.action.LoginAction" method="login">
+            <result name="0">pages/</result>
+            <result name="1">pages/</result>
+            <result name="2">pages/</result>
+        </action>
+    </package>
+
+    <package name="teacher" namespace="/" extends="struts-default">
+        <action name="addCustomerAction"
+                class="com.bupt.se.homework.action.TeacherAction" method="addTeacher">
+            <result name="success">pages/teacher.jsp</result>
+        </action>
+        <action name="listCustomerAction"
+                class="com.bupt.se.homework.action.TeacherAction" method="listTeacher">
+            <result name="success">pages/teacher.jsp</result>
+        </action>
+    </package>
+
+    <package name="student" namespace="/" extends="struts-default">
+        <action name="addStudentAction"
+                class="com.bupt.se.homework.action.StudentAction" method="addStudent">
+            <result name="success">pages/student.jsp</result>
+        </action>
+
+    </package>
+</struts>
