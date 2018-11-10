@@ -25,7 +25,7 @@ public class Student implements Serializable {
     }
 
     @Basic
-    @Column(name = "STUDENT_NAME")
+    @Column(name = "STUDENT_NAME", length = 20)
     public String getStudentName() {
         return studentName;
     }
@@ -35,7 +35,7 @@ public class Student implements Serializable {
     }
 
     @Basic
-    @Column(name = "CLASS_ID")
+    @Column(name = "CLASS_ID", length = 20)
     public String getClassId() {
         return classId;
     }
@@ -45,7 +45,7 @@ public class Student implements Serializable {
     }
 
     @Basic
-    @Column(name = "SEX")
+    @Column(name = "SEX", length = 2)
     public String getSex() {
         return sex;
     }

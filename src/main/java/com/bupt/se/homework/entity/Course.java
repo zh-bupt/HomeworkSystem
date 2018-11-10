@@ -36,7 +36,7 @@ public class Course
     }
 
     @Basic
-    @Column(name = "COURSE_NAME")
+    @Column(name = "COURSE_NAME", length = 50)
     public String getCourseName() {
         return courseName;
     }

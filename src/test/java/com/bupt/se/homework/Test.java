@@ -1,3 +1,5 @@
+package com.bupt.se.homework;
+
 /**
  * @description: test
  * @author: zh

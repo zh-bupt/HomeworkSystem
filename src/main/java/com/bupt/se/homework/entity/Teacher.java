@@ -23,7 +23,7 @@ public class Teacher implements Serializable {
     }
 
     @Basic
-    @Column(name = "PASSWORD")
+    @Column(name = "PASSWORD", length = 40)
     public String getPassword() {
         return password;
     }
@@ -33,13 +33,13 @@ public class Teacher implements Serializable {
     }
 
     @Id
-    @Column(name = "TEACHER_ID")
+    @Column(name = "TEACHER_ID", length = 10)
     public String getTeacherId() {
         return teacherId;
     }
 
     @Basic
-    @Column(name = "TEACHER_NAME")
+    @Column(name = "TEACHER_NAME", length = 20)
     public String getTeacherName() {
         return teacherName;
     }
@@ -49,7 +49,7 @@ public class Teacher implements Serializable {
     }
 
     @Basic
-    @Column(name = "SEX")
+    @Column(name = "SEX", length = 2)
     public String getSex() {
         return sex;
     }
@@ -59,7 +59,7 @@ public class Teacher implements Serializable {
     }
 
     @Basic
-    @Column(name = "PROFESSION")
+    @Column(name = "PROFESSION", length = 40)
     public String getProfession() {
         return profession;
     }
@@ -69,7 +69,7 @@ public class Teacher implements Serializable {
     }
 
     @Basic
-    @Column(name = "TELEPHONE")
+    @Column(name = "TELEPHONE", length = 11)
     public String getTelephone() {
         return telephone;
     }
@@ -79,7 +79,7 @@ public class Teacher implements Serializable {
     }
 
     @Basic
-    @Column(name = "EMAIL")
+    @Column(name = "EMAIL", length = 40)
     public String getEmail() {
         return email;
     }
