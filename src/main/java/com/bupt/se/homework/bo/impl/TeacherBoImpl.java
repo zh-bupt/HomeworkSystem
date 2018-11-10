@@ -3,34 +3,46 @@ package com.bupt.se.homework.bo.impl;
 import com.bupt.se.homework.bo.ReturnCode;
 import com.bupt.se.homework.bo.TeacherBo;
 import com.bupt.se.homework.dao.TeacherDAO;
-import com.bupt.se.homework.entity.Admin;
 import com.bupt.se.homework.entity.Teacher;
 
 import java.util.List;
 
+/**
+ * @Description: Teacher 业务逻辑实现类
+ * @Author: zh
+ * @Date: 2018/11/10
+ **/
 public class TeacherBoImpl implements TeacherBo {
 
     TeacherDAO teacherDAO;
 
-    //DI via Spring
     public void setTeacherDAO(TeacherDAO teacherDAO){
         this.teacherDAO = teacherDAO;
     }
-    //call DAO to save hwsystem
+
     @Override
-    public void addTeacher(Teacher teacher) {
-        teacherDAO.addTeacher(teacher);
+    public boolean addTeacher(Teacher teacher) {
+        return teacherDAO.save(teacher);
+    }
+
+    @Override
+    public boolean updateTeacher(Teacher teacher) {
+        return teacherDAO.update(teacher);
+    }
+
+    @Override
+    public boolean deleteTeacher(String id) {
+        return teacherDAO.delete(id);
     }
 
     @Override
     public List<Teacher> listTeacher() {
-        return teacherDAO.listTeacher();
-
+        return teacherDAO.findResultList(null, null, null, null, null, null, 0, 0);
     }
 
     @Override
     public String login(String id, String password) {
-        Teacher teacher = teacherDAO.queryById(id);
+        Teacher teacher = teacherDAO.get(id);
         if (teacher == null) return ReturnCode.USER_NOT_FOUNT;
         if (!teacher.getPassword().equals(password)) return ReturnCode.WRONG_PASSWORD;
         return ReturnCode.LOGIN_SUCCESS;

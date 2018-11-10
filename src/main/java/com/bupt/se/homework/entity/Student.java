@@ -1,14 +1,12 @@
 package com.bupt.se.homework.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
 @Entity
+@Table(name = "student")
 public class Student implements Serializable {
 
     private String studentId;
@@ -20,6 +18,14 @@ public class Student implements Serializable {
     private String email;
     private String id;
 
+    public Student() {
+    }
+
+    public Student(String studentId, String studentName, String password) {
+        this.studentId = studentId;
+        this.studentName = studentName;
+        this.password = password;
+    }
 
     @Basic
     @Column(name = "STUDENT_NAME", length = 20)

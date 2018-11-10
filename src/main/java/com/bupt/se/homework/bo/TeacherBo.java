@@ -6,7 +6,12 @@ import java.util.List;
 
 public interface TeacherBo {
 
-    void addTeacher(Teacher teacher);
+    boolean addTeacher(Teacher teacher);
+
+    boolean updateTeacher(Teacher teacher);
+
+    boolean deleteTeacher(String id);
+
     List<Teacher> listTeacher();
 
     String login(String id, String password);
