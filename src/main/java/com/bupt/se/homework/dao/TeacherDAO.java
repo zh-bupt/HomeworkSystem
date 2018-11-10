@@ -7,4 +7,6 @@ import java.util.List;
 public interface TeacherDAO {
     void addTeacher(Teacher teacher);
     List<Teacher> listTeacher();
+
+    Teacher queryById(String id);
 }

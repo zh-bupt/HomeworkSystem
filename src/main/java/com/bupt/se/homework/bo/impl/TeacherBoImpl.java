@@ -1,14 +1,16 @@
 package com.bupt.se.homework.bo.impl;
 
+import com.bupt.se.homework.bo.ReturnCode;
 import com.bupt.se.homework.bo.TeacherBo;
 import com.bupt.se.homework.dao.TeacherDAO;
+import com.bupt.se.homework.entity.Admin;
 import com.bupt.se.homework.entity.Teacher;
 
 import java.util.List;
 
 public class TeacherBoImpl implements TeacherBo {
 
-    TeacherDAO teacherDAO;// = new TeacherDAOImpl();
+    TeacherDAO teacherDAO;
 
     //DI via Spring
     public void setTeacherDAO(TeacherDAO teacherDAO){
@@ -27,7 +29,10 @@ public class TeacherBoImpl implements TeacherBo {
     }
 
     @Override
-    public String login(String account, String password) {
-        return null;
+    public String login(String id, String password) {
+        Teacher teacher = teacherDAO.queryById(id);
+        if (teacher == null) return ReturnCode.USER_NOT_FOUNT;
+        if (!teacher.getPassword().equals(password)) return ReturnCode.WRONG_PASSWORD;
+        return ReturnCode.LOGIN_SUCCESS;
     }
 }

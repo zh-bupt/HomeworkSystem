@@ -10,4 +10,8 @@
     <!--Beans Declaration-->
     <import resource="classpath:spring/TeacherBean.xml"/>
     <import resource="classpath:spring/StudentBean.xml"/>
+    <import resource="classpath:spring/AdminBean.xml"/>
+    <import resource="classpath:spring/GroupBean.xml"/>
+    <import resource="classpath:spring/HomeworkBean.xml"/>
+    <import resource="classpath:spring/CourseBean.xml"/>
 </beans>
