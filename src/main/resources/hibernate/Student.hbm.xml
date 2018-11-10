@@ -1,0 +1,16 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="com.bupt.se.homework.entity.Student" table="student" schema="homeworksystem">
+        <id name="studentId" column="STUDENT_ID"/>
+        <property name="studentName" column="STUDENT_NAME"/>
+        <property name="classId" column="CLASS_ID"/>
+        <property name="sex" column="SEX"/>
+        <property name="entranceDate" column="ENTRANCE_DATE"/>
+        <property name="password" column="PASSWORD"/>
+        <property name="email" column="EMAIL"/>
+    </class>
+</hibernate-mapping>

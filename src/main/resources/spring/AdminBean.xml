@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="adminAction" class="com.bupt.se.homework.action.AdminAction">
+        <property name="adminBo" ref="adminBo"/>
+    </bean>
+    <bean id="adminBo" class="com.bupt.se.homework.bo.impl.AdminBoImpl">
+        <property name="adminDAO" ref="adminDAO"/>
+    </bean>
+    <bean id="adminDAO" class="com.bupt.se.homework.dao.impl.AdminDAOImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+</beans>
