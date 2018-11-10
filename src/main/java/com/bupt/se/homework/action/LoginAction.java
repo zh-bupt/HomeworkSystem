@@ -24,17 +24,17 @@ public class LoginAction {
         this.adminBo = adminBo;
     }
 
-    public String login(int role, String account, String password){
+    public String login(int role, String id, String password){
         String response;
         switch (role){
             case 0://管理员
-                response = adminBo.login(account,password);
+                response = adminBo.login(id,password);
                 break;
             case 1://教师
-                response = teacherBo.login(account,password);
+                response = teacherBo.login(id,password);
                 break;
             case 2://学生
-                response = studentBo.login(account,password);
+                response = studentBo.login(id,password);
                 break;
             default:
                 response = "Role Error";
@@ -42,7 +42,7 @@ public class LoginAction {
 
         }
         ActionContext.getContext().getSession().clear();
-
+        
         return response;//TODO 根据不同的返回来提醒用户
     }
 }
