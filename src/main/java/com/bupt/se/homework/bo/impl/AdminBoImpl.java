@@ -5,8 +5,6 @@ import com.bupt.se.homework.bo.ReturnCode;
 import com.bupt.se.homework.dao.AdminDAO;
 import com.bupt.se.homework.entity.Admin;
 
-import java.util.Map;
-
 public class AdminBoImpl implements AdminBo {
 
 
