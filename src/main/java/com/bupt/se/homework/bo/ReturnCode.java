@@ -6,7 +6,8 @@ package com.bupt.se.homework.bo;
  * @create: 2018-11-10 14:08
  **/
 public class ReturnCode {
-    public static String USER_NOT_FOUNT = "user doesn't exist";
-    public static String WRONG_PASSWORD = "password is wrong";
-    public static String LOGIN_SUCCESS = "login succeed";
+    public static final String FIRST_LOGIN = "user first login";
+    public static final String USER_NOT_FOUNT = "user doesn't exist";
+    public static final String WRONG_PASSWORD = "password is wrong";
+    public static final String LOGIN_SUCCESS = "login succeed";
 }

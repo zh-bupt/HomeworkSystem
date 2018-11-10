@@ -14,11 +14,19 @@ public class AdminBoImpl implements AdminBo {
         return adminDAO;
     }
 
+    /**
+     * @Description: 管理员登录
+     * @param id
+     * @param password
+     * @return: java.lang.String
+     * @Author: zh
+     * @Date: 2018/11/10
+     **/
     @Override
     public String login(String id, String password) {
         Admin admin = adminDAO.queryById(id);
         if (admin == null) return ReturnCode.USER_NOT_FOUNT;
-        if (admin.getPassword() == null || !admin.getPassword().equals(password)) return ReturnCode.WRONG_PASSWORD;
+        if (!admin.getPassword().equals(password)) return ReturnCode.WRONG_PASSWORD;
         return ReturnCode.LOGIN_SUCCESS;
     }
 
