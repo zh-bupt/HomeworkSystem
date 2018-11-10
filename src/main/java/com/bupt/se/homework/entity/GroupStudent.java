@@ -4,7 +4,7 @@ import javax.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name = "group_student", schema = "homeworksystem", catalog = "")
+@Table(name = "group_student", schema = "homeworksystem")
 @IdClass(GroupStudentPK.class)
 public class GroupStudent {
 
@@ -12,9 +12,6 @@ public class GroupStudent {
     private String studentId;
     private int grade;
 
-    public void setGrade(Integer grade) {
-        this.grade = grade;
-    }
 
     @Id
     @Column(name = "GROUP_ID")

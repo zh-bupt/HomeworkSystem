@@ -8,4 +8,6 @@ public interface TeacherBo {
 
     void addTeacher(Teacher teacher);
     List<Teacher> listTeacher();
+
+    String login(String id, String password);
 }

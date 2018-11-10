@@ -18,9 +18,6 @@ public class Teacher implements Serializable {
     private String email;
     private String password;
 
-    public void setTeacherId(String teacherId) {
-        this.teacherId = teacherId;
-    }
 
     @Basic
     @Column(name = "PASSWORD", length = 40)
@@ -36,6 +33,10 @@ public class Teacher implements Serializable {
     @Column(name = "TEACHER_ID", length = 10)
     public String getTeacherId() {
         return teacherId;
+    }
+
+    public void setTeacherId(String teacherId) {
+        this.teacherId = teacherId;
     }
 
     @Basic
