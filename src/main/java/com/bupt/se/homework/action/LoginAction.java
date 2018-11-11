@@ -6,6 +6,13 @@ import com.bupt.se.homework.bo.StudentBo;
 import com.bupt.se.homework.bo.TeacherBo;
 import com.opensymphony.xwork2.ActionContext;
 
+/**
+ * @ClassName: LoginAction
+ * @Description: 负责登录
+ * @Author: KRF
+ * @Create: 2018/11/09
+ **/
+
 public class LoginAction {
 
     StudentBo studentBo;

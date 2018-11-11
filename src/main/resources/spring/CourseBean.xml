@@ -3,4 +3,10 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
+    <bean id="courseBo" class="com.bupt.se.homework.bo.impl.CourseBoImpl">
+        <property name="courseDAO" ref="courseDAO"/>
+    </bean>
+    <bean id="courseDAO" class="com.bupt.se.homework.dao.impl.CourseDAOImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
 </beans>

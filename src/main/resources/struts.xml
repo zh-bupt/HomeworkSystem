@@ -9,9 +9,9 @@
     <package name="login" namespace="/" extends="struts-default">
         <action name="loginAction"
                 class="com.bupt.se.homework.action.LoginAction" method="login">
-            <result name="0">pages/</result>
-            <result name="1">pages/</result>
-            <result name="2">pages/</result>
+            <result name="0">pages/admin.jsp</result>
+            <result name="1">pages/teacher.jsp</result>
+            <result name="2">pages/student.jsp</result>
         </action>
     </package>
 

@@ -9,7 +9,7 @@
 <%@taglib prefix="s" uri="/struts-tags" %>
 <html>
 <head>
-    <title>Struts2+Spring+Hibernate integration example</title>
+    <title>教师系统</title>
 </head>
 <body>
 <h1>Struts2+Spring+Hibernate integration example</h1>
