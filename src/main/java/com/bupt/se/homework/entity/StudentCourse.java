@@ -1,20 +1,21 @@
 package com.bupt.se.homework.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-@Table(name = "student_course", schema = "homeworksystem")
+@Table(name = "student_course")
 @IdClass(StudentCoursePK.class)
-public class StudentCourse {
+public class StudentCourse implements Serializable {
     private String studentId;
     private int courseId;
     private int grade;
 
-
+    public StudentCourse() {
+    }
 
     @Id
-    @Column(name = "STUDENT_ID")
     public String getStudentId() {
         return studentId;
     }
@@ -24,7 +25,6 @@ public class StudentCourse {
     }
 
     @Id
-    @Column(name = "COURSE_ID")
     public int getCourseId() {
         return courseId;
     }
@@ -34,7 +34,7 @@ public class StudentCourse {
     }
 
     @Basic
-    @Column(name = "GRADE")
+    @Column(length = 3)
     public int getGrade() {
         return grade;
     }

@@ -1,26 +1,30 @@
 package com.bupt.se.homework.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.sql.Timestamp;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.util.Date;
-import java.util.Objects;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
+@Table(name = "homework")
 public class Homework {
 
     private int homeworkId;
-    private int courseId;
+    private Course course;
     private String content;
     private Date releaseTime;
     private Date deadline;
-    private Timestamp releasetime;
+    private Set<Group> groups = new HashSet<>();
 
+    public Homework() {
+    }
 
     @Id
-    @Column(name = "HOMEWORK_ID")
+    @Column(length = 10)
+    @GeneratedValue(generator = "homeworkId")
+    @GenericGenerator(name = "homeworkId", strategy = "increment")
     public int getHomeworkId() {
         return homeworkId;
     }
@@ -29,18 +33,27 @@ public class Homework {
         this.homeworkId = homeworkId;
     }
 
-    @Basic
-    @Column(name = "COURSE_ID")
-    public int getCourseId() {
-        return courseId;
+    @ManyToMany(mappedBy = "homework", fetch = FetchType.LAZY)
+    public Set<Group> getGroups() {
+        return groups;
     }
 
-    public void setCourseId(int courseId) {
-        this.courseId = courseId;
+    public void setGroups(Set<Group> groups) {
+        this.groups = groups;
+    }
+
+    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REMOVE}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "courseId")
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
     }
 
     @Basic
-    @Column(name = "CONTENT")
+    @Column(length = 100)
     public String getContent() {
         return content;
     }
@@ -49,16 +62,8 @@ public class Homework {
         this.content = content;
     }
 
-    public Date getReleaseTime() {
-        return releaseTime;
-    }
-
-    public void setReleaseTime(Date releaseTime) {
-        this.releaseTime = releaseTime;
-    }
-
     @Basic
-    @Column(name = "DEADLINE")
+    @Column(columnDefinition = "DATE")
     public Date getDeadline() {
         return deadline;
     }
@@ -68,29 +73,12 @@ public class Homework {
     }
 
     @Basic
-    @Column(name = "RELEASETIME")
-    public Timestamp getReleasetime() {
-        return releasetime;
+    @Column(columnDefinition = "DATE")
+    public Date getReleaseTime() {
+        return releaseTime;
     }
 
-    public void setReleasetime(Timestamp releasetime) {
-        this.releasetime = releasetime;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Homework homework = (Homework) o;
-        return homeworkId == homework.homeworkId &&
-                courseId == homework.courseId &&
-                Objects.equals(content, homework.content) &&
-                Objects.equals(deadline, homework.deadline) &&
-                Objects.equals(releasetime, homework.releasetime);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(homeworkId, courseId, content, releasetime, deadline);
+    public void setReleaseTime(Date releaseTime) {
+        this.releaseTime = releaseTime;
     }
 }

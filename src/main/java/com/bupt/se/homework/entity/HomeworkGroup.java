@@ -1,13 +1,14 @@
 package com.bupt.se.homework.entity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
 @Entity
-@Table(name = "homework_group", schema = "homeworksystem")
+@Table(name = "homework_group")
 @IdClass(HomeworkGroupPK.class)
-public class HomeworkGroup {
+public class HomeworkGroup implements Serializable {
 
     private int groupId;
     private int homeworkId;
@@ -15,20 +16,11 @@ public class HomeworkGroup {
     private int score;
     private String comment;
     private String fileDir;
-    private String filedir;
 
-
-
-    public String getFileDir() {
-        return fileDir;
-    }
-
-    public void setFileDir(String fileDir) {
-        this.fileDir = fileDir;
+    public HomeworkGroup() {
     }
 
     @Id
-    @Column(name = "GROUP_ID")
     public int getGroupId() {
         return groupId;
     }
@@ -38,7 +30,6 @@ public class HomeworkGroup {
     }
 
     @Id
-    @Column(name = "HOMEWORK_ID")
     public int getHomeworkId() {
         return homeworkId;
     }
@@ -48,7 +39,7 @@ public class HomeworkGroup {
     }
 
     @Basic
-    @Column(name = "SUBMISSION_TIME")
+    @Column
     public Date getSubmissionTime() {
         return submissionTime;
     }
@@ -58,7 +49,7 @@ public class HomeworkGroup {
     }
 
     @Basic
-    @Column(name = "SCORE")
+    @Column(length = 3)
     public int getScore() {
         return score;
     }
@@ -68,7 +59,7 @@ public class HomeworkGroup {
     }
 
     @Basic
-    @Column(name = "COMMENT")
+    @Column
     public String getComment() {
         return comment;
     }
@@ -78,30 +69,12 @@ public class HomeworkGroup {
     }
 
     @Basic
-    @Column(name = "FILEDIR")
-    public String getFiledir() {
-        return filedir;
+    @Column
+    public String getFileDir() {
+        return fileDir;
     }
 
-    public void setFiledir(String filedir) {
-        this.filedir = filedir;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        HomeworkGroup that = (HomeworkGroup) o;
-        return groupId == that.groupId &&
-                homeworkId == that.homeworkId &&
-                score == that.score &&
-                Objects.equals(submissionTime, that.submissionTime) &&
-                Objects.equals(comment, that.comment) &&
-                Objects.equals(filedir, that.filedir);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(groupId, homeworkId, submissionTime, score, comment, filedir);
+    public void setFileDir(String fileDir) {
+        this.fileDir = fileDir;
     }
 }

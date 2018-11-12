@@ -1,13 +1,11 @@
 package com.bupt.se.homework.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
+@Table(name = "teacher")
 public class Teacher implements Serializable {
 
     private String teacherId;
@@ -17,10 +15,13 @@ public class Teacher implements Serializable {
     private String telephone;
     private String email;
     private String password;
+    private Set<Course> courses = new HashSet<>();
 
+    public Teacher() {
+    }
 
     @Basic
-    @Column(name = "PASSWORD", length = 40)
+    @Column(length = 40)
     public String getPassword() {
         return password;
     }
@@ -30,7 +31,7 @@ public class Teacher implements Serializable {
     }
 
     @Id
-    @Column(name = "TEACHER_ID", length = 10)
+    @Column(length = 10)
     public String getTeacherId() {
         return teacherId;
     }
@@ -40,7 +41,7 @@ public class Teacher implements Serializable {
     }
 
     @Basic
-    @Column(name = "TEACHER_NAME", length = 20)
+    @Column(length = 20)
     public String getTeacherName() {
         return teacherName;
     }
@@ -50,7 +51,18 @@ public class Teacher implements Serializable {
     }
 
     @Basic
-    @Column(name = "SEX", length = 2)
+    @OneToMany(cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "teachId")
+    public Set<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
+    }
+
+    @Basic
+    @Column(length = 2)
     public String getSex() {
         return sex;
     }
@@ -60,7 +72,7 @@ public class Teacher implements Serializable {
     }
 
     @Basic
-    @Column(name = "PROFESSION", length = 40)
+    @Column(length = 40)
     public String getProfession() {
         return profession;
     }
@@ -70,7 +82,7 @@ public class Teacher implements Serializable {
     }
 
     @Basic
-    @Column(name = "TELEPHONE", length = 11)
+    @Column(length = 11)
     public String getTelephone() {
         return telephone;
     }
@@ -80,7 +92,7 @@ public class Teacher implements Serializable {
     }
 
     @Basic
-    @Column(name = "EMAIL", length = 40)
+    @Column(length = 40)
     public String getEmail() {
         return email;
     }

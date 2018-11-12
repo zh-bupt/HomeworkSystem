@@ -1,16 +1,19 @@
 package com.bupt.se.homework.entity;
 
 import javax.persistence.Column;
-import javax.persistence.Id;
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Embeddable
 public class HomeworkGroupPK implements Serializable {
     private int groupId;
     private int homeworkId;
 
-    @Column(name = "GROUP_ID")
-    @Id
+    public HomeworkGroupPK() {
+    }
+
+    @Column(name = "groupId", length = 10)
     public int getGroupId() {
         return groupId;
     }
@@ -19,8 +22,7 @@ public class HomeworkGroupPK implements Serializable {
         this.groupId = groupId;
     }
 
-    @Column(name = "HOMEWORK_ID")
-    @Id
+    @Column(name = "homeworkId", length = 10)
     public int getHomeworkId() {
         return homeworkId;
     }
