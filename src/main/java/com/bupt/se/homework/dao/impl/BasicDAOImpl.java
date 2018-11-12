@@ -2,6 +2,8 @@ package com.bupt.se.homework.dao.impl;
 
 import com.bupt.se.homework.dao.HibernateDaoUtil;
 import com.bupt.se.homework.dao.BasicDao;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -22,6 +24,8 @@ public class BasicDAOImpl<M extends java.io.Serializable, PK extends java.io.Ser
 
     private SessionFactory sessionFactory;
 
+    protected Logger logger = LogManager.getLogger(getClass());
+
     @Autowired
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -37,7 +41,6 @@ public class BasicDAOImpl<M extends java.io.Serializable, PK extends java.io.Ser
         this.entityClass = (Class<Serializable>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
     }
 
-    //基本CRUD
     /**
      * @Description: 保存一个entity 对象
      * @param model
@@ -53,11 +56,43 @@ public class BasicDAOImpl<M extends java.io.Serializable, PK extends java.io.Ser
             transaction = session.beginTransaction();
             session.save(model);
             transaction.commit();
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
+            transaction.rollback();
             return false;
         }
-        return true;
+    }
+
+    /**
+     * @Description: 批量添加
+     * @param list
+     * @return: boolean
+     * @Author: zh
+     * @Date: 2018/11/11
+     **/
+    @Override
+    public boolean save(List<M> list) {
+        Session session = getSession();
+        Transaction transaction = null;
+        try {
+            transaction = session.beginTransaction();
+            int count = 1;
+            for (M model:list) {
+                session.save(model);
+                count ++;
+                if (count % 20 == 0) {
+                    session.flush();
+                    session.clear();
+                }
+            }
+            transaction.commit();
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            transaction.rollback();
+            return false;
+        }
     }
 
     /**
@@ -71,19 +106,16 @@ public class BasicDAOImpl<M extends java.io.Serializable, PK extends java.io.Ser
     public boolean update(M model) {
         Session session = getSession();
         Transaction transaction = null;
-        boolean result = true;
         try{
             transaction = session.beginTransaction();
             session.update(model);
+            transaction.commit();
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
-            result = false;
-        } finally {
-            if (transaction != null) {
-                transaction.commit();
-            }
+            transaction.rollback();
+            return false;
         }
-        return result;
     }
 
 //    @Override
@@ -102,40 +134,58 @@ public class BasicDAOImpl<M extends java.io.Serializable, PK extends java.io.Ser
     public boolean delete(PK id) {
         Session session = getSession();
         Transaction transaction = null;
-        boolean result = true;
         try{
             transaction = session.beginTransaction();
             M entity = (M) session.get(this.entityClass,id);
             session.delete(entity);
+            transaction.commit();
+            return true;
         } catch (Exception e) {
             e.printStackTrace();
-            result = false;
-        } finally {
-            if (transaction != null) {
-                transaction.commit();
-            }
+            transaction.rollback();
+            return false;
         }
-        return result;
     }
 
-//    @Override
-//    public void deleteArray(PK[] id) {
-//        if (id != null && id.length >0) {
-//            StringBuffer sbDelete = new StringBuffer();
-//            sbDelete.append("delete from ").append(entityClass.getSimpleName())
-//                    .append(" as o where o.id in (");
-//            for (int i = 0; i < id.length; i++) {
-//                sbDelete.append("?" + ",");
-//            }
-//            sbDelete.delete(sbDelete.length() - 1, sbDelete.length());
-//            sbDelete.append(")");
-//            Query query = getSession().createQuery(sbDelete.toString());
-//            for (int i = 0; i < id.length; i++) {
-//                query.setParameter(i, id[i]);
-//            }
-//            query.executeUpdate();
-//        }
-//    }
+    /**
+     * @Description: 批量删除
+     * @param id
+     * @return: boolean
+     * @Author: zh
+     * @Date: 2018/11/11
+     **/
+    @Override
+    public boolean deleteArray(PK[] id) {
+        if (id != null && id.length >0) {
+            StringBuffer hql = new StringBuffer();
+            hql.append("delete from ").append(entityClass.getSimpleName())
+                    .append(" as o where o.id in (");
+            for (int i = 0; i < id.length; i++) {
+                hql.append("?" + ",");
+            }
+            hql.replace(hql.length() - 1, hql.length(), ")");
+            logger.info(hql.toString());
+            Session session;
+            Transaction transaction = null;
+            try {
+                session = getSession();
+                transaction = session.beginTransaction();
+                Query query = session.createQuery(hql.toString());
+                for (int i = 0; i < id.length; i++) {
+                    query.setParameter(i, id[i]);
+                }
+                query.executeUpdate();
+                transaction.commit();
+                return true;
+            } catch (Exception e) {
+                e.printStackTrace();
+                transaction.rollback();
+                return false;
+            }
+
+        }
+        return true;
+    }
 
     @Override
     public boolean exists(PK id) {
@@ -143,7 +193,7 @@ public class BasicDAOImpl<M extends java.io.Serializable, PK extends java.io.Ser
     }
 
     /**
-     * @Description: 根据逐渐获取对象实例
+     * @Description: 根据主键获取对象实例
      * @param id
      * @return: M
      * @Author: zh
@@ -157,12 +207,10 @@ public class BasicDAOImpl<M extends java.io.Serializable, PK extends java.io.Ser
         try{
             transaction = session.beginTransaction();
             entity = (M) getSession().get(this.entityClass,id);
+            transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-            if (transaction != null) {
-                transaction.commit();
-            }
+            transaction.rollback();
         }
         return entity;
     }
@@ -179,6 +227,7 @@ public class BasicDAOImpl<M extends java.io.Serializable, PK extends java.io.Ser
                 + " as o "
                 + HibernateDaoUtil.
                 buildWhereJpql(equalFields, notEqualFields, LikeFields, nullFields, null, whereHql);
+        logger.info(hql);
         Query query = session.createQuery(hql);
 
         // 给查询参数赋值

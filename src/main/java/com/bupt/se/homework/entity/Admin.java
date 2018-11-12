@@ -1,20 +1,21 @@
 package com.bupt.se.homework.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
+@Table(name = "admin")
 public class Admin implements Serializable {
     private String adminId;
     private String adminName;
     private String password;
 
+    public Admin() {
+    }
+
     @Basic
-    @Column(name = "PASSWORD")
+    @Column(length = 40, nullable = false)
     public String getPassword() {
         return password;
     }
@@ -24,7 +25,7 @@ public class Admin implements Serializable {
     }
 
     @Id
-    @Column(name = "ADMIN_ID")
+    @Column(length = 10)
     public String getAdminId() {
         return adminId;
     }
@@ -34,7 +35,7 @@ public class Admin implements Serializable {
     }
 
     @Basic
-    @Column(name = "ADMIN_NAME")
+    @Column(length = 20, nullable = false)
     public String getAdminName() {
         return adminName;
     }

@@ -2,8 +2,7 @@ package com.bupt.se.homework.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "student")
@@ -16,7 +15,9 @@ public class Student implements Serializable {
     private Date entranceDate;
     private String password;
     private String email;
-    private String id;
+    private Set<Course> courses = new HashSet<>();
+    private Set<Group> groupsManaged = new HashSet<>();
+    private Set<Group> groupsJoined = new HashSet<>();
 
     public Student() {
     }
@@ -27,8 +28,41 @@ public class Student implements Serializable {
         this.password = password;
     }
 
+    @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
+    @JoinTable(
+            name = "student_course",
+            joinColumns = {@JoinColumn(name = "studentId")},
+            inverseJoinColumns = {@JoinColumn(name = "courseId")}
+    )
+    public Set<Course> getCourses() {
+        return courses;
+    }
+
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
+    }
+
+    @ManyToMany(mappedBy = "members", fetch = FetchType.LAZY)
+    public Set<Group> getGroupsJoined() {
+        return groupsJoined;
+    }
+
+    public void setGroupsJoined(Set<Group> groupsJoined) {
+        this.groupsJoined = groupsJoined;
+    }
+
+    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "leaderId")
+    public Set<Group> getGroupsManaged() {
+        return groupsManaged;
+    }
+
+    public void setGroupsManaged(Set<Group> groupsManaged) {
+        this.groupsManaged = groupsManaged;
+    }
+
     @Basic
-    @Column(name = "STUDENT_NAME", length = 20)
+    @Column(length = 20, nullable = false)
     public String getStudentName() {
         return studentName;
     }
@@ -38,7 +72,7 @@ public class Student implements Serializable {
     }
 
     @Basic
-    @Column(name = "CLASS_ID", length = 20)
+    @Column(length = 20)
     public String getClassId() {
         return classId;
     }
@@ -48,7 +82,7 @@ public class Student implements Serializable {
     }
 
     @Basic
-    @Column(name = "SEX", length = 2)
+    @Column(length = 2)
     public String getSex() {
         return sex;
     }
@@ -58,7 +92,7 @@ public class Student implements Serializable {
     }
 
     @Basic
-    @Column(name = "ENTRANCE_DATE")
+    @Column(columnDefinition = "DATE")
     public Date getEntranceDate() {
         return entranceDate;
     }
@@ -68,7 +102,7 @@ public class Student implements Serializable {
     }
 
     @Basic
-    @Column(name = "PASSWORD")
+    @Column(length = 40, nullable = false)
     public String getPassword() {
         return password;
     }
@@ -78,7 +112,7 @@ public class Student implements Serializable {
     }
 
     @Basic
-    @Column(name = "EMAIL")
+    @Column(length = 40)
     public String getEmail() {
         return email;
     }
@@ -88,7 +122,7 @@ public class Student implements Serializable {
     }
 
     @Id
-    @Column(name = "STUDENT_ID")
+    @Column(length = 10)
     public String getStudentId() {
         return studentId;
     }

@@ -8,9 +8,9 @@ import java.util.List;
  */
 public interface BasicDao<M extends java.io.Serializable, PK extends java.io.Serializable>{
     //基本CRUD
-    public boolean save(M model);
+    boolean save(M model);
 
-//    public void saveOrUpdate(M model);
+    boolean save(List<M> list);
 
     public boolean update(M model);
 
@@ -25,16 +25,17 @@ public interface BasicDao<M extends java.io.Serializable, PK extends java.io.Ser
 //    public void delete(Class<?> entityClass, LinkedHashMap<Object, Object> equalFields,
 //                       String whereJpql);
 
-//    public void deleteArray(PK id[]) ;
+    boolean deleteArray(PK id[]) ;
 
-    public boolean exists(PK id);
+    boolean exists(PK id);
 
-    public M get(PK id);
+    M get(PK id);
 
-    public M get(LinkedHashMap<Object, Object> equalFields,
-                 LinkedHashMap<Object, Object> notEqualFields,
-                 LinkedHashMap<String, String> LikeFields,
-                 LinkedHashMap<String, String> nullFields, String whereHql);
+    M get(LinkedHashMap<Object, Object> equalFields,
+          LinkedHashMap<Object, Object> notEqualFields,
+          LinkedHashMap<String, String> LikeFields,
+          LinkedHashMap<String, String> nullFields, String whereHql
+    );
 //
 //
 //    public List<M> findResultList(LinkedHashMap<Object, Object> equalFields,
@@ -49,13 +50,14 @@ public interface BasicDao<M extends java.io.Serializable, PK extends java.io.Ser
 //            LinkedHashMap<String, String> LikeFields,
 //            LinkedHashMap<String, String> nullFields, String whereJpql) ;
 //
-    public List<M> findResultList(
+    List<M> findResultList(
             LinkedHashMap<Object, Object> equalFields,
             LinkedHashMap<Object, Object> notEqualFields,
             LinkedHashMap<String, String> LikeFields,
             LinkedHashMap<String, String> nullFields,
-            LinkedHashMap<String, String> orderByFields, String whereJpql,
-            int firstResult, int maxResult);
+            LinkedHashMap<String, String> orderByFields, String whereHql,
+            int firstResult, int maxResult
+    );
 
 }
 

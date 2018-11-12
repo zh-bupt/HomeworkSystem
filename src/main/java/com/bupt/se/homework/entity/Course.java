@@ -1,26 +1,71 @@
 package com.bupt.se.homework.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.util.Date;
-import java.util.Objects;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.*;
 
 @Entity
-public class Course
-{
+@Table(name = "course")
+public class Course implements Serializable {
     private int courseId;
     private String courseName;
-    private String teacherId;
     private int capacity;
     private Date createTime;
     private int groupCapacity;
     private String groupPrefix;
+    private Teacher teacher;
+    private Set<Homework> homework = new HashSet<>();
+    private Set<Student> students = new HashSet<>();
+    private Set<Group> groups = new HashSet<>();
 
+    public Course() {
+    }
+
+    @OneToMany(cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "courseId")
+    public Set<Homework> getHomework() {
+        return homework;
+    }
+
+    public void setHomework(Set<Homework> homework) {
+        this.homework = homework;
+    }
+
+    @ManyToMany(mappedBy = "courses")
+    public Set<Student> getStudents() {
+        return students;
+    }
+
+    public void setStudents(Set<Student> students) {
+        this.students = students;
+    }
+
+    @OneToMany(cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "courseId")
+    public Set<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(Set<Group> groups) {
+        this.groups = groups;
+    }
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "teacherId")
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
 
     @Id
-    @Column(name = "COURSE_ID")
+    @Column(length = 10)
+    @GeneratedValue(generator = "courseId")
+    @GenericGenerator(name = "courseId", strategy = "assigned")
     public int getCourseId() {
         return courseId;
     }
@@ -30,7 +75,7 @@ public class Course
     }
 
     @Basic
-    @Column(name = "COURSE_NAME", length = 50)
+    @Column(length = 50)
     public String getCourseName() {
         return courseName;
     }
@@ -39,18 +84,9 @@ public class Course
         this.courseName = courseName;
     }
 
-    @Basic
-    @Column(name = "TEACHER_ID")
-    public String getTeacherId() {
-        return teacherId;
-    }
 
-    public void setTeacherId(String teacherId) {
-        this.teacherId = teacherId;
-    }
-
-    @Basic
-    @Column(name = "CAPACITY")
+    @Basic()
+    @Column(length = 3)
     public int getCapacity() {
         return capacity;
     }
@@ -60,7 +96,7 @@ public class Course
     }
 
     @Basic
-    @Column(name = "CREATE_TIME")
+    @Column(columnDefinition = "DATE")
     public Date getCreateTime() {
         return createTime;
     }
@@ -70,7 +106,7 @@ public class Course
     }
 
     @Basic
-    @Column(name = "GROUP_CAPACITY")
+    @Column()
     public int getGroupCapacity() {
         return groupCapacity;
     }
@@ -80,29 +116,12 @@ public class Course
     }
 
     @Basic
-    @Column(name = "GROUP_PREFIX")
+    @Column(length = 10)
     public String getGroupPrefix() {
         return groupPrefix;
     }
 
     public void setGroupPrefix(String groupPrefix) {
         this.groupPrefix = groupPrefix;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Course course = (Course) o;
-        return courseId == course.courseId &&
-                capacity == course.capacity &&
-                Objects.equals(courseName, course.courseName) &&
-                Objects.equals(teacherId, course.teacherId) &&
-                Objects.equals(createTime, course.createTime);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(courseId, courseName, teacherId, capacity, createTime);
     }
 }
