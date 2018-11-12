@@ -4,7 +4,14 @@ import com.bupt.se.homework.entity.Teacher;
 
 import java.util.List;
 
-public interface TeacherDAO {
-    void addTeacher(Teacher teacher);
-    List<Teacher> listTeacher();
+public interface  TeacherDAO extends BasicDao<Teacher, String> {
+//    boolean add(Teacher teacher);
+//
+//    boolean update(Teacher teacher);
+//
+//    boolean delete(String id);
+//
+//    List<Teacher> listTeacher();
+//
+//    Teacher queryById(String id);
 }

@@ -1,6 +1,7 @@
 package com.bupt.se.homework.dao.impl;
 
 import com.bupt.se.homework.dao.CourseDAO;
+import com.bupt.se.homework.entity.Course
 
-public class CourseDAOImpl implements CourseDAO {
+public class CourseDAOImpl extends BasicDAOImpl implements CourseDAO {
 }
