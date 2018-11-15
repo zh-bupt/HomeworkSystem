@@ -17,6 +17,7 @@ public class Homework {
     private Date releaseTime;
     private Date deadline;
     private Set<Group> groups = new HashSet<>();
+    private Set<StudentHomework> studentHomeworkSet = new HashSet<>();
 
     public Homework() {
     }
@@ -50,6 +51,15 @@ public class Homework {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    @OneToMany(mappedBy = "homework", cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
+    public Set<StudentHomework> getStudentHomeworkSet() {
+        return studentHomeworkSet;
+    }
+
+    public void setStudentHomeworkSet(Set<StudentHomework> studentHomeworkSet) {
+        this.studentHomeworkSet = studentHomeworkSet;
     }
 
     @Basic

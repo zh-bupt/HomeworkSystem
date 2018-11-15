@@ -19,27 +19,14 @@
                 <prop key="hibernate.current_session_context_class">thread</prop>
             </props>
         </property>
-        <!--<property name="mappingResources">-->
-            <!--<list>-->
-                <!--<value>hibernate/Teacher.hbm.xml</value>-->
-                <!--<value>hibernate/Student.hbm.xml</value>-->
-                <!--<value>hibernate/Course.hbm.xml</value>-->
-                <!--<value>hibernate/Group.hbm.xml</value>-->
-                <!--<value>hibernate/Homework.hbm.xml</value>-->
-                <!--<value>hibernate/Admin.hbm.xml</value>-->
-                <!--<value>hibernate/HomeworkGroup.hbm.xml</value>-->
-                <!--<value>hibernate/StudentCourse.hbm.xml</value>-->
-                <!--<value>hibernate/GroupStudent.hbm.xml</value>-->
-            <!--</list>-->
-        <!--</property>-->
         <property name="annotatedClasses">
             <list>
                 <value>com.bupt.se.homework.entity.Admin</value>
                 <value>com.bupt.se.homework.entity.Course</value>
                 <value>com.bupt.se.homework.entity.Group</value>
-                <value>com.bupt.se.homework.entity.GroupStudent</value>
                 <value>com.bupt.se.homework.entity.Homework</value>
                 <value>com.bupt.se.homework.entity.HomeworkGroup</value>
+                <value>com.bupt.se.homework.entity.StudentHomework</value>
                 <value>com.bupt.se.homework.entity.Student</value>
                 <value>com.bupt.se.homework.entity.StudentCourse</value>
                 <value>com.bupt.se.homework.entity.Teacher</value>

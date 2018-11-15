@@ -14,6 +14,12 @@ public class Admin implements Serializable {
     public Admin() {
     }
 
+    public Admin(String adminId, String adminName, String password) {
+        this.adminId = adminId;
+        this.adminName = adminName;
+        this.password = password;
+    }
+
     @Basic
     @Column(length = 40, nullable = false)
     public String getPassword() {

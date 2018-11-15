@@ -5,14 +5,18 @@ import com.bupt.se.homework.bo.ReturnCode;
 import com.bupt.se.homework.dao.AdminDAO;
 import com.bupt.se.homework.dao.BasicDao;
 import com.bupt.se.homework.entity.Admin;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
-public class AdminBoImpl implements AdminBo {
+public class AdminBoImpl extends BasicBoImpl<Admin, String> implements AdminBo {
 
 
     private AdminDAO adminDAO;
 
-    public AdminDAO getAdminDAO() {
-        return adminDAO;
+    @Autowired
+    public void setAdminDAO(BasicDao<Admin, String> basicDao) {
+        super.setBasicDao(basicDao);
+        this.adminDAO = (AdminDAO) basicDao;
     }
 
     /**
@@ -29,9 +33,5 @@ public class AdminBoImpl implements AdminBo {
         if (admin == null) return ReturnCode.USER_NOT_FOUNT;
         if (!admin.getPassword().equals(password)) return ReturnCode.WRONG_PASSWORD;
         return ReturnCode.LOGIN_SUCCESS;
-    }
-
-    public void setAdminDAO(BasicDao<Admin, String> adminDAO) {
-        this.adminDAO = (AdminDAO) adminDAO;
     }
 }

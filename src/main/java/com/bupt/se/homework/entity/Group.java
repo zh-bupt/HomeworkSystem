@@ -8,9 +8,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "courseGroup")
+@Table(name = "group_")
 public class Group implements Serializable {
-    private int groupId;
+    private String groupId;
     private Course course;
     private int num;
     private String name;
@@ -53,11 +53,11 @@ public class Group implements Serializable {
     @Id
     @GeneratedValue(generator = "groupId")
     @GenericGenerator(name = "groupId", strategy = "increment")
-    public int getGroupId() {
+    public String getGroupId() {
         return groupId;
     }
 
-    public void setGroupId(int groupId) {
+    public void setGroupId(String groupId) {
         this.groupId = groupId;
     }
 

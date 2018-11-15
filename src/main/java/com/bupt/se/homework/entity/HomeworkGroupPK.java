@@ -7,18 +7,18 @@ import java.util.Objects;
 
 @Embeddable
 public class HomeworkGroupPK implements Serializable {
-    private int groupId;
+    private String groupId;
     private int homeworkId;
 
     public HomeworkGroupPK() {
     }
 
     @Column(name = "groupId", length = 10)
-    public int getGroupId() {
+    public String getGroupId() {
         return groupId;
     }
 
-    public void setGroupId(int groupId) {
+    public void setGroupId(String groupId) {
         this.groupId = groupId;
     }
 
@@ -36,12 +36,13 @@ public class HomeworkGroupPK implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         HomeworkGroupPK that = (HomeworkGroupPK) o;
-        return groupId == that.groupId &&
-                homeworkId == that.homeworkId;
+        return homeworkId == that.homeworkId &&
+                Objects.equals(groupId, that.groupId);
     }
 
     @Override
     public int hashCode() {
+
         return Objects.hash(groupId, homeworkId);
     }
 }

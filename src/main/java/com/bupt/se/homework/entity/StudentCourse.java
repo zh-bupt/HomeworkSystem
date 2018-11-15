@@ -2,35 +2,51 @@ package com.bupt.se.homework.entity;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Entity
 @Table(name = "student_course")
-@IdClass(StudentCoursePK.class)
 public class StudentCourse implements Serializable {
-    private String studentId;
-    private int courseId;
-    private int grade;
+    private StudentCoursePK pk;
+    private Student student;
+    private Course course;
+    private int grade = 0;
 
     public StudentCourse() {
     }
 
-    @Id
-    public String getStudentId() {
-        return studentId;
+    public StudentCourse(Student student, Course course) {
+        this.student = student;
+        this.course = course;
+        this.pk = new StudentCoursePK(student.getStudentId(), course.getCourseId());
     }
 
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
+    @EmbeddedId
+    public StudentCoursePK getPk() {
+        return pk;
     }
 
-    @Id
-    public int getCourseId() {
-        return courseId;
+    public void setPk(StudentCoursePK pk) {
+        this.pk = pk;
     }
 
-    public void setCourseId(int courseId) {
-        this.courseId = courseId;
+    @ManyToOne
+    @JoinColumn(name = "courseId", updatable = false, insertable = false)
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "studentId", updatable = false, insertable = false)
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
     @Basic
@@ -41,20 +57,5 @@ public class StudentCourse implements Serializable {
 
     public void setGrade(int grade) {
         this.grade = grade;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        StudentCourse that = (StudentCourse) o;
-        return courseId == that.courseId &&
-                grade == that.grade &&
-                Objects.equals(studentId, that.studentId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(studentId, courseId, grade);
     }
 }

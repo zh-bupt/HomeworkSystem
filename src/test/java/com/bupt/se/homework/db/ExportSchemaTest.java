@@ -56,7 +56,7 @@ public class ExportSchemaTest extends UnitTestBase {
         Session session = sessionFactory.getCurrentSession();
         Transaction transaction = session.beginTransaction();
         Course course = new Course();
-        course.setCourseId(123);
+        course.setCourseId("123");
         course.setCourseName("test");
         Group group1 = new Group();
         group1.setName("test group1");

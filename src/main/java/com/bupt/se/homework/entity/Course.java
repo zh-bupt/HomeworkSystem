@@ -9,7 +9,7 @@ import java.util.*;
 @Entity
 @Table(name = "course")
 public class Course implements Serializable {
-    private int courseId;
+    private String courseId;
     private String courseName;
     private int capacity;
     private Date createTime;
@@ -17,14 +17,13 @@ public class Course implements Serializable {
     private String groupPrefix;
     private Teacher teacher;
     private Set<Homework> homework = new HashSet<>();
-    private Set<Student> students = new HashSet<>();
+    private Set<StudentCourse> studentCourses = new HashSet<>();
     private Set<Group> groups = new HashSet<>();
 
     public Course() {
     }
 
     @OneToMany(cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "courseId")
     public Set<Homework> getHomework() {
         return homework;
     }
@@ -33,13 +32,13 @@ public class Course implements Serializable {
         this.homework = homework;
     }
 
-    @ManyToMany(mappedBy = "courses")
-    public Set<Student> getStudents() {
-        return students;
+    @OneToMany(mappedBy = "course", cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
+    public Set<StudentCourse> getStudentCourses() {
+        return studentCourses;
     }
 
-    public void setStudents(Set<Student> students) {
-        this.students = students;
+    public void setStudentCourses(Set<StudentCourse> studentCourses) {
+        this.studentCourses = studentCourses;
     }
 
     @OneToMany(cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
@@ -66,11 +65,11 @@ public class Course implements Serializable {
     @Column(length = 10)
     @GeneratedValue(generator = "courseId")
     @GenericGenerator(name = "courseId", strategy = "assigned")
-    public int getCourseId() {
+    public String getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(int courseId) {
+    public void setCourseId(String courseId) {
         this.courseId = courseId;
     }
 

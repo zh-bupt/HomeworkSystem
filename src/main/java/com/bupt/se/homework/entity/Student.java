@@ -1,5 +1,7 @@
 package com.bupt.se.homework.entity;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.*;
@@ -15,9 +17,10 @@ public class Student implements Serializable {
     private Date entranceDate;
     private String password;
     private String email;
-    private Set<Course> courses = new HashSet<>();
+    private Set<StudentCourse> studentCourses = new HashSet<>();
     private Set<Group> groupsManaged = new HashSet<>();
     private Set<Group> groupsJoined = new HashSet<>();
+    private Set<StudentHomework> studentHomeworkSet = new HashSet<>();
 
     public Student() {
     }
@@ -28,21 +31,16 @@ public class Student implements Serializable {
         this.password = password;
     }
 
-    @ManyToMany(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "student_course",
-            joinColumns = {@JoinColumn(name = "studentId")},
-            inverseJoinColumns = {@JoinColumn(name = "courseId")}
-    )
-    public Set<Course> getCourses() {
-        return courses;
+    @OneToMany(mappedBy = "student", cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
+    public Set<StudentCourse> getStudentCourses() {
+        return studentCourses;
     }
 
-    public void setCourses(Set<Course> courses) {
-        this.courses = courses;
+    public void setStudentCourses(Set<StudentCourse> studentCourses) {
+        this.studentCourses = studentCourses;
     }
 
-    @ManyToMany(mappedBy = "members", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "members", cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
     public Set<Group> getGroupsJoined() {
         return groupsJoined;
     }
@@ -59,6 +57,15 @@ public class Student implements Serializable {
 
     public void setGroupsManaged(Set<Group> groupsManaged) {
         this.groupsManaged = groupsManaged;
+    }
+
+    @OneToMany(mappedBy = "student", cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
+    public Set<StudentHomework> getStudentHomeworkSet() {
+        return studentHomeworkSet;
+    }
+
+    public void setStudentHomeworkSet(Set<StudentHomework> studentHomeworkSet) {
+        this.studentHomeworkSet = studentHomeworkSet;
     }
 
     @Basic
@@ -123,6 +130,8 @@ public class Student implements Serializable {
 
     @Id
     @Column(length = 10)
+    @GeneratedValue(generator = "studentId")
+    @GenericGenerator(name = "studentId", strategy = "assigned")
     public String getStudentId() {
         return studentId;
     }

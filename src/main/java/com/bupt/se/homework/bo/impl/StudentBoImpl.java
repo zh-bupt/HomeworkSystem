@@ -4,16 +4,24 @@ import com.bupt.se.homework.bo.ReturnCode;
 import com.bupt.se.homework.bo.StudentBo;
 import com.bupt.se.homework.dao.BasicDao;
 import com.bupt.se.homework.dao.StudentDAO;
+import com.bupt.se.homework.entity.Course;
 import com.bupt.se.homework.entity.Student;
+import com.bupt.se.homework.entity.StudentCourse;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Set;
 
-public class StudentBoImpl implements StudentBo {
-    StudentDAO studentDAO;
+public class StudentBoImpl extends BasicBoImpl<Student, String> implements StudentBo {
 
-    public void setStudentDAO(BasicDao<Student, String> studentDAO) {
-        this.studentDAO = (StudentDAO) studentDAO;
+    private StudentDAO studentDAO;
+
+    @Autowired
+    public void setStudentDAO(BasicDao<Student, String> basicDao) {
+        super.setBasicDao(basicDao);
+        this.studentDAO = (StudentDAO) basicDao;
     }
 
     @Override
@@ -43,6 +51,24 @@ public class StudentBoImpl implements StudentBo {
         LinkedHashMap<Object, Object> equals = new LinkedHashMap<>();
         equals.put("studentName", name);
         return studentDAO.findResultList(equals, null, null, null, null, null, 0, 0);
+    }
+
+    @Override
+    public Set<StudentCourse> getStudentCourse(Student student) {
+        return student.getStudentCourses();
+    }
+
+    @Override
+    public List<Course> getCourseList(Student student) {
+        List<Course> list = null;
+        Set<StudentCourse> studentCourses = this.getStudentCourse(student);
+        if (studentCourses != null && studentCourses.size() > 0) {
+            list = new ArrayList<>();
+            for (StudentCourse sc:studentCourses) {
+                list.add(sc.getCourse());
+            }
+        }
+        return list;
     }
 
     @Override

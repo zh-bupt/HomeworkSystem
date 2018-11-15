@@ -8,9 +8,14 @@ import java.util.Objects;
 @Embeddable
 public class StudentCoursePK implements Serializable {
     private String studentId;
-    private int courseId;
+    private String courseId;
 
     public StudentCoursePK() {
+    }
+
+    public StudentCoursePK(String studentId, String courseId) {
+        this.studentId = studentId;
+        this.courseId = courseId;
     }
 
     @Column(length = 10)
@@ -23,11 +28,11 @@ public class StudentCoursePK implements Serializable {
     }
 
     @Column(length = 10)
-    public int getCourseId() {
+    public String getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(int courseId) {
+    public void setCourseId(String courseId) {
         this.courseId = courseId;
     }
 

@@ -118,11 +118,6 @@ public class BasicDAOImpl<M extends java.io.Serializable, PK extends java.io.Ser
         }
     }
 
-//    @Override
-//    public void merge(M model) {
-//        getSession().merge(model);
-//    }
-
     /**
      * @Description: 通过主键删除对象信息
      * @param id
@@ -226,7 +221,7 @@ public class BasicDAOImpl<M extends java.io.Serializable, PK extends java.io.Ser
                 + entityName
                 + " as o "
                 + HibernateDaoUtil.
-                buildWhereJpql(equalFields, notEqualFields, LikeFields, nullFields, null, whereHql);
+                buildWhereHql(equalFields, notEqualFields, LikeFields, nullFields, null, whereHql);
         logger.info(hql);
         Query query = session.createQuery(hql);
 
@@ -242,13 +237,6 @@ public class BasicDAOImpl<M extends java.io.Serializable, PK extends java.io.Ser
         return entity;
     }
 
-
-//    @Override
-//    public void deleteObject(M model) {
-//        getSession().delete(model);
-//
-//    }
-
     @Override
     public void deleteObjectList(List<M> list) {
         //TODO 删除列表中的对象
@@ -258,7 +246,7 @@ public class BasicDAOImpl<M extends java.io.Serializable, PK extends java.io.Ser
 //    public void delete(Class entityClass, LinkedHashMap equalFields, String whereJpql) {
 //        Query query = getSession().createQuery("delete from " + entityClass.getSimpleName()
 //                + " as o "
-//                + HibernateDaoUtil.buildWhereJpql(equalFields, null, null, null, null, whereJpql));
+//                + HibernateDaoUtil.buildWhereHql(equalFields, null, null, null, null, whereJpql));
 //        query = HibernateDaoUtil.SetQueryParameter(query, equalFields, null, null);
 //        query.executeUpdate();
 //    }
@@ -294,7 +282,7 @@ public class BasicDAOImpl<M extends java.io.Serializable, PK extends java.io.Ser
         Query query = session.createQuery("select o from "
                 + entityName
                 + " as o "
-                + HibernateDaoUtil.buildWhereJpql(equalFields, notEqualFields, LikeFields, nullFields,
+                + HibernateDaoUtil.buildWhereHql(equalFields, notEqualFields, LikeFields, nullFields,
                 orderByFields, whereHql));
 
         // 给查询参数赋值
