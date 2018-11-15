@@ -19,6 +19,35 @@ public class LoginAction {
     TeacherBo teacherBo;
     AdminBo adminBo;
 
+    private String role;
+    private String id;
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    private String password;
+
     public void setStudentBo(StudentBo studentBo) {
         this.studentBo = studentBo;
     }
@@ -31,18 +60,23 @@ public class LoginAction {
         this.adminBo = adminBo;
     }
 
-    public String login(int role, String id, String password){
+
+    public String login() throws Exception {
         String response;
+        System.out.println(role);
         switch (role){
-            case 0://管理员
+            case "管理员"://管理员
                 response = adminBo.login(id,password);
-                break;
-            case 1://教师
+                System.out.println(response);
+                return "admin";
+            case "教师"://教师
                 response = teacherBo.login(id,password);
-                break;
-            case 2://学生
+                System.out.println(response);
+                return "teacher";
+            case "学生"://学生
                 response = studentBo.login(id,password);
-                break;
+                System.out.println(response);
+                return "student";
             default:
                 response = "Role Error";
 
@@ -52,4 +86,6 @@ public class LoginAction {
 
         return response;//TODO 根据不同的返回来提醒用户
     }
+
+
 }

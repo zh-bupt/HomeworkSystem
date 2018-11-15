@@ -6,31 +6,106 @@
 
 <struts>
     <constant name="struts.devMode" value="true"/>
+    <constant name="struts.multipart.maxSize" value="1000000000"/>
+
     <package name="login" namespace="/" extends="struts-default">
+        <action name="loginPageAction">
+            <result name="">pages/login.jsp</result>
+        </action>
         <action name="loginAction"
                 class="com.bupt.se.homework.action.LoginAction" method="login">
-            <result name="0">pages/admin.jsp</result>
-            <result name="1">pages/teacher.jsp</result>
-            <result name="2">pages/student.jsp</result>
+            <result name="admin">pages/admin.jsp</result>
+            <result name="teacher">pages/teacher.jsp</result>
+            <result name="student">pages/student.jsp</result>
+        </action>
+    </package>
+
+    <package name="admin" namespace="/" extends="struts-default">
+        <action name="addStudentAction"
+                class="com.bupt.se.homework.action.AdminAction" method="addStudent">
+            <result name="success">pages/admin.jsp</result>
+        </action>
+        <action name="addStudentByFileAction"
+                class="com.bupt.se.homework.action.AdminAction" method="addStudentByFile">
+            <!-- 指定（限制）上传文件的类型，定义局部拦截器，修改默认拦截器的属性
+                 "fileUpload.maximumSize" ：限制上传最大的文件大小。
+                 "fileUpload.allowedTypes"：允许上传文件的类型。
+                 "fileUpload.allowedExtensions"：允许上传文件的可扩展文件类型。 -->
+            <interceptor-ref name="defaultStack">
+                <param name="fileUpload.maximumSize">500000000</param>
+                <!--<param name="fileUpload.allowedTypes">text/plain,application/vnd.ms-excel</param>-->
+                <param name="fileUpload.allowedExtensions">.txt,.xlsx,.xls,.csv</param>
+            </interceptor-ref>
+            <result name="success">pages/admin.jsp</result>
+            <!-- 出现错误自动会返回input结果，进入结果视图 -->
+            <result name="error" >pages/error.jsp</result>
+        </action>
+
+        <action name="addTeacherAction"
+                class="com.bupt.se.homework.action.AdminAction" method="addTeacher">
+            <result name="success">pages/admin.jsp</result>
+        </action>
+        <action name="listTeacherAction"
+                class="com.bupt.se.homework.action.AdminAction" method="listTeacher">
+            <result name="success">pages/admin.jsp</result>
         </action>
     </package>
 
     <package name="teacher" namespace="/" extends="struts-default">
-        <action name="addCustomerAction"
-                class="com.bupt.se.homework.action.TeacherAction" method="addTeacher">
+
+
+        <action name="listCourseAction"
+                class="com.bupt.se.homework.action.TeacherAction" method="listCourse">
             <result name="success">pages/teacher.jsp</result>
         </action>
-        <action name="listCustomerAction"
-                class="com.bupt.se.homework.action.TeacherAction" method="listTeacher">
+
+        <action name="addCourseAction"
+                class="com.bupt.se.homework.action.TeacherAction" method="addCourse">
+            <result name="success">listCourseAction.action</result>
+        </action>
+        <action name="addHomework"
+                class="com.bupt.se.homework.action.TeacherAction" method="addHomework">
             <result name="success">pages/teacher.jsp</result>
         </action>
+        <action name="addStudentForCourseByFileAction"
+                class="com.bupt.se.homework.action.TeacherAction" method="addStudentForCourseByFile">
+            <!-- 指定（限制）上传文件的类型，定义局部拦截器，修改默认拦截器的属性
+                 "fileUpload.maximumSize" ：限制上传最大的文件大小。
+                 "fileUpload.allowedTypes"：允许上传文件的类型。
+                 "fileUpload.allowedExtensions"：允许上传文件的可扩展文件类型。 -->
+            <interceptor-ref name="defaultStack">
+                <param name="fileUpload.maximumSize">500000000</param>
+                <!--<param name="fileUpload.allowedTypes">text/plain,application/vnd.ms-excel</param>-->
+                <param name="fileUpload.allowedExtensions">.txt,.xlsx,.xls,.csv</param>
+            </interceptor-ref>
+
+            <result name="success">pages/teacher.jsp</result>
+            <!-- 出现错误自动会返回input结果，进入结果视图 -->
+            <result name="error" >pages/error.jsp</result>
+        </action>
+
     </package>
 
     <package name="student" namespace="/" extends="struts-default">
-        <action name="addStudentAction"
-                class="com.bupt.se.homework.action.StudentAction" method="addStudent">
-            <result name="success">pages/student.jsp</result>
-        </action>
+    </package>
 
+    <package name="Struts2" extends="struts-default" namespace="/">
+
+        <action name="uploads" class="com.bupt.se.homework.action.UploadFileAction">
+
+            <!-- 指定（限制）上传文件的类型，定义局部拦截器，修改默认拦截器的属性
+                "fileUpload.maximumSize" ：限制上传最大的文件大小。
+                "fileUpload.allowedTypes"：允许上传文件的类型。
+                "fileUpload.allowedExtensions"：允许上传文件的可扩展文件类型。 -->
+            <interceptor-ref name="defaultStack">
+                <param name="fileUpload.maximumSize">500000000</param>
+                <!--<param name="fileUpload.allowedTypes">text/plain,application/vnd.ms-excel,application/octet-stream</param>-->
+                <param name="fileUpload.allowedExtensions">.txt,.xlsx,.csv,.xls,.tmp</param>
+            </interceptor-ref>
+
+            <result name="success">admin.jsp</result>
+            <!-- 出现错误自动会返回input结果，进入结果视图 -->
+            <result name="input" >error.jsp</result>
+        </action>
     </package>
 </struts>

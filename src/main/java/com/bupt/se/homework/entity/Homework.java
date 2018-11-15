@@ -3,13 +3,14 @@ package com.bupt.se.homework.entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name = "homework")
-public class Homework {
+public class Homework implements Serializable {
 
     private int homeworkId;
     private Course course;

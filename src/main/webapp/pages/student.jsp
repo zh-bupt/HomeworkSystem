@@ -21,13 +21,13 @@
     <s:textfield name="sex" label="性别" value=""/>
     <s:textfield name="email" label="邮箱" value=""/>
     <s:password name="password" label="密码" value=""/>
-    <s:datetextfield name="entranceDate" format="YYYY-MM-DD"/>
+    <%--<s:datetextfield name="entranceDate" format="YYYY-MM-DD"/>--%>
     <s:submit/>
 </s:form>
 
 <h2>All Students</h2>
 
-<s:if test="teacherList.size() > 0">
+<s:if test="courseList.size() > 0">
     <table border="1px" cellpadding="8px">
         <tr>
             <th>Customer Id</th>
@@ -35,7 +35,7 @@
             <th>Address</th>
             <th>Create Date</th>
         </tr>
-        <s:iterator value="teacherList" status="userStatus">
+        <s:iterator value="courseList" status="userStatus">
             <tr>
                 <td><s:property value="customerId"/> </td>
                 <td><s:property value="name"/> </td>
@@ -46,6 +46,11 @@
     </table>
 </s:if>
 
+<h3>上传作业</h3>
+<s:form action="addStudentForCourseByFileAction" method="post" enctype="multipart/form-data">
+    <s:file name="studentExcel" label="选择上传的文件" />
+    <s:submit value="上传" />
+</s:form>
 <br/>
 <br/>
 </body>

@@ -15,9 +15,9 @@ public class TestLoginAction extends UnitTestBase {
 
         LoginAction loginAction = new LoginAction();
         loginAction.setStudentBo((StudentBo)super.getBean("studentBo"));
-        System.out.println(loginAction.login(2,"2015211203", "12345678"));
+        //System.out.println(loginAction.login(2,"2015211203", "12345678"));
 
         loginAction.setAdminBo((AdminBo)super.getBean("adminBo"));
-        System.out.println(loginAction.login(0,"2015211203", "12345678"));
+        //System.out.println(loginAction.login(0,"2015211203", "12345678"));
     }
 }

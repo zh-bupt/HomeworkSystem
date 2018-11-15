@@ -5,6 +5,8 @@ import com.bupt.se.homework.dao.CourseDAO;
 import com.bupt.se.homework.dao.impl.CourseDAOImpl;
 import com.bupt.se.homework.entity.Course;
 
+import java.util.List;
+
 /**
  * @ClassName: CourseBoImpl
  * @Description: TODO
@@ -18,6 +20,12 @@ public class CourseBoImpl implements CourseBo {
     @Override
     public void addCourse(Course course) {
         //TODO By ZH
+    }
+
+    @Override
+    public List<Course> listCourse() {
+        //TODO BY ZH
+        return null;
     }
 
     public void setCourseDAO(CourseDAOImpl courseDAO) {
