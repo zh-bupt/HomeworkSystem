@@ -1,6 +1,7 @@
 package com.bupt.se.homework.bo;
 
 import java.io.Serializable;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 public interface BasicBo<M extends Serializable, PK extends Serializable> {
@@ -11,4 +12,13 @@ public interface BasicBo<M extends Serializable, PK extends Serializable> {
     boolean delete(PK key);
 
     boolean update(M model);
+
+    List<M> getList(
+            LinkedHashMap<Object, Object> equalFields,
+            LinkedHashMap<Object, Object> notEqualFields,
+            LinkedHashMap<String, String> LikeFields,
+            LinkedHashMap<String, String> nullFields,
+            LinkedHashMap<String, String> orderByFields, String whereHql,
+            int firstResult, int maxResult
+    );
 }

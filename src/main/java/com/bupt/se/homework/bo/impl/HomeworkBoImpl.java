@@ -1,9 +1,10 @@
 package com.bupt.se.homework.bo.impl;
 
 import com.bupt.se.homework.bo.HomeworkBo;
+import com.bupt.se.homework.dao.BasicDao;
 import com.bupt.se.homework.dao.HomeworkDAO;
-import com.bupt.se.homework.dao.impl.HomeworkDAOImpl;
 import com.bupt.se.homework.entity.Homework;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @ClassName: HomeworkBoImpl
@@ -12,14 +13,17 @@ import com.bupt.se.homework.entity.Homework;
  * @Create: 2018/11/11 20:26
  **/
 
-public class HomeworkBoImpl implements HomeworkBo {
+public class HomeworkBoImpl extends BasicBoImpl<Homework, Integer> implements HomeworkBo {
     HomeworkDAO homeworkDAO;
-    public void setHomeworkDAO(HomeworkDAOImpl homeworkDAO) {
-        this.homeworkDAO = homeworkDAO;
+
+    @Autowired
+    public void setHomeworkDAO(BasicDao<Homework, Integer> basicDao) {
+        super.setBasicDao(basicDao);
+        this.homeworkDAO = (HomeworkDAO) basicDao;
     }
 
     @Override
-    public void addHomework(Homework homework) {
-        //TODO BY ZH
+    public boolean addHomework(Homework homework) {
+        return this.save(homework);
     }
 }

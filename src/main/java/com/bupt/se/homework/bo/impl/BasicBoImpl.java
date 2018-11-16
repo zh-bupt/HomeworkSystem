@@ -2,9 +2,8 @@ package com.bupt.se.homework.bo.impl;
 
 import com.bupt.se.homework.bo.BasicBo;
 import com.bupt.se.homework.dao.BasicDao;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import java.io.Serializable;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
@@ -38,5 +37,18 @@ public abstract class BasicBoImpl<M extends Serializable, PK extends Serializabl
     @Override
     public boolean save(List<M> models) {
         return basicDao.save(models);
+    }
+
+    @Override
+    public List<M> getList (
+            LinkedHashMap<Object, Object> equalFields,
+            LinkedHashMap<Object, Object> notEqualFields,
+            LinkedHashMap<String, String> LikeFields,
+            LinkedHashMap<String, String> nullFields,
+            LinkedHashMap<String, String> orderByFields, String whereHql,
+            int firstResult, int maxResult) {
+        return basicDao.findResultList(
+                equalFields, notEqualFields, LikeFields, nullFields, orderByFields, whereHql, firstResult, maxResult
+        );
     }
 }

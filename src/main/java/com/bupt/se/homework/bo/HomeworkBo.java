@@ -2,6 +2,6 @@ package com.bupt.se.homework.bo;
 
 import com.bupt.se.homework.entity.Homework;
 
-public interface HomeworkBo {
-    public void addHomework(Homework homework);
+public interface HomeworkBo extends BasicBo<Homework, Integer> {
+    boolean addHomework(Homework homework);
 }
