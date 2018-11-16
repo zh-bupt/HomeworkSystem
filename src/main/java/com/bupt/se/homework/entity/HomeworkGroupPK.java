@@ -13,6 +13,11 @@ public class HomeworkGroupPK implements Serializable {
     public HomeworkGroupPK() {
     }
 
+    public HomeworkGroupPK(int homeworkId, String groupId) {
+        this.homeworkId = homeworkId;
+        this.groupId = groupId;
+    }
+
     @Column(name = "groupId", length = 10)
     public String getGroupId() {
         return groupId;

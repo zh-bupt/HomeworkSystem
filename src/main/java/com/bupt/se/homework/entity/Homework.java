@@ -16,7 +16,7 @@ public class Homework {
     private String content;
     private Date releaseTime;
     private Date deadline;
-    private Set<Group> groups = new HashSet<>();
+    private Set<HomeworkGroup> homeworkGroups = new HashSet<>();
     private Set<StudentHomework> studentHomeworkSet = new HashSet<>();
 
     public Homework() {
@@ -34,13 +34,13 @@ public class Homework {
         this.homeworkId = homeworkId;
     }
 
-    @ManyToMany(mappedBy = "homework", fetch = FetchType.LAZY)
-    public Set<Group> getGroups() {
-        return groups;
+    @OneToMany(mappedBy = "homework", cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
+    public Set<HomeworkGroup> getHomeworkGroups() {
+        return homeworkGroups;
     }
 
-    public void setGroups(Set<Group> groups) {
-        this.groups = groups;
+    public void setHomeworkGroups(Set<HomeworkGroup> homeworkGroups) {
+        this.homeworkGroups = homeworkGroups;
     }
 
     @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REMOVE}, fetch = FetchType.LAZY)

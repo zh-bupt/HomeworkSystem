@@ -17,7 +17,7 @@ public class Group implements Serializable {
     private double groupScore;
     private Student leader;
     private Set<Student> members = new HashSet<>();
-    private Set<Homework> homework = new HashSet<>();
+    private Set<HomeworkGroup> homeworkGroups = new HashSet<>();
 
     public Group() {
     }
@@ -36,19 +36,28 @@ public class Group implements Serializable {
         this.members = members;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-            name = "homework_group",
-            joinColumns = {@JoinColumn(name = "groupId")},
-            inverseJoinColumns = {@JoinColumn(name = "homeworkId")}
-    )
-    public Set<Homework> getHomework() {
-        return homework;
+    @OneToMany(mappedBy = "group", cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
+    public Set<HomeworkGroup> getHomeworkGroups() {
+        return homeworkGroups;
     }
 
-    public void setHomework(Set<Homework> homework) {
-        this.homework = homework;
+    public void setHomeworkGroups(Set<HomeworkGroup> homeworkGroups) {
+        this.homeworkGroups = homeworkGroups;
     }
+
+    //    @ManyToMany(fetch = FetchType.LAZY)
+//    @JoinTable(
+//            name = "homework_group",
+//            joinColumns = {@JoinColumn(name = "groupId")},
+//            inverseJoinColumns = {@JoinColumn(name = "homeworkId")}
+//    )
+//    public Set<Homework> getHomework() {
+//        return homework;
+//    }
+//
+//    public void setHomework(Set<Homework> homework) {
+//        this.homework = homework;
+//    }
 
     @Id
     @GeneratedValue(generator = "groupId")

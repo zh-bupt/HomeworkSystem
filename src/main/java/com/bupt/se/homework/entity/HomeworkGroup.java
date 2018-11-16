@@ -3,15 +3,13 @@ package com.bupt.se.homework.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 
 @Entity
 @Table(name = "homework_group")
-@IdClass(HomeworkGroupPK.class)
 public class HomeworkGroup implements Serializable {
-
-    private int groupId;
-    private int homeworkId;
+    private Homework homework;
+    private Group group;
+    private HomeworkGroupPK pk;
     private Date submissionTime;
     private int score;
     private String comment;
@@ -20,26 +18,43 @@ public class HomeworkGroup implements Serializable {
     public HomeworkGroup() {
     }
 
-    @Id
-    public int getGroupId() {
-        return groupId;
+    public HomeworkGroup(Homework homework, Group group) {
+        this.homework = homework;
+        this.group = group;
+        this.pk = new HomeworkGroupPK(homework.getHomeworkId(), group.getGroupId());
     }
 
-    public void setGroupId(int groupId) {
-        this.groupId = groupId;
+    @EmbeddedId
+    public HomeworkGroupPK getPk() {
+        return pk;
     }
 
-    @Id
-    public int getHomeworkId() {
-        return homeworkId;
+    public void setPk(HomeworkGroupPK pk) {
+        this.pk = pk;
     }
 
-    public void setHomeworkId(int homeworkId) {
-        this.homeworkId = homeworkId;
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "homeworkId", insertable = false, updatable = false)
+    public Homework getHomework() {
+        return homework;
+    }
+
+    public void setHomework(Homework homework) {
+        this.homework = homework;
+    }
+
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "groupId", insertable = false, updatable = false)
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
     @Basic
-    @Column
+    @Column(columnDefinition = "DATE")
     public Date getSubmissionTime() {
         return submissionTime;
     }
