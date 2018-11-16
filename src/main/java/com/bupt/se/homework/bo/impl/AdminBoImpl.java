@@ -6,7 +6,6 @@ import com.bupt.se.homework.dao.AdminDAO;
 import com.bupt.se.homework.dao.BasicDao;
 import com.bupt.se.homework.entity.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 public class AdminBoImpl extends BasicBoImpl<Admin, String> implements AdminBo {
 
@@ -33,5 +32,20 @@ public class AdminBoImpl extends BasicBoImpl<Admin, String> implements AdminBo {
         if (admin == null) return ReturnCode.USER_NOT_FOUNT;
         if (!admin.getPassword().equals(password)) return ReturnCode.WRONG_PASSWORD;
         return ReturnCode.LOGIN_SUCCESS;
+    }
+
+    @Override
+    public void updateAdmin(Admin admin) {
+
+    }
+
+    @Override
+    public void addAdmin(Admin admin) {
+
+    }
+
+    @Override
+    public void deleteAdmin(String id) {
+
     }
 }

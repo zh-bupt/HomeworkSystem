@@ -16,4 +16,7 @@ public interface CourseBo extends BasicBo<Course, String> {
 
     Map<String, Object> getStatistics(Course course);
 
+    void addCourse(Course course);
+
+    List<Course> listCourse();
 }

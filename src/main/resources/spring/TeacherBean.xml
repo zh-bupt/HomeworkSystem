@@ -5,6 +5,7 @@
 
     <bean id="teacherAction" class="com.bupt.se.homework.action.TeacherAction">
         <property name="teacherBo" ref="teacherBo"/>
+        <property name="courseBo" ref ="courseBo"/>
     </bean>
     <bean id="teacherBo" class="com.bupt.se.homework.bo.impl.TeacherBoImpl">
         <property name="teacherDAO" ref="teacherDAO"/>

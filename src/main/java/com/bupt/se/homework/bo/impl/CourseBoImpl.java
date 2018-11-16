@@ -66,4 +66,14 @@ public class CourseBoImpl extends BasicBoImpl<Course, String> implements CourseB
         map.put("totalCount", totalCount);
         return map;
     }
+
+    @Override
+    public void addCourse(Course course) {
+
+    }
+
+    @Override
+    public List<Course> listCourse() {
+        return null;
+    }
 }

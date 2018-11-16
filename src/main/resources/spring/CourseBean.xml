@@ -9,5 +9,4 @@
     <bean id="courseDAO" class="com.bupt.se.homework.dao.impl.CourseDAOImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
-
 </beans>

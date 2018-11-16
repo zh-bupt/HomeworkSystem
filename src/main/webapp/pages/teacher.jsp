@@ -9,18 +9,21 @@
 <%@taglib prefix="s" uri="/struts-tags" %>
 <html>
 <head>
-    <title>Struts2+Spring+Hibernate integration example</title>
+    <title>教师系统</title>
 </head>
 <body>
 <h1>Struts2+Spring+Hibernate integration example</h1>
 <h2>Add Customer</h2>
-<s:form action="addCustomerAction">
-    <s:textfield name="teacherName" label="Name" value=""/>
+<s:form action="addCourseAction">
+    <s:textfield name="courseId" label="课程ID" value=""/>
+    <s:textfield name="courseName" label="课程名称" value=""/>
+    <s:textfield name="capacity" label="课程容量" value=""/>
 
     <s:submit/>
 </s:form>
-<h2>All Customers</h2>
-<s:if test="teacherList.size() > 0">
+
+<h2>您的所有课程</h2>
+<s:if test="courseList.size() > 0">
     <table border="1px" cellpadding="8px">
         <tr>
             <th>Customer Id</th>
@@ -28,8 +31,9 @@
             <th>Address</th>
             <th>Create Date</th>
         </tr>
-        <s:iterator value="teacherList" status="userStatus">
-            <tr>
+        <s:iterator value="courseList" status="userStatus">
+            <%--点击某一个课程即进入到该课程的详情页--%>
+            <tr onclick="course.jsp">
                 <td><s:property value="customerId"/> </td>
                 <td><s:property value="name"/> </td>
                 <td><s:property value="address"/> </td>
@@ -39,6 +43,8 @@
     </table>
 </s:if>
 <br/>
+
+
 <br/>
 </body>
 </html>
