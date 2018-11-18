@@ -40,15 +40,37 @@ public abstract class BasicBoImpl<M extends Serializable, PK extends Serializabl
     }
 
     @Override
+    public M get(PK key) {
+        return basicDao.get(key);
+    }
+
+    @Override
+    public M load(PK key) {
+        return basicDao.load(key);
+    }
+
+    @Override
     public List<M> getList (
             LinkedHashMap<Object, Object> equalFields,
             LinkedHashMap<Object, Object> notEqualFields,
             LinkedHashMap<String, String> LikeFields,
             LinkedHashMap<String, String> nullFields,
-            LinkedHashMap<String, String> orderByFields, String whereHql,
+            LinkedHashMap<String, String> orderByFields,
+            String whereHql,
             int firstResult, int maxResult) {
         return basicDao.findResultList(
                 equalFields, notEqualFields, LikeFields, nullFields, orderByFields, whereHql, firstResult, maxResult
         );
+    }
+
+    @Override
+    public M get(
+            LinkedHashMap<Object, Object> equalFields,
+            LinkedHashMap<Object, Object> notEqualFields,
+            LinkedHashMap<String, String> LikeFields,
+            LinkedHashMap<String, String> nullFields,
+            String whereHql
+    ) {
+        return basicDao.get(equalFields, notEqualFields, LikeFields, nullFields, whereHql);
     }
 }

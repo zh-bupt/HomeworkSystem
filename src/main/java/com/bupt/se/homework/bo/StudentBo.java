@@ -5,6 +5,7 @@ import com.bupt.se.homework.entity.Student;
 import com.bupt.se.homework.entity.StudentCourse;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public interface StudentBo extends BasicBo<Student, String> {

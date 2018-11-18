@@ -211,6 +211,22 @@ public class BasicDAOImpl<M extends java.io.Serializable, PK extends java.io.Ser
     }
 
     @Override
+    public M load(PK id) {
+        Session session = getSession();
+        Transaction transaction = null;
+        M entity = null;
+        try{
+            transaction = session.beginTransaction();
+            entity = (M) session.load(this.entityClass, id);
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            transaction.rollback();
+        }
+        return entity;
+    }
+
+    @Override
     public M get(LinkedHashMap<Object, Object> equalFields, LinkedHashMap<Object, Object> notEqualFields, LinkedHashMap<String, String> LikeFields, LinkedHashMap<String, String> nullFields, String whereHql) {
         // 获取实体名
         String entityName = entityClass.getSimpleName();

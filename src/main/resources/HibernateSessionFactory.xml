@@ -26,6 +26,7 @@
                 <value>com.bupt.se.homework.entity.Group</value>
                 <value>com.bupt.se.homework.entity.Homework</value>
                 <value>com.bupt.se.homework.entity.HomeworkGroup</value>
+                <value>com.bupt.se.homework.entity.GroupStudent</value>
                 <value>com.bupt.se.homework.entity.StudentHomework</value>
                 <value>com.bupt.se.homework.entity.Student</value>
                 <value>com.bupt.se.homework.entity.StudentCourse</value>

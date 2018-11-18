@@ -35,9 +35,9 @@ public class TestHomeworkBo extends UnitTestBase {
             h.setCourse(c);
             h.setDeadline(new Date());
             homework.add(h);
-            homeworkBo.save(h);
+//            homeworkBo.save(h);
         }
-//        homeworkBo.save(homework);
+        homeworkBo.save(homework);
     }
 }
 

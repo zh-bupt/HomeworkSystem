@@ -13,6 +13,18 @@ public interface BasicBo<M extends Serializable, PK extends Serializable> {
 
     boolean update(M model);
 
+    M get(PK key);
+
+    M load(PK key);
+
+    M get(
+            LinkedHashMap<Object, Object> equalFields,
+            LinkedHashMap<Object, Object> notEqualFields,
+            LinkedHashMap<String, String> LikeFields,
+            LinkedHashMap<String, String> nullFields,
+            String whereHql
+    );
+
     List<M> getList(
             LinkedHashMap<Object, Object> equalFields,
             LinkedHashMap<Object, Object> notEqualFields,
