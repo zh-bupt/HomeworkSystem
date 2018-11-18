@@ -18,7 +18,7 @@ import java.util.List;
 public class UploadFileAction extends ActionSupport {
     File upload;//上传的文件
     String uploadContentType;//上传的文件类型
-    String uploadFileName ="test.xlsx"; //上传的文件名
+    String uploadFileName; //上传的文件名
 
     public File getUpload() {
         return upload;
@@ -40,9 +40,6 @@ public class UploadFileAction extends ActionSupport {
         return uploadFileName;
     }
 
-//    public void setUploadFileName(List<String> uploadName) {
-//        this.uploadFileName = uploadName.get(0);
-//    }
     public void setUploadFileName(String uploadFileName)
     {
         this.uploadFileName = uploadFileName;

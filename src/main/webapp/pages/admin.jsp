@@ -44,10 +44,13 @@
 
 
 <h2>教师列表</h2>
-<s:if test="courseList.size() > 0">
+<s:if test="teacherList.size() > 0">
 <%--<s:if test="true" >--%>
+    <%--<button onclick="/deleteTeacherAction.action?${teacherId}">删除</button>--%>
+    <input type="button" name="search" value="删除" onclick="javascript:window.location.href='deleteTeacherAction.action?${teacherId}'"/>
     <table border="1px" cellpadding="8px">
         <tr>
+            <th>选中</th>
             <th>工号</th>
             <th>姓名</th>
             <th>性别</th>
@@ -55,14 +58,17 @@
             <th>联系电话</th>
             <th>邮箱</th>
         </tr>
-        <s:iterator value="courseList">
+        <s:iterator value="teacherList" >
             <tr>
+                <td><input type="checkbox" value="teacherId" name="teacherId"></td>
                 <td><s:property value="teacherId"/> </td>
                 <td><s:property value="teacherName"/> </td>
                 <td><s:property value="sex"/> </td>
                 <td><s:property value="profession"/> </td>
                 <td><s:property value="telephone"/> </td>
                 <td><s:property value="email"/> </td>
+                <td><input type="button" name="update" value="修改" onclick="javascript:window.location.href='/pages/teacher.jsp?teacherId=${teacherId}'"/> </td>
+                <td><input type="button" name="delete" value="删除" onclick="javascript:window.location.href='deleteTeacherAction.action?teacherId=${teacherId}'"/></td>
             </tr>
         </s:iterator>
     </table>

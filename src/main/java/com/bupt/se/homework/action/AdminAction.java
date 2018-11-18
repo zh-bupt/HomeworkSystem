@@ -83,6 +83,9 @@ public class AdminAction extends ActionSupport {
 
     public String addTeacher() throws Exception{
         teacherBo.addTeacher(teacher);
+        teacherList = null;
+        teacherList = teacherBo.listTeacher();
+        System.out.println("courseList size = "+teacherList.size());
         return "success";
     }
 //    public void addAdmin() throws Exception{
@@ -93,8 +96,8 @@ public class AdminAction extends ActionSupport {
         studentBo.deleteStudent(id);
         return "success";
     }
-    public String deleteTeacher(String id) throws Exception{
-        teacherBo.deleteTeacher(id);
+    public String deleteTeacher() throws Exception{
+        teacherBo.deleteTeacher(teacher.getTeacherId());
         return "success";
     }
 //    public void deleteAdmin(String id) throws Exception{

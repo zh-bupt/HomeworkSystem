@@ -190,7 +190,7 @@ public class TeacherAction implements ModelDriven {
     }
 
     public void setCourseId(String courseId) {
-        this.course.setCourseId(Integer.valueOf(courseId));
+        this.course.setCourseId(courseId);
     }
 
     public void setCourseName(String courseName) {

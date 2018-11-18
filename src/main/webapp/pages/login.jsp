@@ -14,17 +14,17 @@
 <body>
 <h1>系统登录</h1>
 <s:form action="loginAction">
+    <s:actionerror/>
     <s:textfield name="id" label="ID" value=""/>
     <s:password name="password" label="密码" value=""/>
-
-    <%--<input type="RADIO" name="sex" value="管理员" id="0"/>--%>
-    <%--<label for="0">管理员</label>--%>
-    <%--<input type="RADIO" name="sex" value="教师" id="1"/>--%>
-    <%--<label for="1">教师</label>--%>
-    <%--<input type="RADIO" name="sex" value="学生" id="2"/>--%>
-    <%--<label for="2">学生</label>--%>
-    <s:radio name="role" list="{ '管理员', '教师','学生' }" label="用户身份"></s:radio>
+    <s:if test="role==null">
+        <s:radio name="role" list="{ '管理员', '教师','学生' }" value="'学生'"  label="用户身份"/>
+    </s:if>
+    <s:else>
+        <s:radio name="role" list="{ '管理员', '教师','学生' }"  label="用户身份"/>
+    </s:else>
     <s:submit/>
 </s:form>
+
 </body>
 </html>
