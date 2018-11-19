@@ -32,7 +32,7 @@ public class BasicDAOImpl<M extends java.io.Serializable, PK extends java.io.Ser
     }
 
     public Session getSession() {
-        return sessionFactory.getCurrentSession();
+        return sessionFactory.openSession();
     }
 
     private final Class<Serializable> entityClass;

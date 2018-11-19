@@ -17,6 +17,7 @@
             <result name="admin">pages/admin.jsp</result>
             <result name="teacher">pages/teacher.jsp</result>
             <result name="student">pages/student.jsp</result>
+            <allowed-methods>login</allowed-methods>
         </action>
     </package>
 
