@@ -27,8 +27,8 @@ public class TestAdminBo extends UnitTestBase {
         System.out.println(adminBo.update(new Admin("2015211203", "zh", "11111111")));
         System.out.println(adminBo.login("2015211203", "12345678"));
         System.out.println(adminBo.login("2015211203", "11111111"));
-        System.out.println(adminBo.delete("2015211203"));
-        System.out.println(adminBo.update(new Admin("2015211203", "zh", "11111111")));
+//        System.out.println(adminBo.delete("2015211203"));
+//        System.out.println(adminBo.update(new Admin("2015211203", "zh", "11111111")));
     }
 
 

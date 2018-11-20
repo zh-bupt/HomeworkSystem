@@ -6,6 +6,16 @@
     <bean id="courseBo" class="com.bupt.se.homework.bo.impl.CourseBoImpl">
         <property name="courseDAO" ref="courseDAO"/>
     </bean>
+
+    <bean id="studentCourseBo" class="com.bupt.se.homework.bo.impl.StudentCourseBoImpl">
+        <property name="studentDAO" ref="studentDAO"/>
+        <property name="courseDAO" ref="courseDAO"/>
+    </bean>
+
+    <bean id="studentCourseDAO" class="com.bupt.se.homework.dao.impl.StudentCourseDAOImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
     <bean id="courseDAO" class="com.bupt.se.homework.dao.impl.CourseDAOImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>

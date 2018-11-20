@@ -68,12 +68,12 @@ public class CourseBoImpl extends BasicBoImpl<Course, String> implements CourseB
     }
 
     @Override
-    public void addCourse(Course course) {
-
+    public boolean addCourse(Course course) {
+        return this.save(course);
     }
 
     @Override
     public List<Course> listCourse() {
-        return null;
+        return this.getList(null, null, null, null, null, null, 0, 0);
     }
 }

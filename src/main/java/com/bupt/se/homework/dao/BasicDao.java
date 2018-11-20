@@ -33,6 +33,8 @@ public interface BasicDao<M extends java.io.Serializable, PK extends java.io.Ser
 
     M get(PK id);
 
+    M load(PK id);
+
     M get(LinkedHashMap<Object, Object> equalFields,
           LinkedHashMap<Object, Object> notEqualFields,
           LinkedHashMap<String, String> LikeFields,

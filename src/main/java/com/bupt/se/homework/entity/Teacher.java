@@ -52,7 +52,7 @@ public class Teacher implements Serializable {
 
     @Basic
     @OneToMany(cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
-    @JoinColumn(name = "teachId")
+    @JoinColumn(name = "teacherId")
     public Set<Course> getCourses() {
         return courses;
     }

@@ -32,7 +32,7 @@ public class BasicDAOImpl<M extends java.io.Serializable, PK extends java.io.Ser
     }
 
     public Session getSession() {
-        return sessionFactory.getCurrentSession();
+        return sessionFactory.openSession();
     }
 
     private final Class<Serializable> entityClass;
@@ -202,6 +202,22 @@ public class BasicDAOImpl<M extends java.io.Serializable, PK extends java.io.Ser
         try{
             transaction = session.beginTransaction();
             entity = (M) getSession().get(this.entityClass,id);
+            transaction.commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+            transaction.rollback();
+        }
+        return entity;
+    }
+
+    @Override
+    public M load(PK id) {
+        Session session = getSession();
+        Transaction transaction = null;
+        M entity = null;
+        try{
+            transaction = session.beginTransaction();
+            entity = (M) session.load(this.entityClass, id);
             transaction.commit();
         } catch (Exception e) {
             e.printStackTrace();

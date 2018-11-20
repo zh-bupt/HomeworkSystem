@@ -10,4 +10,8 @@
     <bean id="homeworkDAO" class="com.bupt.se.homework.dao.impl.HomeworkDAOImpl">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
+
+    <bean id="homeworkGroupDAO" class="com.bupt.se.homework.dao.impl.HomeworkGroupDAOImpl">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
 </beans>
