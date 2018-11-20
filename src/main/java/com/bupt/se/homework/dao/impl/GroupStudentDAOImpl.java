@@ -3,7 +3,7 @@ package com.bupt.se.homework.dao.impl;
 import com.bupt.se.homework.dao.GroupStudentDAO;
 import com.bupt.se.homework.dao.HibernateDaoUtil;
 import com.bupt.se.homework.dao.StudentDAO;
-import com.bupt.se.homework.entity.Group;
+import com.bupt.se.homework.entity.Group_;
 import com.bupt.se.homework.entity.Student;
 import com.bupt.se.homework.entity.StudentCourse;
 import com.bupt.se.homework.entity.Course;
@@ -49,7 +49,7 @@ public class GroupStudentDAOImpl implements GroupStudentDAO {
         List<Student> secondList = null;
         List<Student> lastList = null;
         List<List> allStuCou = session.createQuery("select new list(Student,Course) from StudentCourse").list();
-        List<List> allGroStu = session.createQuery("select new list(Group,Student) from GroupStudent").list();
+        List<List> allGroStu = session.createQuery("select new list(Group_,Student) from GroupStudent").list();
         transaction.commit();
         for(List StuCou : allStuCou){
             Course course = (Course)StuCou.get(1);
@@ -58,7 +58,7 @@ public class GroupStudentDAOImpl implements GroupStudentDAO {
             }
         }
         for(List GroStu : allGroStu){
-            Group group = (Group)GroStu.get(0);
+            Group_ group = (Group_)GroStu.get(0);
             Course course = group.getCourse();
             if(course.getCourseId() == courseID){
                 secondList.add((Student)GroStu.get(1));

@@ -89,7 +89,7 @@
         </action>
     </package>
 
-    <package name="teacher" namespace="/" extends="struts-default">
+    <package name="teacher" namespace="/teacher" extends="struts-default">
         <action name="listCourseAction"
                 class="com.bupt.se.homework.action.TeacherAction" method="listCourse">
             <result name="success">/pages/teacher.jsp</result>
@@ -104,11 +104,11 @@
         </action>
         <action name="showCourseAction"
                 class="com.bupt.se.homework.action.TeacherAction" method="listStudentAndHomework">
-            <result name="success">/pages/course.jsp</result>
+            <result name="success">/pages/teacher_course.jsp</result>
         </action>
 
     </package>
-    <package name="course" namespace="/" extends="struts-default">
+    <package name="course" namespace="/teacher" extends="struts-default">
         <action name="addStudentForCourseByFileAction"
                 class="com.bupt.se.homework.action.TeacherAction" method="addStudentForCourseByFile">
             <!-- 指定（限制）上传文件的类型，定义局部拦截器，修改默认拦截器的属性
@@ -134,7 +134,15 @@
             <result name="success" type="chain">showCourseAction</result>
         </action>
     </package>
-    <package name="student" namespace="/" extends="struts-default">
+    <package name="student" namespace="/student" extends="struts-default">
+        <action name="listCourseAction"
+                class="com.bupt.se.homework.action.StudentAction" method="listCourse">
+            <result name="success">/pages/student_course.jsp</result>
+        </action>
+        <action name="submitHomeworkAction"
+                class="com.bupt.se.homework.action.StudentAction" method="submitHomework">
+            <result name="success" type="chain">listCourseAction</result>
+        </action>
     </package>
 
     <package name="Struts2" extends="struts-default" namespace="/">
