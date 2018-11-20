@@ -4,6 +4,7 @@ import com.bupt.se.homework.bo.CourseBo;
 import com.bupt.se.homework.dao.BasicDao;
 import com.bupt.se.homework.dao.CourseDAO;
 import com.bupt.se.homework.entity.Course;
+import com.bupt.se.homework.entity.Homework;
 import com.bupt.se.homework.entity.Student;
 import com.bupt.se.homework.entity.StudentCourse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -75,5 +76,21 @@ public class CourseBoImpl extends BasicBoImpl<Course, String> implements CourseB
     @Override
     public List<Course> listCourse() {
         return this.getList(null, null, null, null, null, null, 0, 0);
+    }
+
+    @Override
+    public List<Homework> listHomework(String courseId) {
+        Course course = courseDAO.get(courseId);
+        List<Homework> list = null;
+        if (course != null) {
+            Set<Homework> homeworkSet = course.getHomework();
+            if (homeworkSet != null && homeworkSet.size() > 0) {
+                list = new ArrayList<>();
+                for (Homework h:homeworkSet) {
+                    list.add(h);
+                }
+            }
+        }
+        return list;
     }
 }

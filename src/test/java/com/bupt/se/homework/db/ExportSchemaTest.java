@@ -2,8 +2,7 @@ package com.bupt.se.homework.db;
 
 import com.bupt.se.homework.UnitTestBase;
 import com.bupt.se.homework.entity.Course;
-import com.bupt.se.homework.entity.Group;
-import com.bupt.se.homework.entity.Teacher;
+import com.bupt.se.homework.entity.Group_;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -58,10 +57,10 @@ public class ExportSchemaTest extends UnitTestBase {
         Course course = new Course();
         course.setCourseId("123");
         course.setCourseName("test");
-        Group group1 = new Group();
+        Group_ group1 = new Group_();
         group1.setName("test group1");
 //        session.save(group1);
-        Group group2 = new Group();
+        Group_ group2 = new Group_();
         group2.setName("test group2");
 //        session.save(group2);
         course.getGroups().add(group1);

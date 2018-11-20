@@ -20,7 +20,7 @@ import java.util.List;
  * @author: zh
  * @create: 2018-11-10 16:36
  **/
-public class BasicDAOImpl<M extends java.io.Serializable, PK extends java.io.Serializable> implements BasicDao<M, PK> {
+public abstract class BasicDAOImpl<M extends java.io.Serializable, PK extends java.io.Serializable> implements BasicDao<M, PK> {
 
     private SessionFactory sessionFactory;
 

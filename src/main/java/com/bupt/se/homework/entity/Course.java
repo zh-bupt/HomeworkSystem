@@ -18,7 +18,7 @@ public class Course implements Serializable {
     private Teacher teacher;
     private Set<Homework> homework = new HashSet<>();
     private Set<StudentCourse> studentCourses = new HashSet<>();
-    private Set<Group> groups = new HashSet<>();
+    private Set<Group_> groups = new HashSet<>();
 
     public Course() {
     }
@@ -43,11 +43,11 @@ public class Course implements Serializable {
 
     @OneToMany(cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "courseId")
-    public Set<Group> getGroups() {
+    public Set<Group_> getGroups() {
         return groups;
     }
 
-    public void setGroups(Set<Group> groups) {
+    public void setGroups(Set<Group_> groups) {
         this.groups = groups;
     }
 

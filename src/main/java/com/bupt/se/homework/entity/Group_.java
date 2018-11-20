@@ -9,21 +9,21 @@ import java.util.Set;
 
 @Entity
 @Table(name = "group_")
-public class Group implements Serializable {
+public class Group_ implements Serializable {
     private String groupId;
     private Course course;
     private int num;
     private String name;
     private double groupScore;
     private Student leader;
-//    private Set<Student> members = new HashSet<>();
+    private Set<Student> members = new HashSet<>();
     private Set<GroupStudent> groupStudentSet = new HashSet<>();
     private Set<HomeworkGroup> homeworkGroups = new HashSet<>();
 
-    public Group() {
+    public Group_() {
     }
 
-    @OneToMany(mappedBy = "group", cascade = {CascadeType.ALL, CascadeType.REMOVE})
+    @OneToMany(mappedBy = "group_", cascade = {CascadeType.ALL, CascadeType.REMOVE})
     public Set<GroupStudent> getGroupStudentSet() {
         return groupStudentSet;
     }
@@ -32,21 +32,21 @@ public class Group implements Serializable {
         this.groupStudentSet = groupStudentSet;
     }
 
-    //    @ManyToMany(cascade = {CascadeType.ALL})
-//    @JoinTable(
-//            name = "group_student",
-//            joinColumns = {@JoinColumn(name = "groupId")},
-//            inverseJoinColumns = {@JoinColumn(name = "studentId")}
-//    )
-//    public Set<Student> getMembers() {
-//        return members;
-//    }
-//
-//    public void setMembers(Set<Student> members) {
-//        this.members = members;
-//    }
+    @ManyToMany(cascade = {CascadeType.ALL})
+    @JoinTable(
+            name = "group_student",
+            joinColumns = {@JoinColumn(name = "groupId")},
+            inverseJoinColumns = {@JoinColumn(name = "studentId")}
+    )
+    public Set<Student> getMembers() {
+        return members;
+    }
 
-    @OneToMany(mappedBy = "group", cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
+    public void setMembers(Set<Student> members) {
+        this.members = members;
+    }
+
+    @OneToMany(mappedBy = "group_", cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
     public Set<HomeworkGroup> getHomeworkGroups() {
         return homeworkGroups;
     }

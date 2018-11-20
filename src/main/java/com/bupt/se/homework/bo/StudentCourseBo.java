@@ -7,8 +7,8 @@ import com.bupt.se.homework.entity.StudentCoursePK;
 import java.util.Map;
 
 public interface StudentCourseBo extends BasicBo<StudentCourse, StudentCoursePK> {
-    Map<String, Integer> getStudentTranscript(String studentId);
+//    Map<String, Integer> getStudentTranscript(String studentId);
 
-    Map<Student, Integer> getTeacherTranscript(String teacherId, String courseId);
+//    Map<Student, Integer> getTeacherTranscript(String teacherId, String courseId);
 
 }

@@ -1,7 +1,6 @@
 package com.bupt.se.homework.entity;
 
 import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Proxy;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -19,8 +18,8 @@ public class Student implements Serializable {
     private String password;
     private String email;
     private Set<StudentCourse> studentCourses = new HashSet<>();
-    private Set<Group> groupsManaged = new HashSet<>();
-//    private Set<Group> groupsJoined = new HashSet<>();
+    private Set<Group_> groupsManaged = new HashSet<>();
+    private Set<Group_> groupsJoined = new HashSet<>();
     private Set<GroupStudent> groupStudentSet = new HashSet<>();
     private Set<StudentHomework> studentHomeworkSet = new HashSet<>();
 
@@ -51,22 +50,22 @@ public class Student implements Serializable {
         this.groupStudentSet = groupStudentSet;
     }
 
-    //    @ManyToMany(mappedBy = "members", cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
-//    public Set<Group> getGroupsJoined() {
-//        return groupsJoined;
-//    }
-//
-//    public void setGroupsJoined(Set<Group> groupsJoined) {
-//        this.groupsJoined = groupsJoined;
-//    }
+    @ManyToMany(mappedBy = "members", cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
+    public Set<Group_> getGroupsJoined() {
+        return groupsJoined;
+    }
+
+    public void setGroupsJoined(Set<Group_> groupsJoined) {
+        this.groupsJoined = groupsJoined;
+    }
 
     @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
     @JoinColumn(name = "leaderId")
-    public Set<Group> getGroupsManaged() {
+    public Set<Group_> getGroupsManaged() {
         return groupsManaged;
     }
 
-    public void setGroupsManaged(Set<Group> groupsManaged) {
+    public void setGroupsManaged(Set<Group_> groupsManaged) {
         this.groupsManaged = groupsManaged;
     }
 

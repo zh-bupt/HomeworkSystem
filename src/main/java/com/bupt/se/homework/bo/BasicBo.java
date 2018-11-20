@@ -11,6 +11,8 @@ public interface BasicBo<M extends Serializable, PK extends Serializable> {
 
     boolean delete(PK key);
 
+    boolean deleteArray(PK id[]);
+
     boolean update(M model);
 
     M get(PK key);

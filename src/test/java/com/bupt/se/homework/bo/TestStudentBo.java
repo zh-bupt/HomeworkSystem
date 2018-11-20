@@ -2,13 +2,13 @@ package com.bupt.se.homework.bo;
 
 import com.bupt.se.homework.UnitTestBase;
 import com.bupt.se.homework.dao.StudentDAO;
-import com.bupt.se.homework.entity.Student;
+import com.bupt.se.homework.entity.*;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 /**
  * @description: studentBo的测试类
@@ -43,17 +43,30 @@ public class TestStudentBo extends UnitTestBase {
     }
 
     @Test
-    public void testAddList() {
+    public void testAddList() throws ParseException {
         List<Student> list = new ArrayList<>();
         String[] array = new String[50];
         int index = 0;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        Date date = format.parse("2015-09-01");
         for (int i = 2015211200; i < 2015211250; ++i) {
             Student s = new Student(String.valueOf(i), String.valueOf(i), String.valueOf(i));
+            s.setEntranceDate(date);
             list.add(s);
             array[index++] = String.valueOf(i);
         }
-        StudentDAO studentDAO = super.getBean("studentDAO");
-        Assert.assertTrue(studentDAO.deleteArray(array));
-        Assert.assertTrue(studentDAO.save(list));
+        StudentBo studentBo = super.getBean("studentBo");
+        Assert.assertTrue(studentBo.deleteArray(array));
+        Assert.assertTrue(studentBo.save(list));
+    }
+
+    @Test
+    public void testGetHomeworkGroup() {
+        StudentBo studentBo = super.getBean("studentBo");
+        Student student = studentBo.get("2015211203");
+        HomeworkBo homeworkBo = super.getBean("homeworkBo");
+        Homework homework = homeworkBo.get(1);
+        HomeworkGroup homeworkGroup = studentBo.getHomeworkGroup(student, homework);
+        System.out.println(homeworkGroup.getComment());
     }
 }
