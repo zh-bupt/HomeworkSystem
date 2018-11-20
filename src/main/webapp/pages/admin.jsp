@@ -29,7 +29,48 @@
     <s:file name="studentExcel" label="选择上传的文件" />
     <s:submit value="上传" />
 </s:form>
+<h3>查询学生</h3>
+<s:form action="searchStudentAction">
+    <s:actionerror/>
+    <s:textfield name="searchStudentWord" label="查询" value=""/>
+    <s:if test="searchWay==null">
+        <s:radio name="searchWay" list="{ '班级', '姓名' }" value="'姓名'"  label="搜索方式"/>
+    </s:if>
+    <s:else>
+        <s:radio name="searchWay" list="{ '班级', '姓名' }"  label="搜索方式"/>
+    </s:else>
+    <s:submit/>
+</s:form>
 
+<s:if test="studentList.size() > 0">
+    <%--<s:if test="true" >--%>
+    <%--<button onclick="/deleteTeacherAction.action?${teacherId}">删除</button>--%>
+    <%--<input type="button" name="search" value="删除" onclick="javascript:window.location.href='deleteStudentAction.action?${studentId}'"/>--%>
+    <table border="1px" cellpadding="8px">
+        <tr>
+            <th>选中</th>
+            <th>班级</th>
+            <th>学号</th>
+            <th>姓名</th>
+            <th>性别</th>
+            <th>邮箱</th>
+            <th>入学时间</th>
+        </tr>
+        <s:iterator value="studentList" >
+            <tr>
+                <td><input type="checkbox" value="studentId" name="studentId"></td>
+                <td><s:property value="classId"/> </td>
+                <td><s:property value="studentId"/> </td>
+                <td><s:property value="studentName"/> </td>
+                <td><s:property value="sex"/> </td>
+                <td><s:property value="email"/> </td>
+                <td><s:property value="entranceDate"/> </td>
+                <td><input type="button" name="update" value="修改" onclick="javascript:window.location.href='/pages/student.jsp?studentId=${studentId}'"/> </td>
+                <td><input type="button" name="delete" value="删除" onclick="javascript:window.location.href='deleteStudentAction.action?studentId=${studentId}'"/></td>
+            </tr>
+        </s:iterator>
+    </table>
+</s:if>
 <h2>添加教师</h2>
 <s:form action="addTeacherAction">
     <s:textfield name="teacherId" label="工号" value=""/>
@@ -41,13 +82,17 @@
     <s:password name="teacherPassword" label="密码" value=""/>
     <s:submit/>
 </s:form>
-
+<h3>上传教师名单文件</h3>
+<s:form action="addTeacherByFileAction" method="post" enctype="multipart/form-data">
+    <s:file name="teacherExcel" label="选择上传的文件" />
+    <s:submit value="上传" />
+</s:form>
 
 <h2>教师列表</h2>
 <s:if test="teacherList.size() > 0">
 <%--<s:if test="true" >--%>
     <%--<button onclick="/deleteTeacherAction.action?${teacherId}">删除</button>--%>
-    <input type="button" name="search" value="删除" onclick="javascript:window.location.href='deleteTeacherAction.action?${teacherId}'"/>
+    <%--<input type="button" name="search" value="删除" onclick="javascript:window.location.href='deleteTeacherAction.action?${teacherId}'"/>--%>
     <table border="1px" cellpadding="8px">
         <tr>
             <th>选中</th>

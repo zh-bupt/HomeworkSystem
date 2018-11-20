@@ -82,33 +82,48 @@ public class LoginAction extends ActionSupport {
         String response;
         System.out.println(role);
         ActionContext.getContext().getSession().clear();
+        Map<String, Object> session = ActionContext.getContext().getSession();
+
         switch (role){
             case "管理员"://管理员
                 response = adminBo.login(id,password);
                 if(verify(response).equals("success"))
+                {
+                    System.out.println(session.get("role").toString()+session.get("id").toString());
                     return "admin";
+                }
                 else
                     return "login";//有错误，继续在登录界面
 
             case "教师"://教师
                 response = teacherBo.login(id,password);
                 if(verify(response).equals("success"))
+                {
+                    System.out.println(session.get("role").toString()+session.get("id").toString());
                     return "teacher";
+                }
                 else
                     return "login";//有错误，继续在登录界面
             case "学生"://学生
                 response = studentBo.login(id,password);
                 String returnString = verify(response);
                 if(returnString.equals("success"))
-                    return "teacher";
+                {
+                    System.out.println(session.get("role").toString()+session.get("id").toString());
+                    return "student";
+                }
                 else if(returnString.equals("error"))
                     return "login";//有错误，继续在登录界面
                 else
+                {
+                    System.out.println(session.get("role").toString()+session.get("id").toString());
                     return "changePW";//强制修改密码
+                }
             default:
                 super.addActionError("请选择登录用户类型！");
                 return "login";
         }
+
     }
 
     /**
@@ -151,6 +166,7 @@ public class LoginAction extends ActionSupport {
                 super.addActionError("其他错误");
                 return "input";
         }
+
     }
 
 

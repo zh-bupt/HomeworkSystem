@@ -6,7 +6,7 @@ import com.bupt.se.homework.entity.Teacher;
 import java.util.List;
 import java.util.Set;
 
-public interface TeacherBo {
+public interface TeacherBo  extends BasicBo<Teacher, String> {
 
     boolean addTeacher(Teacher teacher);
 
