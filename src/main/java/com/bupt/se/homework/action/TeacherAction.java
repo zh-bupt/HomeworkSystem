@@ -2,11 +2,15 @@ package com.bupt.se.homework.action;
 
 import com.bupt.se.homework.bo.CourseBo;
 import com.bupt.se.homework.bo.HomeworkBo;
+import com.bupt.se.homework.bo.StudentBo;
 import com.bupt.se.homework.bo.TeacherBo;
 import com.bupt.se.homework.bo.impl.CourseBoImpl;
+import com.bupt.se.homework.bo.impl.StudentBoImpl;
 import com.bupt.se.homework.entity.Course;
 import com.bupt.se.homework.entity.Homework;
+import com.bupt.se.homework.entity.Student;
 import com.bupt.se.homework.entity.Teacher;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import org.apache.commons.io.FileUtils;
@@ -14,25 +18,33 @@ import org.apache.struts2.ServletActionContext;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
-public class TeacherAction implements ModelDriven {
+public class TeacherAction extends ActionSupport {
 
-    Teacher teacher = new Teacher();
-    List<Course> courseList = new ArrayList<Course>();
-    TeacherBo teacherBo;// = new TeacherBoImpl();
+    private List<Course> courseList = new ArrayList<Course>();
+    private List<Student> studentList = new ArrayList<Student>();
+    private List<Homework> homeworkList = new ArrayList<Homework>();
 
 
-    Course course = new Course();
-    CourseBo courseBo;
 
-    Homework homework = new Homework();
-    HomeworkBo homeworkBo;
+    private TeacherBo teacherBo;// = new TeacherBoImpl();
+    private Teacher teacher = new Teacher();
 
-    File studentExcel;//上传的文件
-    String studentExcelContentType;//上传的文件类型
-    String studentExcelFileName; //上传的文件名
+    private Course course = new Course();
+    private CourseBo courseBo;
+
+    private Student student = new Student();
+    private StudentBo studentBo;
+
+    private Homework homework = new Homework();
+    private HomeworkBo homeworkBo;
+
+    private File studentExcel;//上传的文件
+    private String studentExcelContentType;//上传的文件类型
+    private String studentExcelFileName; //上传的文件名
 
     public File getStudentExcel() {
         return studentExcel;
@@ -66,6 +78,14 @@ public class TeacherAction implements ModelDriven {
         this.teacherBo = teacherBo;
     }
 
+    public void setStudentBo(StudentBoImpl studentBo) {
+        this.studentBo = studentBo;
+    }
+
+    public void setCourseBo(CourseBoImpl courseBo) {
+        this.courseBo = courseBo;
+    }
+
     public List<Course> getCourseList() {
         return courseList;
     }
@@ -74,25 +94,39 @@ public class TeacherAction implements ModelDriven {
         this.courseList = courseList;
     }
 
-    @Override
-    public Object getModel() {
-        return teacher;
+    public List<Student> getStudentList() {
+        return studentList;
+    }
+
+    public void setStudentList(List<Student> studentList) {
+        this.studentList = studentList;
+    }
+
+    public List<Homework> getHomeworkList() {
+        return homeworkList;
+    }
+
+    public void setHomeworkList(List<Homework> homeworkList) {
+        this.homeworkList = homeworkList;
+    }
+
+    public void setTeacherName(String teacherName) {
+        this.teacher.setTeacherName(teacherName);
+    }
+
+    public void setCourseId(String courseId) {
+        this.course.setCourseId(courseId);
+    }
+
+    public void setCourseName(String courseName) {
+        this.course.setCourseName(courseName);
+    }
+
+    public void setCapacity(String capacity) {
+        this.course.setCapacity(Integer.valueOf(capacity));
     }
 
 
-//    public String addTeacher() throws Exception {
-//        //save it
-//        teacherBo.addTeacher(teacher);
-//        //reload the hwsystem list
-//        courseList = null;
-//        courseList = teacherBo.listTeacher();
-//        return "success";
-//    }
-
-//    public String listTeacher() throws Exception{
-//        courseList = teacherBo.listTeacher();
-//        return "success";
-//    }
     /**
      * @Author KRF
      * @Description 添加课程，添加结束输出该教师的所有课程
@@ -102,7 +136,13 @@ public class TeacherAction implements ModelDriven {
      **/
 
     public String addCourse() throws Exception{
+        Map<String, Object> session = ActionContext.getContext().getSession();
+        teacher = teacherBo.get(session.get("id").toString());
+        course.setCreateTime(new Date());
+        course.setTeacher(teacher);
+        System.out.println(teacher.getTeacherName());
         courseBo.addCourse(course);
+        //listCourse();
         return "success";
     }
 
@@ -115,6 +155,11 @@ public class TeacherAction implements ModelDriven {
      **/
 
     public String addHomework() throws Exception{
+        homework.setReleaseTime(new Date());
+        Map<String, Object> session = ActionContext.getContext().getSession();
+        course = courseBo.get(session.get("courseId").toString());
+        System.out.println(course.getCourseId());
+        homework.setCourse(course);
         homeworkBo.addHomework(homework);
         return "success";
     }
@@ -127,10 +172,10 @@ public class TeacherAction implements ModelDriven {
      * @return java.lang.String
      **/
 
-    public String addStudentByType()
+    public String addStudentForCourseByType()
     {
 
-        //TODO
+
         return "success";
     }
 
@@ -168,13 +213,6 @@ public class TeacherAction implements ModelDriven {
     }
 
 
-    public void setTeacherName(String teacherName) {
-        this.teacher.setTeacherName(teacherName);
-    }
-
-    public void setCourseBo(CourseBoImpl courseBo) {
-        this.courseBo = courseBo;
-    }
 
     /**
      * @Author KRF
@@ -189,15 +227,65 @@ public class TeacherAction implements ModelDriven {
         return "success";
     }
 
-    public void setCourseId(String courseId) {
-        this.course.setCourseId(courseId);
+
+    public void setHomeworkId(String homeworkId) {
+        this.homework.setHomeworkId(Integer.valueOf(homeworkId));
     }
 
-    public void setCourseName(String courseName) {
-        this.course.setCourseName(courseName);
+    public void setContent(String content) {
+        this.homework.setContent(content);
     }
 
-    public void setCapacity(String capacity) {
-        this.course.setCapacity(Integer.valueOf(capacity));
+    public void setDeadline(String deadline) throws Exception {
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("YYYY-MM-DD");
+        this.homework.setDeadline(simpleDateFormat.parse(deadline));
+    }
+
+    /**
+     * @Author KRF
+     * @Description 列出该课程的学生列表和作业列表
+     * @Date 18:36 2018/11/20
+     * @Param []
+     * @return java.lang.String
+     **/
+
+    public String listStudentAndHomework() throws Exception {
+        Map<String, Object> session = ActionContext.getContext().getSession();
+        course = courseBo.get(session.get("courseId").toString());
+        System.out.println(course.getCourseId());
+        studentList = courseBo.getStudents(course);
+        //homeworkList = courseBo.getHomework(course);TODO 等张珩实现此方法
+        Set<Homework> homeworkSet = course.getHomework();
+        System.out.println("HomeworkList SIZE"+homeworkSet.size());
+        homeworkList = null;
+        if (homeworkSet != null && homeworkSet.size() > 0) {
+
+            homeworkList.addAll(homeworkSet);
+        }
+
+        return "success";
+    }
+
+
+    /**
+     * @Author KRF
+     * @Description 将课程id 存入session中，这样每次刷新就可以读取id
+     * @Date 19:52 2018/11/20
+     * @Param []
+     * @return java.lang.String
+     **/
+
+    public String setSessionCourse() throws Exception {
+        Map<String, Object> session = ActionContext.getContext().getSession();
+        session.put("courseId",course.getCourseId());
+        return "success";
+    }
+
+    public void setStudentId(String studentId) {
+        student.setStudentId(studentId);
+    }
+
+    public CourseBo getCourseBo() {
+        return this.courseBo;
     }
 }

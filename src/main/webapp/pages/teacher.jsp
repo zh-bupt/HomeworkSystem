@@ -12,8 +12,8 @@
     <title>教师系统</title>
 </head>
 <body>
-<h1>Struts2+Spring+Hibernate integration example</h1>
-<h2>Add Customer</h2>
+
+<h2>Add Course</h2>
 <s:form action="addCourseAction">
     <s:textfield name="courseId" label="课程ID" value=""/>
     <s:textfield name="courseName" label="课程名称" value=""/>
@@ -26,18 +26,20 @@
 <s:if test="courseList.size() > 0">
     <table border="1px" cellpadding="8px">
         <tr>
-            <th>Customer Id</th>
-            <th>Name</th>
-            <th>Address</th>
-            <th>Create Date</th>
+            <th>课程编号</th>
+            <th>课程名</th>
+            <th>人数上限</th>
+            <th>创建时间</th>
         </tr>
         <s:iterator value="courseList" status="userStatus">
             <%--点击某一个课程即进入到该课程的详情页--%>
-            <tr onclick="course.jsp">
-                <td><s:property value="customerId"/> </td>
-                <td><s:property value="name"/> </td>
-                <td><s:property value="address"/> </td>
-                <td><s:date name="createdDate" format="dd/MM/yyyy"/> </td>
+            <tr>
+                <td><s:property value="courseId"/> </td>
+                <td><s:property value="courseName"/> </td>
+                <td><s:property value="capacity"/> </td>
+                <td><s:property value="createTime"/> </td>
+                <td><input type="button" name="update" value="课程详情" onclick="javascript:window.location.href='setCurrentCourseAction.action?courseId=${courseId}'"/> </td>
+                <td><input type="button" name="delete" value="删除" onclick="javascript:window.location.href='deleteStudentAction.action?studentId=${studentId}'"/></td>
             </tr>
         </s:iterator>
     </table>
