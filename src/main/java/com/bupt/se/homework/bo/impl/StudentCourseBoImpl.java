@@ -45,52 +45,52 @@ public class StudentCourseBoImpl
         this.courseDAO = courseDAO;
     }
 
-    /**
-     * @Description: 学生获得成绩单, 包括每门课的成绩
-     * @param studentId
-     * @return: java.util.Map<java.lang.String,java.lang.Integer>
-     * @Author: zh
-     * @Date: 2018/11/16
-     **/
-    @Override
-    public Map<String, Integer> getStudentTranscript(String studentId) {
-        Map<String, Integer> map = null;
-        Student s = studentDAO.load(studentId);
-        if (s != null) {
-            Set<StudentCourse> studentCourses = s.getStudentCourses();
-            if (studentCourses != null && studentCourses.size() > 0) {
-                map = new HashMap<>();
-                for (StudentCourse sc:studentCourses) {
-                    map.put(sc.getCourse().getCourseName(), sc.getGrade());
-                }
-            }
-        }
-        return map;
-    }
+//    /**
+//     * @Description: 学生获得成绩单, 包括每门课的成绩
+//     * @param studentId
+//     * @return: java.util.Map<java.lang.String,java.lang.Integer>
+//     * @Author: zh
+//     * @Date: 2018/11/16
+//     **/
+//    @Override
+//    public Map<String, Integer> getStudentTranscript(String studentId) {
+//        Map<String, Integer> map = null;
+//        Student s = studentDAO.load(studentId);
+//        if (s != null) {
+//            Set<StudentCourse> studentCourses = s.getStudentCourses();
+//            if (studentCourses != null && studentCourses.size() > 0) {
+//                map = new HashMap<>();
+//                for (StudentCourse sc:studentCourses) {
+//                    map.put(sc.getCourse().getCourseName(), sc.getGrade());
+//                }
+//            }
+//        }
+//        return map;
+//    }
 
-    /**
-     * @Description: 老师获得成绩单, 包括每个学生的成绩
-     * @param courseId
-     * @return: java.util.Map<com.bupt.se.homework.entity.Student , java.lang.Integer>
-     * @Author: zh
-     * @Date: 2018/11/16
-     **/
-    @Override
-    public Map<Student, Integer> getTeacherTranscript(String teacherId, String courseId) {
-        Map<Student, Integer> map = null;
-        LinkedHashMap<Object, Object> equals = new LinkedHashMap<>();
-        equals.put("teacherId", teacherId);
-        equals.put("courseId", courseId);
-        Course c = courseDAO.get(equals, null, null, null, null);
-        if (c != null) {
-            Set<StudentCourse> studentCourses = c.getStudentCourses();
-            if (studentCourses != null && studentCourses.size() > 0) {
-                map = new HashMap<>();
-                for (StudentCourse sc:studentCourses) {
-                    map.put(sc.getStudent(), sc.getGrade());
-                }
-            }
-        }
-        return map;
-    }
+//    /**
+//     * @Description: 老师获得成绩单, 包括每个学生的成绩
+//     * @param courseId
+//     * @return: java.util.Map<com.bupt.se.homework.entity.Student , java.lang.Integer>
+//     * @Author: zh
+//     * @Date: 2018/11/16
+//     **/
+//    @Override
+//    public Map<Student, Integer> getTeacherTranscript(String teacherId, String courseId) {
+//        Map<Student, Integer> map = null;
+//        LinkedHashMap<Object, Object> equals = new LinkedHashMap<>();
+//        equals.put("teacherId", teacherId);
+//        equals.put("courseId", courseId);
+//        Course c = courseDAO.get(equals, null, null, null, null);
+//        if (c != null) {
+//            Set<StudentCourse> studentCourses = c.getStudentCourses();
+//            if (studentCourses != null && studentCourses.size() > 0) {
+//                map = new HashMap<>();
+//                for (StudentCourse sc:studentCourses) {
+//                    map.put(sc.getStudent(), sc.getGrade());
+//                }
+//            }
+//        }
+//        return map;
+//    }
 }

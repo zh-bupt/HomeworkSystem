@@ -8,17 +8,17 @@ import java.io.Serializable;
 public class GroupStudent implements Serializable {
 
     private GroupStudentPK pk;
-    private Group group;
+    private Group_ group_;
     private Student student;
     private int contribution;
 
     public GroupStudent() {
     }
 
-    public GroupStudent(Group group, Student student) {
-        this.group = group;
+    public GroupStudent(Group_ group_, Student student) {
+        this.group_ = group_;
         this.student = student;
-        this.pk = new GroupStudentPK(group.getGroupId(), student.getStudentId());
+        this.pk = new GroupStudentPK(group_.getGroupId(), student.getStudentId());
     }
 
     @EmbeddedId
@@ -42,12 +42,12 @@ public class GroupStudent implements Serializable {
 
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "groupId", insertable = false, updatable = false)
-    public Group getGroup() {
-        return group;
+    public Group_ getGroup_() {
+        return group_;
     }
 
-    public void setGroup(Group group) {
-        this.group = group;
+    public void setGroup_(Group_ group_) {
+        this.group_ = group_;
     }
 
     @Basic

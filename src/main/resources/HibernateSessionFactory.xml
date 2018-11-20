@@ -23,7 +23,7 @@
             <list>
                 <value>com.bupt.se.homework.entity.Admin</value>
                 <value>com.bupt.se.homework.entity.Course</value>
-                <value>com.bupt.se.homework.entity.Group</value>
+                <value>com.bupt.se.homework.entity.Group_</value>
                 <value>com.bupt.se.homework.entity.Homework</value>
                 <value>com.bupt.se.homework.entity.HomeworkGroup</value>
                 <value>com.bupt.se.homework.entity.GroupStudent</value>

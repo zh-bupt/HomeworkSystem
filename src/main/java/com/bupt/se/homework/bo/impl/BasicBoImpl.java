@@ -30,6 +30,11 @@ public abstract class BasicBoImpl<M extends Serializable, PK extends Serializabl
     }
 
     @Override
+    public boolean deleteArray(PK[] id) {
+        return basicDao.deleteArray(id);
+    }
+
+    @Override
     public boolean update(M model) {
         return basicDao.update(model);
     }

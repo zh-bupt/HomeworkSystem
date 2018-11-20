@@ -1,6 +1,7 @@
 package com.bupt.se.homework.bo;
 
 import com.bupt.se.homework.UnitTestBase;
+import com.bupt.se.homework.entity.Course;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.junit.Test;
@@ -19,12 +20,12 @@ public class TestStudentCourseBo extends UnitTestBase {
 
     @Test
     public void getStudentTranscript() {
-        StudentCourseBo bo = super.getBean("studentCourseBo");
-        Map<String, Integer> map = bo.getStudentTranscript("2017211200");
+        StudentBo bo = super.getBean("studentBo");
+        Map<Course, Integer> map = bo.getTranscript("2017211200");
         System.out.println("学生 2017211200 的成绩单:");
         if (map != null && map.size() > 0) {
-            for (Map.Entry<String, Integer> entry:map.entrySet()) {
-                System.out.println(entry.getKey() + ": " + entry.getValue().intValue());
+            for (Map.Entry<Course, Integer> entry:map.entrySet()) {
+                System.out.println(entry.getKey().getCourseName() + ": " + entry.getValue().intValue());
             }
         }
     }

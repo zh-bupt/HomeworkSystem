@@ -4,9 +4,7 @@ import com.bupt.se.homework.bo.ReturnCode;
 import com.bupt.se.homework.bo.StudentBo;
 import com.bupt.se.homework.dao.BasicDao;
 import com.bupt.se.homework.dao.StudentDAO;
-import com.bupt.se.homework.entity.Course;
-import com.bupt.se.homework.entity.Student;
-import com.bupt.se.homework.entity.StudentCourse;
+import com.bupt.se.homework.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
@@ -75,5 +73,59 @@ public class StudentBoImpl extends BasicBoImpl<Student, String> implements Stude
         if (!student.getPassword().equals(password)) return ReturnCode.WRONG_PASSWORD;
         if (student.getPassword().equals(student.getStudentId())) return ReturnCode.FIRST_LOGIN;
         return ReturnCode.LOGIN_SUCCESS;
+    }
+
+    /**
+     * @Description: 学生获得成绩单, 包括每门课的成绩
+     * @param studentId
+     * @return: java.util.Map<java.lang.String,java.lang.Integer>
+     * @Author: zh
+     * @Date: 2018/11/16
+     **/
+    @Override
+    public Map<Course, Integer> getTranscript(String studentId) {
+        Map<Course, Integer> map = null;
+        Student s = studentDAO.load(studentId);
+        if (s != null) {
+            Set<StudentCourse> studentCourses = s.getStudentCourses();
+            if (studentCourses != null && studentCourses.size() > 0) {
+                map = new HashMap<>();
+                for (StudentCourse sc:studentCourses) {
+                    map.put(sc.getCourse(), sc.getGrade());
+                }
+            }
+        }
+        return map;
+    }
+
+    @Override
+    public List<Homework> getHomeworkList(String studentId, String courseId) {
+        return null;
+    }
+
+    @Override
+    public Group_ getCourseGroup(String studentId, String courseId) {
+        return null;
+    }
+
+    @Override
+    public List<Group_> getManagedGroups(String studentId) {
+        Student student = this.get(studentId);
+        List<Group_> list = null;
+        if (student != null) {
+            Set<Group_> groupSet = student.getGroupsManaged();
+            if (groupSet != null && groupSet.size() > 0) {
+                list = new ArrayList<>();
+                for (Group_ g:groupSet) {
+                    list.add(g);
+                }
+            }
+        }
+        return list;
+    }
+
+    @Override
+    public HomeworkGroup getHomeworkGroup(Student student, Homework homework) {
+        return studentDAO.getHomeworkGroup(student, homework);
     }
 }

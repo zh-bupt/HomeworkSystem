@@ -1,8 +1,6 @@
 package com.bupt.se.homework.bo;
 
-import com.bupt.se.homework.entity.Course;
-import com.bupt.se.homework.entity.Student;
-import com.bupt.se.homework.entity.StudentCourse;
+import com.bupt.se.homework.entity.*;
 
 import java.util.List;
 import java.util.Map;
@@ -25,4 +23,14 @@ public interface StudentBo extends BasicBo<Student, String> {
     List<Course> getCourseList(Student student);
 
     String login(String id, String password);
+
+    Map<Course, Integer> getTranscript(String studentId);
+
+    List<Homework> getHomeworkList(String studentId, String courseId);
+
+    Group_ getCourseGroup(String studentId, String courseId);
+
+    List<Group_> getManagedGroups(String studentId);
+
+    HomeworkGroup getHomeworkGroup(Student student, Homework homework);
 }

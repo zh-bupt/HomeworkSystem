@@ -27,7 +27,7 @@ public interface BasicDao<M extends java.io.Serializable, PK extends java.io.Ser
 //    public void delete(Class<?> entityClass, LinkedHashMap<Object, Object> equalFields,
 //                       String whereJpql);
 
-    boolean deleteArray(PK id[]) ;
+    boolean deleteArray(PK id[]);
 
     boolean exists(PK id);
 

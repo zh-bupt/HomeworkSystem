@@ -1,6 +1,7 @@
 package com.bupt.se.homework.bo;
 
 import com.bupt.se.homework.entity.Course;
+import com.bupt.se.homework.entity.Homework;
 import com.bupt.se.homework.entity.Student;
 import com.bupt.se.homework.entity.StudentCourse;
 
@@ -19,4 +20,6 @@ public interface CourseBo extends BasicBo<Course, String> {
     boolean addCourse(Course course);
 
     List<Course> listCourse();
+
+    List<Homework> listHomework(String courseId);
 }

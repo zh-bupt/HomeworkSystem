@@ -8,20 +8,20 @@ import java.util.Date;
 @Table(name = "homework_group")
 public class HomeworkGroup implements Serializable {
     private Homework homework;
-    private Group group;
+    private Group_ group_;
     private HomeworkGroupPK pk;
     private Date submissionTime;
-    private int score;
+    private Integer score;
     private String comment;
     private String fileDir;
 
     public HomeworkGroup() {
     }
 
-    public HomeworkGroup(Homework homework, Group group) {
+    public HomeworkGroup(Homework homework, Group_ group_) {
         this.homework = homework;
-        this.group = group;
-        this.pk = new HomeworkGroupPK(homework.getHomeworkId(), group.getGroupId());
+        this.group_ = group_;
+        this.pk = new HomeworkGroupPK(homework.getHomeworkId(), group_.getGroupId());
     }
 
     @EmbeddedId
@@ -45,12 +45,12 @@ public class HomeworkGroup implements Serializable {
 
     @ManyToOne(cascade = {CascadeType.ALL})
     @JoinColumn(name = "groupId", insertable = false, updatable = false)
-    public Group getGroup() {
-        return group;
+    public Group_ getGroup_() {
+        return group_;
     }
 
-    public void setGroup(Group group) {
-        this.group = group;
+    public void setGroup_(Group_ group_) {
+        this.group_ = group_;
     }
 
     @Basic
@@ -65,11 +65,11 @@ public class HomeworkGroup implements Serializable {
 
     @Basic
     @Column(length = 3)
-    public int getScore() {
+    public Integer getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(Integer score) {
         this.score = score;
     }
 
