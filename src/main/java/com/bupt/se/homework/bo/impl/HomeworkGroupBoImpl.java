@@ -6,12 +6,16 @@ import com.bupt.se.homework.dao.HomeworkGroupDAO;
 import com.bupt.se.homework.entity.HomeworkGroup;
 import com.bupt.se.homework.entity.HomeworkGroupPK;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @description:
  * @author: zh
  * @create: 2018-11-16 14:27
  **/
+@Service("homeworkGroupBo")
+@Transactional
 public class HomeworkGroupBoImpl
         extends BasicBoImpl<HomeworkGroup, HomeworkGroupPK>
         implements HomeworkGroupBo {

@@ -6,9 +6,13 @@ import com.bupt.se.homework.dao.BasicDao;
 import com.bupt.se.homework.dao.StudentDAO;
 import com.bupt.se.homework.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
+@Service("studentBo")
+@Transactional
 public class StudentBoImpl extends BasicBoImpl<Student, String> implements StudentBo {
 
     private StudentDAO studentDAO;

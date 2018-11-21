@@ -10,6 +10,8 @@ import com.bupt.se.homework.entity.Student;
 import com.bupt.se.homework.entity.StudentCourse;
 import com.bupt.se.homework.entity.Teacher;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -18,6 +20,8 @@ import java.util.*;
  * @Author: zh
  * @Date: 2018/11/10
  **/
+@Service("teacherBo")
+@Transactional
 public class TeacherBoImpl extends BasicBoImpl<Teacher, String> implements TeacherBo {
 
     TeacherDAO teacherDAO;

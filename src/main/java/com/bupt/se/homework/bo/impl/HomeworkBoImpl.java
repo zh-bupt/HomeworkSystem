@@ -5,6 +5,8 @@ import com.bupt.se.homework.dao.BasicDao;
 import com.bupt.se.homework.dao.HomeworkDAO;
 import com.bupt.se.homework.entity.Homework;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @ClassName: HomeworkBoImpl
@@ -12,7 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @Author: kwong
  * @Create: 2018/11/11 20:26
  **/
-
+@Service("homeworkBo")
+@Transactional
 public class HomeworkBoImpl extends BasicBoImpl<Homework, Integer> implements HomeworkBo {
     HomeworkDAO homeworkDAO;
 

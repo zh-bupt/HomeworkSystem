@@ -6,11 +6,18 @@ import com.bupt.se.homework.dao.AdminDAO;
 import com.bupt.se.homework.dao.BasicDao;
 import com.bupt.se.homework.entity.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+@Service("adminBo")
+@Transactional
 public class AdminBoImpl extends BasicBoImpl<Admin, String> implements AdminBo {
 
 
     private AdminDAO adminDAO;
+
+    public AdminBoImpl() {
+    }
 
     @Autowired
     public void setAdminDAO(BasicDao<Admin, String> basicDao) {
