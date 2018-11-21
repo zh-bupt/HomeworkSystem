@@ -8,6 +8,9 @@ import com.bupt.se.homework.entity.Homework;
 import com.bupt.se.homework.entity.Student;
 import com.bupt.se.homework.entity.StudentCourse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -16,11 +19,14 @@ import java.util.*;
  * @author: zh
  * @create: 2018-11-15 16:38
  **/
+@Service
+@Transactional
 public class CourseBoImpl extends BasicBoImpl<Course, String> implements CourseBo {
 
     private CourseDAO courseDAO;
 
     @Autowired
+    @Qualifier("courseDAO")
     public void setCourseDAO(BasicDao<Course, String> basicDao) {
         super.setBasicDao(basicDao);
         this.courseDAO = (CourseDAO) basicDao;

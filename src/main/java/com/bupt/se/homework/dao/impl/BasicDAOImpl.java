@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
@@ -27,12 +28,13 @@ public abstract class BasicDAOImpl<M extends java.io.Serializable, PK extends ja
     protected Logger logger = LogManager.getLogger(getClass());
 
     @Autowired
+    @Qualifier("sessionFactory")
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
 
     public Session getSession() {
-        return sessionFactory.openSession();
+        return sessionFactory.getCurrentSession();
     }
 
     private final Class<Serializable> entityClass;

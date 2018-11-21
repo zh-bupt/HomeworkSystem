@@ -1,6 +1,7 @@
 package com.bupt.se.homework.bo;
 
 import com.bupt.se.homework.entity.Course;
+import com.bupt.se.homework.entity.Homework;
 import com.bupt.se.homework.entity.Student;
 import com.bupt.se.homework.entity.Teacher;
 
@@ -23,4 +24,6 @@ public interface TeacherBo extends BasicBo<Teacher, String> {
     String login(String id, String password);
 
     Map<Student, Integer> getCourseTranscript(String teacherId, String courseId);
+
+    int AssignHomework(Course course, Homework homework);
 }

@@ -11,6 +11,8 @@ import com.bupt.se.homework.entity.StudentCourse;
 import com.bupt.se.homework.entity.StudentCoursePK;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -22,6 +24,8 @@ import java.util.Set;
  * @author: zh
  * @create: 2018-11-16 14:39
  **/
+@Service
+@Transactional
 public class StudentCourseBoImpl
         extends BasicBoImpl<StudentCourse, StudentCoursePK>
         implements StudentCourseBo {
@@ -30,6 +34,7 @@ public class StudentCourseBoImpl
     private CourseDAO courseDAO;
 
     @Autowired
+    @Qualifier("studentCourseDAO")
     public void setStudentCourseDAO(BasicDao<StudentCourse, StudentCoursePK> basicDao) {
         super.setBasicDao(basicDao);
         this.studentCourseDAO = (StudentCourseDAO) basicDao;

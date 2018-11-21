@@ -4,12 +4,13 @@ import com.bupt.se.homework.bo.ReturnCode;
 import com.bupt.se.homework.bo.TeacherBo;
 import com.bupt.se.homework.dao.BasicDao;
 import com.bupt.se.homework.dao.CourseDAO;
+import com.bupt.se.homework.dao.HomeworkDAO;
 import com.bupt.se.homework.dao.TeacherDAO;
-import com.bupt.se.homework.entity.Course;
-import com.bupt.se.homework.entity.Student;
-import com.bupt.se.homework.entity.StudentCourse;
-import com.bupt.se.homework.entity.Teacher;
+import com.bupt.se.homework.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -18,12 +19,16 @@ import java.util.*;
  * @Author: zh
  * @Date: 2018/11/10
  **/
+@Service
+@Transactional
 public class TeacherBoImpl extends BasicBoImpl<Teacher, String> implements TeacherBo {
 
     TeacherDAO teacherDAO;
     CourseDAO courseDAO;
+    HomeworkDAO homeworkDAO;
 
     @Autowired
+    @Qualifier("teacherDAO")
     public void setTeacherDAO(BasicDao<Teacher, String> basicDao){
         super.setBasicDao(basicDao);
         this.teacherDAO = (TeacherDAO) basicDao;
@@ -32,6 +37,11 @@ public class TeacherBoImpl extends BasicBoImpl<Teacher, String> implements Teach
     @Autowired
     public void setCourseDAO(CourseDAO courseDAO) {
         this.courseDAO = courseDAO;
+    }
+
+    @Autowired
+    public void setHomeworkDAO(HomeworkDAO homeworkDAO) {
+        this.homeworkDAO = homeworkDAO;
     }
 
     @Override
@@ -91,5 +101,10 @@ public class TeacherBoImpl extends BasicBoImpl<Teacher, String> implements Teach
             }
         }
         return map;
+    }
+
+    @Override
+    public int AssignHomework(Course course, Homework homework) {
+        return teacherDAO.AssignHomework(course, homework);
     }
 }

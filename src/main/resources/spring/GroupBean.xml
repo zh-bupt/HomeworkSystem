@@ -7,9 +7,9 @@
         <property name="studentBo" ref="studentBo"/>
     </bean>
     <bean id="studentBo" class="com.bupt.se.homework.bo.impl.StudentBoImpl">
-        <property name="studentDAO" ref="studentDAO"/>
+        <!--<property name="studentDAO" ref="studentDAO"/>-->
     </bean>
-    <bean id="studentDAO" class="com.bupt.se.homework.dao.impl.StudentDAOImpl">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
+    <!--<bean id="studentDAO" class="com.bupt.se.homework.dao.impl.StudentDAOImpl">-->
+        <!--&lt;!&ndash;<property name="sessionFactory" ref="sessionFactory"/>&ndash;&gt;-->
+    <!--</bean>-->
 </beans>

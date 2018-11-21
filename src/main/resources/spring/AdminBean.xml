@@ -9,9 +9,9 @@
         <property name="teacherBo" ref="teacherBo"/>
     </bean>
     <bean id="adminBo" class="com.bupt.se.homework.bo.impl.AdminBoImpl">
-        <property name="adminDAO" ref="adminDAO"/>
+        <!--<property name="adminDAO" ref="adminDAO"/>-->
     </bean>
-    <bean id="adminDAO" class="com.bupt.se.homework.dao.impl.AdminDAOImpl">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
+    <!--<bean id="adminDAO" class="com.bupt.se.homework.dao.impl.AdminDAOImpl">-->
+        <!--&lt;!&ndash;<property name="sessionFactory" ref="sessionFactory"/>&ndash;&gt;-->
+    <!--</bean>-->
 </beans>

@@ -8,10 +8,10 @@
         <property name="courseBo" ref ="courseBo"/>
     </bean>
     <bean id="teacherBo" class="com.bupt.se.homework.bo.impl.TeacherBoImpl">
-        <property name="teacherDAO" ref="teacherDAO"/>
+        <!--<property name="teacherDAO" ref="teacherDAO"/>-->
     </bean>
-    <bean id="teacherDAO" class="com.bupt.se.homework.dao.impl.TeacherDAOImpl">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
+    <!--<bean id="teacherDAO" class="com.bupt.se.homework.dao.impl.TeacherDAOImpl">-->
+        <!--&lt;!&ndash;<property name="sessionFactory" ref="sessionFactory"/>&ndash;&gt;-->
+    <!--</bean>-->
 
 </beans>
