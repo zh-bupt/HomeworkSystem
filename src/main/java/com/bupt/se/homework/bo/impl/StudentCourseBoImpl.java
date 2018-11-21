@@ -24,7 +24,7 @@ import java.util.Set;
  * @author: zh
  * @create: 2018-11-16 14:39
  **/
-@Service
+@Service("studentCourseBo")
 @Transactional
 public class StudentCourseBoImpl
         extends BasicBoImpl<StudentCourse, StudentCoursePK>

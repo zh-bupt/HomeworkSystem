@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author: zh
  * @create: 2018-11-16 15:07
  **/
-@Service
+@Service("groupBo")
 @Transactional
 public class GroupBoImpl extends BasicBoImpl<Group_, String> implements GroupBo {
 }

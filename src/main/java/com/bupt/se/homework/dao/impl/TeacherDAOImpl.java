@@ -6,12 +6,9 @@ import com.bupt.se.homework.entity.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.Set;
 
 @Repository("teacherDAO")
-@Transactional
 public class TeacherDAOImpl extends BasicDAOImpl<Teacher, String> implements TeacherDAO {
 
     @Override

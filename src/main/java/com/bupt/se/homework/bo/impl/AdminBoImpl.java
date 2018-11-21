@@ -10,12 +10,15 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
+@Service("adminBo")
 @Transactional
 public class AdminBoImpl extends BasicBoImpl<Admin, String> implements AdminBo {
 
 
     private AdminDAO adminDAO;
+
+    public AdminBoImpl() {
+    }
 
     @Autowired
     @Qualifier("adminDAO")

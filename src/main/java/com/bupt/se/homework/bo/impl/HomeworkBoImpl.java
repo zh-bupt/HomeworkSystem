@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @Author: kwong
  * @Create: 2018/11/11 20:26
  **/
-@Service
+@Service("homeworkBo")
 @Transactional
 public class HomeworkBoImpl extends BasicBoImpl<Homework, Integer> implements HomeworkBo {
     HomeworkDAO homeworkDAO;

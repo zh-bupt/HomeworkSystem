@@ -15,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
  * @author: zh
  * @create: 2018-11-16 14:27
  **/
-@Service
+@Service("homeworkGroupBo")
 @Transactional
 public class HomeworkGroupBoImpl
         extends BasicBoImpl<HomeworkGroup, HomeworkGroupPK>

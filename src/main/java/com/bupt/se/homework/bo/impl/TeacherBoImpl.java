@@ -19,7 +19,7 @@ import java.util.*;
  * @Author: zh
  * @Date: 2018/11/10
  **/
-@Service
+@Service("teacherBo")
 @Transactional
 public class TeacherBoImpl extends BasicBoImpl<Teacher, String> implements TeacherBo {
 
