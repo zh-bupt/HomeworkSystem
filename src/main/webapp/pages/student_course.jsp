@@ -45,5 +45,44 @@
         </s:iterator>
     </table>
 </s:if>
+
+<s:if test="groupMembers.size() > 0">
+    <h2>您所在的小组</h2>
+    <%--<s:if test="true" >--%>
+    <%--<button onclick="/deleteTeacherAction.action?${teacherId}">删除</button>--%>
+    <%--<input type="button" name="search" value="删除" onclick="javascript:window.location.href='deleteStudentAction.action?${studentId}'"/>--%>
+    <table border="1px" cellpadding="8px">
+        <tr>
+            <th>组号</th>
+            <th>组名</th>
+            <th>组长</th>
+            <th>人数</th>
+            <th>成员</th>
+            <th>小组成绩</th>
+        </tr>
+        <tr>
+            <td><s:property value="groupId"/> </td>
+            <td><s:property value="name"/> </td>
+            <td><s:property value="leader.getStudentName()"/> </td>
+            <td><s:property value="num"/> </td>
+            <td>
+                <s:iterator value="members" >
+                    <s:property value="memberName"/>
+                </s:iterator>
+            </td>
+            <td><s:property value="groupScore" /></td>
+
+        </tr>
+    </table>
+</s:if>
+<s:else>
+    <h2>创建小组</h2>
+    <s:form action="addGroupAction">
+        <s:textfield name="groupId" label="组号" value=""/>
+        <s:textfield name="name" label="组名" value=""/>
+        <s:textfield name="studentIds" label="学号(多个用'|'隔开)" value=""/>
+        <s:submit/>
+    </s:form>
+</s:else>
 </body>
 </html>

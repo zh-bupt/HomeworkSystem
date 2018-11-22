@@ -166,7 +166,7 @@
             <result name="success" type="chain">listCourseAction</result>
         </action>
         <action name="showCourseAction"
-                class="com.bupt.se.homework.action.StudentAction" method="listHomework">
+                class="com.bupt.se.homework.action.StudentAction" method="listHomeworkAndGroup">
             <result name="success">/pages/student_course.jsp</result>
         </action>
         <action name="setCurrentCourseAction"
@@ -176,6 +176,10 @@
         <action name="setCurrentHomeworkAction"
                 class="com.bupt.se.homework.action.StudentAction" method="setSessionHomework">
             <result name="success">/pages/student_homework.jsp</result>
+        </action>
+        <action name="addGroupAction"
+                class="com.bupt.se.homework.action.StudentAction" method="addGroup">
+            <result name="success" type="chain">showCourseAction</result>
         </action>
     </package>
     <package name="homework" namespace="/teacher" extends="struts-default">

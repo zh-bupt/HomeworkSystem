@@ -1,9 +1,6 @@
 package com.bupt.se.homework.action;
 
-import com.bupt.se.homework.bo.CourseBo;
-import com.bupt.se.homework.bo.HomeworkBo;
-import com.bupt.se.homework.bo.HomeworkGroupBo;
-import com.bupt.se.homework.bo.StudentBo;
+import com.bupt.se.homework.bo.*;
 import com.bupt.se.homework.entity.*;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ModelDriven;
@@ -28,6 +25,33 @@ public class StudentAction{
     private List<Homework> homeworkList = new ArrayList<>();
     private Homework homework = new Homework();
     private HomeworkBo homeworkBo;
+    private Group_ group = new Group_();
+    private GroupBo groupBo;
+    private List<String> studentIdList = new ArrayList<>();
+
+    public GroupBo getGroupBo() {
+        return groupBo;
+    }
+
+    public void setGroupBo(GroupBo groupBo) {
+        this.groupBo = groupBo;
+    }
+
+    public List<String> getStudentIdList() {
+        return studentIdList;
+    }
+
+    public void setStudentIdList(List<String> studentIdList) {
+        this.studentIdList = studentIdList;
+    }
+
+    public Group_ getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group_ group) {
+        this.group = group;
+    }
 
     public HomeworkBo getHomeworkBo() {
         return homeworkBo;
@@ -199,7 +223,7 @@ public class StudentAction{
             homeworkGroup.setSubmissionTime(new Date());
            // HomeworkGroupPK homeworkGroupPK = new HomeworkGroupPK(homework.getHomeworkId(),group_.getGroupId());
            // homeworkGroup.setPk(homeworkGroupPK);
-            homeworkGroupBo.save(homeworkGroup);
+            homeworkGroupBo.update(homeworkGroup);
             //传文件给studentBo
         } catch (IOException e) {
             e.printStackTrace();
@@ -214,7 +238,7 @@ public class StudentAction{
         return "success";
     }
 
-    public String listHomework() throws Exception {
+    public String listHomeworkAndGroup() throws Exception {
         Map<String, Object> session = ActionContext.getContext().getSession();
         course = courseBo.get(session.get("courseId").toString());
         System.out.println(course.getCourseId());
@@ -225,6 +249,9 @@ public class StudentAction{
 
             homeworkList.addAll(homeworkSet);
         }
+
+        Group_ group_ = studentBo.getCourseGroup(session.get("id").toString(),session.get("courseId").toString());
+
         return "success";
     }
 
@@ -232,5 +259,53 @@ public class StudentAction{
         Map<String, Object> session = ActionContext.getContext().getSession();
         session.put("homeworkId",homework.getHomeworkId());
         return "success";
+    }
+
+    /**
+     * @Author KRF
+     * @Description 创建小组，存入数据库中
+     * @Date 19:51 2018/11/22
+     * @Param []
+     * @return java.lang.String
+     **/
+
+    public String addGroup() throws Exception {
+        //TODO
+        Map<String, Object> session = ActionContext.getContext().getSession();
+        course = courseBo.get(session.get("courseId").toString());
+        group.setCourse(course);
+        student = studentBo.get(session.get("id").toString());
+        group.setLeader(student);
+        Set<GroupStudent> groupStudentSet =  new HashSet<>();;
+        for(String id:studentIdList)
+        {
+            Student s = studentBo.get(id);
+            System.out.println(id);
+            System.out.print(s);
+            GroupStudent groupStudent = new GroupStudent(group,s);
+            groupStudentSet.add(groupStudent);
+        }
+        group.setGroupStudentSet(groupStudentSet);//TODO 注意数据库有没有添加成功
+        groupBo.save(group);
+        return "success";
+    }
+
+    public void setGroupId(String groupId) {
+        this.group.setGroupId(groupId);
+    }
+
+    public void setName(String name) {
+        this.group.setName(name);
+    }
+
+    public void setStudentIds(String studentIds) {
+        String[] is = studentIds.split(",");
+        for(String s:is)
+        {
+            System.out.println(s);
+            studentIdList.add(s);
+        }
+        //studentIdList = Arrays.asList(studentIds.split("|"));
+        this.group.setNum(studentIdList.size());
     }
 }
