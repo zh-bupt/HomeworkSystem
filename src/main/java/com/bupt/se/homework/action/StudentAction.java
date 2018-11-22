@@ -178,11 +178,14 @@ public class StudentAction{
         Map<String, Object> session = ActionContext.getContext().getSession();
         //course = courseBo.get(session.get("courseId").toString());
         homework = homeworkBo.get(Integer.valueOf(session.get("homeworkId").toString()));
-        //homeworkGroup = studentBo.getHomeworkGroup(student,homework);
-        Group_ group_ = studentBo.getCourseGroup(session.get("id").toString(),session.get("courseId").toString());//TODO 该方法待实现
+        student = studentBo.get(session.get("id").toString());
+        homeworkGroup = studentBo.getHomeworkGroup(student,homework);
+        System.out.print(homeworkGroup);
+        //Group_ group_ = studentBo.getCourseGroup(session.get("id").toString(),session.get("courseId").toString());//TODO 该方法待实现
         //获取要保存文件夹的物理路径(绝对路径)
-        String realPath= ServletActionContext.getServletContext().getRealPath("/upload/course");
+        String realPath= ServletActionContext.getServletContext().getRealPath("/upload/course/"+session.get("courseId").toString()+"/"+session.get("homeworkId").toString()+"/");
         File file = new File(realPath);
+        System.out.print(realPath);
         //测试此抽象路径名表示的文件或目录是否存在。若不存在，创建此抽象路径名指定的目录，包括所有必需但不存在的父目录。
         if(!file.exists())
             file.mkdirs();
@@ -190,14 +193,12 @@ public class StudentAction{
             //保存文件
             FileUtils.copyFile(groupHomework, new File(file,groupHomeworkFileName));
             //String result = getDataFromExcel(realPath+"\\"+studentExcelFileName);
-            homeworkGroup.setFileDir(realPath);
-            homeworkGroup.setHomework(homework);
-            homeworkGroup.setGroup_(group_);
+            homeworkGroup.setFileDir(realPath+groupHomeworkFileName);
+//            homeworkGroup.setHomework(homework);
+//            homeworkGroup.setGroup_(group_);
             homeworkGroup.setSubmissionTime(new Date());
-            System.out.print(homework);
-            System.out.print(group_);
-            HomeworkGroupPK homeworkGroupPK = new HomeworkGroupPK(homework.getHomeworkId(),group_.getGroupId());
-            homeworkGroup.setPk(homeworkGroupPK);
+           // HomeworkGroupPK homeworkGroupPK = new HomeworkGroupPK(homework.getHomeworkId(),group_.getGroupId());
+           // homeworkGroup.setPk(homeworkGroupPK);
             homeworkGroupBo.save(homeworkGroup);
             //传文件给studentBo
         } catch (IOException e) {

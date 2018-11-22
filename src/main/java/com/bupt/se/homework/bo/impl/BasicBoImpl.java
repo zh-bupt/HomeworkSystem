@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,7 +21,7 @@ import java.util.List;
  * @author: zh
  * @create: 2018-11-13 15:12
  **/
-@Repository
+@Service
 public abstract class BasicBoImpl<M extends Serializable, PK extends Serializable> implements BasicBo<M, PK> {
 
     protected BasicDao<M, PK> basicDao;
