@@ -19,7 +19,6 @@ public class Student extends AbstractEntity {
     private String email;
     private Set<StudentCourse> studentCourses = new HashSet<>();
     private Set<Group_> groupsManaged = new HashSet<>();
-//    private Set<Group_> groupsJoined = new HashSet<>();
     private Set<GroupStudent> groupStudentSet = new HashSet<>();
     private Set<StudentHomework> studentHomeworkSet = new HashSet<>();
 
@@ -49,15 +48,6 @@ public class Student extends AbstractEntity {
     public void setGroupStudentSet(Set<GroupStudent> groupStudentSet) {
         this.groupStudentSet = groupStudentSet;
     }
-
-//    @ManyToMany(mappedBy = "members", cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
-//    public Set<Group_> getGroupsJoined() {
-//        return groupsJoined;
-//    }
-
-//    public void setGroupsJoined(Set<Group_> groupsJoined) {
-//        this.groupsJoined = groupsJoined;
-//    }
 
     @OneToMany(cascade = {CascadeType.ALL, CascadeType.DETACH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "leaderId")

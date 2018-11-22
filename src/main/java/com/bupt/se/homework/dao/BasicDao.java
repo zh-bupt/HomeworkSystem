@@ -11,7 +11,7 @@ import java.util.List;
  * @Author: zh
  * @Date: 2018/11/10
  **/
-public interface BasicDao<M extends Serializable, PK extends java.io.Serializable>{
+public interface BasicDao<M extends AbstractEntity, PK extends Serializable>{
 
     void save(M model);
 
@@ -23,7 +23,7 @@ public interface BasicDao<M extends Serializable, PK extends java.io.Serializabl
 
     void delete(PK id) ;
 
-//    public void deleteObject(M model) ;
+    void deleteObject(M model) ;
 
     void deleteObjectList(List<M> list);
 

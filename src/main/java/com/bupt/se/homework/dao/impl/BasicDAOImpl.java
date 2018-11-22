@@ -8,11 +8,8 @@ import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.orm.hibernate5.HibernateTemplate;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
@@ -24,7 +21,7 @@ import java.util.List;
  * @author: zh
  * @create: 2018-11-10 16:36
  **/
-public abstract class BasicDAOImpl<M extends Serializable, PK extends java.io.Serializable> implements BasicDao<M, PK> {
+public abstract class BasicDAOImpl<M extends AbstractEntity, PK extends Serializable> implements BasicDao<M, PK> {
 
     private SessionFactory sessionFactory;
 
@@ -146,6 +143,7 @@ public abstract class BasicDAOImpl<M extends Serializable, PK extends java.io.Se
     public void delete(PK id) {
         Session session = getSession();
         M entity = (M) session.get(this.entityClass, id);
+        entity.preRemove();
         session.delete(entity);
 //        Session session = getSession();
 //        Transaction transaction = null;
@@ -172,21 +170,14 @@ public abstract class BasicDAOImpl<M extends Serializable, PK extends java.io.Se
     @Override
     public void deleteArray(PK[] id) {
         if (id != null && id.length >0) {
-//            StringBuffer hql = new StringBuffer();
-//            hql.append("delete from ").append(entityClass.getSimpleName())
-//                    .append(" as o where o.id in (");
+            Session session = getSession();
             for (int i = 0; i < id.length; i++) {
-                this.delete(id[i]);
-//                hql.append("?" + ",");
+                M m = (M) session.get(this.entityClass, id[i]);
+                if (m == null) continue;
+                m.preRemove();
+                session.delete(m);
+                if (i % 20 == 0) session.flush();
             }
-//            hql.replace(hql.length() - 1, hql.length(), ")");
-//            logger.info(hql.toString());
-//            Session session = getSession();
-//            Query query = session.createQuery(hql.toString());
-//            for (int i = 0; i < id.length; i++) {
-//                query.setParameter(i, id[i]);
-//            }
-//            query.executeUpdate();
         }
     }
 
@@ -264,8 +255,21 @@ public abstract class BasicDAOImpl<M extends Serializable, PK extends java.io.Se
     }
 
     @Override
+    public void deleteObject(M model) {
+        model.preRemove();
+        getSession().delete(model);
+    }
+
+    @Override
     public void deleteObjectList(List<M> list) {
-        //TODO 删除列表中的对象
+        Session session = getSession();
+        int count = 0;
+        for (M m:list) {
+            m.preRemove();
+            session.delete(m);
+            count ++;
+            if (count % 20 == 0) session.flush();
+        }
     }
 
 //    @Override

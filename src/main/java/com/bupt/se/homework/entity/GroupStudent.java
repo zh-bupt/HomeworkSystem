@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "group_student")
-public class GroupStudent implements Serializable {
+public class GroupStudent extends AbstractEntity {
 
     private GroupStudentPK pk;
     private Group_ group_;

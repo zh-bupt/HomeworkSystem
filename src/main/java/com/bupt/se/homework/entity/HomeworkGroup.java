@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "homework_group")
-public class HomeworkGroup implements Serializable {
+public class HomeworkGroup extends AbstractEntity {
     private Homework homework;
     private Group_ group_;
     private HomeworkGroupPK pk;

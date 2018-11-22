@@ -1,10 +1,12 @@
 package com.bupt.se.homework.bo;
 
+import com.bupt.se.homework.entity.AbstractEntity;
+
 import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-public interface BasicBo<M extends Serializable, PK extends Serializable> {
+public interface BasicBo<M extends AbstractEntity, PK extends Serializable> {
     boolean save(M model);
 
     boolean save(List<M> models);
@@ -12,6 +14,10 @@ public interface BasicBo<M extends Serializable, PK extends Serializable> {
     boolean delete(PK key);
 
     boolean deleteArray(PK id[]);
+
+    boolean deleteObject(M model);
+
+    boolean deleteObjectList(List<M> list);
 
     boolean update(M model);
 

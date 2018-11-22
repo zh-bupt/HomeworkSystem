@@ -6,7 +6,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "admin")
-public class Admin implements Serializable {
+public class Admin extends AbstractEntity {
     private String adminId;
     private String adminName;
     private String password;

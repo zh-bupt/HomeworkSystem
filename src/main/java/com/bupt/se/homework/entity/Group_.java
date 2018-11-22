@@ -9,14 +9,13 @@ import java.util.Set;
 
 @Entity
 @Table(name = "group_")
-public class Group_ implements Serializable {
+public class Group_ extends AbstractEntity {
     private String groupId;
     private Course course;
     private int num;
     private String name;
     private double groupScore;
     private Student leader;
-//    private Set<Student> members = new HashSet<>();
     private Set<GroupStudent> groupStudentSet = new HashSet<>();
     private Set<HomeworkGroup> homeworkGroups = new HashSet<>();
 
@@ -32,20 +31,6 @@ public class Group_ implements Serializable {
         this.groupStudentSet = groupStudentSet;
     }
 
-//    @ManyToMany(cascade = {CascadeType.ALL})
-//    @JoinTable(
-//            name = "group_student",
-//            joinColumns = {@JoinColumn(name = "groupId")},
-//            inverseJoinColumns = {@JoinColumn(name = "studentId")}
-//    )
-//    public Set<Student> getMembers() {
-//        return members;
-//    }
-//
-//    public void setMembers(Set<Student> members) {
-//        this.members = members;
-//    }
-
     @OneToMany(mappedBy = "group_", cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
     public Set<HomeworkGroup> getHomeworkGroups() {
         return homeworkGroups;
@@ -54,20 +39,6 @@ public class Group_ implements Serializable {
     public void setHomeworkGroups(Set<HomeworkGroup> homeworkGroups) {
         this.homeworkGroups = homeworkGroups;
     }
-
-    //    @ManyToMany(fetch = FetchType.LAZY)
-//    @JoinTable(
-//            name = "homework_group",
-//            joinColumns = {@JoinColumn(name = "groupId")},
-//            inverseJoinColumns = {@JoinColumn(name = "homeworkId")}
-//    )
-//    public Set<Homework> getHomework() {
-//        return homework;
-//    }
-//
-//    public void setHomework(Set<Homework> homework) {
-//        this.homework = homework;
-//    }
 
     @Id
     @GeneratedValue(generator = "groupId")

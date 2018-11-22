@@ -10,7 +10,7 @@ import java.io.Serializable;
  **/
 @Entity
 @Table(name = "student_homework")
-public class StudentHomework implements Serializable {
+public class StudentHomework extends AbstractEntity {
     private StudentHomeworkPK pk;
     private Homework homework;
     private Student student;

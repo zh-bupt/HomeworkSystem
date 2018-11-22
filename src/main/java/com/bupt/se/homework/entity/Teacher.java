@@ -6,7 +6,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "teacher")
-public class Teacher implements Serializable {
+public class Teacher extends AbstractEntity {
 
     private String teacherId;
     private String teacherName;

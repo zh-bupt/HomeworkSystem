@@ -8,7 +8,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "course")
-public class Course implements Serializable {
+public class Course extends AbstractEntity {
     private String courseId;
     private String courseName;
     private int capacity;

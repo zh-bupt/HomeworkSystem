@@ -22,7 +22,7 @@ import java.util.List;
  * @create: 2018-11-13 15:12
  **/
 @Repository
-public abstract class BasicBoImpl<M extends Serializable, PK extends Serializable> implements BasicBo<M, PK> {
+public abstract class BasicBoImpl<M extends AbstractEntity, PK extends Serializable> implements BasicBo<M, PK> {
 
     protected BasicDao<M, PK> basicDao;
 
@@ -73,6 +73,32 @@ public abstract class BasicBoImpl<M extends Serializable, PK extends Serializabl
         TransactionStatus status = getTransactionStatus();
         try {
             basicDao.deleteArray(id);
+            getTransactionManager().commit(status);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean deleteObject(M model) {
+        TransactionStatus status = getTransactionStatus();
+        try {
+            basicDao.deleteObject(model);
+            getTransactionManager().commit(status);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean deleteObjectList(List<M> list) {
+        TransactionStatus status = getTransactionStatus();
+        try {
+            basicDao.deleteObjectList(list);
             getTransactionManager().commit(status);
             return true;
         } catch (Exception e) {

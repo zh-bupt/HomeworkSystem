@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "homework")
-public class Homework implements Serializable {
+public class Homework extends AbstractEntity {
 
     private int homeworkId;
     private Course course;
