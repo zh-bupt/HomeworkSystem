@@ -24,6 +24,7 @@
             <th>内容</th>
             <th>发布时间</th>
             <th>截止时间</th>
+            <th>提交作业</th>
         </tr>
         <s:iterator value="homeworkList" >
             <tr>
@@ -32,13 +33,13 @@
                 <td><s:property value="content"/> </td>
                 <td><s:property value="releaseTime"/> </td>
                 <td><s:property value="deadline"/> </td>
-                <td><input type="button" name="update" value="查看" onclick="javascript:window.location.href='deleteCourseStudentAction.action?studentId=${studentId}'"/></td>
-                <td><input type="button" name="delete" value="提交" onclick="javascript:window.location.href='deleteCourseStudentAction.action?studentId=${studentId}'"/></td>
-                <td<s:form action="submitHomeworkAction" method="post" enctype="multipart/form-data">
-                        <s:file name="groupHomework" label="选择上传的作业" />
-                        <s:submit value="上传" />
-                    </s:form>>
-                </td>
+
+                <td><input type="button" name="delete" value="提交" onclick="javascript:window.location.href='setCurrentHomeworkAction.action?homeworkId=${homeworkId}'"/></td>
+                <%--<td><s:form action="submitHomeworkAction" method="post" enctype="multipart/form-data">--%>
+                        <%--<s:file name="groupHomework" label="" />--%>
+                        <%--<s:submit value="提交" />--%>
+                    <%--</s:form>--%>
+                <%--</td>--%>
 
             </tr>
         </s:iterator>

@@ -61,7 +61,7 @@
 
     <tx:advice id="txAdvice2" transaction-manager="transactionManager">
         <tx:attributes>
-            <tx:method name="test*" rollback-for="java.lang.Exception" read-only="true"/>
+            <tx:method name="*" rollback-for="java.lang.Exception" read-only="true"/>
         </tx:attributes>
     </tx:advice>
 

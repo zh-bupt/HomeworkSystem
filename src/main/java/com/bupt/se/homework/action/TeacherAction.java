@@ -3,6 +3,7 @@ package com.bupt.se.homework.action;
 import com.bupt.se.homework.bo.*;
 import com.bupt.se.homework.bo.impl.CourseBoImpl;
 import com.bupt.se.homework.bo.impl.StudentBoImpl;
+import com.bupt.se.homework.bo.impl.StudentCourseBoImpl;
 import com.bupt.se.homework.entity.*;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
@@ -16,9 +17,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.struts2.ServletActionContext;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -28,7 +27,7 @@ public class TeacherAction extends ActionSupport {
     private List<Course> courseList = new ArrayList<Course>();
     private List<Student> studentList = new ArrayList<Student>();
     private List<Homework> homeworkList = new ArrayList<Homework>();
-
+    private List<HomeworkGroup> homeworkGroupList = new ArrayList<>();
 
 
     private TeacherBo teacherBo;// = new TeacherBoImpl();
@@ -49,6 +48,46 @@ public class TeacherAction extends ActionSupport {
     private File studentExcel;//上传的文件
     private String studentExcelContentType;//上传的文件类型
     private String studentExcelFileName; //上传的文件名
+
+    private String homeworkFileName;
+    private HomeworkGroup homeworkGroup = new HomeworkGroup();//貌似没用
+
+    public void setFileDir(String fileDir)
+    {
+        this.homeworkFileName = fileDir;
+    }
+
+    public HomeworkGroup getHomeworkGroup() {
+        return homeworkGroup;
+    }
+
+    public void setHomeworkGroup(HomeworkGroup homeworkGroup) {
+        this.homeworkGroup = homeworkGroup;
+    }
+
+    public List<HomeworkGroup> getHomeworkGroupList() {
+        return homeworkGroupList;
+    }
+
+    public void setHomeworkGroupList(List<HomeworkGroup> homeworkGroupList) {
+        this.homeworkGroupList = homeworkGroupList;
+    }
+
+    public StudentCourse getStudentCourse() {
+        return studentCourse;
+    }
+
+    public void setStudentCourse(StudentCourse studentCourse) {
+        this.studentCourse = studentCourse;
+    }
+
+    public List<StudentCourse> getStudentCourseList() {
+        return studentCourseList;
+    }
+
+    public void setStudentCourseList(List<StudentCourse> studentCourseList) {
+        this.studentCourseList = studentCourseList;
+    }
 
     public File getStudentExcel() {
         return studentExcel;
@@ -88,6 +127,10 @@ public class TeacherAction extends ActionSupport {
 
     public void setCourseBo(CourseBoImpl courseBo) {
         this.courseBo = courseBo;
+    }
+
+    public void setStudentCourseBo(StudentCourseBoImpl studentCourseBo) {
+        this.studentCourseBo = studentCourseBo;
     }
 
     public List<Course> getCourseList() {
@@ -164,7 +207,8 @@ public class TeacherAction extends ActionSupport {
         course = courseBo.get(session.get("courseId").toString());
         System.out.println(course.getCourseId());
         homework.setCourse(course);
-        homeworkBo.addHomework(homework);
+        //homeworkBo.addHomework(homework);
+        teacherBo.AssignHomework(course,homework);
         return "success";
     }
 
@@ -183,6 +227,8 @@ public class TeacherAction extends ActionSupport {
         course = courseBo.get(session.get("courseId").toString());
         studentCourse.setCourse(course);
         studentCourse.setStudent(student);
+        StudentCoursePK studentCoursePK = new StudentCoursePK(student.getStudentId(),course.getCourseId());
+        studentCourse.setPk(studentCoursePK);
         studentCourseBo.save(studentCourse);
         return "success";
     }
@@ -393,10 +439,10 @@ public class TeacherAction extends ActionSupport {
         course = courseBo.get(session.get("courseId").toString());
         System.out.println(course.getCourseId());
         studentList = courseBo.getStudents(course);
-        //homeworkList = courseBo.getHomework(course);TODO 等张珩实现此方法
+        //homeworkList.addAll(course.getHomework());//TODO 等实现此方法
         Set<Homework> homeworkSet = course.getHomework();
         System.out.println("HomeworkList SIZE"+homeworkSet.size());
-        homeworkList = null;
+
         if (homeworkSet != null && homeworkSet.size() > 0) {
 
             homeworkList.addAll(homeworkSet);
@@ -427,4 +473,116 @@ public class TeacherAction extends ActionSupport {
     public CourseBo getCourseBo() {
         return this.courseBo;
     }
+
+
+    public void setPercentage(String percentage) {
+        this.homework.setPercentage(Integer.valueOf(percentage));//TODO 判断是否是整数
+    }
+
+    public void setGroupPrefix(String groupPrefix) {
+        this.course.setGroupPrefix(groupPrefix);
+    }
+
+    /**
+     * @Author KRF
+     * @Description 删除该教师的课程
+     * @Date 15:40 2018/11/22
+     * @Param []
+     * @return java.lang.String
+     **/
+    public String deleteCourse() throws Exception {
+        //course = courseBo.get(course.getCourseId());
+        courseBo.delete(course.getCourseId());
+        return "success";
+    }
+
+    /**
+     * @Author KRF
+     * @Description 修改某门课的配置，如小组配置
+     * @Date 15:46 2018/11/22
+     * @Param []
+     * @return java.lang.String
+     **/
+
+    public String updateCourse() throws Exception {
+        courseBo.update(course);
+        return "success";
+    }
+
+    /**
+     * @Author KRF
+     * @Description 删除某门课的某次作业
+     * @Date 15:46 2018/11/22
+     * @Param []
+     * @return java.lang.String
+     **/
+
+    public String deleteHomework() throws Exception {
+        homeworkBo.delete(homework.getHomeworkId());
+        return "success";
+    }
+
+    /**
+     * @Author KRF
+     * @Description 删除某门课程的某个学生，使其不再能上此课
+     * @Date 15:46 2018/11/22
+     * @Param []
+     * @return java.lang.String
+     **/
+
+    public String deleteStudentCourse() throws Exception {
+        Map<String, Object> session = ActionContext.getContext().getSession();
+//        course = courseBo.get(session.get("courseId").toString());
+//        student = studentBo.get(student.getStudentId());
+        studentCourseBo.delete(new StudentCoursePK(student.getStudentId(),session.get("courseId").toString()));
+        return "success";
+    }
+
+    /**
+     * @Author KRF
+     * @Description 列出该门课该作业提交了的所有小组，并支持下载作业
+     * @Date 15:50 2018/11/22
+     * @Param []
+     * @return java.lang.String
+     **/
+
+    public String listHomeworkGroup() throws Exception {
+//        Map<String, Object> session = ActionContext.getContext().getSession();
+//        course = courseBo.get(session.get("courseId").toString());
+//        course.getGroups();
+        homework = homeworkBo.get(homework.getHomeworkId());
+        homeworkGroupList.addAll(homework.getHomeworkGroups());
+        return "success";
+    }
+
+    /**
+     * @Author KRF
+     * @Description  教师通过点击按钮下载学生的作业
+     * @Date 16:05 2018/11/22
+     * @Param []
+     * @return java.lang.String
+     **/
+
+    public String downloadHomework() throws Exception {
+        getDownloadFile();
+        return "success";
+    }
+    public InputStream getDownloadFile() throws Exception{
+//        String filePath = ServletActionContext.getRequest().getServletContext().getRealPath("/download/"+fileName);
+        Map<String, Object> session = ActionContext.getContext().getSession();
+//        course = courseBo.get(session.get("courseId").toString());
+        //String filePath = ServletActionContext.getServletContext().getRealPath("/upload/course/"+session.get("courseId").toString()+"/"+session.get("homeworkId").toString()+"/"+homeworkFileName);
+        String filePath = homeworkFileName;
+        InputStream is = new FileInputStream(new File(filePath));
+        return is;
+    }
+    public void setHomeworkFileName(String fileName) throws UnsupportedEncodingException {
+        //处理get请求中文乱码
+        this.homeworkFileName = new String(fileName.getBytes("iso8859-1"),"utf-8");
+    }
+
+    public String getHomeworkFileName() {
+        return homeworkFileName;
+    }
+
 }

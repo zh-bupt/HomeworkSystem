@@ -28,17 +28,12 @@
                 <td><s:property value="courseName"/> </td>
                 <td><s:property value="capacity"/> </td>
                 <td><s:property value="createTime"/> </td>
-                <td><input type="button" name="update" value="课程详情" onclick="javascript:window.location.href='setCurrentCourseAction.action?courseId=${courseId}'"/> </td>
+                <td><input type="button" name="update" value="课程详情" onclick="javascript:window.location.href='/student/setCurrentCourseAction.action?courseId=${courseId}'"/> </td>
             </tr>
         </s:iterator>
     </table>
 </s:if>
 
-<h3>上传作业</h3>
-<s:form action="addStudentForCourseByFileAction" method="post" enctype="multipart/form-data">
-    <s:file name="studentExcel" label="选择上传的文件" />
-    <s:submit value="上传" />
-</s:form>
 <br/>
 <br/>
 </body>
