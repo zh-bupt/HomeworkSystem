@@ -42,7 +42,8 @@
 
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>
-            <tx:method name="get*" read-only="true"/>
+            <tx:method name="getHomeworkGroup" propagation="REQUIRED" read-only="false"/>
+            <!--<tx:method name="get*" read-only="true"/>-->
             <tx:method name="*"  rollback-for="java.lang.Exception" propagation="REQUIRED" />
             <tx:method name="add*" propagation="REQUIRED"/>
             <tx:method name="save*" propagation="REQUIRED"/>
@@ -57,6 +58,11 @@
     <aop:config>
         <aop:pointcut expression="execution(* com.bupt.se.homework.bo.impl.*.*(..))" id="pointCut1"/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="pointCut1"/>
+    </aop:config>
+
+    <aop:config>
+        <aop:pointcut expression="execution(* com.bupt.se.homework.dao.impl.*.*(..))" id="pointCut3"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="pointCut3"/>
     </aop:config>
 
     <tx:advice id="txAdvice2" transaction-manager="transactionManager">

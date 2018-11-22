@@ -136,6 +136,11 @@ public abstract class BasicDAOImpl<M extends java.io.Serializable, PK extends ja
 //        }
     }
 
+    @Override
+    public void merge(M model) {
+        getSession().merge(model);
+    }
+
     /**
      * @Description: 通过主键删除对象信息
      * @param id

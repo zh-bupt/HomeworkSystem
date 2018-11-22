@@ -223,7 +223,11 @@ public class StudentAction{
             homeworkGroup.setSubmissionTime(new Date());
            // HomeworkGroupPK homeworkGroupPK = new HomeworkGroupPK(homework.getHomeworkId(),group_.getGroupId());
            // homeworkGroup.setPk(homeworkGroupPK);
-            homeworkGroupBo.update(homeworkGroup);
+
+            //homeworkGroupBo.update(homeworkGroup);
+
+            homeworkGroupBo.merge(homeworkGroup);
+
             //传文件给studentBo
         } catch (IOException e) {
             e.printStackTrace();
