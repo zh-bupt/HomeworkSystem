@@ -8,11 +8,9 @@ import com.bupt.se.homework.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 
 @Service("studentBo")
-@Transactional
 public class StudentBoImpl extends BasicBoImpl<Student, String> implements StudentBo {
 
     private StudentDAO studentDAO;
@@ -26,17 +24,17 @@ public class StudentBoImpl extends BasicBoImpl<Student, String> implements Stude
 
     @Override
     public boolean addStudent(Student student) {
-        return studentDAO.save(student);
+        return this.save(student);
     }
 
     @Override
     public boolean deleteStudent(String id) {
-        return studentDAO.delete(id);
+        return this.delete(id);
     }
 
     @Override
     public boolean updateStudent(Student student) {
-        return studentDAO.update(student);
+        return this.update(student);
     }
 
     @Override

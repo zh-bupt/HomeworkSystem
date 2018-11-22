@@ -8,7 +8,6 @@ import com.bupt.se.homework.entity.HomeworkGroupPK;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @description:
@@ -16,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
  * @create: 2018-11-16 14:27
  **/
 @Service("homeworkGroupBo")
-@Transactional
 public class HomeworkGroupBoImpl
         extends BasicBoImpl<HomeworkGroup, HomeworkGroupPK>
         implements HomeworkGroupBo {

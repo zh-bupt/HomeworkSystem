@@ -10,15 +10,15 @@ import java.util.List;
  **/
 public interface BasicDao<M extends java.io.Serializable, PK extends java.io.Serializable>{
 
-    boolean save(M model);
+    void save(M model);
 
-    boolean save(List<M> list);
+    void save(List<M> list);
 
-    boolean update(M model);
+    void update(M model);
 
 //    public void merge(M model);
 
-    boolean delete(PK id) ;
+    void delete(PK id) ;
 
 //    public void deleteObject(M model) ;
 
@@ -27,7 +27,7 @@ public interface BasicDao<M extends java.io.Serializable, PK extends java.io.Ser
 //    public void delete(Class<?> entityClass, LinkedHashMap<Object, Object> equalFields,
 //                       String whereJpql);
 
-    boolean deleteArray(PK id[]);
+    void deleteArray(PK id[]);
 
     boolean exists(PK id);
 

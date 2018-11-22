@@ -1,7 +1,5 @@
 package com.bupt.se.homework.bo.impl;
 
-import org.springframework.transaction.annotation.Transactional;
-
 /**
  * @description: 课程成绩统计类
  * @author: zh

@@ -17,7 +17,7 @@ public class Homework implements Serializable {
     private String content;
     private Date releaseTime;
     private Date deadline;
-    private int percentage;
+    private Integer percentage = 0;
     private Set<HomeworkGroup> homeworkGroups = new HashSet<>();
     private Set<StudentHomework> studentHomeworkSet = new HashSet<>();
 
@@ -96,11 +96,11 @@ public class Homework implements Serializable {
 
     @Basic
     @Column(columnDefinition = "INT(3)")
-    public int getPercentage() {
+    public Integer getPercentage() {
         return percentage;
     }
 
-    public void setPercentage(int percentage) {
+    public void setPercentage(Integer percentage) {
         this.percentage = percentage;
     }
 }

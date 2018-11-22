@@ -10,7 +10,6 @@ import com.bupt.se.homework.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -20,7 +19,6 @@ import java.util.*;
  * @Date: 2018/11/10
  **/
 @Service("teacherBo")
-@Transactional
 public class TeacherBoImpl extends BasicBoImpl<Teacher, String> implements TeacherBo {
 
     TeacherDAO teacherDAO;
@@ -46,17 +44,17 @@ public class TeacherBoImpl extends BasicBoImpl<Teacher, String> implements Teach
 
     @Override
     public boolean addTeacher(Teacher teacher) {
-        return teacherDAO.save(teacher);
+        return this.save(teacher);
     }
 
     @Override
     public boolean updateTeacher(Teacher teacher) {
-        return teacherDAO.update(teacher);
+        return this.update(teacher);
     }
 
     @Override
     public boolean deleteTeacher(String id) {
-        return teacherDAO.delete(id);
+        return this.delete(id);
     }
 
     @Override

@@ -18,29 +18,21 @@ public class TeacherDAOImpl extends BasicDAOImpl<Teacher, String> implements Tea
             return ReturnCode.HOMEWORK_PERCENTAGE_EXCEEDED;
         }
         Session session = getSession();
-        Transaction transaction = session.beginTransaction();
-        try {
-            // 保存作业
-            homework.setCourse(course);
-            session.save(homework);
-            // 更新课程的作业列表
-            session.update(course);
-            // 更新group的作业列表
-            Set<Group_> groupSet = course.getGroups();
-            for (Group_ g:groupSet) {
-                HomeworkGroup hg = new HomeworkGroup(homework, g);
-                g.getHomeworkGroups().add(hg);
-                session.update(g);
-                homework.getHomeworkGroups().add(hg);
-                session.save(hg);
-            }
-            session.update(homework);
-            transaction.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            transaction.rollback();
-            return ReturnCode.DATABASE_ERROR;
+        // 保存作业
+        homework.setCourse(course);
+        session.save(homework);
+        // 更新课程的作业列表
+        session.update(course);
+        // 更新group的作业列表
+        Set<Group_> groupSet = course.getGroups();
+        for (Group_ g:groupSet) {
+            HomeworkGroup hg = new HomeworkGroup(homework, g);
+            g.getHomeworkGroups().add(hg);
+            session.update(g);
+            homework.getHomeworkGroups().add(hg);
+            session.save(hg);
         }
+        session.update(homework);
         return ReturnCode.ASSIGN_HOMEWORK_SUCCESS;
     }
 
@@ -49,6 +41,7 @@ public class TeacherDAOImpl extends BasicDAOImpl<Teacher, String> implements Tea
         int total = 0;
         for (Homework homework:homeworkSet) {
             total += homework.getPercentage();
+            System.out.println("total: " + total);
         }
         return total;
     }

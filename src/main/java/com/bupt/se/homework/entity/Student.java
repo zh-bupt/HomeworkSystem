@@ -59,7 +59,7 @@ public class Student implements Serializable {
         this.groupsJoined = groupsJoined;
     }
 
-    @OneToMany(cascade = {CascadeType.ALL}, fetch = FetchType.LAZY)
+    @OneToMany(cascade = {CascadeType.ALL, CascadeType.DETACH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "leaderId")
     public Set<Group_> getGroupsManaged() {
         return groupsManaged;

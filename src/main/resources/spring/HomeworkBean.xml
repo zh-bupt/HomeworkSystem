@@ -4,9 +4,9 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
-    <bean id="homeworkBo" class="com.bupt.se.homework.bo.impl.HomeworkBoImpl">
+    <!--<bean id="homeworkBo" class="com.bupt.se.homework.bo.impl.HomeworkBoImpl">-->
         <!--<property name="homeworkDAO" ref="homeworkDAO"/>-->
-    </bean>
+    <!--</bean>-->
     <!--<bean id="homeworkDAO" class="com.bupt.se.homework.dao.impl.HomeworkDAOImpl">-->
         <!--&lt;!&ndash;<property name="sessionFactory" ref="sessionFactory"/>&ndash;&gt;-->
     <!--</bean>-->
