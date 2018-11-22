@@ -207,7 +207,8 @@ public class StudentAction{
         System.out.print(homeworkGroup);
         //Group_ group_ = studentBo.getCourseGroup(session.get("id").toString(),session.get("courseId").toString());//TODO 该方法待实现
         //获取要保存文件夹的物理路径(绝对路径)
-        String realPath= ServletActionContext.getServletContext().getRealPath("/upload/course/"+session.get("courseId").toString()+"/"+session.get("homeworkId").toString()+"/");
+        String relativePath = "/upload/course/"+session.get("courseId").toString()+"/"+session.get("homeworkId").toString()+"/";
+        String realPath= ServletActionContext.getServletContext().getRealPath(relativePath);
         File file = new File(realPath);
         System.out.print(realPath);
         //测试此抽象路径名表示的文件或目录是否存在。若不存在，创建此抽象路径名指定的目录，包括所有必需但不存在的父目录。
@@ -217,7 +218,7 @@ public class StudentAction{
             //保存文件
             FileUtils.copyFile(groupHomework, new File(file,groupHomeworkFileName));
             //String result = getDataFromExcel(realPath+"\\"+studentExcelFileName);
-            homeworkGroup.setFileDir(realPath+groupHomeworkFileName);
+            homeworkGroup.setFileDir(groupHomeworkFileName);
 //            homeworkGroup.setHomework(homework);
 //            homeworkGroup.setGroup_(group_);
             homeworkGroup.setSubmissionTime(new Date());
@@ -242,6 +243,14 @@ public class StudentAction{
         return "success";
     }
 
+    /**
+     * @Author KRF
+     * @Description 列出该课程的所有作业和该同学所在的小组
+     * @Date 20:15 2018/11/22
+     * @Param []
+     * @return java.lang.String
+     **/
+
     public String listHomeworkAndGroup() throws Exception {
         Map<String, Object> session = ActionContext.getContext().getSession();
         course = courseBo.get(session.get("courseId").toString());
@@ -253,7 +262,7 @@ public class StudentAction{
 
             homeworkList.addAll(homeworkSet);
         }
-
+        //TODO 列出小组
         Group_ group_ = studentBo.getCourseGroup(session.get("id").toString(),session.get("courseId").toString());
 
         return "success";
@@ -280,16 +289,21 @@ public class StudentAction{
         group.setCourse(course);
         student = studentBo.get(session.get("id").toString());
         group.setLeader(student);
-        Set<GroupStudent> groupStudentSet =  new HashSet<>();;
+        Set<GroupStudent> groupStudentSet =  new HashSet<>();
+        Set<Student> studentSet = new HashSet<>();
         for(String id:studentIdList)
         {
             Student s = studentBo.get(id);
+            studentSet.add(s);
             System.out.println(id);
             System.out.print(s);
             GroupStudent groupStudent = new GroupStudent(group,s);
             groupStudentSet.add(groupStudent);
         }
+        group.setMembers(studentSet);
         group.setGroupStudentSet(groupStudentSet);//TODO 注意数据库有没有添加成功
+        System.out.println(group);
+        System.out.println(group.getGroupId()+group.getName()+String.valueOf(group.getNum()));
         groupBo.save(group);
         return "success";
     }

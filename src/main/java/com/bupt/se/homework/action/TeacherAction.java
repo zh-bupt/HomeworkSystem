@@ -52,6 +52,24 @@ public class TeacherAction extends ActionSupport {
     private String homeworkFileName;
     private HomeworkGroup homeworkGroup = new HomeworkGroup();//貌似没用
 
+    private String groupId;
+
+    private String homeworkId;
+
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
+    }
+
+    public String getHomeworkId() {
+        return homeworkId;
+    }
+
+
+
     public void setFileDir(String fileDir)
     {
         this.homeworkFileName = fileDir;
@@ -414,6 +432,7 @@ public class TeacherAction extends ActionSupport {
 
 
     public void setHomeworkId(String homeworkId) {
+        this.homeworkId = homeworkId;
         this.homework.setHomeworkId(Integer.valueOf(homeworkId));
     }
 
@@ -567,15 +586,18 @@ public class TeacherAction extends ActionSupport {
         getDownloadFile();
         return "success";
     }
+
     public InputStream getDownloadFile() throws Exception{
 //        String filePath = ServletActionContext.getRequest().getServletContext().getRealPath("/download/"+fileName);
         Map<String, Object> session = ActionContext.getContext().getSession();
+
 //        course = courseBo.get(session.get("courseId").toString());
-        //String filePath = ServletActionContext.getServletContext().getRealPath("/upload/course/"+session.get("courseId").toString()+"/"+session.get("homeworkId").toString()+"/"+homeworkFileName);
-        String filePath = homeworkFileName;
+        String filePath = ServletActionContext.getServletContext().getRealPath("/upload/course/"+session.get("courseId").toString()+"/"+homeworkId+"/"+homeworkFileName);
+
         InputStream is = new FileInputStream(new File(filePath));
         return is;
     }
+
     public void setHomeworkFileName(String fileName) throws UnsupportedEncodingException {
         //处理get请求中文乱码
         this.homeworkFileName = new String(fileName.getBytes("iso8859-1"),"utf-8");

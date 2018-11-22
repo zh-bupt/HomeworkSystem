@@ -37,8 +37,9 @@
                 <td><s:property value="score"/> </td>
                 <td><s:property value="comment"/> </td>
                 <%--<td><input type="button" name="update" value="查看提交" onclick="javascript:window.location.href='/teacher/listHomeworkGroupAction.action?homeworkId=${homeworkId}'"/></td>--%>
-                <%--<td><input type="button" name="download" value="下载" onclick="javascript:window.location.href='/teacher/downloadHomeworkAction.action?fileDir=${fileDir}'"/></td>--%>
-                <td><a href="/teacher/downloadHomeworkAction.action?fileDir=${fileDir}">下载</a></td>
+
+                <td><input type="button" name="download" value="下载" onclick="javascript:window.location.href='/teacher/downloadHomeworkAction.action?homeworkId=${homeworkId}&groupId=${groupId}&fileDir=${fileDir}'"/></td>
+                <%--<td><a href="/teacher/downloadHomeworkAction.action?fileDir=${fileDir}">下载</a></td>--%>
             </tr>
         </s:iterator>
     </table>
