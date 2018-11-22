@@ -8,7 +8,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "student")
-public class Student implements Serializable {
+public class Student extends AbstractEntity {
 
     private String studentId;
     private String studentName;
@@ -19,7 +19,7 @@ public class Student implements Serializable {
     private String email;
     private Set<StudentCourse> studentCourses = new HashSet<>();
     private Set<Group_> groupsManaged = new HashSet<>();
-    private Set<Group_> groupsJoined = new HashSet<>();
+//    private Set<Group_> groupsJoined = new HashSet<>();
     private Set<GroupStudent> groupStudentSet = new HashSet<>();
     private Set<StudentHomework> studentHomeworkSet = new HashSet<>();
 
@@ -50,14 +50,14 @@ public class Student implements Serializable {
         this.groupStudentSet = groupStudentSet;
     }
 
-    @ManyToMany(mappedBy = "members", cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
-    public Set<Group_> getGroupsJoined() {
-        return groupsJoined;
-    }
+//    @ManyToMany(mappedBy = "members", cascade = {CascadeType.ALL},fetch = FetchType.LAZY)
+//    public Set<Group_> getGroupsJoined() {
+//        return groupsJoined;
+//    }
 
-    public void setGroupsJoined(Set<Group_> groupsJoined) {
-        this.groupsJoined = groupsJoined;
-    }
+//    public void setGroupsJoined(Set<Group_> groupsJoined) {
+//        this.groupsJoined = groupsJoined;
+//    }
 
     @OneToMany(cascade = {CascadeType.ALL, CascadeType.DETACH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "leaderId")
@@ -167,5 +167,10 @@ public class Student implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(studentId, studentName, classId, sex, entranceDate, password, email);
+    }
+
+    @Override
+    public void preRemove() {
+        this.groupsManaged = null;
     }
 }

@@ -2,6 +2,7 @@ package com.bupt.se.homework.dao.impl;
 
 import com.bupt.se.homework.dao.HibernateDaoUtil;
 import com.bupt.se.homework.dao.BasicDao;
+import com.bupt.se.homework.entity.AbstractEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
@@ -23,7 +24,7 @@ import java.util.List;
  * @author: zh
  * @create: 2018-11-10 16:36
  **/
-public abstract class BasicDAOImpl<M extends java.io.Serializable, PK extends java.io.Serializable> implements BasicDao<M, PK> {
+public abstract class BasicDAOImpl<M extends Serializable, PK extends java.io.Serializable> implements BasicDao<M, PK> {
 
     private SessionFactory sessionFactory;
 
@@ -171,20 +172,21 @@ public abstract class BasicDAOImpl<M extends java.io.Serializable, PK extends ja
     @Override
     public void deleteArray(PK[] id) {
         if (id != null && id.length >0) {
-            StringBuffer hql = new StringBuffer();
-            hql.append("delete from ").append(entityClass.getSimpleName())
-                    .append(" as o where o.id in (");
+//            StringBuffer hql = new StringBuffer();
+//            hql.append("delete from ").append(entityClass.getSimpleName())
+//                    .append(" as o where o.id in (");
             for (int i = 0; i < id.length; i++) {
-                hql.append("?" + ",");
+                this.delete(id[i]);
+//                hql.append("?" + ",");
             }
-            hql.replace(hql.length() - 1, hql.length(), ")");
-            logger.info(hql.toString());
-            Session session = getSession();
-            Query query = session.createQuery(hql.toString());
-            for (int i = 0; i < id.length; i++) {
-                query.setParameter(i, id[i]);
-            }
-            query.executeUpdate();
+//            hql.replace(hql.length() - 1, hql.length(), ")");
+//            logger.info(hql.toString());
+//            Session session = getSession();
+//            Query query = session.createQuery(hql.toString());
+//            for (int i = 0; i < id.length; i++) {
+//                query.setParameter(i, id[i]);
+//            }
+//            query.executeUpdate();
         }
     }
 

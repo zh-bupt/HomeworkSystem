@@ -1,5 +1,8 @@
 package com.bupt.se.homework.dao;
 
+import com.bupt.se.homework.entity.AbstractEntity;
+
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -8,7 +11,7 @@ import java.util.List;
  * @Author: zh
  * @Date: 2018/11/10
  **/
-public interface BasicDao<M extends java.io.Serializable, PK extends java.io.Serializable>{
+public interface BasicDao<M extends Serializable, PK extends java.io.Serializable>{
 
     void save(M model);
 

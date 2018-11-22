@@ -2,6 +2,7 @@ package com.bupt.se.homework.bo.impl;
 
 import com.bupt.se.homework.bo.BasicBo;
 import com.bupt.se.homework.dao.BasicDao;
+import com.bupt.se.homework.entity.AbstractEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;

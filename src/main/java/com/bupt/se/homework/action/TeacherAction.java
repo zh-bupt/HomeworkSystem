@@ -223,6 +223,10 @@ public class TeacherAction extends ActionSupport {
      **/
 
     public String listCourse() throws Exception {
+        Map<String, Object> session = ActionContext.getContext().getSession();
+        teacher = teacherBo.get(session.get("id").toString());
+        Set<Course> courses = teacher.getCourses();
+        System.out.println(courses.size());
         courseList = courseBo.listCourse();
         return "success";
     }

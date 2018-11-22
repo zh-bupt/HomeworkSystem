@@ -23,7 +23,7 @@ public class Course implements Serializable {
     public Course() {
     }
 
-    @OneToMany(cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "course", cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
     public Set<Homework> getHomework() {
         return homework;
     }
