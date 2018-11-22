@@ -5,10 +5,12 @@ import com.bupt.se.homework.bo.AdminBo;
 import com.bupt.se.homework.bo.ReturnCode;
 import com.bupt.se.homework.bo.StudentBo;
 import com.bupt.se.homework.bo.TeacherBo;
+import com.bupt.se.homework.entity.Course;
+import com.bupt.se.homework.entity.Homework;
+import com.bupt.se.homework.entity.Teacher;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.ServletActionContext;
-
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
@@ -18,7 +20,6 @@ import java.util.Map;
  * @Author: KRF
  * @Create: 2018/11/09
  **/
-
 public class LoginAction extends ActionSupport {
 
     StudentBo studentBo;

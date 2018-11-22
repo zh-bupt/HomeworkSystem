@@ -7,7 +7,9 @@ import com.bupt.se.homework.entity.Student;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
+import org.springframework.stereotype.Repository;
 
+@Repository("studentDAO")
 public class StudentDAOImpl extends BasicDAOImpl<Student, String> implements StudentDAO {
 
     @Override

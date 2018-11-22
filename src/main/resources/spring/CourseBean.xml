@@ -4,19 +4,19 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <bean id="courseBo" class="com.bupt.se.homework.bo.impl.CourseBoImpl">
-        <property name="courseDAO" ref="courseDAO"/>
+        <!--<property name="courseDAO" ref="courseDAO"/>-->
     </bean>
 
-    <bean id="studentCourseBo" class="com.bupt.se.homework.bo.impl.StudentCourseBoImpl">
-        <property name="studentDAO" ref="studentDAO"/>
-        <property name="courseDAO" ref="courseDAO"/>
-    </bean>
+    <!--<bean id="studentCourseBo" class="com.bupt.se.homework.bo.impl.StudentCourseBoImpl">-->
+        <!--&lt;!&ndash;<property name="studentDAO" ref="studentDAO"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<property name="courseDAO" ref="courseDAO"/>&ndash;&gt;-->
+    <!--</bean>-->
 
-    <bean id="studentCourseDAO" class="com.bupt.se.homework.dao.impl.StudentCourseDAOImpl">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
+    <!--<bean id="studentCourseDAO" class="com.bupt.se.homework.dao.impl.StudentCourseDAOImpl">-->
+        <!--&lt;!&ndash;<property name="sessionFactory" ref="sessionFactory"/>&ndash;&gt;-->
+    <!--</bean>-->
 
-    <bean id="courseDAO" class="com.bupt.se.homework.dao.impl.CourseDAOImpl">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
+    <!--<bean id="courseDAO" class="com.bupt.se.homework.dao.impl.CourseDAOImpl">-->
+        <!--&lt;!&ndash;<property name="sessionFactory" ref="sessionFactory"/>&ndash;&gt;-->
+    <!--</bean>-->
 </beans>

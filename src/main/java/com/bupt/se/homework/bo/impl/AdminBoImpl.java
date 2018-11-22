@@ -6,13 +6,20 @@ import com.bupt.se.homework.dao.AdminDAO;
 import com.bupt.se.homework.dao.BasicDao;
 import com.bupt.se.homework.entity.Admin;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
+@Service("adminBo")
 public class AdminBoImpl extends BasicBoImpl<Admin, String> implements AdminBo {
 
 
     private AdminDAO adminDAO;
 
+    public AdminBoImpl() {
+    }
+
     @Autowired
+    @Qualifier("adminDAO")
     public void setAdminDAO(BasicDao<Admin, String> basicDao) {
         super.setBasicDao(basicDao);
         this.adminDAO = (AdminDAO) basicDao;
@@ -35,17 +42,17 @@ public class AdminBoImpl extends BasicBoImpl<Admin, String> implements AdminBo {
     }
 
     @Override
-    public void updateAdmin(Admin admin) {
-
+    public boolean updateAdmin(Admin admin) {
+        return this.update(admin);
     }
 
     @Override
-    public void addAdmin(Admin admin) {
-
+    public boolean addAdmin(Admin admin) {
+        return this.save(admin);
     }
 
     @Override
-    public void deleteAdmin(String id) {
-
+    public boolean deleteAdmin(String id) {
+        return this.delete(id);
     }
 }

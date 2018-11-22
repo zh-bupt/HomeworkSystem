@@ -4,14 +4,14 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
-    <bean id="homeworkBo" class="com.bupt.se.homework.bo.impl.HomeworkBoImpl">
-        <property name="homeworkDAO" ref="homeworkDAO"/>
-    </bean>
-    <bean id="homeworkDAO" class="com.bupt.se.homework.dao.impl.HomeworkDAOImpl">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
+    <!--<bean id="homeworkBo" class="com.bupt.se.homework.bo.impl.HomeworkBoImpl">-->
+        <!--<property name="homeworkDAO" ref="homeworkDAO"/>-->
+    <!--</bean>-->
+    <!--<bean id="homeworkDAO" class="com.bupt.se.homework.dao.impl.HomeworkDAOImpl">-->
+        <!--&lt;!&ndash;<property name="sessionFactory" ref="sessionFactory"/>&ndash;&gt;-->
+    <!--</bean>-->
 
-    <bean id="homeworkGroupDAO" class="com.bupt.se.homework.dao.impl.HomeworkGroupDAOImpl">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
+    <!--<bean id="homeworkGroupDAO" class="com.bupt.se.homework.dao.impl.HomeworkGroupDAOImpl">-->
+        <!--&lt;!&ndash;<property name="sessionFactory" ref="sessionFactory"/>&ndash;&gt;-->
+    <!--</bean>-->
 </beans>

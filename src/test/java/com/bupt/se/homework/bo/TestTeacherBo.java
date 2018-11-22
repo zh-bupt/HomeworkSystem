@@ -1,10 +1,18 @@
 package com.bupt.se.homework.bo;
 
 import com.bupt.se.homework.UnitTestBase;
+import com.bupt.se.homework.entity.Course;
+import com.bupt.se.homework.entity.Homework;
 import com.bupt.se.homework.entity.Teacher;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @description: teacher bo test
@@ -45,5 +53,22 @@ public class TestTeacherBo extends UnitTestBase {
                 System.out.println(t.getTeacherId() + ":" + t.getTeacherName());
             }
         }
+    }
+
+    @Test
+    public void testAddHomework() {
+        TeacherBo teacherBo = super.getBean("teacherBo");
+        Teacher teacher = teacherBo.get("2011222222");
+        List<Course> courses = new ArrayList<>();
+        courses.addAll(teacher.getCourses());
+        Course course = courses.get(0);
+        if (course != null) {
+            System.out.println(course.getCourseName());
+            Homework homework = new Homework();
+            homework.setDeadline(new Date());
+            homework.setContent("test homework content");
+            System.out.println(teacherBo.AssignHomework(course, homework));
+        }
+
     }
 }
