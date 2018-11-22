@@ -16,7 +16,7 @@ public interface BasicDao<M extends java.io.Serializable, PK extends java.io.Ser
 
     void update(M model);
 
-//    public void merge(M model);
+    void merge(M model);
 
     void delete(PK id) ;
 

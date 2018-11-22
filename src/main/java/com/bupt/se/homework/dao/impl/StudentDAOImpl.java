@@ -19,19 +19,19 @@ public class StudentDAOImpl extends BasicDAOImpl<Student, String> implements Stu
                 "and groupId in " +
                 "(select group_.groupId from GroupStudent where studentId = ?)";
 //        String hql = "from HomeworkGroup where groupId = ?";
-        Session session = getSession();
+        Session session = super.getSession();
 //        Transaction transaction = session.beginTransaction();
         HomeworkGroup homeworkGroup = null;
-        try {
+//        try {
             Query query = session.createQuery(hql);
             query.setParameter(0, homework.getHomeworkId());
             query.setParameter(1, student.getStudentId());
             homeworkGroup = (HomeworkGroup) query.uniqueResult();
 //            transaction.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
+//        } catch (Exception e) {
+//            e.printStackTrace();
 //            transaction.rollback();
-        }
+//        }
         return homeworkGroup;
     }
 }

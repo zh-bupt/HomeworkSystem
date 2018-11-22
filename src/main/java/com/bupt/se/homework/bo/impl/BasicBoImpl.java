@@ -56,6 +56,19 @@ public abstract class BasicBoImpl<M extends Serializable, PK extends Serializabl
     }
 
     @Override
+    public boolean merge(M model) {
+        TransactionStatus status = getTransactionStatus();
+        try {
+            basicDao.merge(model);
+            getTransactionManager().commit(status);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
     public boolean delete(PK key) {
         TransactionStatus status = getTransactionStatus();
         try {
@@ -89,6 +102,7 @@ public abstract class BasicBoImpl<M extends Serializable, PK extends Serializabl
             getTransactionManager().commit(status);
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }

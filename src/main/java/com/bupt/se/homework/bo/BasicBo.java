@@ -15,9 +15,13 @@ public interface BasicBo<M extends Serializable, PK extends Serializable> {
 
     boolean update(M model);
 
+    boolean merge(M model);
+
     M get(PK key);
 
     M load(PK key);
+
+
 
     M get(
             LinkedHashMap<Object, Object> equalFields,
