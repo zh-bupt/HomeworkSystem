@@ -11,7 +11,7 @@ public class HomeworkGroup extends AbstractEntity {
     private Group_ group_;
     private HomeworkGroupPK pk;
     private Date submissionTime;
-    private Integer score;
+    private Integer score = 0;
     private String comment;
     private String fileDir;
 

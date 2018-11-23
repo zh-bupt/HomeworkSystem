@@ -12,10 +12,24 @@
     <title>课程管理</title>
 </head>
 <body>
+<h2>修改课程配置</h2>
+<s:form action="updateCourseAction">
+    <s:textfield name="courseName" label="课程名称" value=""/>
+    <s:textfield name="capacity" label="课程容量" value=""/>
+    <s:textfield name="groupPrefix" label="小组前缀" value=""/>
+    <s:textfield name="groupMin" label="小组人数下限" value=""/>
+    <s:textfield name="groupMax" label="小组人数上限" value=""/>
+    <s:submit/>
+</s:form>
 <h2>添加学生</h2>
 <s:form action="addStudentForCourseByTypeAction">
     <s:textfield name="studentId" label="学号" value=""/>
     <s:submit/>
+</s:form>
+<h3>上传该课程学生名单文件</h3>
+<s:form action="addStudentForCourseByFileAction" method="post" enctype="multipart/form-data">
+    <s:file name="studentExcel" label="选择上传的文件" />
+    <s:submit value="上传" />
 </s:form>
 <s:if test="studentList.size() > 0">
     <%--<s:if test="true" >--%>
@@ -40,23 +54,18 @@
                 <td><s:property value="sex"/> </td>
                 <td><s:property value="email"/> </td>
                 <td><s:property value="entranceDate"/> </td>
-                <td><input type="button" name="delete" value="删除" onclick="javascript:window.location.href='deleteCourseStudentAction.action?studentId=${studentId}'"/></td>
+
+                <td><input type="button" name="delete" value="删除" onclick="javascript:window.location.href='/teacher/deleteStudentCourseAction.action?studentId=${studentId}'"/></td>
             </tr>
         </s:iterator>
     </table>
 </s:if>
-<s:else>
-    <h3>上传该课程学生名单文件</h3>
-    <s:form action="addStudentForCourseByFileAction" method="post" enctype="multipart/form-data">
-        <s:file name="studentExcel" label="选择上传的文件" />
-        <s:submit value="上传" />
-    </s:form>
-</s:else>
 <h3>发布作业</h3>
 <s:form action="addHomeworkAction">
     <s:textfield name="homeworkId" label="作业编号" value=""/>
     <s:textfield name="content" label="内容" value=""/>
     <s:textfield name="deadline" label="截止日期(YYYY-MM-DD)" value=""/>
+    <s:textfield name="percentage" label="所占比例" value=""/>
     <s:submit/>
 </s:form>
 <h3>作业列表</h3>
@@ -71,6 +80,7 @@
             <th>内容</th>
             <th>发布时间</th>
             <th>截止时间</th>
+            <th>所占比例</th>
         </tr>
         <s:iterator value="homeworkList" >
             <tr>
@@ -79,8 +89,9 @@
                 <td><s:property value="content"/> </td>
                 <td><s:property value="releaseTime"/> </td>
                 <td><s:property value="deadline"/> </td>
-                <td><input type="button" name="update" value="查看" onclick="javascript:window.location.href='deleteCourseStudentAction.action?studentId=${studentId}'"/></td>
-                <td><input type="button" name="delete" value="删除" onclick="javascript:window.location.href='deleteCourseStudentAction.action?studentId=${studentId}'"/></td>
+                <td><s:property value="percentage"/> </td>
+                <td><input type="button" name="update" value="查看提交" onclick="javascript:window.location.href='/teacher/listHomeworkGroupAction.action?homeworkId=${homeworkId}'"/></td>
+                <td><input type="button" name="delete" value="删除" onclick="javascript:window.location.href='/teacher/deleteHomeworkAction.action?homeoworkId=${homeworkId}'"/></td>
             </tr>
         </s:iterator>
     </table>

@@ -75,7 +75,7 @@ public class Homework extends AbstractEntity {
     }
 
     @Basic
-    @Column(columnDefinition = "DATE")
+    @Column(columnDefinition = "DATETIME")
     public Date getDeadline() {
         return deadline;
     }
@@ -85,7 +85,7 @@ public class Homework extends AbstractEntity {
     }
 
     @Basic
-    @Column(columnDefinition = "DATE")
+    @Column(columnDefinition = "DATETIME")
     public Date getReleaseTime() {
         return releaseTime;
     }

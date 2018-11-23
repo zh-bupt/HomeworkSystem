@@ -3,7 +3,6 @@ package com.bupt.se.homework.entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.*;
 
 @Entity
@@ -11,9 +10,9 @@ import java.util.*;
 public class Course extends AbstractEntity {
     private String courseId;
     private String courseName;
-    private int capacity;
+    private Integer capacity;
     private Date createTime;
-    private int groupCapacity;
+    private Integer groupCapacity;
     private String groupPrefix;
     private Teacher teacher;
     private Set<Homework> homework = new HashSet<>();
@@ -86,11 +85,11 @@ public class Course extends AbstractEntity {
 
     @Basic()
     @Column(length = 3)
-    public int getCapacity() {
+    public Integer getCapacity() {
         return capacity;
     }
 
-    public void setCapacity(int capacity) {
+    public void setCapacity(Integer capacity) {
         this.capacity = capacity;
     }
 
@@ -106,11 +105,11 @@ public class Course extends AbstractEntity {
 
     @Basic
     @Column()
-    public int getGroupCapacity() {
+    public Integer getGroupCapacity() {
         return groupCapacity;
     }
 
-    public void setGroupCapacity(int groupCapacity) {
+    public void setGroupCapacity(Integer groupCapacity) {
         this.groupCapacity = groupCapacity;
     }
 

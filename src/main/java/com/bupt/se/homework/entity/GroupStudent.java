@@ -10,8 +10,8 @@ public class GroupStudent extends AbstractEntity {
     private GroupStudentPK pk;
     private Group_ group_;
     private Student student;
-    private int contribution;
-    private int score;
+    private Integer contribution = 100;
+//    private int score;
 
     public GroupStudent() {
     }
@@ -53,11 +53,11 @@ public class GroupStudent extends AbstractEntity {
 
     @Basic
     @Column(length = 3)
-    public int getContribution() {
+    public Integer getContribution() {
         return contribution;
     }
 
-    public void setContribution(int contribution) {
+    public void setContribution(Integer contribution) {
         this.contribution = contribution;
     }
 }

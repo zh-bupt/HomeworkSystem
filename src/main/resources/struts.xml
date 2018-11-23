@@ -7,8 +7,8 @@
 <struts>
     <constant name="struts.devMode" value="true"/>
     <constant name="struts.multipart.maxSize" value="1000000000"/>
-
-    <package name="login" namespace="/" extends="struts-default">
+    <!--<constant name="struts.convention.package.locators" value="action,actions,struts,struts2,teacher,student,login,admin,course" />-->
+    <package name="login"  extends="struts-default">
         <action name="loginPageAction">
             <result name="">/pages/login.jsp</result>
         </action>
@@ -16,8 +16,14 @@
                 class="com.bupt.se.homework.action.LoginAction" method="login">
 
             <result name="admin" type="chain">listTeacherAction</result>
-            <result name="teacher" type="chain">listCourseAction</result>
-            <result name="student">/pages/student.jsp</result>
+            <result name="teacher" type="chain">
+                <param name="actionName">listCourseAction</param>
+                <param name="namespace">/teacher</param>
+            </result>
+            <result name="student" type="chain">
+                <param name="actionName">listCourseAction</param>
+                <param name="namespace">/student</param>
+            </result>
             <result name="login" type="chain">loginPageAction</result>
             <result name="changePW" >/pages/changePW.jsp</result>
 
@@ -89,7 +95,7 @@
         </action>
     </package>
 
-    <package name="teacher" namespace="/" extends="struts-default">
+    <package name="teacher" namespace="/teacher" extends="struts-default">
         <action name="listCourseAction"
                 class="com.bupt.se.homework.action.TeacherAction" method="listCourse">
             <result name="success">/pages/teacher.jsp</result>
@@ -104,17 +110,17 @@
         </action>
         <action name="showCourseAction"
                 class="com.bupt.se.homework.action.TeacherAction" method="listStudentAndHomework">
-            <result name="success">/pages/course.jsp</result>
+            <result name="success">/pages/teacher_course.jsp</result>
+        </action>
+        <action name="deleteCourseAction"
+                class="com.bupt.se.homework.action.TeacherAction" method="deleteCourse">
+            <result name="success" type="chain">listCourseAction</result>
         </action>
 
     </package>
-    <package name="course" namespace="/" extends="struts-default">
+    <package name="course" namespace="/teacher" extends="struts-default">
         <action name="addStudentForCourseByFileAction"
                 class="com.bupt.se.homework.action.TeacherAction" method="addStudentForCourseByFile">
-            <!-- 指定（限制）上传文件的类型，定义局部拦截器，修改默认拦截器的属性
-                 "fileUpload.maximumSize" ：限制上传最大的文件大小。
-                 "fileUpload.allowedTypes"：允许上传文件的类型。
-                 "fileUpload.allowedExtensions"：允许上传文件的可扩展文件类型。 -->
             <interceptor-ref name="defaultStack">
                 <param name="fileUpload.maximumSize">500000000</param>
                 <!--<param name="fileUpload.allowedTypes">text/plain,application/vnd.ms-excel</param>-->
@@ -129,14 +135,68 @@
                 class="com.bupt.se.homework.action.TeacherAction" method="addStudentForCourseByType">
             <result name="success" type="chain">showCourseAction</result>
         </action>
+        <action name="updateCourseAction"
+                class="com.bupt.se.homework.action.TeacherAction" method="updateCourse">
+            <result name="success" type="chain">showCourseAction</result>
+        </action>
         <action name="addHomeworkAction"
                 class="com.bupt.se.homework.action.TeacherAction" method="addHomework">
             <result name="success" type="chain">showCourseAction</result>
         </action>
+        <action name="deleteHomeworkAction"
+                class="com.bupt.se.homework.action.TeacherAction" method="deleteHomework">
+            <result name="success" type="chain">showCourseAction</result>
+        </action>
+        <action name="deleteStudentCourseAction"
+                class="com.bupt.se.homework.action.TeacherAction" method="deleteStudentCourse">
+            <result name="success" type="chain">showCourseAction</result>
+        </action>
+        <action name="listHomeworkGroupAction"
+                class="com.bupt.se.homework.action.TeacherAction" method="listHomeworkGroup">
+            <result name="success">/pages/teacher_homework.jsp</result>
+        </action>
     </package>
-    <package name="student" namespace="/" extends="struts-default">
+    <package name="student" namespace="/student" extends="struts-default" >
+        <action name="listCourseAction"
+                class="com.bupt.se.homework.action.StudentAction" method="listCourse">
+            <result name="success">/pages/student.jsp</result>
+        </action>
+        <action name="submitHomeworkAction"
+                class="com.bupt.se.homework.action.StudentAction" method="submitHomework">
+            <result name="success" type="chain">listCourseAction</result>
+        </action>
+        <action name="showCourseAction"
+                class="com.bupt.se.homework.action.StudentAction" method="listHomeworkAndGroup">
+            <result name="success">/pages/student_course.jsp</result>
+        </action>
+        <action name="setCurrentCourseAction"
+                class="com.bupt.se.homework.action.StudentAction" method="setSessionCourse">
+            <result name="success" type="chain">showCourseAction</result>
+        </action>
+        <action name="setCurrentHomeworkAction"
+                class="com.bupt.se.homework.action.StudentAction" method="setSessionHomework">
+            <result name="success">/pages/student_homework.jsp</result>
+        </action>
+        <action name="addGroupAction"
+                class="com.bupt.se.homework.action.StudentAction" method="addGroup">
+            <result name="success" type="chain">showCourseAction</result>
+        </action>
     </package>
-
+    <package name="homework" namespace="/teacher" extends="struts-default">
+        <action name="downloadHomeworkAction"
+                class="com.bupt.se.homework.action.TeacherAction" method="downloadHomework">
+                    <!--<result name="success" type="chain">listHomeworkGroupAction</result>-->
+                    <result type="stream">  
+                        <!-- 下载的文件数据存放的方法，该方法返回一个InputStream   
+                        例如取值为inputStream的属性需要编写getInputStream()方法-->  
+                        <param name="inputName">downloadFile</param>  
+                        <!--下载时，客户端显示的下载的文件名 -->  
+                        <param name="contentDisposition"> attachment; filename=${fileName}</param>  
+                        <!-- 数据的缓冲大小 -->  
+                        <param name="bufferSize">1024</param>  
+                    </result>
+        </action>
+    </package>
     <package name="Struts2" extends="struts-default" namespace="/">
 
         <action name="uploads" class="com.bupt.se.homework.action.UploadFileAction">

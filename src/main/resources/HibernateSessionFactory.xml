@@ -44,13 +44,14 @@
         <tx:attributes>
             <tx:method name="get*" read-only="true"/>
             <!--<tx:method name="*"  rollback-for="java.lang.Exception" propagation="REQUIRED" />-->
+            <tx:method name="getHomeworkGroup" propagation="REQUIRED" read-only="false"/>
             <tx:method name="add*" propagation="REQUIRED"/>
             <tx:method name="save*" propagation="REQUIRED"/>
             <tx:method name="del*" propagation="REQUIRED"/>
             <tx:method name="modify*" propagation="REQUIRED"/>
             <tx:method name="update*" propagation="REQUIRED"/>
             <tx:method name="calculate*" propagation="REQUIRED"/>
-            <tx:method name="AssignHomework" propagation="REQUIRED"/>
+            <tx:method name="AssignHomework" rollback-for="java.lang.Exception" propagation="REQUIRED"/>
             <tx:method name="*" rollback-for="java.lang.Exception" propagation="REQUIRED" read-only="true"/>
         </tx:attributes>
     </tx:advice>
@@ -59,6 +60,11 @@
         <aop:pointcut expression="execution(* com.bupt.se.homework.bo.impl.*.*(..))" id="pointCut1"/>
         <aop:advisor advice-ref="txAdvice" pointcut-ref="pointCut1"/>
     </aop:config>
+
+    <!--<aop:config>-->
+        <!--<aop:pointcut expression="execution(* com.bupt.se.homework.dao.impl.*.*(..))" id="pointCut3"/>-->
+        <!--<aop:advisor advice-ref="txAdvice" pointcut-ref="pointCut3"/>-->
+    <!--</aop:config>-->
 
     <tx:advice id="txAdvice2" transaction-manager="transactionManager">
         <tx:attributes>

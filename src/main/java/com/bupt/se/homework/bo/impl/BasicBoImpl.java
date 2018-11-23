@@ -6,7 +6,6 @@ import com.bupt.se.homework.entity.AbstractEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.TransactionStatus;
@@ -48,6 +47,19 @@ public abstract class BasicBoImpl<M extends AbstractEntity, PK extends Serializa
         TransactionStatus status = getTransactionStatus();
         try {
             basicDao.save(model);
+            getTransactionManager().commit(status);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    @Override
+    public boolean merge(M model) {
+        TransactionStatus status = getTransactionStatus();
+        try {
+            basicDao.merge(model);
             getTransactionManager().commit(status);
             return true;
         } catch (Exception e) {
@@ -116,6 +128,7 @@ public abstract class BasicBoImpl<M extends AbstractEntity, PK extends Serializa
             getTransactionManager().commit(status);
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }
@@ -184,7 +197,8 @@ public abstract class BasicBoImpl<M extends AbstractEntity, PK extends Serializa
         }
         return m;
     }
-    private TransactionStatus getTransactionStatus() {
+
+    protected TransactionStatus getTransactionStatus() {
         DefaultTransactionDefinition def = new DefaultTransactionDefinition();
         def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
         return getTransactionManager().getTransaction(def);

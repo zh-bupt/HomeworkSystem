@@ -82,7 +82,7 @@ public class Teacher extends AbstractEntity {
     }
 
     @Basic
-    @Column(length = 11)
+    @Column(length = 20)
     public String getTelephone() {
         return telephone;
     }

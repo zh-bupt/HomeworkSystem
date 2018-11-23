@@ -13,7 +13,7 @@
 </head>
 <body>
 
-<h2>Add Course</h2>
+<h2>添加课程</h2>
 <s:form action="addCourseAction">
     <s:textfield name="courseId" label="课程ID" value=""/>
     <s:textfield name="courseName" label="课程名称" value=""/>
@@ -38,8 +38,8 @@
                 <td><s:property value="courseName"/> </td>
                 <td><s:property value="capacity"/> </td>
                 <td><s:property value="createTime"/> </td>
-                <td><input type="button" name="update" value="课程详情" onclick="javascript:window.location.href='setCurrentCourseAction.action?courseId=${courseId}'"/> </td>
-                <td><input type="button" name="delete" value="删除" onclick="javascript:window.location.href='deleteStudentAction.action?studentId=${studentId}'"/></td>
+                <td><input type="button" name="update" value="课程详情" onclick="javascript:window.location.href='/teacher/setCurrentCourseAction.action?courseId=${courseId}'"/> </td>
+                <td><input type="button" name="delete" value="删除" onclick="javascript:window.location.href='/teacher/deleteCourseAction.action?courseId=${courseId}'"/></td>
             </tr>
         </s:iterator>
     </table>

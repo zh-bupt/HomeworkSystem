@@ -12,9 +12,9 @@ import java.util.Set;
 public class Group_ extends AbstractEntity {
     private String groupId;
     private Course course;
-    private int num;
+    private Integer num = 0;
     private String name;
-    private double groupScore;
+    private Double groupScore = 0.;
     private Student leader;
     private Set<GroupStudent> groupStudentSet = new HashSet<>();
     private Set<HomeworkGroup> homeworkGroups = new HashSet<>();
@@ -42,7 +42,7 @@ public class Group_ extends AbstractEntity {
 
     @Id
     @GeneratedValue(generator = "groupId")
-    @GenericGenerator(name = "groupId", strategy = "increment")
+    @GenericGenerator(name = "groupId", strategy = "assigned")
     public String getGroupId() {
         return groupId;
     }
@@ -63,11 +63,11 @@ public class Group_ extends AbstractEntity {
 
     @Basic
     @Column(length = 4)
-    public int getNum() {
+    public Integer getNum() {
         return num;
     }
 
-    public void setNum(int num) {
+    public void setNum(Integer num) {
         this.num= num;
     }
 
@@ -92,12 +92,12 @@ public class Group_ extends AbstractEntity {
     }
 
     @Basic
-    @Column
-    public double getGroupScore() {
+    @Column(columnDefinition = "FLOAT(3,2)")
+    public Double getGroupScore() {
         return groupScore;
     }
 
-    public void setGroupScore(double groupScore) {
+    public void setGroupScore(Double groupScore) {
         this.groupScore = groupScore;
     }
 
