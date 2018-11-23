@@ -45,7 +45,7 @@ public class TestStudentCourse extends UnitTestBase {
         Course c = session.get(Course.class, "100010");
         Set<StudentCourse> studentCourses = c.getStudentCourses();
         for (StudentCourse sc:studentCourses) {
-            sc.setGrade(90);
+            sc.setGrade(90.);
             session.update(sc);
         }
         transaction.commit();

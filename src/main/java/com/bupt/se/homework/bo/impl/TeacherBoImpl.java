@@ -83,8 +83,8 @@ public class TeacherBoImpl extends BasicBoImpl<Teacher, String> implements Teach
      * @Date: 2018/11/16
      **/
     @Override
-    public Map<Student, Integer> getCourseTranscript(String teacherId, String courseId) {
-        Map<Student, Integer> map = null;
+    public Map<Student, Double> getCourseTranscript(String teacherId, String courseId) {
+        Map<Student, Double> map = null;
         LinkedHashMap<Object, Object> equals = new LinkedHashMap<>();
         equals.put("teacherId", teacherId);
         equals.put("courseId", courseId);

@@ -10,6 +10,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
@@ -21,6 +22,7 @@ import java.util.List;
  * @author: zh
  * @create: 2018-11-10 16:36
  **/
+@Repository
 public abstract class BasicDAOImpl<M extends AbstractEntity, PK extends Serializable> implements BasicDao<M, PK> {
 
     private SessionFactory sessionFactory;

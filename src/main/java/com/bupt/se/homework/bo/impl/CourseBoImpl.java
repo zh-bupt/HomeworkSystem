@@ -1,12 +1,12 @@
 package com.bupt.se.homework.bo.impl;
 
 import com.bupt.se.homework.bo.CourseBo;
+import com.bupt.se.homework.bo.GroupBo;
 import com.bupt.se.homework.dao.BasicDao;
 import com.bupt.se.homework.dao.CourseDAO;
-import com.bupt.se.homework.entity.Course;
-import com.bupt.se.homework.entity.Homework;
-import com.bupt.se.homework.entity.Student;
-import com.bupt.se.homework.entity.StudentCourse;
+import com.bupt.se.homework.dao.GroupDAO;
+import com.bupt.se.homework.dao.StudentCourseDAO;
+import com.bupt.se.homework.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -22,12 +22,24 @@ import java.util.*;
 public class CourseBoImpl extends BasicBoImpl<Course, String> implements CourseBo {
 
     private CourseDAO courseDAO;
+    private GroupBo groupBo;
+    private StudentCourseDAO studentCourseDAO;
 
     @Autowired
     @Qualifier("courseDAO")
     public void setCourseDAO(BasicDao<Course, String> basicDao) {
         super.setBasicDao(basicDao);
         this.courseDAO = (CourseDAO) basicDao;
+    }
+
+    @Autowired
+    public void setGroupBo(GroupBo groupBo) {
+        this.groupBo = groupBo;
+    }
+
+    @Autowired
+    public void setStudentCourseDAO(StudentCourseDAO studentCourseDAO) {
+        this.studentCourseDAO = studentCourseDAO;
     }
 
     @Override
@@ -63,7 +75,7 @@ public class CourseBoImpl extends BasicBoImpl<Course, String> implements CourseB
         Set<StudentCourse> studentCourses = course.getStudentCourses();
         if (studentCourses != null && studentCourses.size() > 0) {
             for (StudentCourse sc:studentCourses) {
-                countPerTenScore[sc.getGrade() / 10]++;
+                countPerTenScore[(int) Math.floor(sc.getGrade() / 10)]++;
                 totalCount++;
             }
         }
@@ -96,5 +108,28 @@ public class CourseBoImpl extends BasicBoImpl<Course, String> implements CourseB
             }
         }
         return list;
+    }
+
+    @Override
+    public void calculateScore(Course course) {
+        Set<Group_> groups = course.getGroups();
+        if (groups != null && groups.size() > 0) {
+            for (Group_ g:groups) {
+                // 先计算小组成绩
+                groupBo.calculateScore(g);
+                // 再计算课程成绩
+                Set<GroupStudent> groupStudents = g.getGroupStudentSet();
+                if (groupStudents != null && groupStudents.size() > 0) {
+                    for (GroupStudent gs:groupStudents) {
+                        double courseScore = (gs.getContribution() / 100.) * gs.getGroup_().getGroupScore();
+                        StudentCourse sc = new StudentCourse(gs.getStudent(), course);
+                        sc.setGrade(courseScore);
+                        studentCourseDAO.update(sc);
+                    }
+
+                }
+            }
+
+        }
     }
 }

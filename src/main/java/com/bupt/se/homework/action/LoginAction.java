@@ -11,7 +11,13 @@ import com.bupt.se.homework.entity.Teacher;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.struts2.ServletActionContext;
+import org.springframework.context.annotation.Bean;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -20,6 +26,7 @@ import java.util.Map;
  * @Author: KRF
  * @Create: 2018/11/09
  **/
+//@Transactional
 public class LoginAction extends ActionSupport {
 
     StudentBo studentBo;
@@ -78,7 +85,7 @@ public class LoginAction extends ActionSupport {
             super.addActionError("密码不能为空！");
             return "login";
         }
-
+        testAddHomework();
         System.out.println(id+","+password);
         String response;
         System.out.println(role);
@@ -123,6 +130,22 @@ public class LoginAction extends ActionSupport {
             default:
                 super.addActionError("请选择登录用户类型！");
                 return "login";
+        }
+
+    }
+
+    public void testAddHomework() {
+//        TeacherBo teacherBo = super.getBean("teacherBo");
+        Teacher teacher = teacherBo.get("2011211211");
+        List<Course> courses = new ArrayList<>();
+        courses.addAll(teacher.getCourses());
+        Course course = courses.get(0);
+        if (course != null) {
+            System.out.println(course.getCourseName());
+            Homework homework = new Homework();
+            homework.setDeadline(new Date());
+            homework.setContent("test homework content");
+            System.out.println(teacherBo.AssignHomework(course, homework));
         }
 
     }

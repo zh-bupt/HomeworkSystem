@@ -86,8 +86,8 @@ public class StudentBoImpl extends BasicBoImpl<Student, String> implements Stude
      * @Date: 2018/11/16
      **/
     @Override
-    public Map<Course, Integer> getTranscript(String studentId) {
-        Map<Course, Integer> map = null;
+    public Map<Course, Double> getTranscript(String studentId) {
+        Map<Course, Double> map = null;
         Student s = studentDAO.load(studentId);
         if (s != null) {
             Set<StudentCourse> studentCourses = s.getStudentCourses();

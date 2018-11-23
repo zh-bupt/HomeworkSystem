@@ -9,7 +9,7 @@ public class StudentCourse extends AbstractEntity {
     private StudentCoursePK pk;
     private Student student;
     private Course course;
-    private int grade = 0;
+    private Double grade = 0.;
 
     public StudentCourse() {
     }
@@ -50,12 +50,12 @@ public class StudentCourse extends AbstractEntity {
     }
 
     @Basic
-    @Column(length = 3)
-    public int getGrade() {
+    @Column(columnDefinition = "FLOAT(3, 2)")
+    public Double getGrade() {
         return grade;
     }
 
-    public void setGrade(int grade) {
+    public void setGrade(Double grade) {
         this.grade = grade;
     }
 }

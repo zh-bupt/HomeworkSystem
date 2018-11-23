@@ -50,7 +50,7 @@ public class TestStudentBo extends UnitTestBase {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         Date date = format.parse("2015-09-01");
         for (int i = 2015211200; i < 2015211250; ++i) {
-            Student s = new Student(String.valueOf(i), String.valueOf(i), String.valueOf(i));
+            Student s = new Student(String.valueOf(i), "学生" + String.valueOf(i), String.valueOf(i));
             s.setEntranceDate(date);
             list.add(s);
             array[index++] = String.valueOf(i);

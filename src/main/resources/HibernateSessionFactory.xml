@@ -43,12 +43,13 @@
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>
             <tx:method name="get*" read-only="true"/>
-            <tx:method name="*"  rollback-for="java.lang.Exception" propagation="REQUIRED" />
+            <!--<tx:method name="*"  rollback-for="java.lang.Exception" propagation="REQUIRED" />-->
             <tx:method name="add*" propagation="REQUIRED"/>
             <tx:method name="save*" propagation="REQUIRED"/>
             <tx:method name="del*" propagation="REQUIRED"/>
             <tx:method name="modify*" propagation="REQUIRED"/>
             <tx:method name="update*" propagation="REQUIRED"/>
+            <tx:method name="calculate*" propagation="REQUIRED"/>
             <tx:method name="AssignHomework" propagation="REQUIRED"/>
             <tx:method name="*" rollback-for="java.lang.Exception" propagation="REQUIRED" read-only="true"/>
         </tx:attributes>
@@ -61,7 +62,7 @@
 
     <tx:advice id="txAdvice2" transaction-manager="transactionManager">
         <tx:attributes>
-            <tx:method name="*" rollback-for="java.lang.Exception" read-only="true"/>
+            <tx:method name="*" rollback-for="java.lang.Exception"/>
         </tx:attributes>
     </tx:advice>
 

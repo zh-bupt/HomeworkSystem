@@ -22,4 +22,6 @@ public interface CourseBo extends BasicBo<Course, String> {
     List<Course> listCourse();
 
     List<Homework> listHomework(String courseId);
+
+    void calculateScore(Course course);
 }

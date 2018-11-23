@@ -11,6 +11,7 @@ public class GroupStudent extends AbstractEntity {
     private Group_ group_;
     private Student student;
     private int contribution;
+    private int score;
 
     public GroupStudent() {
     }
