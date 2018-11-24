@@ -96,5 +96,5 @@
     </table>
 </s:if>
 </body>
-<button value="导出成绩单" onclick=""/>
+<input type="button" name="download" value="导出成绩单" onclick="javascript:window.location.href='/teacher/ExportExcelAction'"/>
 </html>

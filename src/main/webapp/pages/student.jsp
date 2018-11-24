@@ -8,6 +8,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="s" uri="/struts-tags" %>
 <html>
+
+<script>
+    function disp_prompt()
+    {
+        var name=prompt("请输入您的名字","xxx"); // 弹出input框
+        alert(name);
+    }
+</script>
+
 <head>
     <title>学生系统</title>
 </head>

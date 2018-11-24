@@ -116,7 +116,7 @@
                 class="com.bupt.se.homework.action.TeacherAction" method="deleteCourse">
             <result name="success" type="chain">listCourseAction</result>
         </action>
-        <action name="exportExcel"
+        <action name="ExportExcelAction"
                 class="com.bupt.se.homework.action.TeacherAction" method="exportExcel">
             <result name="exportExcel" type="stream">
                 <param name="contentType">application/vnd.ms-excel</param>

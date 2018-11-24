@@ -422,6 +422,7 @@ public class TeacherAction extends ActionSupport {
 
         }
         System.out.println("sclist-->"+sclist);
+        //TODO BY ZH studentCourseBo.save(sclist)执行失败，而且回滚的时候会把student表里的学生也删除（该课程名单里的学生）
         System.out.println(studentCourseBo.save(sclist));
         if(studentCourseBo.save(sclist))
             return "success";
@@ -483,7 +484,7 @@ public class TeacherAction extends ActionSupport {
         System.out.println("course-->"+course);
         System.out.println("courseId-->"+course.getCourseId());
         studentList = courseBo.getStudents(course);
-        //homeworkList.addAll(course.getHomework());//TODO 等实现此方法
+        //homeworkList.addAll(course.getHomework());
         Set<Homework> homeworkSet = course.getHomework();
         System.out.println("HomeworkList SIZE"+homeworkSet.size());
 
@@ -520,7 +521,7 @@ public class TeacherAction extends ActionSupport {
 
 
     public void setPercentage(String percentage) {
-        this.homework.setPercentage(Integer.valueOf(percentage));//TODO 判断是否是整数
+        this.homework.setPercentage(Integer.valueOf(percentage));
     }
 
     public void setGroupPrefix(String groupPrefix) {
@@ -611,9 +612,16 @@ public class TeacherAction extends ActionSupport {
      **/
 
     public String downloadHomework() throws Exception {
-        getDownloadFile();
+        getDownloadFile();//TODO BY KRF 生成的文件是txt格式
         return "success";
     }
+    /**
+     * @Author KRF
+     * @Description 获取所选小组的该课程的该次作业
+     * @Date 21:15 2018/11/24
+     * @Param []
+     * @return java.io.InputStream
+     **/
 
     public InputStream getDownloadFile() throws Exception{
 //        String filePath = ServletActionContext.getRequest().getServletContext().getRealPath("/download/"+fileName);
@@ -635,8 +643,17 @@ public class TeacherAction extends ActionSupport {
         return homeworkFileName;
     }
 
+    /**
+     * @Author KRF
+     * @Description 导出某门课的成绩单
+     * @Date 20:57 2018/11/24
+     * @Param []
+     * @return java.lang.String
+     **/
+
     public String exportExcel() throws Exception {
         Map<String, Object> session = ActionContext.getContext().getSession();
+        //TODO BY ZH 这里有问题 java.lang.IllegalArgumentException: org.hibernate.QueryException: could not resolve property: teacherId of: com.bupt.se.homework.entity.Course [select o from com.bupt.se.homework.entity.Course as o  where  o.teacherId=? and o.courseId=? ]
         Map<Student,Double> scoreList = teacherBo.getCourseTranscript(session.get("id").toString(),session.get("courseId").toString());
         HSSFWorkbook workbook = exportExcel(scoreList);
         ByteArrayOutputStream output = new ByteArrayOutputStream();
@@ -680,7 +697,7 @@ public class TeacherAction extends ActionSupport {
                 cell.setCellValue(s.getStudentName());
                 cell=row.createCell(3);
                 cell.setCellValue(scoreList.get(s));
-                cell=row.createCell(4);
+                count+=1;
             }
         }
         return wb;
