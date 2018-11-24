@@ -45,7 +45,7 @@ public class Homework extends AbstractEntity {
         this.homeworkGroups = homeworkGroups;
     }
 
-    @ManyToOne(cascade = {CascadeType.MERGE, CascadeType.REMOVE}, fetch = FetchType.LAZY)
+    @ManyToOne(cascade = {CascadeType.MERGE}, fetch = FetchType.EAGER)
     @JoinColumn(name = "courseId")
     public Course getCourse() {
         return course;

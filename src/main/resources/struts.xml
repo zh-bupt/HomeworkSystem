@@ -24,7 +24,7 @@
                 <param name="actionName">listCourseAction</param>
                 <param name="namespace">/student</param>
             </result>
-            <result name="login" type="chain">loginPageAction</result>
+            <result name="login">/pages/login.jsp</result>
             <result name="changePW" >/pages/changePW.jsp</result>
 
         </action>
@@ -116,6 +116,15 @@
                 class="com.bupt.se.homework.action.TeacherAction" method="deleteCourse">
             <result name="success" type="chain">listCourseAction</result>
         </action>
+        <action name="exportExcel"
+                class="com.bupt.se.homework.action.TeacherAction" method="exportExcel">
+            <result name="exportExcel" type="stream">
+                <param name="contentType">application/vnd.ms-excel</param>
+                <param name="contentDisposition">attachment;filename="${fileName}"</param>
+                <param name="bufferSize">1024</param>
+                <param name="inputName">excelFile</param>
+            </result>
+        </action>
 
     </package>
     <package name="course" namespace="/teacher" extends="struts-default">
@@ -158,7 +167,7 @@
     </package>
     <package name="student" namespace="/student" extends="struts-default" >
         <action name="listCourseAction"
-                class="com.bupt.se.homework.action.StudentAction" method="listCourse">
+                class="com.bupt.se.homework.action.StudentAction" method="listCourseAndGroup">
             <result name="success">/pages/student.jsp</result>
         </action>
         <action name="submitHomeworkAction"
@@ -181,6 +190,7 @@
                 class="com.bupt.se.homework.action.StudentAction" method="addGroup">
             <result name="success" type="chain">showCourseAction</result>
         </action>
+
     </package>
     <package name="homework" namespace="/teacher" extends="struts-default">
         <action name="downloadHomeworkAction"

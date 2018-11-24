@@ -28,6 +28,15 @@ public class StudentAction{
     private Group_ group = new Group_();
     private GroupBo groupBo;
     private List<String> studentIdList = new ArrayList<>();
+    private List<Group_> groupManagedList = new ArrayList<>();
+
+    public List<Group_> getGroupManagedList() {
+        return groupManagedList;
+    }
+
+    public void setGroupManagedList(List<Group_> groupManagedList) {
+        this.groupManagedList = groupManagedList;
+    }
 
     public GroupBo getGroupBo() {
         return groupBo;
@@ -167,14 +176,20 @@ public class StudentAction{
         this.studentBo = studentBo;
     }
 
-    public String listCourse() throws Exception {
+    public String listCourseAndGroup() throws Exception {
         Map<String, Object> session = ActionContext.getContext().getSession();
         student = studentBo.get(session.get("id").toString());
         Set<StudentCourse> studentCourses = student.getStudentCourses();//TODO 等待张珩封装
         System.out.println("studentCourses.size():"+studentCourses.size());
+        groupManagedList.addAll(student.getGroupsManaged());
+        System.out.println("groupManagedList-->"+groupManagedList+" "+groupManagedList.get(0).getGroupId()+" "+groupManagedList.get(0).getName());
         for(StudentCourse sc : studentCourses)
         {
             courseList.add(sc.getCourse());
+        }
+        for(GroupStudent gs : groupManagedList.get(0).getGroupStudentSet())
+        {
+            System.out.println(gs.getStudent().getStudentName());
         }
         return "success";
     }
@@ -283,7 +298,7 @@ public class StudentAction{
      **/
 
     public String addGroup() throws Exception {
-        //TODO
+
         Map<String, Object> session = ActionContext.getContext().getSession();
         course = courseBo.get(session.get("courseId").toString());
 //        group.setCourse(course);
@@ -301,10 +316,11 @@ public class StudentAction{
 //            groupStudentSet.add(groupStudent);
         }
 //        group.setMembers(studentSet);
-//        group.setGroupStudentSet(groupStudentSet);//TODO 注意数据库有没有添加成功
+//        group.setGroupStudentSet(groupStudentSet);
 //        System.out.println(group);
         System.out.println(group.getGroupId()+group.getName()+String.valueOf(group.getNum()));
 //        groupBo.merge(group);
+        studentSet.add(student);
         groupBo.addGroup(group, course, student, studentSet);
         return "success";
     }
@@ -327,4 +343,18 @@ public class StudentAction{
         //studentIdList = Arrays.asList(studentIds.split("|"));
         this.group.setNum(studentIdList.size());
     }
+//
+//
+//    public String toStringStudentGroupSet(HashSet<GroupStudent> groupStudentSet)
+//    {
+//        String result = "";
+//        if(groupStudentSet!=null && groupStudentSet.size()>0)
+//        {
+//            for(GroupStudent gs:groupStudentSet)
+//            {
+//                result = result + gs.getStudent().getStudentName()+" ";
+//            }
+//        }
+//        return result;
+//    }
 }

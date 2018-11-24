@@ -9,6 +9,9 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.opensymphony.xwork2.ModelDriven;
 import org.apache.commons.io.FileUtils;
+import org.apache.poi.hssf.usermodel.HSSFCell;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -55,6 +58,13 @@ public class TeacherAction extends ActionSupport {
     private String groupId;
 
     private String homeworkId;
+
+
+    //为了下载成绩单
+    private static final long serialVersionUID = 1L;
+    private InputStream excelFile;
+    private String fileName;
+
 
     public String getGroupId() {
         return groupId;
@@ -207,7 +217,7 @@ public class TeacherAction extends ActionSupport {
         course.setTeacher(teacher);
         System.out.println(teacher.getTeacherName());
         courseBo.addCourse(course);
-        //listCourse();
+
         return "success";
     }
 
@@ -226,8 +236,8 @@ public class TeacherAction extends ActionSupport {
         System.out.println(course.getCourseId());
         homework.setCourse(course);
         //homeworkBo.addHomework(homework);
-        // TODO 你这儿截止日期直接从字符串转过来是错的, 一直是 Sun Dec 31 00:00:00 CST 2017 所以数据库里也是错的
-        // TODO homeworkId 是自动生成的, 指定了也没用, 是递增生成的
+
+
         System.out.println("deadline---->" + homework.getDeadline());
         teacherBo.AssignHomework(course,homework);
         return "success";
@@ -345,7 +355,7 @@ public class TeacherAction extends ActionSupport {
         try
         {
                 //这里根据你的表格有多少列
-                while (flag < 6)
+                while (flag < 3)
                 {
                     Cell cell = rowHead.getCell(flag);
                     switch (cell.getStringCellValue()){
@@ -411,10 +421,14 @@ public class TeacherAction extends ActionSupport {
             sclist.add(sc);
 
         }
+        System.out.println("sclist-->"+sclist);
+        System.out.println(studentCourseBo.save(sclist));
         if(studentCourseBo.save(sclist))
             return "success";
         else
+        {
             return "error";
+        }
     }
 
 
@@ -448,8 +462,10 @@ public class TeacherAction extends ActionSupport {
     }
 
     public void setDeadline(String deadline) throws Exception {
-        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("YYYY-MM-DD");
+        SimpleDateFormat simpleDateFormat=new SimpleDateFormat("yyyy-MM-dd");
+        System.out.println("deadline="+deadline);
         this.homework.setDeadline(simpleDateFormat.parse(deadline));
+        System.out.println(this.homework.getDeadline());
     }
 
     /**
@@ -462,8 +478,10 @@ public class TeacherAction extends ActionSupport {
 
     public String listStudentAndHomework() throws Exception {
         Map<String, Object> session = ActionContext.getContext().getSession();
+        System.out.println("Session-->"+session.toString());
         course = courseBo.get(session.get("courseId").toString());
-        System.out.println(course.getCourseId());
+        System.out.println("course-->"+course);
+        System.out.println("courseId-->"+course.getCourseId());
         studentList = courseBo.getStudents(course);
         //homeworkList.addAll(course.getHomework());//TODO 等实现此方法
         Set<Homework> homeworkSet = course.getHomework();
@@ -544,7 +562,7 @@ public class TeacherAction extends ActionSupport {
      **/
 
     public String deleteHomework() throws Exception {
-        // TODO 你这儿 homework.getHomeworkId 获得的 ID 一直是 0
+
         System.out.println("homeworkId------>" + homework.getHomeworkId());
         homeworkBo.delete(homework.getHomeworkId());
         return "success";
@@ -578,6 +596,7 @@ public class TeacherAction extends ActionSupport {
 //        Map<String, Object> session = ActionContext.getContext().getSession();
 //        course = courseBo.get(session.get("courseId").toString());
 //        course.getGroups();
+        System.out.println("homeworkId"+homework.getHomeworkId());
         homework = homeworkBo.get(homework.getHomeworkId());
         homeworkGroupList.addAll(homework.getHomeworkGroups());
         return "success";
@@ -616,4 +635,54 @@ public class TeacherAction extends ActionSupport {
         return homeworkFileName;
     }
 
+    public String exportExcel() throws Exception {
+        Map<String, Object> session = ActionContext.getContext().getSession();
+        Map<Student,Double> scoreList = teacherBo.getCourseTranscript(session.get("id").toString(),session.get("courseId").toString());
+        HSSFWorkbook workbook = exportExcel(scoreList);
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        workbook.write(output);
+        byte[] ba = output.toByteArray();
+        excelFile = new ByteArrayInputStream(ba);
+        output.flush();
+        output.close();
+        return "exportExcel";
+    }
+    public HSSFWorkbook exportExcel(Map<Student,Double> scoreList) throws Exception {
+        Map<String, Object> session = ActionContext.getContext().getSession();
+        course = courseBo.get(session.get("courseId").toString());
+        studentCourseList.addAll(course.getStudentCourses());
+        fileName = course.getCourseName()+"成绩单.xls";
+        //设置字符，防止乱码
+        fileName= new String(fileName.getBytes("UTF-8"),"ISO8859-1");
+        HSSFWorkbook wb;
+        //根据studentList生成excel文件
+        wb = new HSSFWorkbook();
+        HSSFSheet sheet = wb.createSheet(course.getCourseName()+"成绩单");
+        HSSFRow row=sheet.createRow(0);
+        HSSFCell cell=row.createCell(0);
+        cell.setCellValue("班级");
+        cell=row.createCell(1);
+        cell.setCellValue("学号");
+        cell=row.createCell(2);
+        cell.setCellValue("姓名");
+        cell=row.createCell(3);
+        cell.setCellValue("成绩");
+        int count = 0;
+        if(studentCourseList!=null&&studentCourseList.size()>0){
+            for(StudentCourse sc:studentCourseList){
+                Student s = sc.getStudent();
+                row=sheet.createRow(count+1);
+                cell=row.createCell(0);
+                cell.setCellValue(s.getClassId());
+                cell=row.createCell(1);
+                cell.setCellValue(s.getStudentId());
+                cell=row.createCell(2);
+                cell.setCellValue(s.getStudentName());
+                cell=row.createCell(3);
+                cell.setCellValue(scoreList.get(s));
+                cell=row.createCell(4);
+            }
+        }
+        return wb;
+    }
 }

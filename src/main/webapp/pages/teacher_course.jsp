@@ -62,9 +62,8 @@
 </s:if>
 <h3>发布作业</h3>
 <s:form action="addHomeworkAction">
-    <s:textfield name="homeworkId" label="作业编号" value=""/>
     <s:textfield name="content" label="内容" value=""/>
-    <s:textfield name="deadline" label="截止日期(YYYY-MM-DD)" value=""/>
+    <s:textfield name="deadline" label="截止日期(yyyy-MM-dd)" value=""/>
     <s:textfield name="percentage" label="所占比例" value=""/>
     <s:submit/>
 </s:form>
@@ -80,21 +79,22 @@
             <th>内容</th>
             <th>发布时间</th>
             <th>截止时间</th>
-            <th>所占比例</th>
+            <th>所占比例 %</th>
         </tr>
         <s:iterator value="homeworkList" >
             <tr>
                 <td><input type="checkbox" value="homeworkId" name="homeworkId"></td>
                 <td><s:property value="homeworkId"/> </td>
                 <td><s:property value="content"/> </td>
-                <td><s:property value="releaseTime"/> </td>
-                <td><s:property value="deadline"/> </td>
+                <td><s:date  name="releaseTime"  format="yyyy-MM-dd"/> </td>
+                <td><s:date  name="deadline"  format="yyyy-MM-dd"/></td>
                 <td><s:property value="percentage"/> </td>
                 <td><input type="button" name="update" value="查看提交" onclick="javascript:window.location.href='/teacher/listHomeworkGroupAction.action?homeworkId=${homeworkId}'"/></td>
-                <td><input type="button" name="delete" value="删除" onclick="javascript:window.location.href='/teacher/deleteHomeworkAction.action?homeoworkId=${homeworkId}'"/></td>
+                <td><input type="button" name="delete" value="删除" onclick="javascript:window.location.href='/teacher/deleteHomeworkAction.action?homeworkId=${homeworkId}'"/></td>
             </tr>
         </s:iterator>
     </table>
 </s:if>
 </body>
+<button value="导出成绩单" onclick=""/>
 </html>
