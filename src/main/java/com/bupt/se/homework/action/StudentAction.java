@@ -179,7 +179,7 @@ public class StudentAction{
     public String listCourseAndGroup() throws Exception {
         Map<String, Object> session = ActionContext.getContext().getSession();
         student = studentBo.get(session.get("id").toString());
-        Set<StudentCourse> studentCourses = student.getStudentCourses();//TODO 等待张珩封装
+        Set<StudentCourse> studentCourses = student.getStudentCourses();
         System.out.println("studentCourses.size():"+studentCourses.size());
         groupManagedList.addAll(student.getGroupsManaged());
         System.out.println("groupManagedList-->"+groupManagedList+" "+groupManagedList.get(0).getGroupId()+" "+groupManagedList.get(0).getName());

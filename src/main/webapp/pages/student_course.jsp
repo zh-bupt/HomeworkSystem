@@ -81,6 +81,7 @@
         <s:textfield name="groupId" label="组号" value=""/>
         <s:textfield name="name" label="组名" value=""/>
         <s:textfield name="studentIds" label="学号(多个用','隔开)" value=""/>
+        <s:token/>
         <s:submit/>
     </s:form>
 </s:else>

@@ -18,7 +18,7 @@
     <s:textfield name="courseId" label="课程ID" value=""/>
     <s:textfield name="courseName" label="课程名称" value=""/>
     <s:textfield name="capacity" label="课程容量" value=""/>
-
+    <s:token/>
     <s:submit/>
 </s:form>
 

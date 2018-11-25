@@ -15,6 +15,7 @@
 <h1>后台管理系统</h1>
 <h2>添加学生</h2>
 <s:form action="addStudentAction">
+    <%--<s:actionerror/>--%>
     <s:textfield name="studentId" label="学号" value=""/>
     <s:textfield name="studentName" label="姓名" value=""/>
     <s:textfield name="classId" label="班级" value=""/>
@@ -22,16 +23,18 @@
     <s:textfield name="email" label="邮箱" value=""/>
     <s:password name="password" label="密码" value=""/>
     <s:date name="entranceDate" format="YYYY-MM-DD"/>
+    <s:token/>
     <s:submit/>
 </s:form>
 <h3>上传学生名单文件</h3>
 <s:form action="addStudentByFileAction" method="post" enctype="multipart/form-data">
     <s:file name="studentExcel" label="选择上传的文件" />
+    <s:token/>
     <s:submit value="上传" />
 </s:form>
 <h3>查询学生</h3>
 <s:form action="searchStudentAction">
-    <s:actionerror/>
+    <%--<s:actionerror/>--%>
     <s:textfield name="searchStudentWord" label="查询" value=""/>
     <s:if test="searchWay==null">
         <s:radio name="searchWay" list="{ '班级', '姓名' }" value="'姓名'"  label="搜索方式"/>
@@ -80,11 +83,13 @@
     <s:textfield name="telephone" label="联系电话" value=""/>
     <s:textfield name="teacherEmail" label="邮箱" value=""/>
     <s:password name="teacherPassword" label="密码" value=""/>
+    <s:token/>
     <s:submit/>
 </s:form>
 <h3>上传教师名单文件</h3>
 <s:form action="addTeacherByFileAction" method="post" enctype="multipart/form-data">
     <s:file name="teacherExcel" label="选择上传的文件" />
+    <s:token/>
     <s:submit value="上传" />
 </s:form>
 

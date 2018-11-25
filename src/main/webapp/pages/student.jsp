@@ -56,14 +56,14 @@
         <s:iterator value="groupManagedList" status="userStatus">
             <%--点击某一个组进入打分窗口--%>
             <tr>
-                <td><s:property value="course.getCourseName()"/> </td>
+                <td><s:property value="course.getCourseId()"/> </td>
                 <td><s:property value="groupId"/> </td>
                 <td><s:property value="name"/> </td>
                 <td><s:property value="num"/> </td>
-                <%--<td> <s:iterator value="groupStudentSet">--%>
-                        <%--<s:property value="student.getStudentName()"/>--%>
-                    <%--</s:iterator>--%>
-                <%--</td>--%>
+                <td> <s:iterator value="groupStudentSet">
+                        <s:property value="student.getStudentName()"/>
+                    </s:iterator>
+                </td>
                 <td><input type="button" name="update" value="打分" onclick="javascript:window.location.href='/student/getContributionPageAction?groupId=${groupId}'"/> </td>
                 <%--d使用JS弹出文本框，输入分配后传给action--%>
             </tr>

@@ -33,6 +33,9 @@
     <package name="admin" namespace="/" extends="struts-default">
         <action name="addStudentAction"
                 class="com.bupt.se.homework.action.AdminAction" method="addStudent">
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="token"/>
+            <result name="invalid.token">/pages/admin.jsp</result>
             <result name="success">/pages/admin.jsp</result>
         </action>
         <action name="addStudentByFileAction"
@@ -46,6 +49,8 @@
                 <!--<param name="fileUpload.allowedTypes">text/plain,application/vnd.ms-excel</param>-->
                 <param name="fileUpload.allowedExtensions">.txt,.xlsx,.xls,.csv</param>
             </interceptor-ref>
+            <interceptor-ref name="token"/>
+            <result name="invalid.token">/pages/admin.jsp</result>
             <result name="success">/pages/admin.jsp</result>
             <!-- 出现错误自动会返回input结果，进入结果视图 -->
             <result name="error" >/pages/error.jsp</result>
@@ -64,6 +69,9 @@
         </action>
         <action name="addTeacherAction"
                 class="com.bupt.se.homework.action.AdminAction" method="addTeacher">
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="token"/>
+            <result name="invalid.token">/pages/admin.jsp</result>
             <result name="success">/pages/admin.jsp</result>
         </action>
         <action name="addTeacherByFileAction"
@@ -77,6 +85,8 @@
                 <!--<param name="fileUpload.allowedTypes">text/plain,application/vnd.ms-excel</param>-->
                 <param name="fileUpload.allowedExtensions">.txt,.xlsx,.xls,.csv</param>
             </interceptor-ref>
+            <interceptor-ref name="token"/>
+            <result name="invalid.token">/pages/admin.jsp</result>
             <result name="success">/pages/admin.jsp</result>
             <!-- 出现错误自动会返回input结果，进入结果视图 -->
             <result name="error" >/pages/error.jsp</result>
@@ -102,6 +112,9 @@
         </action>
         <action name="addCourseAction"
                 class="com.bupt.se.homework.action.TeacherAction" method="addCourse">
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="token"/>
+            <result name="invalid.token" type="chain">listCourseAction</result>
             <result name="success" type="chain">listCourseAction</result>
         </action>
         <action name="setCurrentCourseAction"
@@ -135,21 +148,31 @@
                 <!--<param name="fileUpload.allowedTypes">text/plain,application/vnd.ms-excel</param>-->
                 <param name="fileUpload.allowedExtensions">.txt,.xlsx,.xls,.csv</param>
             </interceptor-ref>
-
+            <interceptor-ref name="token"/>
+            <result name="invalid.token">/pages/teacher.jsp</result>
             <result name="success">/pages/teacher.jsp</result>
             <!-- 出现错误自动会返回input结果，进入结果视图 -->
             <result name="error" >/pages/error.jsp</result>
         </action>
         <action name="addStudentForCourseByTypeAction"
                 class="com.bupt.se.homework.action.TeacherAction" method="addStudentForCourseByType">
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="token"/>
+            <result name="invalid.token" type="chain">showCourseAction</result>
             <result name="success" type="chain">showCourseAction</result>
         </action>
         <action name="updateCourseAction"
                 class="com.bupt.se.homework.action.TeacherAction" method="updateCourse">
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="token"/>
+            <result name="invalid.token" type="chain">showCourseAction</result>
             <result name="success" type="chain">showCourseAction</result>
         </action>
         <action name="addHomeworkAction"
                 class="com.bupt.se.homework.action.TeacherAction" method="addHomework">
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="token"/>
+            <result name="invalid.token" type="chain">showCourseAction</result>
             <result name="success" type="chain">showCourseAction</result>
         </action>
         <action name="deleteHomeworkAction"
@@ -188,6 +211,7 @@
         </action>
         <action name="addGroupAction"
                 class="com.bupt.se.homework.action.StudentAction" method="addGroup">
+            <result name="invalid.token" type="chain">showCourseAction</result>
             <result name="success" type="chain">showCourseAction</result>
         </action>
 

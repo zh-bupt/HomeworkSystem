@@ -19,16 +19,19 @@
     <s:textfield name="groupPrefix" label="小组前缀" value=""/>
     <s:textfield name="groupMin" label="小组人数下限" value=""/>
     <s:textfield name="groupMax" label="小组人数上限" value=""/>
+    <s:token/>
     <s:submit/>
 </s:form>
 <h2>添加学生</h2>
 <s:form action="addStudentForCourseByTypeAction">
     <s:textfield name="studentId" label="学号" value=""/>
+    <s:token/>
     <s:submit/>
 </s:form>
 <h3>上传该课程学生名单文件</h3>
 <s:form action="addStudentForCourseByFileAction" method="post" enctype="multipart/form-data">
     <s:file name="studentExcel" label="选择上传的文件" />
+    <s:token/>
     <s:submit value="上传" />
 </s:form>
 <s:if test="studentList.size() > 0">
@@ -65,6 +68,7 @@
     <s:textfield name="content" label="内容" value=""/>
     <s:textfield name="deadline" label="截止日期(yyyy-MM-dd)" value=""/>
     <s:textfield name="percentage" label="所占比例" value=""/>
+    <s:token/>
     <s:submit/>
 </s:form>
 <h3>作业列表</h3>
