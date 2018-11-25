@@ -110,6 +110,13 @@ public class CourseBoImpl extends BasicBoImpl<Course, String> implements CourseB
         return list;
     }
 
+    /**
+     * @Description: 计算对应课程每个学生的成绩
+     * @param course
+     * @return: void
+     * @Author: zh
+     * @Date: 2018/11/25
+     **/
     @Override
     public void calculateScore(Course course) {
         Set<Group_> groups = course.getGroups();

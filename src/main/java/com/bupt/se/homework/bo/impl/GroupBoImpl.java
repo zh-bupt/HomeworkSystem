@@ -28,6 +28,13 @@ public class GroupBoImpl extends BasicBoImpl<Group_, String> implements GroupBo 
         this.groupDAO = (GroupDAO) basicDao;
     }
 
+    /**
+     * @Description: 计算小组的成绩
+     * @param group_
+     * @return: void
+     * @Author: zh
+     * @Date: 2018/11/25
+     **/
     @Override
     public void calculateScore(Group_ group_) {
         Set<HomeworkGroup> homeworkGroups = group_.getHomeworkGroups();
