@@ -220,7 +220,8 @@ public class StudentAction{
         student = studentBo.get(session.get("id").toString());
         homeworkGroup = studentBo.getHomeworkGroup(student,homework);
         System.out.print(homeworkGroup);
-        //Group_ group_ = studentBo.getCourseGroup(session.get("id").toString(),session.get("courseId").toString());//TODO BY ZH 该方法待实现
+        // TODO 已经实现, 简单测试了一下
+        Group_ group_ = studentBo.getCourseGroup(session.get("id").toString(),session.get("courseId").toString());
         //获取要保存文件夹的物理路径(绝对路径)
         String relativePath = "/upload/course/"+session.get("courseId").toString()+"/"+session.get("homeworkId").toString()+"/";
         String realPath= ServletActionContext.getServletContext().getRealPath(relativePath);
@@ -277,9 +278,8 @@ public class StudentAction{
 
             homeworkList.addAll(homeworkSet);
         }
-        //TODO 同样的问题，想列出小组，获得group的方法尚未实现
         Group_ group_ = studentBo.getCourseGroup(session.get("id").toString(),session.get("courseId").toString());
-
+        System.out.println(group_.getGroupId());
         return "success";
     }
 

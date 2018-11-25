@@ -142,6 +142,7 @@ public abstract class BasicBoImpl<M extends AbstractEntity, PK extends Serializa
             getTransactionManager().commit(status);
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         }
     }

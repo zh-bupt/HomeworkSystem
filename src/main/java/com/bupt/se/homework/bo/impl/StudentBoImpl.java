@@ -108,7 +108,7 @@ public class StudentBoImpl extends BasicBoImpl<Student, String> implements Stude
 
     @Override
     public Group_ getCourseGroup(String studentId, String courseId) {
-        return null;
+        return studentDAO.getCourseGroup(studentId, courseId);
     }
 
     @Override

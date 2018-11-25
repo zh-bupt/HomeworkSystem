@@ -126,10 +126,8 @@ public class CourseBoImpl extends BasicBoImpl<Course, String> implements CourseB
                         sc.setGrade(courseScore);
                         studentCourseDAO.update(sc);
                     }
-
                 }
             }
-
         }
     }
 }

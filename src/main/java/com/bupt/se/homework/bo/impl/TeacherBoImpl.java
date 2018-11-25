@@ -86,7 +86,7 @@ public class TeacherBoImpl extends BasicBoImpl<Teacher, String> implements Teach
     public Map<Student, Double> getCourseTranscript(String teacherId, String courseId) {
         Map<Student, Double> map = null;
         LinkedHashMap<Object, Object> equals = new LinkedHashMap<>();
-        equals.put("teacherId", teacherId);
+        equals.put("teacher.teacherId", teacherId);
         equals.put("courseId", courseId);
         Course c = courseDAO.get(equals, null, null, null, null);
         if (c != null) {

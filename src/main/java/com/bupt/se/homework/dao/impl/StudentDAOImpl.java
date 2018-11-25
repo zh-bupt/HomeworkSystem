@@ -1,9 +1,7 @@
 package com.bupt.se.homework.dao.impl;
 
 import com.bupt.se.homework.dao.StudentDAO;
-import com.bupt.se.homework.entity.Homework;
-import com.bupt.se.homework.entity.HomeworkGroup;
-import com.bupt.se.homework.entity.Student;
+import com.bupt.se.homework.entity.*;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.stereotype.Repository;
@@ -26,5 +24,19 @@ public class StudentDAOImpl extends BasicDAOImpl<Student, String> implements Stu
         query.setParameter(1, student.getStudentId());
         homeworkGroup = (HomeworkGroup) query.uniqueResult();
         return homeworkGroup;
+    }
+
+    @Override
+    public Group_ getCourseGroup(String studentId, String courseId) {
+        String hql = "from Group_ where groupId = " +
+                "(select g.groupId from Group_ g join g.groupStudentSet gss " +
+                "where g.course.courseId = ? " +
+                "and ? in gss.student.studentId)";
+        Session session = getSession();
+        Query query = session.createQuery(hql);
+        query.setParameter(0, courseId);
+        query.setParameter(1, studentId);
+        Group_ group_ = (Group_) query.uniqueResult();
+        return group_;
     }
 }

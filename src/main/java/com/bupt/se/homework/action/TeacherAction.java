@@ -292,7 +292,8 @@ public class TeacherAction extends ActionSupport {
         try {
             //保存文件
             FileUtils.copyFile(studentExcel, new File(file,studentExcelFileName));
-            String result = getDataFromExcel(realPath+"\\"+studentExcelFileName);
+            // TODO bug-fix 文件分隔符问题, 应用File.separator代替"\\"
+            String result = getDataFromExcel(realPath + File.separator + studentExcelFileName);
             return result;
             //传文件给studentBo
         } catch (IOException e) {
@@ -404,26 +405,26 @@ public class TeacherAction extends ActionSupport {
                 e.printStackTrace();
                 System.out.println("获取单元格错误");
             }
-            Student s = new Student();
-            StudentCourse sc = new StudentCourse();
             try
             {
-
-                    s.setStudentId(cell_2.toString());
-                    s = studentBo.get(s.getStudentId());
-                    sc.setStudent(s);
-                    sc.setCourse(course);
+                String sid = cell_2.toString();
+                System.out.println("studentId---->" + sid);
+                Student s = studentBo.get(sid);
+                if (s != null) {
+                    // TODO bug-fix 之前的代码不能自动生成主键, 调用这个构造方法才能自动生成主键
+                    // 单独调用setStudent和setCourse, StudentCoursePK为空, 需要自己正定(set)方法
+                    // 其他几个实体类类似, 以后注意一下就行了
+                    StudentCourse sc = new StudentCourse(s, course);
+                    sclist.add(sc);
+                }
             } catch (ClassCastException e)
             {
                     e.printStackTrace();
                     System.out.println("数据有错误!");
             }
-            sclist.add(sc);
-
         }
         System.out.println("sclist-->"+sclist);
-        //TODO BY ZH studentCourseBo.save(sclist)执行失败，而且回滚的时候会把student表里的学生也删除（该课程名单里的学生）
-        System.out.println(studentCourseBo.save(sclist));
+//        System.out.println(studentCourseBo.save(sclist));
         if(studentCourseBo.save(sclist))
             return "success";
         else
@@ -653,7 +654,7 @@ public class TeacherAction extends ActionSupport {
 
     public String exportExcel() throws Exception {
         Map<String, Object> session = ActionContext.getContext().getSession();
-        //TODO BY ZH 这里有问题 java.lang.IllegalArgumentException: org.hibernate.QueryException: could not resolve property: teacherId of: com.bupt.se.homework.entity.Course [select o from com.bupt.se.homework.entity.Course as o  where  o.teacherId=? and o.courseId=? ]
+        // TODO 数据库的问题应该解决了, 但是有新的错误, 应该是写文件的问题
         Map<Student,Double> scoreList = teacherBo.getCourseTranscript(session.get("id").toString(),session.get("courseId").toString());
         HSSFWorkbook workbook = exportExcel(scoreList);
         ByteArrayOutputStream output = new ByteArrayOutputStream();
