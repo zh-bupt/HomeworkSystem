@@ -114,7 +114,7 @@
             <AppenderRef ref="Console" />
         </Logger>
 
-        <Logger name="org.springframework.web" level="debug" additivity="false">
+        <Logger name="org.springframework.web" level="warn" additivity="false">
             <!--<AppenderRef ref="DEBUG_LOG" />-->
             <!--<AppenderRef ref="INFO_LOG" />-->
             <!--<AppenderRef ref="WARN_LOG" />-->
@@ -128,26 +128,20 @@
             <!--<AppenderRef ref="ERROR_LOG" />-->
             <AppenderRef ref="Console" />
         </Logger>
-        <Logger name="org.springframework.transaction.*" level="debug" additivity="false">
+        <Logger name="org.springframework.transaction" level="warn" additivity="false">
             <!--<AppenderRef ref="DEBUG_LOG" />-->
             <!--<AppenderRef ref="INFO_LOG" />-->
             <!--<AppenderRef ref="WARN_LOG" />-->
             <!--<AppenderRef ref="ERROR_LOG" />-->
             <AppenderRef ref="Console" />
         </Logger>
-        <Logger name="com.mchange.v2" level="debug" additivity="false">
+        <Logger name="com.mchange.v2" level="warn" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="com.mchange.v2.c3p0" level="debug" additivity="false">
+        <Logger name="com.opensymphony" level="error" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="com.mchange.v2.log.MLog.log" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-        <Logger name="com.mchange.v2.cfg.MConfig.log" level="debug" additivity="false">
-            <AppenderRef ref="Console"/>
-        </Logger>
-        <Logger name="com.mchange.v2.resourcepool" level="debug" additivity="false">
+        <Logger name="org.apache.struts2" level="error" additivity="false">
             <AppenderRef ref="Console"/>
         </Logger>
 

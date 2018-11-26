@@ -197,9 +197,9 @@ public class TeacherAction extends ActionSupport {
         this.course.setCourseName(courseName);
     }
 
-    public void setCapacity(String capacity) {
-        this.course.setCapacity(Integer.valueOf(capacity));
-    }
+//    public void setCapacity(String capacity) {
+//        this.course.setCapacity(Integer.valueOf(capacity));
+//    }
 
 
     /**
@@ -481,10 +481,10 @@ public class TeacherAction extends ActionSupport {
     public String listStudentAndHomework() throws Exception {
         Map<String, Object> session = ActionContext.getContext().getSession();
         System.out.println("Session-->"+session.toString());
+        String courseId = session.get("courseId").toString();
         course = courseBo.get(session.get("courseId").toString());
         System.out.println("course-->"+course);
-        System.out.println("courseId-->"+course.getCourseId());
-        studentList = courseBo.getStudents(course);
+        studentList = courseBo.getStudentList(courseId);
         //homeworkList.addAll(course.getHomework());
         Set<Homework> homeworkSet = course.getHomework();
         System.out.println("HomeworkList SIZE"+homeworkSet.size());

@@ -1,7 +1,6 @@
 package com.bupt.se.homework.entity;
 
 import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import java.util.*;
 
@@ -10,10 +9,12 @@ import java.util.*;
 public class Course extends AbstractEntity {
     private String courseId;
     private String courseName;
-    private Integer capacity;
+//    private Integer capacity;
+    private Integer minStudentNum = 0;
+    private Integer maxStudentNum = 1000;
     private Date createTime;
-    private Integer groupCapacity;
-    private String groupPrefix;
+    private Integer groupCapacity = 100;
+    private String groupPrefix = "";
     private Teacher teacher;
     private Set<Homework> homework = new HashSet<>();
     private Set<StudentCourse> studentCourses = new HashSet<>();
@@ -82,16 +83,33 @@ public class Course extends AbstractEntity {
         this.courseName = courseName;
     }
 
-
-    @Basic()
-    @Column(length = 3)
-    public Integer getCapacity() {
-        return capacity;
+    @Basic
+    public Integer getMaxStudentNum() {
+        return maxStudentNum;
     }
 
-    public void setCapacity(Integer capacity) {
-        this.capacity = capacity;
+    public void setMaxStudentNum(Integer maxStudentNum) {
+        this.maxStudentNum = maxStudentNum;
     }
+
+    @Basic
+    public Integer getMinStudentNum() {
+        return minStudentNum;
+    }
+
+    public void setMinStudentNum(Integer minStudentNum) {
+        this.minStudentNum = minStudentNum;
+    }
+
+//    @Basic()
+//    @Column(length = 3)
+//    public Integer getCapacity() {
+//        return capacity;
+//    }
+//
+//    public void setCapacity(Integer capacity) {
+//        this.capacity = capacity;
+//    }
 
     @Basic
     @Column(columnDefinition = "DATE")

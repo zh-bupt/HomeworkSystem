@@ -24,13 +24,13 @@ public interface StudentBo extends BasicBo<Student, String> {
 
     String login(String id, String password);
 
-    Map<Course, Double> getTranscript(String studentId);
+    Map<Course, Double> getTranscript(String studentId) throws Exception;
 
     List<Homework> getHomeworkList(String studentId, String courseId);
 
     Group_ getCourseGroup(String studentId, String courseId);
 
-    List<Group_> getManagedGroups(String studentId);
+    List<Group_> getManagedGroups (String studentId) throws Exception;
 
     HomeworkGroup getHomeworkGroup(Student student, Homework homework);
 }

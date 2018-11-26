@@ -3,6 +3,8 @@ package com.bupt.se.homework.bo.impl;
 import com.bupt.se.homework.bo.BasicBo;
 import com.bupt.se.homework.dao.BasicDao;
 import com.bupt.se.homework.entity.AbstractEntity;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
@@ -28,6 +30,8 @@ public abstract class BasicBoImpl<M extends AbstractEntity, PK extends Serializa
 
     protected HibernateTransactionManager transactionManager;
 
+    protected Logger logger = LoggerFactory.getLogger(this.getClass());
+
     @Autowired
     @Qualifier("transactionManager")
     public void setTransactionManager(HibernateTransactionManager transactionManager) {
@@ -44,107 +48,107 @@ public abstract class BasicBoImpl<M extends AbstractEntity, PK extends Serializa
 
     @Override
     public boolean save(M model) {
-        TransactionStatus status = getTransactionStatus();
-        try {
+//        TransactionStatus status = getTransactionStatus();
+//        try {
             basicDao.save(model);
-            getTransactionManager().commit(status);
+//            getTransactionManager().commit(status);
             return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return false;
+//        }
     }
 
     @Override
     public boolean merge(M model) {
-        TransactionStatus status = getTransactionStatus();
-        try {
+//        TransactionStatus status = getTransactionStatus();
+//        try {
             basicDao.merge(model);
-            getTransactionManager().commit(status);
+//            getTransactionManager().commit(status);
             return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return false;
+//        }
     }
 
     @Override
     public boolean delete(PK key) {
-        TransactionStatus status = getTransactionStatus();
-        try {
+//        TransactionStatus status = getTransactionStatus();
+//        try {
             basicDao.delete(key);
-            getTransactionManager().commit(status);
+//            getTransactionManager().commit(status);
             return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return false;
+//        }
     }
 
     @Override
     public boolean deleteArray(PK[] id) {
-        TransactionStatus status = getTransactionStatus();
-        try {
+//        TransactionStatus status = getTransactionStatus();
+//        try {
             basicDao.deleteArray(id);
-            getTransactionManager().commit(status);
+//            getTransactionManager().commit(status);
             return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return false;
+//        }
     }
 
     @Override
     public boolean deleteObject(M model) {
-        TransactionStatus status = getTransactionStatus();
-        try {
+//        TransactionStatus status = getTransactionStatus();
+//        try {
             basicDao.deleteObject(model);
-            getTransactionManager().commit(status);
+//            getTransactionManager().commit(status);
             return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return false;
+//        }
     }
 
     @Override
     public boolean deleteObjectList(List<M> list) {
-        TransactionStatus status = getTransactionStatus();
-        try {
+//        TransactionStatus status = getTransactionStatus();
+//        try {
             basicDao.deleteObjectList(list);
-            getTransactionManager().commit(status);
+//            getTransactionManager().commit(status);
             return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return false;
+//        }
     }
 
     @Override
     public boolean update(M model) {
-        TransactionStatus status = getTransactionStatus();
-        try {
+//        TransactionStatus status = getTransactionStatus();
+//        try {
             basicDao.update(model);
-            getTransactionManager().commit(status);
+//            getTransactionManager().commit(status);
             return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return false;
+//        }
     }
 
     @Override
     @Transactional(rollbackFor = {Exception.class})
     public boolean save(List<M> models) {
-        TransactionStatus status = getTransactionStatus();
-        try {
+//        TransactionStatus status = getTransactionStatus();
+//        try {
             basicDao.save(models);
-            getTransactionManager().commit(status);
+//            getTransactionManager().commit(status);
             return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            return false;
-        }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return false;
+//        }
     }
 
     @Override
@@ -170,13 +174,13 @@ public abstract class BasicBoImpl<M extends AbstractEntity, PK extends Serializa
             int firstResult, int maxResult) {
         TransactionStatus status = getTransactionStatus();
         List<M> list = null;
-        try {
+//        try {
             list = basicDao.findResultList(
                     equalFields, notEqualFields, LikeFields, nullFields, orderByFields, whereHql, firstResult, maxResult);
-            getTransactionManager().commit(status);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//            getTransactionManager().commit(status);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         return list;
     }
 
@@ -190,12 +194,12 @@ public abstract class BasicBoImpl<M extends AbstractEntity, PK extends Serializa
     ) {
         TransactionStatus status = getTransactionStatus();
         M m = null;
-        try {
+//        try {
             m = basicDao.get(equalFields, notEqualFields, LikeFields, nullFields, whereHql);
             getTransactionManager().commit(status);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         return m;
     }
 

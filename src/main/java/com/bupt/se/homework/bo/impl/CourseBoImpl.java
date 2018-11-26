@@ -7,6 +7,8 @@ import com.bupt.se.homework.dao.CourseDAO;
 import com.bupt.se.homework.dao.GroupDAO;
 import com.bupt.se.homework.dao.StudentCourseDAO;
 import com.bupt.se.homework.entity.*;
+import com.bupt.se.homework.exception.ServiceException;
+import com.bupt.se.homework.exception.ServiceExceptionErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -42,13 +44,18 @@ public class CourseBoImpl extends BasicBoImpl<Course, String> implements CourseB
         this.studentCourseDAO = studentCourseDAO;
     }
 
-    @Override
-    public Set<StudentCourse> getStudentCourse(Course course) {
-        return course.getStudentCourses();
-    }
+//    @Override
+//    public Set<StudentCourse> getStudentCourse(Course course) {
+//        return course.getStudentCourses();
+//    }
 
     @Override
-    public List<Student> getStudents(Course course) {
+    public List<Student> getStudentList(String courseId) throws Exception {
+        Course course = this.get(courseId);
+        if (course == null) {
+            throw new ServiceException(ServiceExceptionErrorCode.COURSE_NOT_FOUND,
+                    "课程 " + courseId + " 不存在.");
+        }
         Set<StudentCourse> studentCourses = course.getStudentCourses();
         List<Student> list = null;
         if (studentCourses != null && studentCourses.size() > 0) {
@@ -118,12 +125,12 @@ public class CourseBoImpl extends BasicBoImpl<Course, String> implements CourseB
      * @Date: 2018/11/25
      **/
     @Override
-    public void calculateScore(Course course) {
+    public void calculateScore(Course course) throws Exception {
         Set<Group_> groups = course.getGroups();
         if (groups != null && groups.size() > 0) {
             for (Group_ g:groups) {
                 // 先计算小组成绩
-                groupBo.calculateScore(g);
+                groupBo.calculateScore(g.getGroupId());
                 // 再计算课程成绩
                 Set<GroupStudent> groupStudents = g.getGroupStudentSet();
                 if (groupStudents != null && groupStudents.size() > 0) {

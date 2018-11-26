@@ -182,11 +182,12 @@ public class StudentAction{
         Set<StudentCourse> studentCourses = student.getStudentCourses();//TODO 等待张珩封装
         System.out.println("studentCourses.size():"+studentCourses.size());
         groupManagedList.addAll(student.getGroupsManaged());
-        System.out.println("groupManagedList-->"+groupManagedList+" "+groupManagedList.get(0).getGroupId()+" "+groupManagedList.get(0).getName());
+//        System.out.println("groupManagedList-->"+groupManagedList+" "+groupManagedList.get(0).getGroupId()+" "+groupManagedList.get(0).getName());
         for(StudentCourse sc : studentCourses)
         {
             courseList.add(sc.getCourse());
         }
+        if (groupManagedList == null || groupManagedList.size() == 0) return "success";
         for(GroupStudent gs : groupManagedList.get(0).getGroupStudentSet())
         {
             System.out.println(gs.getStudent().getStudentName());
@@ -279,7 +280,7 @@ public class StudentAction{
             homeworkList.addAll(homeworkSet);
         }
         Group_ group_ = studentBo.getCourseGroup(session.get("id").toString(),session.get("courseId").toString());
-        System.out.println(group_.getGroupId());
+//        System.out.println(group_.getGroupId());
         return "success";
     }
 

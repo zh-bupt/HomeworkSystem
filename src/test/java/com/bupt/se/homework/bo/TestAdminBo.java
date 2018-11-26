@@ -36,5 +36,11 @@ public class TestAdminBo extends UnitTestBase {
 //        System.out.println(adminBo.update(new Admin("2015211203", "zh", "11111111")));
     }
 
+    @Test
+    public void testxx() {
+        Long l = 10L;
+        long l1 = 10;
+        System.out.println(l == l1);
+    }
 
 }

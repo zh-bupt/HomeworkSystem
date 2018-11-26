@@ -4,6 +4,8 @@ import com.bupt.se.homework.bo.GroupBo;
 import com.bupt.se.homework.dao.BasicDao;
 import com.bupt.se.homework.dao.GroupDAO;
 import com.bupt.se.homework.entity.*;
+import com.bupt.se.homework.exception.ServiceException;
+import com.bupt.se.homework.exception.ServiceExceptionErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -30,13 +32,17 @@ public class GroupBoImpl extends BasicBoImpl<Group_, String> implements GroupBo 
 
     /**
      * @Description: 计算小组的成绩
-     * @param group_
+     * @param groupId
      * @return: void
      * @Author: zh
      * @Date: 2018/11/25
      **/
     @Override
-    public void calculateScore(Group_ group_) {
+    public void calculateScore(String groupId) throws Exception {
+        Group_ group_ = this.get(groupId);
+        if (group_ == null) {
+            throw new ServiceException(ServiceExceptionErrorCode.GROUP_NOT_FOUND, "小组 " + groupId + " 不存在!");
+        }
         Set<HomeworkGroup> homeworkGroups = group_.getHomeworkGroups();
         if (homeworkGroups != null && homeworkGroups.size() > 0) {
             double score = 0.;
@@ -51,7 +57,12 @@ public class GroupBoImpl extends BasicBoImpl<Group_, String> implements GroupBo 
     }
 
     @Override
-    public void addGroup(Group_ group_, Course course, Student leader, Set<Student> members) {
+    public void addGroup(Group_ group_, Course course, Student leader, Set<Student> members) throws Exception {
+        if (members.size() > course.getMaxStudentNum()) {
+            throw new ServiceException(ServiceExceptionErrorCode.GROUP_NUM_ERROE, "小组人数过多!");
+        } else if (members.size() < course.getMinStudentNum()) {
+            throw new ServiceException(ServiceExceptionErrorCode.GROUP_NUM_ERROE, "小组人数不足!");
+        }
         group_.setCourse(course);
         group_.setLeader(leader);
         Set<Homework> homeworkSet = course.getHomework();
