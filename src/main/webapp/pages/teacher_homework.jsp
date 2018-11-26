@@ -31,14 +31,14 @@
         <s:iterator value="homeworkGroupList" >
             <tr>
                 <td><input type="checkbox" value="fileDir" name="fileDir"></td>
-                <td><s:property value="groupId"/> </td>
+                <td><s:property value="group_.getGroupId()"/> </td>
                 <td><s:property value="homeworkId"/> </td>
-                <td><s:property value="submissionTime"/> </td>
+                <td><s:date name="submissionTime" format="yyyy-MM-dd"/> </td>
                 <td><s:property value="score"/> </td>
                 <td><s:property value="comment"/> </td>
                 <%--<td><input type="button" name="update" value="查看提交" onclick="javascript:window.location.href='/teacher/listHomeworkGroupAction.action?homeworkId=${homeworkId}'"/></td>--%>
 
-                <td><input type="button" name="download" value="下载" onclick="javascript:window.location.href='/teacher/downloadHomeworkAction.action?homeworkId=${homeworkId}&groupId=${groupId}&fileDir=${fileDir}'"/></td>
+                <td><input type="button" name="download" value="下载" onclick="javascript:window.location.href='/teacher/downloadHomeworkAction.action?homeworkId=${homeworkId}&groupId=${group_.getGroupId()}&homeworkFileName=${fileDir}'"/></td>
                 <%--<td><a href="/teacher/downloadHomeworkAction.action?fileDir=${fileDir}">下载</a></td>--%>
             </tr>
         </s:iterator>

@@ -42,6 +42,8 @@ public class AdminAction extends ActionSupport {
     private String searchWay;
     private String searchStudentWord;
 
+    private String searchTeacherWord;
+
     private List<Teacher> teacherList = new ArrayList<Teacher>();
     private List<Student> studentList = new ArrayList<Student>();
 
@@ -52,6 +54,14 @@ public class AdminAction extends ActionSupport {
     private String teacherExcelContentType;//上传的文件类型
     private String teacherExcelFileName; //上传的文件名
 
+
+    public String getSearchTeacherWord() {
+        return searchTeacherWord;
+    }
+
+    public void setSearchTeacherWord(String searchTeacherWord) {
+        this.searchTeacherWord = searchTeacherWord;
+    }
 
     public String getSearchWay() {
         return searchWay;
@@ -187,12 +197,17 @@ public class AdminAction extends ActionSupport {
 
     public String listStudent() throws Exception{
         if(searchWay.equals("班级"))
-        {
             return listStudentByClass();
+        else if(searchWay.equals("姓名"))
+        {
+            return listStudentByName();
         }
         else
         {
-            return listStudentByName();
+            LinkedHashMap<Object, Object> equals = new LinkedHashMap<>();
+            equals.put("studentId", searchStudentWord);
+            studentList = studentBo.getList(equals,null,null,null,null,null,0,0);
+            return "success";
         }
     }
     public String listStudentByName() throws Exception{
@@ -573,4 +588,21 @@ public class AdminAction extends ActionSupport {
     }
 
 
+    /**
+     * @Author KRF
+     * @Description 按照工号和姓名查询老师
+     * @Date 11:33 2018/11/26
+     * @Param []
+     * @return java.lang.String
+     **/
+    
+    public String queryTeacher() throws Exception {
+        LinkedHashMap<Object, Object> equals = new LinkedHashMap<>();
+        if(searchWay.equals("工号"))
+            equals.put("teacherId", searchTeacherWord);
+        else if(searchWay.equals("姓名"))
+            equals.put("teacherName", searchTeacherWord);
+        teacherList = teacherBo.getList(equals,null,null,null,null,null,0,0);
+        return "success";
+    }
 }

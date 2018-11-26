@@ -59,6 +59,10 @@
                 class="com.bupt.se.homework.action.AdminAction" method="listStudent">
             <result name="success">/pages/admin.jsp</result>
         </action>
+        <action name="searchTeacherAction"
+                class="com.bupt.se.homework.action.AdminAction" method="queryTeacher">
+            <result name="success">/pages/admin.jsp</result>
+        </action>
         <action name="deleteStudentAction"
                 class="com.bupt.se.homework.action.AdminAction" method="deleteStudent">
             <result name="success">/pages/admin.jsp</result>
@@ -223,9 +227,9 @@
                     <result type="stream">  
                         <!-- 下载的文件数据存放的方法，该方法返回一个InputStream   
                         例如取值为inputStream的属性需要编写getInputStream()方法-->  
-                        <param name="inputName">downloadFile</param>  
+                        <param name="inputName">is</param>  
                         <!--下载时，客户端显示的下载的文件名 -->  
-                        <param name="contentDisposition"> attachment; filename=${fileName}</param>  
+                        <param name="contentDisposition"> attachment; filename=${homeworkFileName}</param>  
                         <!-- 数据的缓冲大小 -->  
                         <param name="bufferSize">1024</param>  
                     </result>

@@ -59,12 +59,21 @@ public class TeacherAction extends ActionSupport {
 
     private String homeworkId;
 
+    private InputStream is;
 
     //为了下载成绩单
     private static final long serialVersionUID = 1L;
     private InputStream excelFile;
     private String fileName;
 
+
+    public InputStream getIs() {
+        return is;
+    }
+
+    public void setIs(InputStream is) {
+        this.is = is;
+    }
 
     public String getGroupId() {
         return groupId;
@@ -613,7 +622,7 @@ public class TeacherAction extends ActionSupport {
      **/
 
     public String downloadHomework() throws Exception {
-        getDownloadFile();//TODO BY KRF 生成的文件是txt格式
+        this.setIs(getDownloadFile());
         return "success";
     }
     /**
@@ -637,6 +646,7 @@ public class TeacherAction extends ActionSupport {
 
     public void setHomeworkFileName(String fileName) throws UnsupportedEncodingException {
         //处理get请求中文乱码
+        System.out.println(fileName);
         this.homeworkFileName = new String(fileName.getBytes("iso8859-1"),"utf-8");
     }
 

@@ -37,10 +37,10 @@
     <%--<s:actionerror/>--%>
     <s:textfield name="searchStudentWord" label="查询" value=""/>
     <s:if test="searchWay==null">
-        <s:radio name="searchWay" list="{ '班级', '姓名' }" value="'姓名'"  label="搜索方式"/>
+        <s:radio name="searchWay" list="{ '班级','学号', '姓名' }" value="'学号'"  label="搜索方式"/>
     </s:if>
     <s:else>
-        <s:radio name="searchWay" list="{ '班级', '姓名' }"  label="搜索方式"/>
+        <s:radio name="searchWay" list="{ '班级', '学号', '姓名' }"  label="搜索方式"/>
     </s:else>
     <s:submit/>
 </s:form>
@@ -92,8 +92,19 @@
     <s:token/>
     <s:submit value="上传" />
 </s:form>
+<h3>查询教师</h3>
+<s:form action="searchTeacherAction">
+    <%--<s:actionerror/>--%>
+    <s:textfield name="searchTeacherWord" label="查询" value=""/>
+    <s:if test="searchWay==null">
+        <s:radio name="searchWay" list="{ '工号', '姓名' }" value="'姓名'"  label="搜索方式"/>
+    </s:if>
+    <s:else>
+        <s:radio name="searchWay" list="{ '工号', '姓名' }"  label="搜索方式"/>
+    </s:else>
+    <s:submit/>
+</s:form>
 
-<h2>教师列表</h2>
 <s:if test="teacherList.size() > 0">
 <%--<s:if test="true" >--%>
     <%--<button onclick="/deleteTeacherAction.action?${teacherId}">删除</button>--%>

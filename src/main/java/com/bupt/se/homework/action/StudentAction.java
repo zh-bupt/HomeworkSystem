@@ -29,6 +29,25 @@ public class StudentAction{
     private GroupBo groupBo;
     private List<String> studentIdList = new ArrayList<>();
     private List<Group_> groupManagedList = new ArrayList<>();
+    private GroupStudentBo groupStudentBo;
+    private List<Student> noGroupStudentList =  new ArrayList<>();
+
+    public List<Student> getNoGroupStudentList() {
+        return noGroupStudentList;
+    }
+
+    public void setNoGroupStudentList(List<Student> noGroupStudentList) {
+        this.noGroupStudentList = noGroupStudentList;
+    }
+
+
+    public GroupStudentBo getGroupStudentBo() {
+        return groupStudentBo;
+    }
+
+    public void setGroupStudentBo(GroupStudentBo groupStudentBo) {
+        this.groupStudentBo = groupStudentBo;
+    }
 
     public List<Group_> getGroupManagedList() {
         return groupManagedList;
@@ -191,6 +210,7 @@ public class StudentAction{
         {
             System.out.println(gs.getStudent().getStudentName());
         }
+
         return "success";
     }
 
@@ -222,6 +242,7 @@ public class StudentAction{
         System.out.print(homeworkGroup);
         // TODO 已经实现, 简单测试了一下
         Group_ group_ = studentBo.getCourseGroup(session.get("id").toString(),session.get("courseId").toString());
+        System.out.println(group_);
         //获取要保存文件夹的物理路径(绝对路径)
         String relativePath = "/upload/course/"+session.get("courseId").toString()+"/"+session.get("homeworkId").toString()+"/";
         String realPath= ServletActionContext.getServletContext().getRealPath(relativePath);
@@ -229,7 +250,10 @@ public class StudentAction{
         System.out.print(realPath);
         //测试此抽象路径名表示的文件或目录是否存在。若不存在，创建此抽象路径名指定的目录，包括所有必需但不存在的父目录。
         if(!file.exists())
+        {
             file.mkdirs();
+            System.out.println("创建了作业的目录");
+        }
         try {
             //保存文件
             FileUtils.copyFile(groupHomework, new File(file,groupHomeworkFileName));
@@ -280,6 +304,8 @@ public class StudentAction{
         }
         Group_ group_ = studentBo.getCourseGroup(session.get("id").toString(),session.get("courseId").toString());
         System.out.println(group_.getGroupId());
+        noGroupStudentList = groupStudentBo.findResultList(course.getCourseId());
+        System.out.println("noGroupStudentList-->"+noGroupStudentList);
         return "success";
     }
 
@@ -303,6 +329,7 @@ public class StudentAction{
         course = courseBo.get(session.get("courseId").toString());
 //        group.setCourse(course);
         student = studentBo.get(session.get("id").toString());
+
 //        group.setLeader(student);
 //        Set<GroupStudent> groupStudentSet =  new HashSet<>();
         Set<Student> studentSet = new HashSet<>();
