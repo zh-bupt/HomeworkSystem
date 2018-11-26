@@ -210,7 +210,6 @@ public class StudentAction{
         {
             System.out.println(gs.getStudent().getStudentName());
         }
-
         return "success";
     }
 
@@ -242,7 +241,7 @@ public class StudentAction{
         System.out.print(homeworkGroup);
         // TODO 已经实现, 简单测试了一下
         Group_ group_ = studentBo.getCourseGroup(session.get("id").toString(),session.get("courseId").toString());
-        System.out.println(group_);
+
         //获取要保存文件夹的物理路径(绝对路径)
         String relativePath = "/upload/course/"+session.get("courseId").toString()+"/"+session.get("homeworkId").toString()+"/";
         String realPath= ServletActionContext.getServletContext().getRealPath(relativePath);

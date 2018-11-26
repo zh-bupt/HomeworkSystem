@@ -49,9 +49,12 @@ public class GroupStudentDAOImpl extends BasicDAOImpl<GroupStudent, GroupStudent
         List<Student> firstList = null;
         List<Student> secondList = null;
         List<Student> lastList = null;
-        List<List> allStuCou = session.createQuery("select new list(Student,Course) from StudentCourse").list();
-        List<List> allGroStu = session.createQuery("select new list(Group_,Student) from GroupStudent").list();
+
+        List<List> allStuCou = session.createQuery("select new list(student,course) from StudentCourse").list();
+        List<List> allGroStu = session.createQuery("select new list(group_,student) from GroupStudent").list();
         transaction.commit();
+		int isChosen = 0;
+
         for(List StuCou : allStuCou){
             Course course = (Course)StuCou.get(1);
             if(course.getCourseId() == courseID){
@@ -66,10 +69,16 @@ public class GroupStudentDAOImpl extends BasicDAOImpl<GroupStudent, GroupStudent
             }
         }
         for(Student student : firstList){
+
+			isChosen = 0;
             for(Student student2 : secondList){
-                if(student.getStudentId() != student2.getStudentId())
-                    lastList.add(student);
+                if(student.getStudentId() == student2.getStudentId())
+						isChosen = 1;
+						break;
             }
+			if(isChosen == 0)
+				lastList.add(student);
+
         }
 
         return lastList;

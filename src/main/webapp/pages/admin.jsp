@@ -16,6 +16,7 @@
 <h2>添加学生</h2>
 <s:form action="addStudentAction">
     <%--<s:actionerror/>--%>
+
     <s:textfield name="studentId" label="学号" value=""/>
     <s:textfield name="studentName" label="姓名" value=""/>
     <s:textfield name="classId" label="班级" value=""/>
