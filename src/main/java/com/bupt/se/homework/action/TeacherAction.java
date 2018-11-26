@@ -7,7 +7,6 @@ import com.bupt.se.homework.bo.impl.StudentCourseBoImpl;
 import com.bupt.se.homework.entity.*;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
-import com.opensymphony.xwork2.ModelDriven;
 import org.apache.commons.io.FileUtils;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -21,7 +20,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.struts2.ServletActionContext;
 
 import java.io.*;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -447,7 +445,7 @@ public class TeacherAction extends ActionSupport {
     public String listCourse() throws Exception {
         Map<String, Object> session = ActionContext.getContext().getSession();
         teacher = teacherBo.get(session.get("id").toString());
-        Set<Course> courses = teacher.getCourses();
+        List<Course> courses = teacher.getCourses();
         System.out.println(courses.size());
         courseList = courseBo.listCourse();
         return "success";
@@ -486,7 +484,7 @@ public class TeacherAction extends ActionSupport {
         System.out.println("course-->"+course);
         studentList = courseBo.getStudentList(courseId);
         //homeworkList.addAll(course.getHomework());
-        Set<Homework> homeworkSet = course.getHomework();
+        List<Homework> homeworkSet = course.getHomework();
         System.out.println("HomeworkList SIZE"+homeworkSet.size());
 
         if (homeworkSet != null && homeworkSet.size() > 0) {

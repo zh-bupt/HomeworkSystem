@@ -63,7 +63,7 @@ public class TeacherBoImpl extends BasicBoImpl<Teacher, String> implements Teach
     }
 
     @Override
-    public Set<Course> getCourseSet(Teacher teacher) {
+    public List<Course> getCourseSet(Teacher teacher) {
         return teacher.getCourses();
     }
 
@@ -90,7 +90,7 @@ public class TeacherBoImpl extends BasicBoImpl<Teacher, String> implements Teach
         equals.put("courseId", courseId);
         Course c = courseDAO.get(equals, null, null, null, null);
         if (c != null) {
-            Set<StudentCourse> studentCourses = c.getStudentCourses();
+            List<StudentCourse> studentCourses = c.getStudentCourses();
             if (studentCourses != null && studentCourses.size() > 0) {
                 map = new HashMap<>();
                 for (StudentCourse sc:studentCourses) {

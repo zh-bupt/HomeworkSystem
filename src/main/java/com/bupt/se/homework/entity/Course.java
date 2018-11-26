@@ -16,38 +16,38 @@ public class Course extends AbstractEntity {
     private Integer groupCapacity = 100;
     private String groupPrefix = "";
     private Teacher teacher;
-    private Set<Homework> homework = new HashSet<>();
-    private Set<StudentCourse> studentCourses = new HashSet<>();
-    private Set<Group_> groups = new HashSet<>();
+    private List<Homework> homework = new ArrayList<>();
+    private List<StudentCourse> studentCourses = new ArrayList<>();
+    private List<Group_> groups = new ArrayList<>();
 
     public Course() {
     }
 
     @OneToMany(mappedBy = "course", cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
-    public Set<Homework> getHomework() {
+    public List<Homework> getHomework() {
         return homework;
     }
 
-    public void setHomework(Set<Homework> homework) {
+    public void setHomework(List<Homework> homework) {
         this.homework = homework;
     }
 
     @OneToMany(mappedBy = "course", cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
-    public Set<StudentCourse> getStudentCourses() {
+    public List<StudentCourse> getStudentCourses() {
         return studentCourses;
     }
 
-    public void setStudentCourses(Set<StudentCourse> studentCourses) {
+    public void setStudentCourses(List<StudentCourse> studentCourses) {
         this.studentCourses = studentCourses;
     }
 
     @OneToMany(cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "courseId")
-    public Set<Group_> getGroups() {
+    public List<Group_> getGroups() {
         return groups;
     }
 
-    public void setGroups(Set<Group_> groups) {
+    public void setGroups(List<Group_> groups) {
         this.groups = groups;
     }
 

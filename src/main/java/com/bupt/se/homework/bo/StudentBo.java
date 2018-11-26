@@ -4,7 +4,6 @@ import com.bupt.se.homework.entity.*;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 public interface StudentBo extends BasicBo<Student, String> {
 
@@ -18,7 +17,7 @@ public interface StudentBo extends BasicBo<Student, String> {
 
     List<Student> getStudentsByName(String name);
 
-    Set<StudentCourse> getStudentCourse(Student student);
+    List<StudentCourse> getStudentCourse(Student student);
 
     List<Course> getCourseList(Student student);
 

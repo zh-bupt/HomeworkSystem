@@ -60,7 +60,7 @@
                 <td><s:property value="groupId"/> </td>
                 <td><s:property value="name"/> </td>
                 <td><s:property value="num"/> </td>
-                <%--<td> <s:iterator value="groupStudentSet">--%>
+                <%--<td> <s:iterator value="groupStudentList">--%>
                         <%--<s:property value="student.getStudentName()"/>--%>
                     <%--</s:iterator>--%>
                 <%--</td>--%>

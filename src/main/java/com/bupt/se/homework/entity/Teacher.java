@@ -1,7 +1,6 @@
 package com.bupt.se.homework.entity;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.*;
 
 @Entity
@@ -15,7 +14,7 @@ public class Teacher extends AbstractEntity {
     private String telephone;
     private String email;
     private String password;
-    private Set<Course> courses = new HashSet<>();
+    private List<Course> courses = new ArrayList<>();
 
     public Teacher() {
     }
@@ -53,11 +52,11 @@ public class Teacher extends AbstractEntity {
     @Basic
     @OneToMany(cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "teacherId")
-    public Set<Course> getCourses() {
+    public List<Course> getCourses() {
         return courses;
     }
 
-    public void setCourses(Set<Course> courses) {
+    public void setCourses(List<Course> courses) {
         this.courses = courses;
     }
 

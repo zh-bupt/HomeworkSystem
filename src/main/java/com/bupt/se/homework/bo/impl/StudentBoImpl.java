@@ -54,14 +54,14 @@ public class StudentBoImpl extends BasicBoImpl<Student, String> implements Stude
     }
 
     @Override
-    public Set<StudentCourse> getStudentCourse(Student student) {
+    public List<StudentCourse> getStudentCourse(Student student) {
         return student.getStudentCourses();
     }
 
     @Override
     public List<Course> getCourseList(Student student) {
         List<Course> list = null;
-        Set<StudentCourse> studentCourses = this.getStudentCourse(student);
+        List<StudentCourse> studentCourses = this.getStudentCourse(student);
         if (studentCourses != null && studentCourses.size() > 0) {
             list = new ArrayList<>();
             for (StudentCourse sc:studentCourses) {
@@ -95,7 +95,7 @@ public class StudentBoImpl extends BasicBoImpl<Student, String> implements Stude
             logger.info("student: " + studentId + "doesn't exist.");
             throw new ServiceException(ServiceExceptionErrorCode.STUDENT_NOT_FOUND, "学生不存在");
         }
-        Set<StudentCourse> studentCourses = s.getStudentCourses();
+        List<StudentCourse> studentCourses = s.getStudentCourses();
         if (studentCourses != null && studentCourses.size() > 0) {
             map = new HashMap<>();
             for (StudentCourse sc:studentCourses) {
@@ -124,7 +124,7 @@ public class StudentBoImpl extends BasicBoImpl<Student, String> implements Stude
             throw new ServiceException(ServiceExceptionErrorCode.STUDENT_NOT_FOUND, "学生不存在");
         }
         List<Group_> list = null;
-        Set<Group_> groupSet = student.getGroupsManaged();
+        List<Group_> groupSet = student.getGroupsManaged();
         if (groupSet != null && groupSet.size() > 0) {
             list = new ArrayList<>();
             for (Group_ g:groupSet) {

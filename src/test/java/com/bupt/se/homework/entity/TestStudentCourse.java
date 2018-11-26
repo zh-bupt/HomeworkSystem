@@ -6,8 +6,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.junit.Test;
 
-import java.util.Map;
-import java.util.Set;
+import java.util.List;
 
 
 /**
@@ -43,7 +42,7 @@ public class TestStudentCourse extends UnitTestBase {
         Session session = sessionFactory.getCurrentSession();
         Transaction transaction = session.beginTransaction();
         Course c = session.get(Course.class, "100010");
-        Set<StudentCourse> studentCourses = c.getStudentCourses();
+        List<StudentCourse> studentCourses = c.getStudentCourses();
         for (StudentCourse sc:studentCourses) {
             sc.setGrade(90.);
             session.update(sc);

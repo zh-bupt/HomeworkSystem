@@ -3,7 +3,6 @@ package com.bupt.se.homework.action;
 import com.bupt.se.homework.bo.*;
 import com.bupt.se.homework.entity.*;
 import com.opensymphony.xwork2.ActionContext;
-import com.opensymphony.xwork2.ModelDriven;
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 
@@ -179,7 +178,7 @@ public class StudentAction{
     public String listCourseAndGroup() throws Exception {
         Map<String, Object> session = ActionContext.getContext().getSession();
         student = studentBo.get(session.get("id").toString());
-        Set<StudentCourse> studentCourses = student.getStudentCourses();//TODO 等待张珩封装
+        List<StudentCourse> studentCourses = student.getStudentCourses();//TODO 等待张珩封装
         System.out.println("studentCourses.size():"+studentCourses.size());
         groupManagedList.addAll(student.getGroupsManaged());
 //        System.out.println("groupManagedList-->"+groupManagedList+" "+groupManagedList.get(0).getGroupId()+" "+groupManagedList.get(0).getName());
@@ -188,7 +187,7 @@ public class StudentAction{
             courseList.add(sc.getCourse());
         }
         if (groupManagedList == null || groupManagedList.size() == 0) return "success";
-        for(GroupStudent gs : groupManagedList.get(0).getGroupStudentSet())
+        for(GroupStudent gs : groupManagedList.get(0).getGroupStudentList())
         {
             System.out.println(gs.getStudent().getStudentName());
         }
@@ -272,7 +271,7 @@ public class StudentAction{
         Map<String, Object> session = ActionContext.getContext().getSession();
         course = courseBo.get(session.get("courseId").toString());
         System.out.println(course.getCourseId());
-        Set<Homework> homeworkSet = course.getHomework();
+        List<Homework> homeworkSet = course.getHomework();
         System.out.println("HomeworkList SIZE"+homeworkSet.size());
 
         if (homeworkSet != null && homeworkSet.size() > 0) {
@@ -317,7 +316,7 @@ public class StudentAction{
 //            groupStudentSet.add(groupStudent);
         }
 //        group.setMembers(studentSet);
-//        group.setGroupStudentSet(groupStudentSet);
+//        group.setGroupStudentList(groupStudentSet);
 //        System.out.println(group);
         System.out.println(group.getGroupId()+group.getName()+String.valueOf(group.getNum()));
 //        groupBo.merge(group);

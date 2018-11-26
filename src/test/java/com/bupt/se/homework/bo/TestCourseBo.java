@@ -1,17 +1,11 @@
 package com.bupt.se.homework.bo;
 
 import com.bupt.se.homework.UnitTestBase;
-import com.bupt.se.homework.bo.impl.CourseBoImpl;
-import com.bupt.se.homework.bo.impl.StudentBoImpl;
 import com.bupt.se.homework.entity.Course;
 import com.bupt.se.homework.entity.Student;
 import com.bupt.se.homework.entity.StudentCourse;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.junit.Test;
 
-import java.nio.charset.CoderResult;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

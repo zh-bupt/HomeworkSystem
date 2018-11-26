@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -43,7 +44,7 @@ public class GroupBoImpl extends BasicBoImpl<Group_, String> implements GroupBo 
         if (group_ == null) {
             throw new ServiceException(ServiceExceptionErrorCode.GROUP_NOT_FOUND, "小组 " + groupId + " 不存在!");
         }
-        Set<HomeworkGroup> homeworkGroups = group_.getHomeworkGroups();
+        List<HomeworkGroup> homeworkGroups = group_.getHomeworkGroups();
         if (homeworkGroups != null && homeworkGroups.size() > 0) {
             double score = 0.;
             int temp = 0;
@@ -65,9 +66,9 @@ public class GroupBoImpl extends BasicBoImpl<Group_, String> implements GroupBo 
         }
         group_.setCourse(course);
         group_.setLeader(leader);
-        Set<Homework> homeworkSet = course.getHomework();
-        if (homeworkSet != null && homeworkSet.size() > 0) {
-            for (Homework h:homeworkSet) {
+        List<Homework> homeworkList = course.getHomework();
+        if (homeworkList != null && homeworkList.size() > 0) {
+            for (Homework h:homeworkList) {
                 HomeworkGroup hg = new HomeworkGroup(h, group_);
                 group_.getHomeworkGroups().add(hg);
             }
@@ -75,7 +76,7 @@ public class GroupBoImpl extends BasicBoImpl<Group_, String> implements GroupBo 
         if (members != null && members.size() > 0) {
             for (Student s:members) {
                 GroupStudent gs = new GroupStudent(group_, s);
-                group_.getGroupStudentSet().add(gs);
+                group_.getGroupStudentList().add(gs);
             }
         }
         this.merge(group_);
