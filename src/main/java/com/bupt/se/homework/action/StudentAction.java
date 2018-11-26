@@ -367,7 +367,7 @@ public class StudentAction{
             studentIdList.add(s);
         }
         //studentIdList = Arrays.asList(studentIds.split("|"));
-        this.group.setNum(studentIdList.size());
+        this.group.setNum(studentIdList.size()+1);
     }
 //
 //

@@ -45,14 +45,14 @@ public class GroupStudentDAOImpl extends BasicDAOImpl<GroupStudent, GroupStudent
         // 获取实体名
         //String entityName = entityClass.getSimpleName();
         Session session = getSession();
-        Transaction transaction = session.beginTransaction();
+        //Transaction transaction = session.beginTransaction();
         List<Student> firstList = null;
         List<Student> secondList = null;
         List<Student> lastList = null;
-
+        //TODO BY LEE java.lang.NullPointerException at org.hibernate.hql.internal.NameGenerator.generateColumnNames(NameGenerator.java:27)
         List<List> allStuCou = session.createQuery("select new list(student,course) from StudentCourse").list();
         List<List> allGroStu = session.createQuery("select new list(group_,student) from GroupStudent").list();
-        transaction.commit();
+        //transaction.commit();
 		int isChosen = 0;
 
         for(List StuCou : allStuCou){
