@@ -5,11 +5,15 @@
 
     <bean id="adminAction" class="com.bupt.se.homework.action.AdminAction">
         <property name="adminBo" ref="adminBo"/>
+        <property name="studentBo" ref="studentBo"/>
+        <property name="teacherBo" ref="teacherBo"/>
     </bean>
-    <bean id="adminBo" class="com.bupt.se.homework.bo.impl.AdminBoImpl">
-        <property name="adminDAO" ref="adminDAO"/>
-    </bean>
-    <bean id="adminDAO" class="com.bupt.se.homework.dao.impl.AdminDAOImpl">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
+
+    <bean id="loginAction" class="com.bupt.se.homework.action.LoginAction"/>
+    <!--<bean id="adminBo" class="com.bupt.se.homework.bo.impl.AdminBoImpl">-->
+        <!--<property name="adminDAO" ref="adminDAO"/>-->
+    <!--</bean>-->
+    <!--<bean id="adminDAO" class="com.bupt.se.homework.dao.impl.AdminDAOImpl">-->
+        <!--<property name="sessionFactory" ref="sessionFactory"/>-->
+    <!--</bean>-->
 </beans>

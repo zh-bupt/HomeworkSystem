@@ -1,26 +1,33 @@
 package com.bupt.se.homework.entity;
 
 import javax.persistence.Column;
-import javax.persistence.Id;
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Embeddable
 public class HomeworkGroupPK implements Serializable {
-    private int groupId;
+    private String groupId;
     private int homeworkId;
 
-    @Column(name = "GROUP_ID")
-    @Id
-    public int getGroupId() {
-        return groupId;
+    public HomeworkGroupPK() {
     }
 
-    public void setGroupId(int groupId) {
+    public HomeworkGroupPK(int homeworkId, String groupId) {
+        this.homeworkId = homeworkId;
         this.groupId = groupId;
     }
 
-    @Column(name = "HOMEWORK_ID")
-    @Id
+    @Column(name = "groupId", length = 10)
+    public String getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(String groupId) {
+        this.groupId = groupId;
+    }
+
+    @Column(name = "homeworkId", length = 10)
     public int getHomeworkId() {
         return homeworkId;
     }
@@ -34,12 +41,13 @@ public class HomeworkGroupPK implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         HomeworkGroupPK that = (HomeworkGroupPK) o;
-        return groupId == that.groupId &&
-                homeworkId == that.homeworkId;
+        return homeworkId == that.homeworkId &&
+                Objects.equals(groupId, that.groupId);
     }
 
     @Override
     public int hashCode() {
+
         return Objects.hash(groupId, homeworkId);
     }
 }

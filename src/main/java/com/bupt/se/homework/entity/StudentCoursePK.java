@@ -1,16 +1,24 @@
 package com.bupt.se.homework.entity;
 
 import javax.persistence.Column;
-import javax.persistence.Id;
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Objects;
 
+@Embeddable
 public class StudentCoursePK implements Serializable {
     private String studentId;
-    private int courseId;
+    private String courseId;
 
-    @Column(name = "STUDENT_ID")
-    @Id
+    public StudentCoursePK() {
+    }
+
+    public StudentCoursePK(String studentId, String courseId) {
+        this.studentId = studentId;
+        this.courseId = courseId;
+    }
+
+    @Column(length = 10)
     public String getStudentId() {
         return studentId;
     }
@@ -19,13 +27,12 @@ public class StudentCoursePK implements Serializable {
         this.studentId = studentId;
     }
 
-    @Column(name = "COURSE_ID")
-    @Id
-    public int getCourseId() {
+    @Column(length = 10)
+    public String getCourseId() {
         return courseId;
     }
 
-    public void setCourseId(int courseId) {
+    public void setCourseId(String courseId) {
         this.courseId = courseId;
     }
 
@@ -41,5 +48,13 @@ public class StudentCoursePK implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(studentId, courseId);
+    }
+
+    @Override
+    public String toString() {
+        return "StudentCoursePK{" +
+                "studentId='" + studentId + '\'' +
+                ", courseId='" + courseId + '\'' +
+                '}';
     }
 }

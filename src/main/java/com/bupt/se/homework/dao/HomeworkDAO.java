@@ -1,6 +1,4 @@
-package com.bupt.se.homework.dao.impl;
+package com.bupt.se.homework.dao;
 
-import com.bupt.se.homework.entity.Homework
-public interface CourseDAO extends BasicDAO<Homework,String>{
-
+public interface HomeworkDAO {
 }

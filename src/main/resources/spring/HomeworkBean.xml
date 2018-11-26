@@ -3,13 +3,15 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <bean id="studentAction" class="com.bupt.se.homework.action.StudentAction">
-        <property name="studentBo" ref="studentBo"/>
-    </bean>
-    <bean id="studentBo" class="com.bupt.se.homework.bo.impl.StudentBoImpl">
-        <property name="studentDAO" ref="studentDAO"/>
-    </bean>
-    <bean id="studentDAO" class="com.bupt.se.homework.dao.impl.StudentDAOImpl">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
+
+    <!--<bean id="homeworkBo" class="com.bupt.se.homework.bo.impl.HomeworkBoImpl">-->
+        <!--<property name="homeworkDAO" ref="homeworkDAO"/>-->
+    <!--</bean>-->
+    <!--<bean id="homeworkDAO" class="com.bupt.se.homework.dao.impl.HomeworkDAOImpl">-->
+        <!--&lt;!&ndash;<property name="sessionFactory" ref="sessionFactory"/>&ndash;&gt;-->
+    <!--</bean>-->
+
+    <!--<bean id="homeworkGroupDAO" class="com.bupt.se.homework.dao.impl.HomeworkGroupDAOImpl">-->
+        <!--&lt;!&ndash;<property name="sessionFactory" ref="sessionFactory"/>&ndash;&gt;-->
+    <!--</bean>-->
 </beans>

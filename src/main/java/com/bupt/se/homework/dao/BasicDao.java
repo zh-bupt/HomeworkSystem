@@ -1,35 +1,42 @@
 package com.bupt.se.homework.dao;
 
+import com.bupt.se.homework.entity.AbstractEntity;
+
+import java.io.Serializable;
 import java.util.LinkedHashMap;
 import java.util.List;
 
 /**
- * Created by JiaLin on 2014/5/23.
- */
-public interface BasicDao<M extends java.io.Serializable, PK extends java.io.Serializable>{
-    //基本CRUD
-    boolean save(M model);
+ * @Description: Basic class of DAO
+ * @Author: zh
+ * @Date: 2018/11/10
+ **/
+public interface BasicDao<M extends AbstractEntity, PK extends Serializable>{
 
-    boolean save(List<M> list);
+    void save(M model);
 
-    public boolean update(M model);
+    void save(List<M> list);
 
-//    public void merge(M model);
+    void update(M model);
 
-    public boolean delete(PK id) ;
+    void merge(M model);
 
-//    public void deleteObject(M model) ;
+    void delete(PK id) ;
 
-    public void deleteObjectList(List<M> list);
+    void deleteObject(M model) ;
+
+    void deleteObjectList(List<M> list);
 
 //    public void delete(Class<?> entityClass, LinkedHashMap<Object, Object> equalFields,
 //                       String whereJpql);
 
-    boolean deleteArray(PK id[]) ;
+    void deleteArray(PK id[]);
 
     boolean exists(PK id);
 
     M get(PK id);
+
+    M load(PK id);
 
     M get(LinkedHashMap<Object, Object> equalFields,
           LinkedHashMap<Object, Object> notEqualFields,

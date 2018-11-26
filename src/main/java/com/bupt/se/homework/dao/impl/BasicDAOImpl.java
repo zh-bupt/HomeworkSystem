@@ -2,14 +2,15 @@ package com.bupt.se.homework.dao.impl;
 
 import com.bupt.se.homework.dao.HibernateDaoUtil;
 import com.bupt.se.homework.dao.BasicDao;
+import com.bupt.se.homework.entity.AbstractEntity;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Repository;
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.LinkedHashMap;
@@ -20,13 +21,15 @@ import java.util.List;
  * @author: zh
  * @create: 2018-11-10 16:36
  **/
-public class BasicDAOImpl<M extends java.io.Serializable, PK extends java.io.Serializable> implements BasicDao<M, PK> {
+@Repository
+public abstract class BasicDAOImpl<M extends AbstractEntity, PK extends Serializable> implements BasicDao<M, PK> {
 
     private SessionFactory sessionFactory;
 
     protected Logger logger = LogManager.getLogger(getClass());
 
     @Autowired
+    @Qualifier("sessionFactory")
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
@@ -49,19 +52,20 @@ public class BasicDAOImpl<M extends java.io.Serializable, PK extends java.io.Ser
      * @Date: 2018/11/10
      **/
     @Override
-    public boolean save(M model) {
-        Session session = getSession();
-        Transaction transaction = null;
-        try{
-            transaction = session.beginTransaction();
-            session.save(model);
-            transaction.commit();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            transaction.rollback();
-            return false;
-        }
+    public void save(M model) {
+        getSession().save(model);
+//        Session session = getSession();
+//        Transaction transaction = null;
+//        try{
+//            transaction = session.beginTransaction();
+//            session.save(model);
+//            transaction.commit();
+//            return true;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            transaction.rollback();
+//            return false;
+//        }
     }
 
     /**
@@ -72,27 +76,37 @@ public class BasicDAOImpl<M extends java.io.Serializable, PK extends java.io.Ser
      * @Date: 2018/11/11
      **/
     @Override
-    public boolean save(List<M> list) {
+    public void save(List<M> list) {
         Session session = getSession();
-        Transaction transaction = null;
-        try {
-            transaction = session.beginTransaction();
-            int count = 1;
-            for (M model:list) {
-                session.save(model);
-                count ++;
-                if (count % 20 == 0) {
-                    session.flush();
-                    session.clear();
-                }
+        int count = 1;
+        for (M model:list) {
+            session.save(model);
+            count++;
+            if (count % 20 == 0) {
+                session.flush();
+                session.clear();
             }
-            transaction.commit();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            transaction.rollback();
-            return false;
         }
+//        Session session = getSession();
+//        Transaction transaction = null;
+//        try {
+//            transaction = session.beginTransaction();
+//            int count = 1;
+//            for (M model:list) {
+//                session.save(model);
+//                count ++;
+//                if (count % 20 == 0) {
+//                    session.flush();
+//                    session.clear();
+//                }
+//            }
+//            transaction.commit();
+//            return true;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            transaction.rollback();
+//            return false;
+//        }
     }
 
     /**
@@ -103,25 +117,26 @@ public class BasicDAOImpl<M extends java.io.Serializable, PK extends java.io.Ser
      * @Date: 2018/11/10
      **/
     @Override
-    public boolean update(M model) {
-        Session session = getSession();
-        Transaction transaction = null;
-        try{
-            transaction = session.beginTransaction();
-            session.update(model);
-            transaction.commit();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            transaction.rollback();
-            return false;
-        }
+    public void update(M model) {
+        getSession().update(model);
+//        Session session = getSession();
+//        Transaction transaction = null;
+//        try{
+//            transaction = session.beginTransaction();
+//            session.update(model);
+//            transaction.commit();
+//            return true;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            transaction.rollback();
+//            return false;
+//        }
     }
 
-//    @Override
-//    public void merge(M model) {
-//        getSession().merge(model);
-//    }
+    @Override
+    public void merge(M model) {
+        getSession().merge(model);
+    }
 
     /**
      * @Description: 通过主键删除对象信息
@@ -131,20 +146,24 @@ public class BasicDAOImpl<M extends java.io.Serializable, PK extends java.io.Ser
      * @Date: 2018/11/10
      **/
     @Override
-    public boolean delete(PK id) {
+    public void delete(PK id) {
         Session session = getSession();
-        Transaction transaction = null;
-        try{
-            transaction = session.beginTransaction();
-            M entity = (M) session.get(this.entityClass,id);
-            session.delete(entity);
-            transaction.commit();
-            return true;
-        } catch (Exception e) {
-            e.printStackTrace();
-            transaction.rollback();
-            return false;
-        }
+        M entity = (M) session.get(this.entityClass, id);
+        entity.preRemove();
+        session.delete(entity);
+//        Session session = getSession();
+//        Transaction transaction = null;
+//        try{
+//            transaction = session.beginTransaction();
+//            M entity = (M) session.get(this.entityClass,id);
+//            session.delete(entity);
+//            transaction.commit();
+//            return true;
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            transaction.rollback();
+//            return false;
+//        }
     }
 
     /**
@@ -155,36 +174,17 @@ public class BasicDAOImpl<M extends java.io.Serializable, PK extends java.io.Ser
      * @Date: 2018/11/11
      **/
     @Override
-    public boolean deleteArray(PK[] id) {
+    public void deleteArray(PK[] id) {
         if (id != null && id.length >0) {
-            StringBuffer hql = new StringBuffer();
-            hql.append("delete from ").append(entityClass.getSimpleName())
-                    .append(" as o where o.id in (");
+            Session session = getSession();
             for (int i = 0; i < id.length; i++) {
-                hql.append("?" + ",");
+                M m = (M) session.get(this.entityClass, id[i]);
+                if (m == null) continue;
+                m.preRemove();
+                session.delete(m);
+                if (i % 20 == 0) session.flush();
             }
-            hql.replace(hql.length() - 1, hql.length(), ")");
-            logger.info(hql.toString());
-            Session session;
-            Transaction transaction = null;
-            try {
-                session = getSession();
-                transaction = session.beginTransaction();
-                Query query = session.createQuery(hql.toString());
-                for (int i = 0; i < id.length; i++) {
-                    query.setParameter(i, id[i]);
-                }
-                query.executeUpdate();
-                transaction.commit();
-                return true;
-            } catch (Exception e) {
-                e.printStackTrace();
-                transaction.rollback();
-                return false;
-            }
-
         }
-        return true;
     }
 
     @Override
@@ -201,18 +201,36 @@ public class BasicDAOImpl<M extends java.io.Serializable, PK extends java.io.Ser
      **/
     @Override
     public M get(PK id) {
-        Session session = getSession();
-        Transaction transaction = null;
-        M entity = null;
-        try{
-            transaction = session.beginTransaction();
-            entity = (M) getSession().get(this.entityClass,id);
-            transaction.commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-            transaction.rollback();
-        }
-        return entity;
+        return (M) getSession().get(this.entityClass, id);
+//        Session session = getSession();
+//        Transaction transaction = null;
+//        M entity = null;
+//        try{
+//            transaction = session.beginTransaction();
+//            entity = (M) getSession().get(this.entityClass,id);
+//            transaction.commit();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            transaction.rollback();
+//        }
+//        return entity;
+    }
+
+    @Override
+    public M load(PK id) {
+        return (M) getSession().load(this.entityClass, id);
+//        Session session = getSession();
+//        Transaction transaction = null;
+//        M entity = null;
+//        try{
+//            transaction = session.beginTransaction();
+//            entity = (M) session.load(this.entityClass, id);
+//            transaction.commit();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            transaction.rollback();
+//        }
+//        return entity;
     }
 
     @Override
@@ -221,12 +239,12 @@ public class BasicDAOImpl<M extends java.io.Serializable, PK extends java.io.Ser
         String entityName = entityClass.getSimpleName();
         Session session = getSession();
         M entity = null;
-        Transaction transaction = session.beginTransaction();
+//        Transaction transaction = session.beginTransaction();
         String hql = "select o from "
                 + entityName
                 + " as o "
                 + HibernateDaoUtil.
-                buildWhereJpql(equalFields, notEqualFields, LikeFields, nullFields, null, whereHql);
+                buildWhereHql(equalFields, notEqualFields, LikeFields, nullFields, null, whereHql);
         logger.info(hql);
         Query query = session.createQuery(hql);
 
@@ -238,27 +256,33 @@ public class BasicDAOImpl<M extends java.io.Serializable, PK extends java.io.Ser
         if(list != null && list.size()>0) {
             entity = (M) query.list().get(0);
         }
-        transaction.commit();
+//        transaction.commit();
         return entity;
     }
 
-
-//    @Override
-//    public void deleteObject(M model) {
-//        getSession().delete(model);
-//
-//    }
+    @Override
+    public void deleteObject(M model) {
+        model.preRemove();
+        getSession().delete(model);
+    }
 
     @Override
     public void deleteObjectList(List<M> list) {
-        //TODO 删除列表中的对象
+        Session session = getSession();
+        int count = 0;
+        for (M m:list) {
+            m.preRemove();
+            session.delete(m);
+            count ++;
+            if (count % 20 == 0) session.flush();
+        }
     }
 
 //    @Override
 //    public void delete(Class entityClass, LinkedHashMap equalFields, String whereJpql) {
 //        Query query = getSession().createQuery("delete from " + entityClass.getSimpleName()
 //                + " as o "
-//                + HibernateDaoUtil.buildWhereJpql(equalFields, null, null, null, null, whereJpql));
+//                + HibernateDaoUtil.buildWhereHql(equalFields, null, null, null, null, whereJpql));
 //        query = HibernateDaoUtil.SetQueryParameter(query, equalFields, null, null);
 //        query.executeUpdate();
 //    }
@@ -288,13 +312,13 @@ public class BasicDAOImpl<M extends java.io.Serializable, PK extends java.io.Ser
         // 获取实体名
         String entityName = entityClass.getSimpleName();
         Session session = getSession();
-        Transaction transaction = session.beginTransaction();
+//        Transaction transaction = session.beginTransaction();
         List<M> list = null;
         // 获得query，并构建查询条件，排序条件
         Query query = session.createQuery("select o from "
                 + entityName
                 + " as o "
-                + HibernateDaoUtil.buildWhereJpql(equalFields, notEqualFields, LikeFields, nullFields,
+                + HibernateDaoUtil.buildWhereHql(equalFields, notEqualFields, LikeFields, nullFields,
                 orderByFields, whereHql));
 
         // 给查询参数赋值
@@ -309,7 +333,7 @@ public class BasicDAOImpl<M extends java.io.Serializable, PK extends java.io.Ser
 
         // 查询，返回list
         list = query.list();
-        transaction.commit();
+//        transaction.commit();
         return list;
     }
 

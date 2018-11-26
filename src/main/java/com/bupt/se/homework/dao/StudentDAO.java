@@ -1,19 +1,10 @@
 package com.bupt.se.homework.dao;
 
-import com.bupt.se.homework.entity.Student;
-
-import java.util.List;
+import com.bupt.se.homework.entity.*;
 
 public interface StudentDAO extends BasicDao<Student, String> {
-//    boolean add(Student student);
-//
-//    boolean update(Student student);
-//
-//    boolean delete(String id);
-//
-//    Student queryById(String id);
 
-//    List<Student> queryByClass(String classId);
-//
-//    List<Student> queryByName(String name);
+    HomeworkGroup getHomeworkGroup(Student student, Homework homework);
+
+    Group_ getCourseGroup(String studentId, String courseId);
 }

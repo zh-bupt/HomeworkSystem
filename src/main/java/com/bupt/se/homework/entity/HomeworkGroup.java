@@ -1,61 +1,60 @@
 package com.bupt.se.homework.entity;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.io.Serializable;
 import java.util.Date;
-import java.util.Objects;
 
 @Entity
-@Table(name = "homework_group", schema = "homeworksystem", catalog = "")
-@IdClass(HomeworkGroupPK.class)
-public class HomeworkGroup {
-
-    private int groupId;
-    private int homeworkId;
+@Table(name = "homework_group")
+public class HomeworkGroup extends AbstractEntity {
+    private Homework homework;
+    private Group_ group_;
+    private HomeworkGroupPK pk;
     private Date submissionTime;
-    private int score;
+    private Integer score = 0;
     private String comment;
     private String fileDir;
-    private String filedir;
 
-    public void setSubmissionTime(Timestamp submissionTime) {
-        this.submissionTime = submissionTime;
+    public HomeworkGroup() {
     }
 
-    public void setScore(Integer score) {
-        this.score = score;
+    public HomeworkGroup(Homework homework, Group_ group_) {
+        this.homework = homework;
+        this.group_ = group_;
+        this.pk = new HomeworkGroupPK(homework.getHomeworkId(), group_.getGroupId());
     }
 
-    public String getFileDir() {
-        return fileDir;
+    @EmbeddedId
+    public HomeworkGroupPK getPk() {
+        return pk;
     }
 
-    public void setFileDir(String fileDir) {
-        this.fileDir = fileDir;
+    public void setPk(HomeworkGroupPK pk) {
+        this.pk = pk;
     }
 
-    @Id
-    @Column(name = "GROUP_ID")
-    public int getGroupId() {
-        return groupId;
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "homeworkId", insertable = false, updatable = false)
+    public Homework getHomework() {
+        return homework;
     }
 
-    public void setGroupId(int groupId) {
-        this.groupId = groupId;
+    public void setHomework(Homework homework) {
+        this.homework = homework;
     }
 
-    @Id
-    @Column(name = "HOMEWORK_ID")
-    public int getHomeworkId() {
-        return homeworkId;
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "groupId", insertable = false, updatable = false)
+    public Group_ getGroup_() {
+        return group_;
     }
 
-    public void setHomeworkId(int homeworkId) {
-        this.homeworkId = homeworkId;
+    public void setGroup_(Group_ group_) {
+        this.group_ = group_;
     }
 
     @Basic
-    @Column(name = "SUBMISSION_TIME")
+    @Column(columnDefinition = "DATE")
     public Date getSubmissionTime() {
         return submissionTime;
     }
@@ -65,17 +64,17 @@ public class HomeworkGroup {
     }
 
     @Basic
-    @Column(name = "SCORE")
-    public int getScore() {
+    @Column(length = 3)
+    public Integer getScore() {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(Integer score) {
         this.score = score;
     }
 
     @Basic
-    @Column(name = "COMMENT")
+    @Column
     public String getComment() {
         return comment;
     }
@@ -85,30 +84,12 @@ public class HomeworkGroup {
     }
 
     @Basic
-    @Column(name = "FILEDIR")
-    public String getFiledir() {
-        return filedir;
+    @Column
+    public String getFileDir() {
+        return fileDir;
     }
 
-    public void setFiledir(String filedir) {
-        this.filedir = filedir;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        HomeworkGroup that = (HomeworkGroup) o;
-        return groupId == that.groupId &&
-                homeworkId == that.homeworkId &&
-                score == that.score &&
-                Objects.equals(submissionTime, that.submissionTime) &&
-                Objects.equals(comment, that.comment) &&
-                Objects.equals(filedir, that.filedir);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(groupId, homeworkId, submissionTime, score, comment, filedir);
+    public void setFileDir(String fileDir) {
+        this.fileDir = fileDir;
     }
 }

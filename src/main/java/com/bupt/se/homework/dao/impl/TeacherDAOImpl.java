@@ -1,134 +1,48 @@
 package com.bupt.se.homework.dao.impl;
 
+import com.bupt.se.homework.bo.ReturnCode;
 import com.bupt.se.homework.dao.TeacherDAO;
-//import com.bupt.se.homework.entity.Student;
-import com.bupt.se.homework.entity.Teacher;
-//import org.hibernate.Session;
-//import org.hibernate.SessionFactory;
-//import org.hibernate.Transaction;
-//import org.hibernate.query.Query;
-//import org.springframework.beans.factory.annotation.Autowired;
-//import org.springframework.beans.factory.annotation.Qualifier;
-//
-//import java.util.List;
+import com.bupt.se.homework.entity.*;
+import org.hibernate.Session;
+import org.hibernate.Transaction;
+import org.springframework.stereotype.Repository;
+import java.util.Set;
 
-
+@Repository("teacherDAO")
 public class TeacherDAOImpl extends BasicDAOImpl<Teacher, String> implements TeacherDAO {
 
-//    private SessionFactory sessionFactory;
-//
-//    @Autowired
-//    @Qualifier("sessionFactory")
-//    public void setSessionFactory(SessionFactory sessionFactory) {
-//        this.sessionFactory = sessionFactory;
-//    }
-//
-//    /**
-//     * @Description: add a new Teacher
-//     * @param teacher
-//     * @return: boolean
-//     * @Author: zh
-//     * @Date: 2018/11/10
-//     **/
-//    @Override
-//    public boolean add(Teacher teacher) {
-//        Session s = sessionFactory.getCurrentSession();
-//        Transaction transaction = null;
-//        try {
-//            transaction = s.beginTransaction();
-//            s.save(teacher);
-//            transaction.commit();
-//            return true;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            transaction.commit();
-//            return false;
-//        }
-//    }
-//
-//    @Override
-//    public boolean update(Teacher teacher) {
-//        Session s = sessionFactory.getCurrentSession();
-//        Transaction transaction = null;
-//        try {
-//            transaction = s.beginTransaction();
-//            s.update(teacher);
-//            transaction.commit();
-//            return true;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            transaction.commit();
-//            return false;
-//        }
-//    }
-//
-//    @Override
-//    public boolean delete(String id) {
-//        Session s = sessionFactory.getCurrentSession();
-//        Transaction transaction = null;
-//        try {
-//            transaction = s.beginTransaction();
-//            Student student = s.get(Student.class, id);
-//            s.delete(student);
-//            transaction.commit();
-//            return true;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            transaction.commit();
-//            return false;
-//        }
-//    }
-//
-//    /**
-//     * @Description: 得到所有教师的List
-//     * @param
-//     * @return: java.util.List<com.bupt.se.homework.entity.Teacher>
-//     * @Author: zh
-//     * @Date: 2018/11/10
-//     **/
-//    @Override
-//    public List<Teacher> listTeacher() {
-//
-//        Session s = sessionFactory.getCurrentSession();
-//        Transaction transaction = null;
-//        List<Teacher> list = null;
-//        try {
-//            transaction = s.beginTransaction();
-//            String hql = "from Teacher";
-//            Query query = s.createQuery(hql);
-//            list =  query.list();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            if (transaction != null) {
-//                transaction.commit();
-//            }
-//        }
-//        return list;
-//    }
-//
-//    /**
-//     * @Description: 根据ID查询Teacher
-//     * @param id
-//     * @return: com.bupt.se.homework.entity.Teacher
-//     * @Author: zh
-//     * @Date: 2018/11/10
-//     **/
-//    @Override
-//    public Teacher queryById(String id) {
-//        Session session = sessionFactory.getCurrentSession();
-//        Transaction transaction = null;
-//        Teacher teacher = null;
-//        try{
-//            transaction = session.beginTransaction();
-//            teacher = session.get(Teacher.class, id);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        } finally {
-//            if (transaction != null) {
-//                transaction.commit();
-//            }
-//        }
-//        return teacher;
-//    }
+    @Override
+    public int AssignHomework(Course course, Homework homework) {
+        course.getHomework().add(homework);
+        if (CalculateHomePercentage(course) > 100) {
+            return ReturnCode.HOMEWORK_PERCENTAGE_EXCEEDED;
+        }
+        Session session = getSession();
+        // 保存作业
+        homework.setCourse(course);
+        session.save(homework);
+        // 更新课程的作业列表
+        session.update(course);
+        // 更新group的作业列表
+        Set<Group_> groupSet = course.getGroups();
+        for (Group_ g:groupSet) {
+            HomeworkGroup hg = new HomeworkGroup(homework, g);
+            g.getHomeworkGroups().add(hg);
+            session.update(g);
+            homework.getHomeworkGroups().add(hg);
+            session.save(hg);
+        }
+        session.update(homework);
+        return ReturnCode.ASSIGN_HOMEWORK_SUCCESS;
+    }
+
+    private int CalculateHomePercentage(Course course) {
+        Set<Homework> homeworkSet = course.getHomework();
+        int total = 0;
+        for (Homework homework:homeworkSet) {
+            total += homework.getPercentage();
+            System.out.println("total: " + total);
+        }
+        return total;
+    }
 }

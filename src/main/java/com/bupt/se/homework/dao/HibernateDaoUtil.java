@@ -22,12 +22,9 @@ public class HibernateDaoUtil {
      */
     public static Query SetQueryParameter(Query query, LinkedHashMap<Object, Object> equalFields,
                                           LinkedHashMap<Object, Object> notEqualFields,
-                                          LinkedHashMap<String, String> LikeFields)
-    {
-        //单纯的Hibernate 是从0开始，jpa的hibernate实现是从1开始
+                                          LinkedHashMap<String, String> LikeFields) {
         int i=0;
-        if(equalFields!=null && equalFields.size() >0)
-        {
+        if(equalFields!=null && equalFields.size() >0) {
 
             for (Object key : equalFields.keySet()) {
                 query.setParameter(i , equalFields.get(key));
@@ -36,8 +33,7 @@ public class HibernateDaoUtil {
 
         }
 
-        if(notEqualFields!=null && notEqualFields.size() >0)
-        {
+        if(notEqualFields!=null && notEqualFields.size() >0) {
             for (Object key : notEqualFields.keySet()) {
                 query.setParameter(i , notEqualFields.get(key));
                 i++;
@@ -45,8 +41,7 @@ public class HibernateDaoUtil {
 
         }
 
-        if(LikeFields!=null && LikeFields.size() >0)
-        {
+        if(LikeFields!=null && LikeFields.size() >0) {
 
             for (String key : LikeFields.keySet()) {
                 query.setParameter(i , LikeFields.get(key)+"%");
@@ -54,14 +49,11 @@ public class HibernateDaoUtil {
             }
 
         }
-
-
         return query;
-
     }
 
     /**
-     * @MethodName	: buildWhereJpql
+     * @MethodName	: buildWhereHql
      * @Description	: 拼接where查询字符串
      * @param equalFields 等于条件
      * @param notEqualFields  不等条件
@@ -74,21 +66,20 @@ public class HibernateDaoUtil {
 
     //单纯的hibernate 参数应该是  name=？ and age=?
     //在hibernate实现的jpa中，参数为name=？1 and age=?2
-    public static String buildWhereJpql(	LinkedHashMap<Object, Object> equalFields,
-                                            LinkedHashMap<Object, Object> notEqualFields,
-                                            LinkedHashMap<String, String> LikeFields,
-                                            LinkedHashMap<String, String> nullFields,
-                                            LinkedHashMap<String, String> orderByFields,
-                                            String whereHql)
-    {
+    public static String buildWhereHql(
+            LinkedHashMap<Object, Object> equalFields,
+            LinkedHashMap<Object, Object> notEqualFields,
+            LinkedHashMap<String, String> LikeFields,
+            LinkedHashMap<String, String> nullFields,
+            LinkedHashMap<String, String> orderByFields,
+            String whereHql) {
 
         StringBuffer out = new StringBuffer("");
 
         boolean flag=false;
         int i=1;
 
-        if(equalFields!=null && equalFields.size() >0)
-        {
+        if(equalFields!=null && equalFields.size() >0) {
             out.append(" where ");
             flag=true;
             for (Object key : equalFields.keySet()) {
@@ -100,17 +91,13 @@ public class HibernateDaoUtil {
 
         }
 
-        if(notEqualFields!=null && notEqualFields.size() >0)
-        {
-            if(flag==false)
-            {
+        if(notEqualFields!=null && notEqualFields.size() >0) {
+            if(flag==false) {
                 out.append(" where ");
                 flag=true;
             }else {
                 out.append("and");
             }
-
-
 
             for (Object key : notEqualFields.keySet()) {
                 out.append(" o." + key + "<>?"+" ");
@@ -121,10 +108,8 @@ public class HibernateDaoUtil {
 
         }
 
-        if(LikeFields!=null && LikeFields.size() >0)
-        {
-            if(flag==false)
-            {
+        if(LikeFields!=null && LikeFields.size() >0) {
+            if(flag==false) {
                 out.append(" where ");
                 flag=true;
             }else {
@@ -142,10 +127,8 @@ public class HibernateDaoUtil {
 
         }
 
-        if(nullFields!=null && nullFields.size() >0)
-        {
-            if(flag==false)
-            {
+        if(nullFields!=null && nullFields.size() >0) {
+            if(flag==false) {
                 out.append(" where ");
                 flag=true;
             }else {
@@ -157,17 +140,14 @@ public class HibernateDaoUtil {
             for (String key : nullFields.keySet()) {
                 out.append(" o." + key + " is null ");
                 out.append("and");
-
                 i++;
             }
             out.delete(out.length() - 3, out.length());
 
         }
 
-        if(whereHql!=null && !"".equals(whereHql))
-        {
-            if(flag==false)
-            {
+        if(whereHql!=null && !"".equals(whereHql)) {
+            if(flag==false) {
                 out.append(" "+whereHql);
                 flag=true;
             }else {
@@ -186,7 +166,6 @@ public class HibernateDaoUtil {
         }
 
         return out.toString();
-
     }
 
     /**

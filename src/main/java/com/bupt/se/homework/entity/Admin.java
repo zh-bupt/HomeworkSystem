@@ -1,20 +1,27 @@
 package com.bupt.se.homework.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import java.util.Date;
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
-public class Admin {
+@Table(name = "admin")
+public class Admin extends AbstractEntity {
     private String adminId;
     private String adminName;
     private String password;
 
+    public Admin() {
+    }
+
+    public Admin(String adminId, String adminName, String password) {
+        this.adminId = adminId;
+        this.adminName = adminName;
+        this.password = password;
+    }
+
     @Basic
-    @Column(name = "PASSWORD")
+    @Column(length = 40, nullable = false)
     public String getPassword() {
         return password;
     }
@@ -24,7 +31,7 @@ public class Admin {
     }
 
     @Id
-    @Column(name = "ADMIN_ID")
+    @Column(length = 10)
     public String getAdminId() {
         return adminId;
     }
@@ -34,7 +41,7 @@ public class Admin {
     }
 
     @Basic
-    @Column(name = "ADMIN_NAME")
+    @Column(length = 20, nullable = false)
     public String getAdminName() {
         return adminName;
     }

@@ -1,63 +1,63 @@
 package com.bupt.se.homework.entity;
 
 import javax.persistence.*;
-import java.util.Objects;
+import java.io.Serializable;
 
 @Entity
-@Table(name = "group_student", schema = "homeworksystem", catalog = "")
-@IdClass(GroupStudentPK.class)
-public class GroupStudent {
+@Table(name = "group_student")
+public class GroupStudent extends AbstractEntity {
 
-    private int groupId;
-    private String studentId;
-    private int grade;
+    private GroupStudentPK pk;
+    private Group_ group_;
+    private Student student;
+    private Integer contribution = 100;
+//    private int score;
 
-    public void setGrade(Integer grade) {
-        this.grade = grade;
+    public GroupStudent() {
     }
 
-    @Id
-    @Column(name = "GROUP_ID")
-    public int getGroupId() {
-        return groupId;
+    public GroupStudent(Group_ group_, Student student) {
+        this.group_ = group_;
+        this.student = student;
+        this.pk = new GroupStudentPK(group_.getGroupId(), student.getStudentId());
     }
 
-    public void setGroupId(int groupId) {
-        this.groupId = groupId;
+    @EmbeddedId
+    public GroupStudentPK getPk() {
+        return pk;
     }
 
-    @Id
-    @Column(name = "STUDENT_ID")
-    public String getStudentId() {
-        return studentId;
+    public void setPk(GroupStudentPK pk) {
+        this.pk = pk;
     }
 
-    public void setStudentId(String studentId) {
-        this.studentId = studentId;
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "studentId", insertable = false, updatable = false)
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    @ManyToOne(cascade = {CascadeType.ALL})
+    @JoinColumn(name = "groupId", insertable = false, updatable = false)
+    public Group_ getGroup_() {
+        return group_;
+    }
+
+    public void setGroup_(Group_ group_) {
+        this.group_ = group_;
     }
 
     @Basic
-    @Column(name = "GRADE")
-    public int getGrade() {
-        return grade;
+    @Column(length = 3)
+    public Integer getContribution() {
+        return contribution;
     }
 
-    public void setGrade(int grade) {
-        this.grade = grade;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        GroupStudent that = (GroupStudent) o;
-        return groupId == that.groupId &&
-                grade == that.grade &&
-                Objects.equals(studentId, that.studentId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(groupId, studentId, grade);
+    public void setContribution(Integer contribution) {
+        this.contribution = contribution;
     }
 }

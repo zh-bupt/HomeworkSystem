@@ -1,7 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+
+    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="location">
+            <value>classpath:database.properties</value>
+        </property>
+    </bean>
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="${jdbc.driverClassName}"/>
+        <property name="jdbcUrl" value="${jdbc.url}"/>
+        <property name="user" value="${jdbc.username}"/>
+        <property name="password" value="${jdbc.password}"/>
+    </bean>
 
     <!--Hibernate session factory-->
     <bean id="sessionFactory"
@@ -11,37 +25,55 @@
         </property>
         <property name="hibernateProperties">
             <props>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
                 <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
                 <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.connection.url">jdbc:mysql://localhost:3306/homeworksystem</prop>
-                <prop key="hibernate.connection.driver_class">com.mysql.jdbc.Driver</prop>
             </props>
         </property>
-        <!--<property name="mappingResources">-->
-            <!--<list>-->
-                <!--<value>hibernate/Teacher.hbm.xml</value>-->
-                <!--<value>hibernate/Student.hbm.xml</value>-->
-                <!--<value>hibernate/Course.hbm.xml</value>-->
-                <!--<value>hibernate/GroupCourse.hbm.xml</value>-->
-                <!--<value>hibernate/Homework.hbm.xml</value>-->
-                <!--<value>hibernate/Admin.hbm.xml</value>-->
-                <!--<value>hibernate/HomeworkGroup.hbm.xml</value>-->
-                <!--<value>hibernate/StudentCourse.hbm.xml</value>-->
-                <!--<value>hibernate/GroupStudent.hbm.xml</value>-->
-            <!--</list>-->
-        <!--</property>-->
-        <property name="annotatedClasses">
-            <list>
-                <value>com.bupt.se.homework.entity.Admin</value>
-                <value>com.bupt.se.homework.entity.Course</value>
-                <value>com.bupt.se.homework.entity.GroupCourse</value>
-                <value>com.bupt.se.homework.entity.GroupStudent</value>
-                <value>com.bupt.se.homework.entity.Homework</value>
-                <value>com.bupt.se.homework.entity.HomeworkGroup</value>
-                <value>com.bupt.se.homework.entity.Student</value>
-                <value>com.bupt.se.homework.entity.StudentCourse</value>
-                <value>com.bupt.se.homework.entity.Teacher</value>
-            </list>
-        </property>
+        <property name="packagesToScan" value="com.bupt.se.homework.entity"/>
     </bean>
+
+    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="get*" read-only="true"/>
+            <!--<tx:method name="*"  rollback-for="java.lang.Exception" propagation="REQUIRED" />-->
+            <tx:method name="getHomeworkGroup" propagation="REQUIRED" read-only="false"/>
+            <tx:method name="add*" propagation="REQUIRED"/>
+            <tx:method name="save*" propagation="REQUIRED"/>
+            <tx:method name="del*" propagation="REQUIRED"/>
+            <tx:method name="modify*" propagation="REQUIRED"/>
+            <tx:method name="update*" propagation="REQUIRED"/>
+            <tx:method name="calculate*" propagation="REQUIRED"/>
+            <tx:method name="AssignHomework" rollback-for="java.lang.Exception" propagation="REQUIRED"/>
+            <tx:method name="*" rollback-for="java.lang.Exception" propagation="REQUIRED" read-only="true"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config>
+        <aop:pointcut expression="execution(* com.bupt.se.homework.bo.impl.*.*(..))" id="pointCut1"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="pointCut1"/>
+    </aop:config>
+
+    <!--<aop:config>-->
+        <!--<aop:pointcut expression="execution(* com.bupt.se.homework.dao.impl.*.*(..))" id="pointCut3"/>-->
+        <!--<aop:advisor advice-ref="txAdvice" pointcut-ref="pointCut3"/>-->
+    <!--</aop:config>-->
+
+    <tx:advice id="txAdvice2" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="*" rollback-for="java.lang.Exception"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config>
+        <aop:pointcut expression="execution(* com.bupt.se.homework.action.*.*(..))" id="pointCut2"/>
+        <aop:advisor advice-ref="txAdvice2" pointcut-ref="pointCut2"/>
+    </aop:config>
 </beans>

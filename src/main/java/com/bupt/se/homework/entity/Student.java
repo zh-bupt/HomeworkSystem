@@ -1,15 +1,14 @@
 package com.bupt.se.homework.entity;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
-public class Student implements Serializable {
+@Table(name = "student")
+public class Student extends AbstractEntity {
 
     private String studentId;
     private String studentName;
@@ -18,14 +17,59 @@ public class Student implements Serializable {
     private Date entranceDate;
     private String password;
     private String email;
-    private String id;
+    private Set<StudentCourse> studentCourses = new HashSet<>();
+    private Set<Group_> groupsManaged = new HashSet<>();
+    private Set<GroupStudent> groupStudentSet = new HashSet<>();
+    private Set<StudentHomework> studentHomeworkSet = new HashSet<>();
 
-    public void setEntranceDate(java.sql.Date entranceDate) {
-        this.entranceDate = entranceDate;
+    public Student() {
+    }
+
+    public Student(String studentId, String studentName, String password) {
+        this.studentId = studentId;
+        this.studentName = studentName;
+        this.password = password;
+    }
+
+    @OneToMany(mappedBy = "student", cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
+    public Set<StudentCourse> getStudentCourses() {
+        return studentCourses;
+    }
+
+    public void setStudentCourses(Set<StudentCourse> studentCourses) {
+        this.studentCourses = studentCourses;
+    }
+
+    @OneToMany(mappedBy = "student", cascade = {CascadeType.ALL, CascadeType.REMOVE})
+    public Set<GroupStudent> getGroupStudentSet() {
+        return groupStudentSet;
+    }
+
+    public void setGroupStudentSet(Set<GroupStudent> groupStudentSet) {
+        this.groupStudentSet = groupStudentSet;
+    }
+
+    @OneToMany(cascade = {CascadeType.ALL, CascadeType.DETACH}, fetch = FetchType.LAZY)
+    @JoinColumn(name = "leaderId")
+    public Set<Group_> getGroupsManaged() {
+        return groupsManaged;
+    }
+
+    public void setGroupsManaged(Set<Group_> groupsManaged) {
+        this.groupsManaged = groupsManaged;
+    }
+
+    @OneToMany(mappedBy = "student", cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
+    public Set<StudentHomework> getStudentHomeworkSet() {
+        return studentHomeworkSet;
+    }
+
+    public void setStudentHomeworkSet(Set<StudentHomework> studentHomeworkSet) {
+        this.studentHomeworkSet = studentHomeworkSet;
     }
 
     @Basic
-    @Column(name = "STUDENT_NAME")
+    @Column(length = 20, nullable = false)
     public String getStudentName() {
         return studentName;
     }
@@ -35,7 +79,7 @@ public class Student implements Serializable {
     }
 
     @Basic
-    @Column(name = "CLASS_ID")
+    @Column(length = 20)
     public String getClassId() {
         return classId;
     }
@@ -45,7 +89,7 @@ public class Student implements Serializable {
     }
 
     @Basic
-    @Column(name = "SEX")
+    @Column(length = 2)
     public String getSex() {
         return sex;
     }
@@ -55,7 +99,7 @@ public class Student implements Serializable {
     }
 
     @Basic
-    @Column(name = "ENTRANCE_DATE")
+    @Column(columnDefinition = "DATE")
     public Date getEntranceDate() {
         return entranceDate;
     }
@@ -65,7 +109,7 @@ public class Student implements Serializable {
     }
 
     @Basic
-    @Column(name = "PASSWORD")
+    @Column(length = 40, nullable = false)
     public String getPassword() {
         return password;
     }
@@ -75,7 +119,7 @@ public class Student implements Serializable {
     }
 
     @Basic
-    @Column(name = "EMAIL")
+    @Column(length = 40)
     public String getEmail() {
         return email;
     }
@@ -85,7 +129,9 @@ public class Student implements Serializable {
     }
 
     @Id
-    @Column(name = "STUDENT_ID")
+    @Column(length = 10)
+    @GeneratedValue(generator = "studentId")
+    @GenericGenerator(name = "studentId", strategy = "assigned")
     public String getStudentId() {
         return studentId;
     }
@@ -111,5 +157,10 @@ public class Student implements Serializable {
     @Override
     public int hashCode() {
         return Objects.hash(studentId, studentName, classId, sex, entranceDate, password, email);
+    }
+
+    @Override
+    public void preRemove() {
+        this.groupsManaged = null;
     }
 }
