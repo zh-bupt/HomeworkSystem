@@ -47,7 +47,14 @@ public class GroupStudentPK implements Serializable {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(groupId, studentId);
+    }
+
+    @Override
+    public String toString() {
+        return "GroupStudentPK{" +
+                "groupId='" + groupId + '\'' +
+                ", studentId='" + studentId + '\'' +
+                '}';
     }
 }

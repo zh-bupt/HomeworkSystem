@@ -3,9 +3,9 @@ package com.bupt.se.homework.bo;
 import com.bupt.se.homework.entity.Homework;
 
 public interface HomeworkBo extends BasicBo<Homework, Integer> {
-    boolean addHomework(Homework homework);
+//    void addHomework(Homework homework) throws Exception;
 
-    boolean updateHomework(Homework homework);
+    void updateHomework(Homework homework) throws Exception;
 
-    boolean getHomework(int homeworkId);
+    Homework getHomework(int homeworkId);
 }

@@ -49,7 +49,14 @@ public class StudentHomeworkPK implements Serializable {
 
     @Override
     public int hashCode() {
-
         return Objects.hash(homeworkId, studentId);
+    }
+
+    @Override
+    public String toString() {
+        return "StudentHomeworkPK{" +
+                "homeworkId=" + homeworkId +
+                ", studentId='" + studentId + '\'' +
+                '}';
     }
 }
