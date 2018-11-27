@@ -4,9 +4,10 @@ import com.bupt.se.homework.bo.CourseBo;
 import com.bupt.se.homework.bo.GroupBo;
 import com.bupt.se.homework.dao.BasicDao;
 import com.bupt.se.homework.dao.CourseDAO;
-import com.bupt.se.homework.dao.GroupDAO;
 import com.bupt.se.homework.dao.StudentCourseDAO;
 import com.bupt.se.homework.entity.*;
+import com.bupt.se.homework.exception.ServiceException;
+import com.bupt.se.homework.exception.ServiceExceptionErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -42,14 +43,19 @@ public class CourseBoImpl extends BasicBoImpl<Course, String> implements CourseB
         this.studentCourseDAO = studentCourseDAO;
     }
 
-    @Override
-    public Set<StudentCourse> getStudentCourse(Course course) {
-        return course.getStudentCourses();
-    }
+//    @Override
+//    public Set<StudentCourse> getStudentCourse(Course course) {
+//        return course.getStudentCourses();
+//    }
 
     @Override
-    public List<Student> getStudents(Course course) {
-        Set<StudentCourse> studentCourses = course.getStudentCourses();
+    public List<Student> getStudentList(String courseId) throws Exception {
+        Course course = this.get(courseId);
+        if (course == null) {
+            throw new ServiceException(ServiceExceptionErrorCode.COURSE_NOT_FOUND,
+                    "课程 " + courseId + " 不存在.");
+        }
+        List<StudentCourse> studentCourses = course.getStudentCourses();
         List<Student> list = null;
         if (studentCourses != null && studentCourses.size() > 0) {
             list = new ArrayList<>();
@@ -72,7 +78,7 @@ public class CourseBoImpl extends BasicBoImpl<Course, String> implements CourseB
         Map<String, Object> map = new HashMap<>();
         int countPerTenScore[] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
         int totalCount = 0;
-        Set<StudentCourse> studentCourses = course.getStudentCourses();
+        List<StudentCourse> studentCourses = course.getStudentCourses();
         if (studentCourses != null && studentCourses.size() > 0) {
             for (StudentCourse sc:studentCourses) {
                 countPerTenScore[(int) Math.floor(sc.getGrade() / 10)]++;
@@ -99,7 +105,7 @@ public class CourseBoImpl extends BasicBoImpl<Course, String> implements CourseB
         Course course = courseDAO.get(courseId);
         List<Homework> list = null;
         if (course != null) {
-            Set<Homework> homeworkSet = course.getHomework();
+            List<Homework> homeworkSet = course.getHomework();
             if (homeworkSet != null && homeworkSet.size() > 0) {
                 list = new ArrayList<>();
                 for (Homework h:homeworkSet) {
@@ -110,15 +116,22 @@ public class CourseBoImpl extends BasicBoImpl<Course, String> implements CourseB
         return list;
     }
 
+    /**
+     * @Description: 计算对应课程每个学生的成绩
+     * @param course
+     * @return: void
+     * @Author: zh
+     * @Date: 2018/11/25
+     **/
     @Override
-    public void calculateScore(Course course) {
-        Set<Group_> groups = course.getGroups();
+    public void calculateScore(Course course) throws Exception {
+        List<Group_> groups = course.getGroups();
         if (groups != null && groups.size() > 0) {
             for (Group_ g:groups) {
                 // 先计算小组成绩
-                groupBo.calculateScore(g);
+                groupBo.calculateScore(g.getGroupId());
                 // 再计算课程成绩
-                Set<GroupStudent> groupStudents = g.getGroupStudentSet();
+                List<GroupStudent> groupStudents = g.getGroupStudentList();
                 if (groupStudents != null && groupStudents.size() > 0) {
                     for (GroupStudent gs:groupStudents) {
                         double courseScore = (gs.getContribution() / 100.) * gs.getGroup_().getGroupScore();

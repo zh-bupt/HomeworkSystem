@@ -5,6 +5,8 @@ import com.bupt.se.homework.bo.StudentBo;
 import com.bupt.se.homework.dao.BasicDao;
 import com.bupt.se.homework.dao.StudentDAO;
 import com.bupt.se.homework.entity.*;
+import com.bupt.se.homework.exception.ServiceException;
+import com.bupt.se.homework.exception.ServiceExceptionErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -52,14 +54,14 @@ public class StudentBoImpl extends BasicBoImpl<Student, String> implements Stude
     }
 
     @Override
-    public Set<StudentCourse> getStudentCourse(Student student) {
+    public List<StudentCourse> getStudentCourse(Student student) {
         return student.getStudentCourses();
     }
 
     @Override
     public List<Course> getCourseList(Student student) {
         List<Course> list = null;
-        Set<StudentCourse> studentCourses = this.getStudentCourse(student);
+        List<StudentCourse> studentCourses = this.getStudentCourse(student);
         if (studentCourses != null && studentCourses.size() > 0) {
             list = new ArrayList<>();
             for (StudentCourse sc:studentCourses) {
@@ -88,14 +90,16 @@ public class StudentBoImpl extends BasicBoImpl<Student, String> implements Stude
     @Override
     public Map<Course, Double> getTranscript(String studentId) {
         Map<Course, Double> map = null;
-        Student s = studentDAO.load(studentId);
-        if (s != null) {
-            Set<StudentCourse> studentCourses = s.getStudentCourses();
-            if (studentCourses != null && studentCourses.size() > 0) {
-                map = new HashMap<>();
-                for (StudentCourse sc:studentCourses) {
-                    map.put(sc.getCourse(), sc.getGrade());
-                }
+        Student s = studentDAO.get(studentId);
+        if (s == null) {
+            logger.info("student: " + studentId + "doesn't exist.");
+            throw new ServiceException(ServiceExceptionErrorCode.STUDENT_NOT_FOUND, "学生不存在");
+        }
+        List<StudentCourse> studentCourses = s.getStudentCourses();
+        if (studentCourses != null && studentCourses.size() > 0) {
+            map = new HashMap<>();
+            for (StudentCourse sc:studentCourses) {
+                map.put(sc.getCourse(), sc.getGrade());
             }
         }
         return map;
@@ -108,20 +112,23 @@ public class StudentBoImpl extends BasicBoImpl<Student, String> implements Stude
 
     @Override
     public Group_ getCourseGroup(String studentId, String courseId) {
+        logger.info("getCourseGroup(" + studentId + ", " + courseId + ")");
         return studentDAO.getCourseGroup(studentId, courseId);
     }
 
     @Override
-    public List<Group_> getManagedGroups(String studentId) {
+    public List<Group_> getManagedGroups(String studentId) throws Exception {
         Student student = this.get(studentId);
+        if (student == null) {
+            logger.info("student: " + studentId + "doesn't exist.");
+            throw new ServiceException(ServiceExceptionErrorCode.STUDENT_NOT_FOUND, "学生不存在");
+        }
         List<Group_> list = null;
-        if (student != null) {
-            Set<Group_> groupSet = student.getGroupsManaged();
-            if (groupSet != null && groupSet.size() > 0) {
-                list = new ArrayList<>();
-                for (Group_ g:groupSet) {
-                    list.add(g);
-                }
+        List<Group_> groupSet = student.getGroupsManaged();
+        if (groupSet != null && groupSet.size() > 0) {
+            list = new ArrayList<>();
+            for (Group_ g:groupSet) {
+                list.add(g);
             }
         }
         return list;

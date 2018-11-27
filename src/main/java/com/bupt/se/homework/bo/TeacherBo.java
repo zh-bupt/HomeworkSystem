@@ -7,7 +7,6 @@ import com.bupt.se.homework.entity.Teacher;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 
 public interface TeacherBo extends BasicBo<Teacher, String> {
@@ -21,7 +20,7 @@ public interface TeacherBo extends BasicBo<Teacher, String> {
 
     List<Teacher> listTeacher();
 
-    Set<Course> getCourseSet(Teacher teacher);
+    List<Course> getCourseSet(Teacher teacher);
 
     String login(String id, String password);
 

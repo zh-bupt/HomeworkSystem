@@ -3,7 +3,6 @@ package com.bupt.se.homework.entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.*;
 
 @Entity
@@ -17,10 +16,10 @@ public class Student extends AbstractEntity {
     private Date entranceDate;
     private String password;
     private String email;
-    private Set<StudentCourse> studentCourses = new HashSet<>();
-    private Set<Group_> groupsManaged = new HashSet<>();
-    private Set<GroupStudent> groupStudentSet = new HashSet<>();
-    private Set<StudentHomework> studentHomeworkSet = new HashSet<>();
+    private List<StudentCourse> studentCourses = new ArrayList<>();
+    private List<Group_> groupsManaged = new ArrayList<Group_>();
+    private List<GroupStudent> groupStudentList = new ArrayList<GroupStudent>();
+    private List<StudentHomework> studentHomeworkList = new ArrayList<StudentHomework>();
 
     public Student() {
     }
@@ -32,40 +31,40 @@ public class Student extends AbstractEntity {
     }
 
     @OneToMany(mappedBy = "student", cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
-    public Set<StudentCourse> getStudentCourses() {
+    public List<StudentCourse> getStudentCourses() {
         return studentCourses;
     }
 
-    public void setStudentCourses(Set<StudentCourse> studentCourses) {
+    public void setStudentCourses(List<StudentCourse> studentCourses) {
         this.studentCourses = studentCourses;
     }
 
     @OneToMany(mappedBy = "student", cascade = {CascadeType.ALL, CascadeType.REMOVE})
-    public Set<GroupStudent> getGroupStudentSet() {
-        return groupStudentSet;
+    public List<GroupStudent> getGroupStudentList() {
+        return groupStudentList;
     }
 
-    public void setGroupStudentSet(Set<GroupStudent> groupStudentSet) {
-        this.groupStudentSet = groupStudentSet;
+    public void setGroupStudentList(List<GroupStudent> groupStudentList) {
+        this.groupStudentList = groupStudentList;
     }
 
     @OneToMany(cascade = {CascadeType.ALL, CascadeType.DETACH}, fetch = FetchType.LAZY)
     @JoinColumn(name = "leaderId")
-    public Set<Group_> getGroupsManaged() {
+    public List<Group_> getGroupsManaged() {
         return groupsManaged;
     }
 
-    public void setGroupsManaged(Set<Group_> groupsManaged) {
+    public void setGroupsManaged(List<Group_> groupsManaged) {
         this.groupsManaged = groupsManaged;
     }
 
     @OneToMany(mappedBy = "student", cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
-    public Set<StudentHomework> getStudentHomeworkSet() {
-        return studentHomeworkSet;
+    public List<StudentHomework> getStudentHomeworkList() {
+        return studentHomeworkList;
     }
 
-    public void setStudentHomeworkSet(Set<StudentHomework> studentHomeworkSet) {
-        this.studentHomeworkSet = studentHomeworkSet;
+    public void setStudentHomeworkList(List<StudentHomework> studentHomeworkList) {
+        this.studentHomeworkList = studentHomeworkList;
     }
 
     @Basic

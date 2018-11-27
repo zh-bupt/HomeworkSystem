@@ -11,9 +11,9 @@ import java.util.Set;
 
 public interface CourseBo extends BasicBo<Course, String> {
 
-    Set<StudentCourse> getStudentCourse(Course course);
+//    Set<StudentCourse> getStudentCourse(Course course);
 
-    List<Student> getStudents(Course course);
+    List<Student> getStudentList(String courseId) throws Exception;
 
     Map<String, Object> getStatistics(Course course);
 
@@ -23,5 +23,5 @@ public interface CourseBo extends BasicBo<Course, String> {
 
     List<Homework> listHomework(String courseId);
 
-    void calculateScore(Course course);
+    void calculateScore(Course course) throws Exception;
 }

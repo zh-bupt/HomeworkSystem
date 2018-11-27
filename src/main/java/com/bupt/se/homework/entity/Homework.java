@@ -3,10 +3,7 @@ package com.bupt.se.homework.entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "homework")
@@ -18,8 +15,8 @@ public class Homework extends AbstractEntity {
     private Date releaseTime;
     private Date deadline;
     private Integer percentage = 0;
-    private Set<HomeworkGroup> homeworkGroups = new HashSet<>();
-    private Set<StudentHomework> studentHomeworkSet = new HashSet<>();
+    private List<HomeworkGroup> homeworkGroups = new ArrayList<>();
+    private List<StudentHomework> studentHomeworkList = new ArrayList<StudentHomework>();
 
     public Homework() {
     }
@@ -37,11 +34,11 @@ public class Homework extends AbstractEntity {
     }
 
     @OneToMany(mappedBy = "homework", cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
-    public Set<HomeworkGroup> getHomeworkGroups() {
+    public List<HomeworkGroup> getHomeworkGroups() {
         return homeworkGroups;
     }
 
-    public void setHomeworkGroups(Set<HomeworkGroup> homeworkGroups) {
+    public void setHomeworkGroups(List<HomeworkGroup> homeworkGroups) {
         this.homeworkGroups = homeworkGroups;
     }
 
@@ -56,12 +53,12 @@ public class Homework extends AbstractEntity {
     }
 
     @OneToMany(mappedBy = "homework", cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
-    public Set<StudentHomework> getStudentHomeworkSet() {
-        return studentHomeworkSet;
+    public List<StudentHomework> getStudentHomeworkList() {
+        return studentHomeworkList;
     }
 
-    public void setStudentHomeworkSet(Set<StudentHomework> studentHomeworkSet) {
-        this.studentHomeworkSet = studentHomeworkSet;
+    public void setStudentHomeworkList(List<StudentHomework> studentHomeworkList) {
+        this.studentHomeworkList = studentHomeworkList;
     }
 
     @Basic

@@ -3,9 +3,9 @@ package com.bupt.se.homework.entity;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "group_")
@@ -16,27 +16,27 @@ public class Group_ extends AbstractEntity {
     private String name;
     private Double groupScore = 0.;
     private Student leader;
-    private Set<GroupStudent> groupStudentSet = new HashSet<>();
-    private Set<HomeworkGroup> homeworkGroups = new HashSet<>();
+    private List<GroupStudent> groupStudentList = new ArrayList<>();
+    private List<HomeworkGroup> homeworkGroups = new ArrayList<>();
 
     public Group_() {
     }
 
     @OneToMany(mappedBy = "group_", cascade = {CascadeType.ALL, CascadeType.REMOVE})
-    public Set<GroupStudent> getGroupStudentSet() {
-        return groupStudentSet;
+    public List<GroupStudent> getGroupStudentList() {
+        return groupStudentList;
     }
 
-    public void setGroupStudentSet(Set<GroupStudent> groupStudentSet) {
-        this.groupStudentSet = groupStudentSet;
+    public void setGroupStudentList(List<GroupStudent> groupStudentList) {
+        this.groupStudentList = groupStudentList;
     }
 
     @OneToMany(mappedBy = "group_", cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
-    public Set<HomeworkGroup> getHomeworkGroups() {
+    public List<HomeworkGroup> getHomeworkGroups() {
         return homeworkGroups;
     }
 
-    public void setHomeworkGroups(Set<HomeworkGroup> homeworkGroups) {
+    public void setHomeworkGroups(List<HomeworkGroup> homeworkGroups) {
         this.homeworkGroups = homeworkGroups;
     }
 

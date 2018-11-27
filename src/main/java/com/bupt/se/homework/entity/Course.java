@@ -1,7 +1,6 @@
 package com.bupt.se.homework.entity;
 
 import org.hibernate.annotations.GenericGenerator;
-
 import javax.persistence.*;
 import java.util.*;
 
@@ -10,43 +9,45 @@ import java.util.*;
 public class Course extends AbstractEntity {
     private String courseId;
     private String courseName;
-    private Integer capacity;
+//    private Integer capacity;
+    private Integer minStudentNum = 0;
+    private Integer maxStudentNum = 1000;
     private Date createTime;
-    private Integer groupCapacity;
-    private String groupPrefix;
+    private Integer groupCapacity = 100;
+    private String groupPrefix = "";
     private Teacher teacher;
-    private Set<Homework> homework = new HashSet<>();
-    private Set<StudentCourse> studentCourses = new HashSet<>();
-    private Set<Group_> groups = new HashSet<>();
+    private List<Homework> homework = new ArrayList<>();
+    private List<StudentCourse> studentCourses = new ArrayList<>();
+    private List<Group_> groups = new ArrayList<>();
 
     public Course() {
     }
 
     @OneToMany(mappedBy = "course", cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
-    public Set<Homework> getHomework() {
+    public List<Homework> getHomework() {
         return homework;
     }
 
-    public void setHomework(Set<Homework> homework) {
+    public void setHomework(List<Homework> homework) {
         this.homework = homework;
     }
 
     @OneToMany(mappedBy = "course", cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
-    public Set<StudentCourse> getStudentCourses() {
+    public List<StudentCourse> getStudentCourses() {
         return studentCourses;
     }
 
-    public void setStudentCourses(Set<StudentCourse> studentCourses) {
+    public void setStudentCourses(List<StudentCourse> studentCourses) {
         this.studentCourses = studentCourses;
     }
 
     @OneToMany(cascade = {CascadeType.ALL, CascadeType.REMOVE}, fetch = FetchType.LAZY)
     @JoinColumn(name = "courseId")
-    public Set<Group_> getGroups() {
+    public List<Group_> getGroups() {
         return groups;
     }
 
-    public void setGroups(Set<Group_> groups) {
+    public void setGroups(List<Group_> groups) {
         this.groups = groups;
     }
 
@@ -82,16 +83,33 @@ public class Course extends AbstractEntity {
         this.courseName = courseName;
     }
 
-
-    @Basic()
-    @Column(length = 3)
-    public Integer getCapacity() {
-        return capacity;
+    @Basic
+    public Integer getMaxStudentNum() {
+        return maxStudentNum;
     }
 
-    public void setCapacity(Integer capacity) {
-        this.capacity = capacity;
+    public void setMaxStudentNum(Integer maxStudentNum) {
+        this.maxStudentNum = maxStudentNum;
     }
+
+    @Basic
+    public Integer getMinStudentNum() {
+        return minStudentNum;
+    }
+
+    public void setMinStudentNum(Integer minStudentNum) {
+        this.minStudentNum = minStudentNum;
+    }
+
+//    @Basic()
+//    @Column(length = 3)
+//    public Integer getCapacity() {
+//        return capacity;
+//    }
+//
+//    public void setCapacity(Integer capacity) {
+//        this.capacity = capacity;
+//    }
 
     @Basic
     @Column(columnDefinition = "DATE")

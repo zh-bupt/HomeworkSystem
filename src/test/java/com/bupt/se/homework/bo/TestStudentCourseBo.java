@@ -21,7 +21,12 @@ public class TestStudentCourseBo extends UnitTestBase {
     @Test
     public void getStudentTranscript() {
         StudentBo bo = super.getBean("studentBo");
-        Map<Course, Double> map = bo.getTranscript("2017211200");
+        Map<Course, Double> map = null;
+        try {
+            map = bo.getTranscript("2017211200");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         System.out.println("学生 2017211200 的成绩单:");
         if (map != null && map.size() > 0) {
             for (Map.Entry<Course, Double> entry:map.entrySet()) {

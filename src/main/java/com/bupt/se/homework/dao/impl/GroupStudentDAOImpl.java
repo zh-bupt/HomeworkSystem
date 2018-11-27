@@ -5,7 +5,6 @@ import com.bupt.se.homework.dao.HibernateDaoUtil;
 import com.bupt.se.homework.dao.StudentDAO;
 
 import com.bupt.se.homework.entity.*;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
@@ -13,14 +12,12 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-@Repository("groupStudentDAO")
 public class GroupStudentDAOImpl extends BasicDAOImpl<GroupStudent, GroupStudentPK> implements GroupStudentDAO {
     private SessionFactory sessionFactory;
 
