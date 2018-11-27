@@ -5,9 +5,9 @@ import com.bupt.se.homework.entity.Admin;
 public interface AdminBo extends BasicBo<Admin, String> {
     String login(String id, String password);
 
-    boolean updateAdmin(Admin admin);
+    void updateAdmin(Admin admin) throws Exception;
 
-    boolean addAdmin(Admin admin);
+    void addAdmin(Admin admin) throws Exception;
 
-    boolean deleteAdmin(String id);
+    void deleteAdmin(String id) throws Exception;
 }

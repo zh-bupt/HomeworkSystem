@@ -230,14 +230,11 @@ public class TeacherAction extends ActionSupport {
     public String addHomework() throws Exception{
         homework.setReleaseTime(new Date());
         Map<String, Object> session = ActionContext.getContext().getSession();
-        course = courseBo.get(session.get("courseId").toString());
-        System.out.println(course.getCourseId());
-        homework.setCourse(course);
-        //homeworkBo.addHomework(homework);
-
+        String courseId = session.get("courseId").toString();
+        System.out.println(courseId);
 
         System.out.println("deadline---->" + homework.getDeadline());
-        teacherBo.AssignHomework(course,homework);
+        teacherBo.assignHomework(courseId ,homework);
         return "success";
     }
 
@@ -423,10 +420,11 @@ public class TeacherAction extends ActionSupport {
         }
         System.out.println("sclist-->"+sclist);
 //        System.out.println(studentCourseBo.save(sclist));
-        if(studentCourseBo.save(sclist))
+        try {
+            studentCourseBo.save(sclist);
             return "success";
-        else
-        {
+        } catch (Exception e) {
+            e.printStackTrace();
             return "error";
         }
     }
@@ -445,9 +443,9 @@ public class TeacherAction extends ActionSupport {
     public String listCourse() throws Exception {
         Map<String, Object> session = ActionContext.getContext().getSession();
         teacher = teacherBo.get(session.get("id").toString());
-        List<Course> courses = teacher.getCourses();
-        System.out.println(courses.size());
-        courseList = courseBo.listCourse();
+        courseList = teacher.getCourses();
+        System.out.println(courseList.size());
+//        courseList = courseBo.listCourse();
         return "success";
     }
 
@@ -549,6 +547,8 @@ public class TeacherAction extends ActionSupport {
      **/
 
     public String updateCourse() throws Exception {
+        Map<String, Object> session = ActionContext.getContext().getSession();
+        course.setCourseId(session.get("courseId").toString());
         courseBo.update(course);
         return "success";
     }

@@ -17,8 +17,8 @@
     <s:textfield name="courseName" label="课程名称" value=""/>
     <s:textfield name="capacity" label="课程容量" value=""/>
     <s:textfield name="groupPrefix" label="小组前缀" value=""/>
-    <s:textfield name="groupMin" label="小组人数下限" value=""/>
-    <s:textfield name="groupMax" label="小组人数上限" value=""/>
+    <s:textfield name="minStudentNum" label="小组人数下限" value=""/>
+    <s:textfield name="maxStudentNum" label="小组人数上限" value=""/>
     <s:submit/>
 </s:form>
 <h2>添加学生</h2>

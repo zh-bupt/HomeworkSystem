@@ -47,12 +47,12 @@ public abstract class BasicBoImpl<M extends AbstractEntity, PK extends Serializa
     }
 
     @Override
-    public boolean save(M model) {
+    public void save(M model) {
 //        TransactionStatus status = getTransactionStatus();
 //        try {
             basicDao.save(model);
 //            getTransactionManager().commit(status);
-            return true;
+//            return true;
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //            return false;
@@ -73,12 +73,12 @@ public abstract class BasicBoImpl<M extends AbstractEntity, PK extends Serializa
     }
 
     @Override
-    public boolean delete(PK key) {
+    public void delete(PK key) {
 //        TransactionStatus status = getTransactionStatus();
 //        try {
             basicDao.delete(key);
 //            getTransactionManager().commit(status);
-            return true;
+//            return true;
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //            return false;
@@ -96,6 +96,11 @@ public abstract class BasicBoImpl<M extends AbstractEntity, PK extends Serializa
 //            e.printStackTrace();
 //            return false;
 //        }
+    }
+
+    @Override
+    public boolean exists(PK key) {
+        return basicDao.exists(key);
     }
 
     @Override
@@ -125,12 +130,12 @@ public abstract class BasicBoImpl<M extends AbstractEntity, PK extends Serializa
     }
 
     @Override
-    public boolean update(M model) {
+    public void update(M model) {
 //        TransactionStatus status = getTransactionStatus();
 //        try {
             basicDao.update(model);
 //            getTransactionManager().commit(status);
-            return true;
+//            return true;
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //            return false;
@@ -139,12 +144,12 @@ public abstract class BasicBoImpl<M extends AbstractEntity, PK extends Serializa
 
     @Override
     @Transactional(rollbackFor = {Exception.class})
-    public boolean save(List<M> models) {
+    public void save(List<M> models) {
 //        TransactionStatus status = getTransactionStatus();
 //        try {
             basicDao.save(models);
 //            getTransactionManager().commit(status);
-            return true;
+//            return true;
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //            return false;

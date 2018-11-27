@@ -512,10 +512,12 @@ public class AdminAction extends ActionSupport {
                 slist.add(s);
 
             }
-           if(studentBo.save(slist))
+           try {
+                studentBo.save(slist);
                return "success";
-           else
+           } catch (Exception e) {
                return "error";
+           }
 
         }
         else if (userType.equals("老师"))
@@ -560,10 +562,13 @@ public class AdminAction extends ActionSupport {
                 tlist.add(t);
 
             }
-            if (teacherBo.save(tlist))
+            try {
+                teacherBo.save(tlist);
                 return "success";
-            else
+            } catch (Exception e) {
+                e.printStackTrace();
                 return "error";
+            }
         }
         else
         {

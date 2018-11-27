@@ -12,10 +12,9 @@ import java.util.List;
 public class TeacherDAOImpl extends BasicDAOImpl<Teacher, String> implements TeacherDAO {
 
     @Override
-    public int AssignHomework(Course course, Homework homework) {
-        course.getHomework().add(homework);
+    public void assignHomework(Course course, Homework homework) throws Exception {
         if (CalculateHomePercentage(course) > 100) {
-            return ReturnCode.HOMEWORK_PERCENTAGE_EXCEEDED;
+            throw new Exception("作业比例超过100%.");
         }
         Session session = getSession();
         // 保存作业
@@ -33,7 +32,6 @@ public class TeacherDAOImpl extends BasicDAOImpl<Teacher, String> implements Tea
             session.save(hg);
         }
         session.update(homework);
-        return ReturnCode.ASSIGN_HOMEWORK_SUCCESS;
     }
 
     private int CalculateHomePercentage(Course course) {

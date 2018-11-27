@@ -233,6 +233,7 @@ public abstract class BasicDAOImpl<M extends AbstractEntity, PK extends Serializ
 //        return entity;
     }
 
+
     @Override
     public M get(LinkedHashMap<Object, Object> equalFields, LinkedHashMap<Object, Object> notEqualFields, LinkedHashMap<String, String> LikeFields, LinkedHashMap<String, String> nullFields, String whereHql) {
         // 获取实体名
