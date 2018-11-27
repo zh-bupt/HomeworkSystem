@@ -302,10 +302,10 @@ public class StudentAction{
 
             homeworkList.addAll(homeworkSet);
         }
-        Group_ group_ = studentBo.getCourseGroup(session.get("id").toString(),session.get("courseId").toString());
-        System.out.println(group_.getGroupId());
-        noGroupStudentList = groupStudentBo.findResultList(course.getCourseId());
-        System.out.println("noGroupStudentList-->"+noGroupStudentList);
+        //TODO BUG Group_ group_ = studentBo.getCourseGroup(session.get("id").toString(),session.get("courseId").toString());
+        // System.out.println(group_.getGroupId());
+        // TODO BUG noGroupStudentList = groupStudentBo.findResultList(course.getCourseId());
+        // System.out.println("noGroupStudentList-->"+noGroupStudentList);
         return "success";
     }
 
