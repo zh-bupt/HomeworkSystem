@@ -12,11 +12,11 @@ import java.util.Map;
 public interface TeacherBo extends BasicBo<Teacher, String> {
 
 
-    boolean addTeacher(Teacher teacher);
+    void addTeacher(Teacher teacher) throws Exception;
 
-    boolean updateTeacher(Teacher teacher);
+    void updateTeacher(Teacher teacher) throws Exception;
 
-    boolean deleteTeacher(String id);
+    void deleteTeacher(String id) throws Exception;
 
     List<Teacher> listTeacher();
 
@@ -24,7 +24,7 @@ public interface TeacherBo extends BasicBo<Teacher, String> {
 
     String login(String id, String password);
 
-    Map<Student, Double> getCourseTranscript(String teacherId, String courseId);
+    Map<Student, Double> getCourseTranscript(String teacherId, String courseId) throws Exception;
 
-    int AssignHomework(Course course, Homework homework);
+    void assignHomework(String courseId, Homework homework) throws Exception;
 }

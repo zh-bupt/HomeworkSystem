@@ -7,11 +7,11 @@ import java.util.Map;
 
 public interface StudentBo extends BasicBo<Student, String> {
 
-    boolean addStudent(Student student);
+    void addStudent(Student student) throws Exception;
 
-    boolean deleteStudent(String id);
+    void deleteStudent(String id) throws Exception;
 
-    boolean updateStudent(Student student);
+    void updateStudent(Student student) throws Exception;
 
     List<Student> getStudentsByClass(String classId);
 

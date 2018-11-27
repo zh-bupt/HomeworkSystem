@@ -6,5 +6,5 @@ import com.bupt.se.homework.entity.Teacher;
 
 public interface  TeacherDAO extends BasicDao<Teacher, String> {
 
-    int AssignHomework(Course course, Homework homework);
+    void assignHomework(Course course, Homework homework) throws Exception;
 }

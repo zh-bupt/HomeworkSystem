@@ -3,6 +3,7 @@ package com.bupt.se.homework.bo.impl;
 import com.bupt.se.homework.bo.ReturnCode;
 import com.bupt.se.homework.bo.StudentBo;
 import com.bupt.se.homework.dao.BasicDao;
+import com.bupt.se.homework.dao.CourseDAO;
 import com.bupt.se.homework.dao.StudentDAO;
 import com.bupt.se.homework.entity.*;
 import com.bupt.se.homework.exception.ServiceException;
@@ -16,6 +17,7 @@ import java.util.*;
 public class StudentBoImpl extends BasicBoImpl<Student, String> implements StudentBo {
 
     private StudentDAO studentDAO;
+    private CourseDAO courseDAO;
 
     @Autowired
     @Qualifier("studentDAO")
@@ -24,19 +26,24 @@ public class StudentBoImpl extends BasicBoImpl<Student, String> implements Stude
         this.studentDAO = (StudentDAO) basicDao;
     }
 
-    @Override
-    public boolean addStudent(Student student) {
-        return this.save(student);
+    @Autowired
+    public void setCourseDAO(CourseDAO courseDAO) {
+        this.courseDAO = courseDAO;
     }
 
     @Override
-    public boolean deleteStudent(String id) {
-        return this.delete(id);
+    public void addStudent(Student student) throws Exception {
+        this.save(student);
     }
 
     @Override
-    public boolean updateStudent(Student student) {
-        return this.update(student);
+    public void deleteStudent(String id) throws Exception {
+        this.delete(id);
+    }
+
+    @Override
+    public void updateStudent(Student student) throws Exception {
+        this.update(student);
     }
 
     @Override
@@ -113,7 +120,17 @@ public class StudentBoImpl extends BasicBoImpl<Student, String> implements Stude
     @Override
     public Group_ getCourseGroup(String studentId, String courseId) {
         logger.info("getCourseGroup(" + studentId + ", " + courseId + ")");
-        return studentDAO.getCourseGroup(studentId, courseId);
+        Student student = this.get(studentId);
+        if (student == null) {
+            throw new ServiceException(ServiceExceptionErrorCode.STUDENT_NOT_FOUND,
+                    "学生 " + studentId + " 不存在.");
+        }
+        Course course = courseDAO.get(courseId);
+        if (course == null) {
+            throw new ServiceException(ServiceExceptionErrorCode.COURSE_NOT_FOUND,
+                    "课程 " + courseId + " 不存在.");
+        }
+        return studentDAO.getCourseGroup(student, course);
     }
 
     @Override

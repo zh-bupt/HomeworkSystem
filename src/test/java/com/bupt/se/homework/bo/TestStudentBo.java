@@ -26,7 +26,7 @@ public class TestStudentBo extends UnitTestBase {
 //        Assert.assertTrue(studentBo.deleteStudent("2015211205"));
 //        Assert.assertTrue(studentBo.addStudent(new Student("2015211205", "xxx", "11111111")));
         System.out.println(studentBo.login("2015211203", "2015211203"));
-        System.out.println(studentBo.updateStudent(new Student("2015211204", "krf", "12345678")));
+//        System.out.println(studentBo.updateStudent(new Student("2015211204", "krf", "12345678")));
         System.out.println(studentBo.login("2015211204", "12345678"));
 
         System.out.println(studentBo.login("2015211119", "11111111"));
@@ -57,7 +57,7 @@ public class TestStudentBo extends UnitTestBase {
         }
         StudentBo studentBo = super.getBean("studentBo");
         Assert.assertTrue(studentBo.deleteArray(array));
-        Assert.assertTrue(studentBo.save(list));
+//        Assert.assertTrue(studentBo.save(list));
     }
 
     @Test
