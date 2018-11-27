@@ -36,7 +36,7 @@
   position:absolute;
   left:99px;
   top:41px;
-  width:783px;
+  width:auto;
   height:470px;
 }
 #u28_text {
@@ -216,7 +216,7 @@
   left:121px;
   top:233px;
   width:323px;
-  height:209px;
+  height:10px;
 }
 #u34_img {
   border-width:0px;

@@ -1,17 +1,22 @@
 <%--
   Created by IntelliJ IDEA.
   User: kwong
-  Date: 2018/11/22
-  Time: 14:59
+  Date: 2018/11/27
+  Time: 20:11
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="s" uri="/struts-tags" %>
 <html>
 <head>
-    <title>提交作业</title>
-    <link rel="stylesheet" type="text/css" href="../assets/css/main.css"/>
+    <title>教师管理</title>
+</head>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<html>
+<head>
+    <title>管理系统</title>
     <link rel="stylesheet" type="text/css" href="../assets/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../assets/css/main.css"/>
     <link rel="stylesheet" type="text/css" href="../assets/css/pagination.css">
     <script type="text/javascript" src="../assets/js/libs/modernizr.min.js"></script>
     <script src="../assets/js/jquery-3.2.1.js"></script>
@@ -54,7 +59,6 @@
                     <ul class="sub-menu">
                         <li><a href="/pages/admin_student.jsp"><i class="icon-font">&#xe005;</i>查找学生</a></li>
                         <li><a href="/pages/admin_add_student.jsp"><i class="icon-font">&#xe005;</i>添加学生</a></li>
-                        <%--TODO 修改这里--%>
                     </ul>
                 </li>
             </ul>
@@ -69,20 +73,31 @@
             <!--用于查询得表单-->
             <div class="search-content">
                 <%--<form method="post" action="readerManage.jsp" id="searchForm">--%>
-                <s:form action="addStudentForCourseByTypeAction" id="searchForm">
+                <s:form action="addTeacherAction" id="searchForm">
                     <table class="search-tab">
                         <tr>
-                                <%--<th width="140">学号:</th>--%>
-                            <%--<s:textfield  class="common-text" name="studentId" label="学号" value="" style="width:150px"/>--%>
-                                <%--&lt;%&ndash;<td><input class="common-text" placeholder="" name="studentId"  id="studentId"  type="text" style="width:150px"></td>&ndash;%&gt;--%>
-                                <%--&lt;%&ndash;<th width="140">姓名:</th>&ndash;%&gt;--%>
-                                <%--&lt;%&ndash;<td><input class="common-text" placeholder="" name="studentName"  id="studentName"  type="text" style="width:150px"></td>&ndash;%&gt;--%>
-                            <%--<td style="padding-left:50px">--%>
-                                <%--<s:token/>--%>
-                                <%--<s:submit  class="btn btn-primary btn2" value="添加"/>--%>
-                                    <%--<button class="btn btn-primary btn2" type="submit" >添加</button>--%>
-                                    <%--TODO   这里加点什么呢？？--%>
-                            </td>
+                                <%--<s:textfield name="studentId" label="学号" value=""/>--%>
+                                <%--<s:textfield name="studentName" label="姓名" value=""/>--%>
+                                <%--<s:textfield name="classId" label="班级" value=""/>--%>
+                                <%--<s:textfield name="sex" label="性别" value=""/>--%>
+                                <%--<s:textfield name="email" label="邮箱" value=""/>--%>
+                                <%--<s:password name="password" label="密码" value=""/>--%>
+                                <%--<s:date name="entranceDate" format="YYYY-MM-DD"/>--%>
+                            <th width="140">学号:</th>
+                            <td><input class="common-text" placeholder="" name="studentId"  id="studentId"  type="text" style="width:150px"></td>
+                            <th width="140">姓名:</th>
+                            <td><input class="common-text" placeholder="" name="studentName"  id="studentName"  type="text" style="width:150px"></td>
+                            <th width="140">班级:</th>
+                            <td><input class="common-text" placeholder="" name="classId"  id="classId"  type="text" style="width:150px"></td>
+                            <th width="140">性别:</th>
+                            <td><input class="common-text" placeholder="" name="sex"  id="sex"  type="text" style="width:150px"></td>
+                            <th width="140">邮箱:</th>
+                            <td><input class="common-text" placeholder="" name="email"  id="email"  type="text" style="width:150px"></td>
+                            <th width="140">入学时间:</th>
+                            <td><input class="common-text" placeholder="" name="entranceDate"  id="entranceDate"  type="date" style="width:150px"></td>
+                            <th width="140">密码:</th>
+                            <td><input class="common-text" placeholder="" name="password"  id="password"  type="password" style="width:150px"></td>
+                            <td style="padding-left:50px"><button class="btn btn-primary btn2" type="submit" >添加</button></td>
                         </tr>
                     </table>
                 </s:form>
@@ -94,14 +109,18 @@
                 <div class="result-title">
                     <div class="result-list">
                         <%--<a href="addReader.jsp"><i class="icon-font"></i>添加读者</a>--%>
-                            <h3>上传作业</h3>
-                            <s:form action="submitHomeworkAction" method="post" enctype="multipart/form-data">
-                                <s:file name="groupHomework" label="选择提交的文件" />
-                                <s:submit value="提交" />
+                        <h3>上传学生名单文件</h3>
+                            <s:form action="addStudentByFileAction" method="post" enctype="multipart/form-data">
+                                <s:file name="studentExcel" label="选择上传的文件" />
+                            <s:submit value="上传" />
                             </s:form>
                     </div>
                 </div>
                 <div class="result-content">
+
+
+
+
                 </div>
             </form>
         </div>
@@ -110,3 +129,4 @@
 </div>
 </body>
 </html>
+

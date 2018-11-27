@@ -1,21 +1,10 @@
 <%--
   Created by IntelliJ IDEA.
   User: kwong
-  Date: 2018/11/22
-  Time: 15:36
+  Date: 2018/11/27
+  Time: 17:19
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="s" uri="/struts-tags" %>
-<html>
-<head>
-    <title>小组提交作业</title>
-</head>
-<body>
-<h1>小组提交作业</h1>
-
-</body>
-</html>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
@@ -79,16 +68,16 @@
             <!--用于查询得表单-->
             <div class="search-content">
                 <%--<form method="post" action="readerManage.jsp" id="searchForm">--%>
-                <s:form action="searchTeacherAction" id="searchForm">
+                    <s:form action="searchTeacherAction" id="searchForm">
                     <table class="search-tab">
                         <tr>
                             <th width="140">姓名/工号:</th>
-<%--TODO 修改这里为显示作业的内容--%>
+
                             <td><input class="common-text" placeholder="" name="searchTeacherWord"  id="readername"  type="text" style="width:150px"></td>
                             <td style="padding-left:50px"><button class="btn btn-primary btn2" type="submit" >查询</button></td>
                         </tr>
                     </table>
-                </s:form>
+                    </s:form>
                 <%--</form>--%>
             </div>
         </div>
@@ -100,42 +89,54 @@
                     </div>
                 </div>
                 <div class="result-content">
-                    <s:if test="homeworkGroupList.size() > 0">
+                    <s:if test="teacherList.size() > 0">
                         <%--<s:if test="true" >--%>
                         <%--<button onclick="/deleteTeacherAction.action?${teacherId}">删除</button>--%>
-                        <%--<input type="button" name="search" value="删除" onclick="javascript:window.location.href='deleteStudentAction.action?${studentId}'"/>--%>
+                        <%--<input type="button" name="search" value="删除" onclick="javascript:window.location.href='deleteTeacherAction.action?${teacherId}'"/>--%>
                         <table border="1px" cellpadding="8px" class="result-tab" width="100%">
                             <tr id="col-title">
                                 <th>选中</th>
-                                <th>小组编号</th>
-                                <th>作业编号</th>
-                                <th>提交时间</th>
-                                <th>分数</th>
-                                <th>评语</th>
-                                <th>下载</th>
-
+                                <th>工号</th>
+                                <th>姓名</th>
+                                <th>性别</th>
+                                <th>职称</th>
+                                <th>联系电话</th>
+                                <th>邮箱</th>
+                                <th>操作</th>
                             </tr>
-                            <s:iterator value="homeworkGroupList" >
+                            <s:iterator value="teacherList" >
                                 <tr>
-                                    <td><input type="checkbox" value="fileDir" name="fileDir"></td>
-                                    <td><s:property value="group_.getGroupId()"/> </td>
-                                    <td><s:property value="homeworkId"/> </td>
-                                    <td><s:date name="submissionTime" format="yyyy-MM-dd"/> </td>
-                                    <td><s:property value="score"/> </td>
-                                    <td><s:property value="comment"/> </td>
-                                        <%--<td><input type="button" name="update" value="查看提交" onclick="javascript:window.location.href='/teacher/listHomeworkGroupAction.action?homeworkId=${homeworkId}'"/></td>--%>
-
-                                    <td><input   class="link-update btn btn-warning btn2"  type="button" name="download" value="下载" onclick="javascript:window.location.href='/teacher/downloadHomeworkAction.action?homeworkId=${homeworkId}&groupId=${group_.getGroupId()}&homeworkFileName=${fileDir}'"/></td>
-                                        <%--<td><a href="/teacher/downloadHomeworkAction.action?fileDir=${fileDir}">下载</a></td>--%>
+                                    <td><input type="checkbox" value="teacherId" name="teacherId"></td>
+                                    <td><s:property value="teacherId"/> </td>
+                                    <td><s:property value="teacherName"/> </td>
+                                    <td><s:property value="sex"/> </td>
+                                    <td><s:property value="profession"/> </td>
+                                    <td><s:property value="telephone"/> </td>
+                                    <td><s:property value="email"/> </td>
+                                    <td><input  class="link-update btn btn-warning btn2"  type="button" name="update" value="修改" onclick="javascript:window.location.href='/pages/teacher.jsp?teacherId=${teacherId}'"/>
+                                        <input class="link-del btn btn-danger btn2" type="button" name="delete" value="删除" onclick="delete_user(${teacherId})"/></td>
                                 </tr>
                             </s:iterator>
                         </table>
                     </s:if>
+
                 </div>
             </form>
         </div>
     </div>
     <!--/main-->
 </div>
+<script>
+    function delete_user(id) {
+        if(confirm("确定要删除该教师？")){
+            // window.location.href = "delreader.jsp?id="+id;
+            window.location.href="deleteTeacherAction.action?teacherId="+id
+        }
+        document.form1.action("deleteTeacherAction.action?teacherId="+id);
+
+    }
+</script>
+
 </body>
 </html>
+

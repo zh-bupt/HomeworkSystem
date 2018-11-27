@@ -1,15 +1,15 @@
 <%--
   Created by IntelliJ IDEA.
   User: kwong
-  Date: 2018/11/22
-  Time: 14:59
+  Date: 2018/11/27
+  Time: 22:34
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <html>
 <head>
-    <title>提交作业</title>
+    <title>课程管理</title>
     <link rel="stylesheet" type="text/css" href="../assets/css/main.css"/>
     <link rel="stylesheet" type="text/css" href="../assets/css/common.css"/>
     <link rel="stylesheet" type="text/css" href="../assets/css/pagination.css">
@@ -73,15 +73,14 @@
                     <table class="search-tab">
                         <tr>
                                 <%--<th width="140">学号:</th>--%>
-                            <%--<s:textfield  class="common-text" name="studentId" label="学号" value="" style="width:150px"/>--%>
-                                <%--&lt;%&ndash;<td><input class="common-text" placeholder="" name="studentId"  id="studentId"  type="text" style="width:150px"></td>&ndash;%&gt;--%>
-                                <%--&lt;%&ndash;<th width="140">姓名:</th>&ndash;%&gt;--%>
-                                <%--&lt;%&ndash;<td><input class="common-text" placeholder="" name="studentName"  id="studentName"  type="text" style="width:150px"></td>&ndash;%&gt;--%>
-                            <%--<td style="padding-left:50px">--%>
-                                <%--<s:token/>--%>
-                                <%--<s:submit  class="btn btn-primary btn2" value="添加"/>--%>
+                            <s:textfield  class="common-text" name="studentId" label="学号" value="" style="width:150px"/>
+                                <%--<td><input class="common-text" placeholder="" name="studentId"  id="studentId"  type="text" style="width:150px"></td>--%>
+                                <%--<th width="140">姓名:</th>--%>
+                                <%--<td><input class="common-text" placeholder="" name="studentName"  id="studentName"  type="text" style="width:150px"></td>--%>
+                            <td style="padding-left:50px">
+                                <s:token/>
+                                <s:submit  class="btn btn-primary btn2" value="添加"/>
                                     <%--<button class="btn btn-primary btn2" type="submit" >添加</button>--%>
-                                    <%--TODO   这里加点什么呢？？--%>
                             </td>
                         </tr>
                     </table>
@@ -94,14 +93,19 @@
                 <div class="result-title">
                     <div class="result-list">
                         <%--<a href="addReader.jsp"><i class="icon-font"></i>添加读者</a>--%>
-                            <h3>上传作业</h3>
-                            <s:form action="submitHomeworkAction" method="post" enctype="multipart/form-data">
-                                <s:file name="groupHomework" label="选择提交的文件" />
-                                <s:submit value="提交" />
-                            </s:form>
+                        <h3>上传该课程学生名单文件</h3>
+                        <s:form action="addStudentForCourseByFileAction" method="post" enctype="multipart/form-data">
+                            <s:file name="studentExcel" label="选择上传的文件" />
+                            <%--<s:token/>--%>
+                            <s:submit value="上传" />
+                        </s:form>
                     </div>
                 </div>
                 <div class="result-content">
+
+
+
+
                 </div>
             </form>
         </div>

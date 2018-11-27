@@ -1,0 +1,1170 @@
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<%--
+  Created by IntelliJ IDEA.
+  User: kwong
+  Date: 2018/11/11
+  Time: 18:20
+  To change this template use File | Settings | File Templates.
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>管理系统</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+    <meta name="apple-mobile-web-app-capable" content="yes"/>
+    <link href="resources/css/jquery-ui-themes.css" type="text/css" rel="stylesheet"/>
+    <link href="resources/css/axure_rp_page.css" type="text/css" rel="stylesheet"/>
+    <link href="data/styles.css" type="text/css" rel="stylesheet"/>
+    <link href="files/管理员主页/styles.css" type="text/css" rel="stylesheet"/>
+    <script src="resources/scripts/jquery-1.7.1.min.js"></script>
+    <script src="resources/scripts/jquery-ui-1.8.10.custom.min.js"></script>
+    <script src="resources/scripts/prototypePre.js"></script>
+    <script src="data/document.js"></script>
+    <script src="resources/scripts/prototypePost.js"></script>
+    <script src="files/管理员主页/data.js"></script>
+    <script type="text/javascript">
+        $axure.utils.getTransparentGifPath = function() { return 'resources/images/transparent.gif'; };
+        $axure.utils.getOtherPath = function() { return 'resources/Other.html'; };
+        $axure.utils.getReloadPath = function() { return 'resources/reload.html'; };
+    </script>
+</head>
+<body>
+<h1>后台管理系统</h1>
+<h2>添加学生</h2>
+<s:form action="addStudentAction">
+    <%--<s:actionerror/>--%>
+
+    <s:textfield name="studentId" label="学号" value=""/>
+    <s:textfield name="studentName" label="姓名" value=""/>
+    <s:textfield name="classId" label="班级" value=""/>
+    <s:textfield name="sex" label="性别" value=""/>
+    <s:textfield name="email" label="邮箱" value=""/>
+    <s:password name="password" label="密码" value=""/>
+    <s:date name="entranceDate" format="YYYY-MM-DD"/>
+    <s:token/>
+    <s:submit/>
+</s:form>
+<h3>上传学生名单文件</h3>
+<s:form action="addStudentByFileAction" method="post" enctype="multipart/form-data">
+    <s:file name="studentExcel" label="选择上传的文件" />
+    <s:token/>
+    <s:submit value="上传" />
+</s:form>
+<h3>查询学生</h3>
+<s:form action="searchStudentAction">
+    <%--<s:actionerror/>--%>
+    <s:textfield name="searchStudentWord" label="查询" value=""/>
+    <s:if test="searchWay==null">
+        <s:radio name="searchWay" list="{ '班级','学号', '姓名' }" value="'学号'"  label="搜索方式"/>
+    </s:if>
+    <s:else>
+        <s:radio name="searchWay" list="{ '班级', '学号', '姓名' }"  label="搜索方式"/>
+    </s:else>
+    <s:submit/>
+</s:form>
+
+<s:if test="studentList.size() > 0">
+    <%--<s:if test="true" >--%>
+    <%--<button onclick="/deleteTeacherAction.action?${teacherId}">删除</button>--%>
+    <%--<input type="button" name="search" value="删除" onclick="javascript:window.location.href='deleteStudentAction.action?${studentId}'"/>--%>
+    <table border="1px" cellpadding="8px">
+        <tr>
+            <th>选中</th>
+            <th>班级</th>
+            <th>学号</th>
+            <th>姓名</th>
+            <th>性别</th>
+            <th>邮箱</th>
+            <th>入学时间</th>
+        </tr>
+        <s:iterator value="studentList" >
+            <tr>
+                <td><input type="checkbox" value="studentId" name="studentId"></td>
+                <td><s:property value="classId"/> </td>
+                <td><s:property value="studentId"/> </td>
+                <td><s:property value="studentName"/> </td>
+                <td><s:property value="sex"/> </td>
+                <td><s:property value="email"/> </td>
+                <td><s:property value="entranceDate"/> </td>
+                <td><input type="button" name="update" value="修改" onclick="javascript:window.location.href='/pages/student.jsp?studentId=${studentId}'"/> </td>
+                <td><input type="button" name="delete" value="删除" onclick="javascript:window.location.href='deleteStudentAction.action?studentId=${studentId}'"/></td>
+            </tr>
+        </s:iterator>
+    </table>
+</s:if>
+<h2>添加教师</h2>
+<s:form action="addTeacherAction">
+    <s:textfield name="teacherId" label="工号" value=""/>
+    <s:textfield name="teacherName" label="姓名" value=""/>
+    <s:textfield name="teacherSex" label="性别" value=""/>
+    <s:textfield name="profession" label="职称" value=""/>
+    <s:textfield name="telephone" label="联系电话" value=""/>
+    <s:textfield name="teacherEmail" label="邮箱" value=""/>
+    <s:password name="teacherPassword" label="密码" value=""/>
+    <s:token/>
+    <s:submit/>
+</s:form>
+<h3>上传教师名单文件</h3>
+<s:form action="addTeacherByFileAction" method="post" enctype="multipart/form-data">
+    <s:file name="teacherExcel" label="选择上传的文件" />
+    <s:token/>
+    <s:submit value="上传" />
+</s:form>
+<h3>查询教师</h3>
+<s:form action="searchTeacherAction">
+    <%--<s:actionerror/>--%>
+    <s:textfield name="searchTeacherWord" label="查询" value=""/>
+    <s:if test="searchWay==null">
+        <s:radio name="searchWay" list="{ '工号', '姓名' }" value="'姓名'"  label="搜索方式"/>
+    </s:if>
+    <s:else>
+        <s:radio name="searchWay" list="{ '工号', '姓名' }"  label="搜索方式"/>
+    </s:else>
+    <s:submit/>
+</s:form>
+
+
+
+<body>
+<div id="base" class="">
+
+    <!-- Unnamed (矩形) -->
+    <div id="u28" class="ax_default box_3">
+        <div id="u28_div" class=""></div>
+    </div>
+
+    <!-- Unnamed (矩形) -->
+    <div id="u29" class="ax_default box_1">
+        <div id="u29_div" class=""></div>
+        <div id="u29_text" class="text ">
+            <p><span>北邮软件工程作业管理系统</span></p>
+        </div>
+    </div>
+
+    <!-- Unnamed (矩形) -->
+    <div id="u30" class="ax_default box_1">
+        <div id="u30_div" class=""></div>
+        <div id="u30_text" class="text ">
+            <p><span>Hi 管理员</span></p>
+        </div>
+    </div>
+
+    <!-- Unnamed (矩形) -->
+    <div id="u31" class="ax_default box_1">
+        <div id="u31_div" class=""></div>
+        <div id="u31_text" class="text ">
+            <p><span>王大锤</span></p>
+        </div>
+    </div>
+
+    <!-- Unnamed (矩形) -->
+    <div id="u32" class="ax_default box_2">
+        <div id="u32_div" class=""></div>
+    </div>
+
+    <s:if test="true">
+        <%--<s:if test="true" >--%>
+        <%--<button onclick="/deleteTeacherAction.action?${teacherId}">删除</button>--%>
+        <%--<input type="button" name="search" value="删除" onclick="javascript:window.location.href='deleteTeacherAction.action?${teacherId}'"/>--%>
+        <table id="u33" border="1px" cellpadding="8px">
+            <tr>
+                <th>选中</th>
+                <th>工号</th>
+                <th>姓名</th>
+                <th>性别</th>
+                <th>职称</th>
+                <th>联系电话</th>
+                <th>邮箱</th>
+            </tr>
+            <s:iterator value="teacherList" >
+                <tr>
+                    <td><input type="checkbox" value="teacherId" name="teacherId"></td>
+                    <td><s:property value="teacherId"/> </td>
+                    <td><s:property value="teacherName"/> </td>
+                    <td><s:property value="sex"/> </td>
+                    <td><s:property value="profession"/> </td>
+                    <td><s:property value="telephone"/> </td>
+                    <td><s:property value="email"/> </td>
+                    <td><input type="button" name="update" value="修改" onclick="javascript:window.location.href='/pages/teacher.jsp?teacherId=${teacherId}'"/> </td>
+                    <td><input type="button" name="delete" value="删除" onclick="javascript:window.location.href='deleteTeacherAction.action?teacherId=${teacherId}'"/></td>
+                </tr>
+            </s:iterator>
+        </table>
+    </s:if>
+    <!-- Unnamed (表格) -->
+    <%--<div id="u33" class="ax_default">--%>
+
+        <%--<!-- Unnamed (单元格) -->--%>
+        <%--<div id="u34" class="ax_default table_cell">--%>
+            <%--<img id="u34_img" class="img " src="images/管理员主页/u34.png"/>--%>
+            <%--<div id="u34_text" class="text ">--%>
+                <%--<p><span>工号</span></p>--%>
+            <%--</div>--%>
+        <%--</div>--%>
+
+        <%--<!-- Unnamed (单元格) -->--%>
+        <%--<div id="u35" class="ax_default table_cell">--%>
+            <%--<img id="u35_img" class="img " src="images/管理员主页/u35.png"/>--%>
+        <%--</div>--%>
+
+        <%--<!-- Unnamed (单元格) -->--%>
+        <%--<div id="u36" class="ax_default table_cell">--%>
+            <%--<img id="u36_img" class="img " src="images/管理员主页/u36.png"/>--%>
+        <%--</div>--%>
+
+        <%--<!-- Unnamed (单元格) -->--%>
+        <%--<div id="u37" class="ax_default table_cell">--%>
+            <%--<img id="u37_img" class="img " src="images/管理员主页/u37.png"/>--%>
+        <%--</div>--%>
+
+        <%--<!-- Unnamed (单元格) -->--%>
+        <%--<div id="u38" class="ax_default table_cell">--%>
+            <%--<img id="u38_img" class="img " src="images/管理员主页/u38.png"/>--%>
+            <%--<div id="u38_text" class="text ">--%>
+                <%--<p><span>操作</span></p>--%>
+            <%--</div>--%>
+        <%--</div>--%>
+
+        <%--<!-- Unnamed (单元格) -->--%>
+        <%--<div id="u39" class="ax_default table_cell">--%>
+            <%--<img id="u39_img" class="img " src="images/管理员主页/u39.png"/>--%>
+        <%--</div>--%>
+
+        <%--<!-- Unnamed (单元格) -->--%>
+        <%--<div id="u40" class="ax_default table_cell">--%>
+            <%--<img id="u40_img" class="img " src="images/管理员主页/u40.png"/>--%>
+            <%--<div id="u40_text" class="text ">--%>
+                <%--<p><span>铁柱</span></p>--%>
+            <%--</div>--%>
+        <%--</div>--%>
+
+        <%--<!-- Unnamed (单元格) -->--%>
+        <%--<div id="u41" class="ax_default table_cell">--%>
+            <%--<img id="u41_img" class="img " src="images/管理员主页/u41.png"/>--%>
+        <%--</div>--%>
+
+        <%--<!-- Unnamed (单元格) -->--%>
+        <%--<div id="u42" class="ax_default table_cell">--%>
+            <%--<img id="u42_img" class="img " src="images/管理员主页/u42.png"/>--%>
+        <%--</div>--%>
+
+        <%--<!-- Unnamed (单元格) -->--%>
+        <%--<div id="u43" class="ax_default table_cell">--%>
+            <%--<img id="u43_img" class="img " src="images/管理员主页/u43.png"/>--%>
+        <%--</div>--%>
+
+        <%--<!-- Unnamed (单元格) -->--%>
+        <%--<div id="u44" class="ax_default table_cell">--%>
+            <%--<img id="u44_img" class="img " src="images/管理员主页/u34.png"/>--%>
+        <%--</div>--%>
+
+        <%--<!-- Unnamed (单元格) -->--%>
+        <%--<div id="u45" class="ax_default table_cell">--%>
+            <%--<img id="u45_img" class="img " src="images/管理员主页/u45.png"/>--%>
+        <%--</div>--%>
+
+        <%--<!-- Unnamed (单元格) -->--%>
+        <%--<div id="u46" class="ax_default table_cell">--%>
+            <%--<img id="u46_img" class="img " src="images/管理员主页/u46.png"/>--%>
+        <%--</div>--%>
+
+        <%--<!-- Unnamed (单元格) -->--%>
+        <%--<div id="u47" class="ax_default table_cell">--%>
+            <%--<img id="u47_img" class="img " src="images/管理员主页/u47.png"/>--%>
+        <%--</div>--%>
+
+        <%--<!-- Unnamed (单元格) -->--%>
+        <%--<div id="u48" class="ax_default table_cell">--%>
+            <%--<img id="u48_img" class="img " src="images/管理员主页/u48.png"/>--%>
+        <%--</div>--%>
+
+        <%--<!-- Unnamed (单元格) -->--%>
+        <%--<div id="u49" class="ax_default table_cell">--%>
+            <%--<img id="u49_img" class="img " src="images/管理员主页/u49.png"/>--%>
+            <%--<div id="u49_text" class="text ">--%>
+                <%--<p><span>···</span></p>--%>
+            <%--</div>--%>
+        <%--</div>--%>
+
+        <%--<!-- Unnamed (单元格) -->--%>
+        <%--<div id="u50" class="ax_default table_cell">--%>
+            <%--<img id="u50_img" class="img " src="images/管理员主页/u50.png"/>--%>
+        <%--</div>--%>
+
+        <%--<!-- Unnamed (单元格) -->--%>
+        <%--<div id="u51" class="ax_default table_cell">--%>
+            <%--<img id="u51_img" class="img " src="images/管理员主页/u51.png"/>--%>
+        <%--</div>--%>
+
+        <%--<!-- Unnamed (单元格) -->--%>
+        <%--<div id="u52" class="ax_default table_cell">--%>
+            <%--<img id="u52_img" class="img " src="images/管理员主页/u52.png"/>--%>
+        <%--</div>--%>
+
+        <%--<!-- Unnamed (单元格) -->--%>
+        <%--<div id="u53" class="ax_default table_cell">--%>
+            <%--<img id="u53_img" class="img " src="images/管理员主页/u53.png"/>--%>
+        <%--</div>--%>
+
+        <%--<!-- Unnamed (单元格) -->--%>
+        <%--<div id="u54" class="ax_default table_cell">--%>
+            <%--<img id="u54_img" class="img " src="images/管理员主页/u54.png"/>--%>
+        <%--</div>--%>
+
+        <%--<!-- Unnamed (单元格) -->--%>
+        <%--<div id="u55" class="ax_default table_cell">--%>
+            <%--<img id="u55_img" class="img " src="images/管理员主页/u55.png"/>--%>
+            <%--<div id="u55_text" class="text ">--%>
+                <%--<p><span>下拉式列表</span></p>--%>
+            <%--</div>--%>
+        <%--</div>--%>
+
+        <%--<!-- Unnamed (单元格) -->--%>
+        <%--<div id="u56" class="ax_default table_cell">--%>
+            <%--<img id="u56_img" class="img " src="images/管理员主页/u56.png"/>--%>
+        <%--</div>--%>
+
+        <%--<!-- Unnamed (单元格) -->--%>
+        <%--<div id="u57" class="ax_default table_cell">--%>
+            <%--<img id="u57_img" class="img " src="images/管理员主页/u57.png"/>--%>
+        <%--</div>--%>
+
+        <%--<!-- Unnamed (单元格) -->--%>
+        <%--<div id="u58" class="ax_default table_cell">--%>
+            <%--<img id="u58_img" class="img " src="images/管理员主页/u58.png"/>--%>
+        <%--</div>--%>
+
+        <%--<!-- Unnamed (单元格) -->--%>
+        <%--<div id="u59" class="ax_default table_cell">--%>
+            <%--<img id="u59_img" class="img " src="images/管理员主页/u34.png"/>--%>
+        <%--</div>--%>
+
+        <%--<!-- Unnamed (单元格) -->--%>
+        <%--<div id="u60" class="ax_default table_cell">--%>
+            <%--<img id="u60_img" class="img " src="images/管理员主页/u45.png"/>--%>
+        <%--</div>--%>
+
+        <%--<!-- Unnamed (单元格) -->--%>
+        <%--<div id="u61" class="ax_default table_cell">--%>
+            <%--<img id="u61_img" class="img " src="images/管理员主页/u46.png"/>--%>
+        <%--</div>--%>
+
+        <%--<!-- Unnamed (单元格) -->--%>
+        <%--<div id="u62" class="ax_default table_cell">--%>
+            <%--<img id="u62_img" class="img " src="images/管理员主页/u47.png"/>--%>
+        <%--</div>--%>
+
+        <%--<!-- Unnamed (单元格) -->--%>
+        <%--<div id="u63" class="ax_default table_cell">--%>
+            <%--<img id="u63_img" class="img " src="images/管理员主页/u48.png"/>--%>
+        <%--</div>--%>
+
+        <%--<!-- Unnamed (单元格) -->--%>
+        <%--<div id="u64" class="ax_default table_cell">--%>
+            <%--<img id="u64_img" class="img " src="images/管理员主页/u64.png"/>--%>
+        <%--</div>--%>
+
+        <%--<!-- Unnamed (单元格) -->--%>
+        <%--<div id="u65" class="ax_default table_cell">--%>
+            <%--<img id="u65_img" class="img " src="images/管理员主页/u65.png"/>--%>
+        <%--</div>--%>
+
+        <%--<!-- Unnamed (单元格) -->--%>
+        <%--<div id="u66" class="ax_default table_cell">--%>
+            <%--<img id="u66_img" class="img " src="images/管理员主页/u66.png"/>--%>
+        <%--</div>--%>
+
+        <%--<!-- Unnamed (单元格) -->--%>
+        <%--<div id="u67" class="ax_default table_cell">--%>
+            <%--<img id="u67_img" class="img " src="images/管理员主页/u67.png"/>--%>
+        <%--</div>--%>
+
+        <%--<!-- Unnamed (单元格) -->--%>
+        <%--<div id="u68" class="ax_default table_cell">--%>
+            <%--<img id="u68_img" class="img " src="images/管理员主页/u68.png"/>--%>
+        <%--</div>--%>
+    <%--</div>--%>
+
+    <%--<!-- Unnamed (矩形) -->--%>
+    <%--<div id="u69" class="ax_default box_1">--%>
+        <%--<div id="u69_div" class=""></div>--%>
+        <%--<div id="u69_text" class="text ">--%>
+            <%--<p><span>教师信息</span></p>--%>
+        <%--</div>--%>
+    <%--</div>--%>
+
+    <!-- Unnamed (形状) -->
+    <%--<div id="u70" class="ax_default icon">--%>
+        <%--<img id="u70_img" class="img " src="images/管理员主页/u70.png"/>--%>
+    <%--</div>--%>
+
+    <!-- Unnamed (矩形) -->
+    <%--<div id="u71" class="ax_default box_1">--%>
+        <%--<div id="u71_div" class=""></div>--%>
+        <%--<div id="u71_text" class="text ">--%>
+            <%--<p><span>输入工号或姓名发起快速搜索</span></p>--%>
+        <%--</div>--%>
+    <%--</div>--%>
+    <h3>查询教师</h3>
+    <s:form action="searchTeacherAction">
+        <%--<s:actionerror/>--%>
+        <s:textfield id="u71" name="searchTeacherWord" label="查询" value=""/>
+        <s:if test="searchWay==null">
+            <s:radio name="searchWay" list="{ '工号', '姓名' }" value="'姓名'"  label="搜索方式"/>
+        </s:if>
+        <s:else>
+            <s:radio name="searchWay" list="{ '工号', '姓名' }"  label="搜索方式"/>
+        </s:else>
+        <s:submit value="查询" id="u70"/>
+    </s:form>
+
+    <!-- Unnamed (矩形) -->
+    <div id="u72" class="ax_default button">
+        <div id="u72_div" class=""></div>
+        <div id="u72_text" class="text ">
+            <p><span>删除</span></p>
+        </div>
+    </div>
+
+    <!-- Unnamed (复选框) -->
+    <div id="u73" class="ax_default checkbox">
+        <label for="u73_input" style="position: absolute; left: 0px;">
+            <div id="u73_text" class="text ">
+                <p><span>001</span></p>
+            </div>
+        </label>
+        <input id="u73_input" type="checkbox" value="checkbox"/>
+    </div>
+
+    <!-- Unnamed (复选框) -->
+    <div id="u74" class="ax_default checkbox">
+        <label for="u74_input" style="position: absolute; left: 0px;">
+            <div id="u74_text" class="text ">
+                <p><span>002</span></p>
+            </div>
+        </label>
+        <input id="u74_input" type="checkbox" value="checkbox"/>
+    </div>
+
+    <!-- Unnamed (矩形) -->
+    <div id="u75" class="ax_default box_2">
+        <div id="u75_div" class=""></div>
+    </div>
+
+    <!-- Unnamed (复选框) -->
+    <div id="u76" class="ax_default checkbox">
+        <label for="u76_input" style="position: absolute; left: 0px;">
+            <div id="u76_text" class="text ">
+                <p><span>00n</span></p>
+            </div>
+        </label>
+        <input id="u76_input" type="checkbox" value="checkbox"/>
+    </div>
+
+    <!-- Unnamed (矩形) -->
+    <div id="u77" class="ax_default link_button">
+        <div id="u77_div" class=""></div>
+        <div id="u77_text" class="text ">
+            <p><span>教师录入</span></p>
+        </div>
+    </div>
+
+    <!-- Unnamed (矩形) -->
+    <div id="u78" class="ax_default box_1">
+        <div id="u78_div" class=""></div>
+        <div id="u78_text" class="text ">
+            <p><span>学生信息</span></p>
+        </div>
+    </div>
+
+    <!-- Unnamed (形状) -->
+    <div id="u79" class="ax_default icon">
+        <img id="u79_img" class="img " src="images/管理员主页/u70.png"/>
+    </div>
+
+    <!-- Unnamed (表格) -->
+    <div id="u80" class="ax_default">
+
+        <!-- Unnamed (单元格) -->
+        <div id="u81" class="ax_default table_cell">
+            <img id="u81_img" class="img " src="images/管理员主页/u81.png"/>
+            <div id="u81_text" class="text ">
+                <p><span>班级</span></p>
+            </div>
+        </div>
+
+        <!-- Unnamed (单元格) -->
+        <div id="u82" class="ax_default table_cell">
+            <img id="u82_img" class="img " src="images/管理员主页/u82.png"/>
+        </div>
+
+        <!-- Unnamed (单元格) -->
+        <div id="u83" class="ax_default table_cell">
+            <img id="u83_img" class="img " src="images/管理员主页/u83.png"/>
+        </div>
+
+        <!-- Unnamed (单元格) -->
+        <div id="u84" class="ax_default table_cell">
+            <img id="u84_img" class="img " src="images/管理员主页/u82.png"/>
+        </div>
+
+        <!-- Unnamed (单元格) -->
+        <div id="u85" class="ax_default table_cell">
+            <img id="u85_img" class="img " src="images/管理员主页/u85.png"/>
+            <div id="u85_text" class="text ">
+                <p><span>操作</span></p>
+            </div>
+        </div>
+
+        <!-- Unnamed (单元格) -->
+        <div id="u86" class="ax_default table_cell">
+            <img id="u86_img" class="img " src="images/管理员主页/u81.png"/>
+        </div>
+
+        <!-- Unnamed (单元格) -->
+        <div id="u87" class="ax_default table_cell">
+            <img id="u87_img" class="img " src="images/管理员主页/u87.png"/>
+            <div id="u87_text" class="text ">
+                <p><span>胡歌</span></p>
+            </div>
+        </div>
+
+        <!-- Unnamed (单元格) -->
+        <div id="u88" class="ax_default table_cell">
+            <img id="u88_img" class="img " src="images/管理员主页/u88.png"/>
+        </div>
+
+        <!-- Unnamed (单元格) -->
+        <div id="u89" class="ax_default table_cell">
+            <img id="u89_img" class="img " src="images/管理员主页/u87.png"/>
+        </div>
+
+        <!-- Unnamed (单元格) -->
+        <div id="u90" class="ax_default table_cell">
+            <img id="u90_img" class="img " src="images/管理员主页/u85.png"/>
+        </div>
+
+        <!-- Unnamed (单元格) -->
+        <div id="u91" class="ax_default table_cell">
+            <img id="u91_img" class="img " src="images/管理员主页/u91.png"/>
+        </div>
+
+        <!-- Unnamed (单元格) -->
+        <div id="u92" class="ax_default table_cell">
+            <img id="u92_img" class="img " src="images/管理员主页/u92.png"/>
+            <div id="u92_text" class="text ">
+                <p><span>lixiang</span></p>
+            </div>
+        </div>
+
+        <!-- Unnamed (单元格) -->
+        <div id="u93" class="ax_default table_cell">
+            <img id="u93_img" class="img " src="images/管理员主页/u93.png"/>
+        </div>
+
+        <!-- Unnamed (单元格) -->
+        <div id="u94" class="ax_default table_cell">
+            <img id="u94_img" class="img " src="images/管理员主页/u92.png"/>
+        </div>
+
+        <!-- Unnamed (单元格) -->
+        <div id="u95" class="ax_default table_cell">
+            <img id="u95_img" class="img " src="images/管理员主页/u95.png"/>
+        </div>
+
+        <!-- Unnamed (单元格) -->
+        <div id="u96" class="ax_default table_cell">
+            <img id="u96_img" class="img " src="images/管理员主页/u96.png"/>
+            <div id="u96_text" class="text ">
+                <p><span>···</span></p>
+            </div>
+        </div>
+
+        <!-- Unnamed (单元格) -->
+        <div id="u97" class="ax_default table_cell">
+            <img id="u97_img" class="img " src="images/管理员主页/u97.png"/>
+        </div>
+
+        <!-- Unnamed (单元格) -->
+        <div id="u98" class="ax_default table_cell">
+            <img id="u98_img" class="img " src="images/管理员主页/u98.png"/>
+        </div>
+
+        <!-- Unnamed (单元格) -->
+        <div id="u99" class="ax_default table_cell">
+            <img id="u99_img" class="img " src="images/管理员主页/u97.png"/>
+        </div>
+
+        <!-- Unnamed (单元格) -->
+        <div id="u100" class="ax_default table_cell">
+            <img id="u100_img" class="img " src="images/管理员主页/u100.png"/>
+        </div>
+
+        <!-- Unnamed (单元格) -->
+        <div id="u101" class="ax_default table_cell">
+            <img id="u101_img" class="img " src="images/管理员主页/u101.png"/>
+        </div>
+
+        <!-- Unnamed (单元格) -->
+        <div id="u102" class="ax_default table_cell">
+            <img id="u102_img" class="img " src="images/管理员主页/u102.png"/>
+            <div id="u102_text" class="text ">
+                <p><span>下拉式列表</span></p>
+            </div>
+        </div>
+
+        <!-- Unnamed (单元格) -->
+        <div id="u103" class="ax_default table_cell">
+            <img id="u103_img" class="img " src="images/管理员主页/u103.png"/>
+        </div>
+
+        <!-- Unnamed (单元格) -->
+        <div id="u104" class="ax_default table_cell">
+            <img id="u104_img" class="img " src="images/管理员主页/u102.png"/>
+        </div>
+
+        <!-- Unnamed (单元格) -->
+        <div id="u105" class="ax_default table_cell">
+            <img id="u105_img" class="img " src="images/管理员主页/u105.png"/>
+        </div>
+
+        <!-- Unnamed (单元格) -->
+        <div id="u106" class="ax_default table_cell">
+            <img id="u106_img" class="img " src="images/管理员主页/u101.png"/>
+        </div>
+
+        <!-- Unnamed (单元格) -->
+        <div id="u107" class="ax_default table_cell">
+            <img id="u107_img" class="img " src="images/管理员主页/u102.png"/>
+        </div>
+
+        <!-- Unnamed (单元格) -->
+        <div id="u108" class="ax_default table_cell">
+            <img id="u108_img" class="img " src="images/管理员主页/u103.png"/>
+        </div>
+
+        <!-- Unnamed (单元格) -->
+        <div id="u109" class="ax_default table_cell">
+            <img id="u109_img" class="img " src="images/管理员主页/u102.png"/>
+        </div>
+
+        <!-- Unnamed (单元格) -->
+        <div id="u110" class="ax_default table_cell">
+            <img id="u110_img" class="img " src="images/管理员主页/u105.png"/>
+        </div>
+
+        <!-- Unnamed (单元格) -->
+        <div id="u111" class="ax_default table_cell">
+            <img id="u111_img" class="img " src="images/管理员主页/u111.png"/>
+        </div>
+
+        <!-- Unnamed (单元格) -->
+        <div id="u112" class="ax_default table_cell">
+            <img id="u112_img" class="img " src="images/管理员主页/u112.png"/>
+        </div>
+
+        <!-- Unnamed (单元格) -->
+        <div id="u113" class="ax_default table_cell">
+            <img id="u113_img" class="img " src="images/管理员主页/u113.png"/>
+        </div>
+
+        <!-- Unnamed (单元格) -->
+        <div id="u114" class="ax_default table_cell">
+            <img id="u114_img" class="img " src="images/管理员主页/u112.png"/>
+        </div>
+
+        <!-- Unnamed (单元格) -->
+        <div id="u115" class="ax_default table_cell">
+            <img id="u115_img" class="img " src="images/管理员主页/u115.png"/>
+        </div>
+    </div>
+
+    <!-- Unnamed (矩形) -->
+    <div id="u116" class="ax_default link_button">
+        <div id="u116_div" class=""></div>
+        <div id="u116_text" class="text ">
+            <p><span>学生录入</span></p>
+        </div>
+    </div>
+
+    <!-- Unnamed (矩形) -->
+    <div id="u117" class="ax_default box_1">
+        <div id="u117_div" class=""></div>
+        <div id="u117_text" class="text ">
+            <p><span>输入工号/姓名/学院/班级发起快速搜索</span></p>
+        </div>
+    </div>
+
+    <!-- Unnamed (复选框) -->
+    <div id="u118" class="ax_default checkbox">
+        <label for="u118_input" style="position: absolute; left: 0px;">
+            <div id="u118_text" class="text ">
+                <p><span>2015211001</span></p>
+            </div>
+        </label>
+        <input id="u118_input" type="checkbox" value="checkbox"/>
+    </div>
+
+    <!-- Unnamed (复选框) -->
+    <div id="u119" class="ax_default checkbox">
+        <label for="u119_input" style="position: absolute; left: 0px;">
+            <div id="u119_text" class="text ">
+                <p><span>2015211002</span></p>
+            </div>
+        </label>
+        <input id="u119_input" type="checkbox" value="checkbox"/>
+    </div>
+
+    <!-- Unnamed (复选框) -->
+    <div id="u120" class="ax_default checkbox">
+        <label for="u120_input" style="position: absolute; left: 0px;">
+            <div id="u120_text" class="text ">
+                <p><span>201521100n</span></p>
+            </div>
+        </label>
+        <input id="u120_input" type="checkbox" value="checkbox"/>
+    </div>
+
+    <!-- Unnamed (矩形) -->
+    <div id="u121" class="ax_default button">
+        <div id="u121_div" class=""></div>
+        <div id="u121_text" class="text ">
+            <p><span>删除</span></p>
+        </div>
+    </div>
+
+    <!-- 更改姓名 (矩形) -->
+    <div id="u122" class="ax_default link_button" data-label="更改姓名">
+        <div id="u122_div" class=""></div>
+        <div id="u122_text" class="text ">
+            <p><span>更改信息</span></p>
+        </div>
+    </div>
+
+    <!-- Unnamed (矩形) -->
+    <div id="u123" class="ax_default link_button">
+        <div id="u123_div" class=""></div>
+        <div id="u123_text" class="text ">
+            <p><span>更改信息</span></p>
+        </div>
+    </div>
+
+    <!-- Unnamed (矩形) -->
+    <div id="u124" class="ax_default link_button">
+        <div id="u124_div" class=""></div>
+        <div id="u124_text" class="text ">
+            <p><span>更改信息</span></p>
+        </div>
+    </div>
+
+    <!-- Unnamed (矩形) -->
+    <div id="u125" class="ax_default link_button">
+        <div id="u125_div" class=""></div>
+        <div id="u125_text" class="text ">
+            <p><span>更改信息</span></p>
+        </div>
+    </div>
+
+    <!-- 更改信息 (矩形) -->
+    <div id="u126" class="ax_default link_button" data-label="更改信息">
+        <div id="u126_div" class=""></div>
+        <div id="u126_text" class="text ">
+            <p><span>更改信息</span></p>
+        </div>
+    </div>
+
+    <!-- Unnamed (矩形) -->
+    <div id="u127" class="ax_default link_button">
+        <div id="u127_div" class=""></div>
+        <div id="u127_text" class="text ">
+            <p><span>更改信息</span></p>
+        </div>
+    </div>
+
+    <!-- 搜索说明 (矩形) -->
+    <div id="u128" class="ax_default sticky_2 ax_default_hidden" data-label="搜索说明" style="display:none; visibility: hidden">
+        <div id="u128_div" class=""></div>
+        <div id="u128_text" class="text ">
+            <p><span>点击快速搜索后，表格只展示符合用户搜索条件的内容。</span></p><p><span>如：如果用户输入工号001，则表格只展示一条结果；如果用户输入姓名王大锤，则表格只展示所有叫王大锤的老师^ ^</span></p>
+        </div>
+    </div>
+
+    <!-- 搜索说明 学生 (矩形) -->
+    <div id="u129" class="ax_default sticky_2 ax_default_hidden" data-label="搜索说明 学生" style="display:none; visibility: hidden">
+        <div id="u129_div" class=""></div>
+        <div id="u129_text" class="text ">
+            <p><span>点击快速搜索后，表格只展示符合用户搜索条件的内容。</span></p><p><span>如：如果用户输入学号001，则表格只展示一条结果；如果用户输入姓名张小美，则表格只展示所有叫张小美的学生^ ^</span></p>
+        </div>
+    </div>
+
+    <!-- Unnamed (矩形) -->
+    <div id="u130" class="ax_default sticky_2 ax_default_hidden" style="display:none; visibility: hidden">
+        <div id="u130_div" class=""></div>
+        <div id="u130_text" class="text ">
+            <p><span><br></span></p><p><span>确认删除选中内容？</span></p>
+        </div>
+    </div>
+
+    <!-- 确认删除 (矩形) -->
+    <div id="u131" class="ax_default button ax_default_hidden" data-label="确认删除" style="display:none; visibility: hidden">
+        <div id="u131_div" class=""></div>
+        <div id="u131_text" class="text ">
+            <p><span>确认</span></p>
+        </div>
+    </div>
+
+    <!-- 取消删除 (矩形) -->
+    <div id="u132" class="ax_default button ax_default_hidden" data-label="取消删除" style="display:none; visibility: hidden">
+        <div id="u132_div" class=""></div>
+        <div id="u132_text" class="text ">
+            <p><span>取消</span></p>
+        </div>
+    </div>
+
+    <!-- 确认确认 (矩形) -->
+    <div id="u133" class="ax_default button ax_default_hidden" data-label="确认确认" style="display:none; visibility: hidden">
+        <div id="u133_div" class=""></div>
+        <div id="u133_text" class="text ">
+            <p><span>确认</span></p>
+        </div>
+    </div>
+
+    <!-- Unnamed (矩形) -->
+    <div id="u134" class="ax_default box_1 ax_default_hidden" style="display:none; visibility: hidden">
+        <div id="u134_div" class=""></div>
+        <div id="u134_text" class="text ">
+            <p><span>点此输入新名字</span></p>
+        </div>
+    </div>
+
+    <!-- Unnamed (矩形) -->
+    <div id="u135" class="ax_default link_button">
+        <div id="u135_div" class=""></div>
+        <div id="u135_text" class="text ">
+            <p><span style="font-family:'Arial Normal', 'Arial';">[</span><span style="font-family:'PingFangSC-Regular', 'PingFang SC';">退出</span><span style="font-family:'Arial Normal', 'Arial';">]</span></p>
+        </div>
+    </div>
+
+    <!-- Unnamed (矩形) -->
+    <div id="u136" class="ax_default label">
+        <div id="u136_div" class=""></div>
+        <div id="u136_text" class="text ">
+            <p><span>省略多列,依次为:学号\姓名\性别\注册日期\邮箱\密码</span></p>
+        </div>
+    </div>
+
+    <!-- Unnamed (矩形) -->
+    <div id="u137" class="ax_default label">
+        <div id="u137_div" class=""></div>
+        <div id="u137_text" class="text ">
+            <p><span>省略多列,依次为:姓名\性别\职称\邮箱\密码\电话</span></p>
+        </div>
+    </div>
+
+    <!-- 改名字 (矩形) -->
+    <div id="u138" class="ax_default sticky_2 ax_default_hidden" data-label="改名字" style="display:none; visibility: hidden">
+        <div id="u138_div" class=""></div>
+    </div>
+
+    <!-- 老师-电话 (矩形) -->
+    <div id="u139" class="ax_default box_1 ax_default_hidden" data-label="老师-电话" style="display:none; visibility: hidden">
+        <div id="u139_div" class=""></div>
+        <div id="u139_text" class="text ">
+            <p><span>在此输入电话号码</span></p>
+        </div>
+    </div>
+
+    <!-- 老师-电话 (复选框) -->
+    <div id="u140" class="ax_default checkbox ax_default_hidden" data-label="老师-电话" style="display:none; visibility: hidden">
+        <label for="u140_input" style="position: absolute; left: 0px;">
+            <div id="u140_text" class="text ">
+                <p><span>电话：</span></p>
+            </div>
+        </label>
+        <input id="u140_input" type="checkbox" value="checkbox"/>
+    </div>
+
+    <!-- 老师-密码 (矩形) -->
+    <div id="u141" class="ax_default box_1 ax_default_hidden" data-label="老师-密码" style="display:none; visibility: hidden">
+        <div id="u141_div" class=""></div>
+        <div id="u141_text" class="text ">
+            <p><span>在此输入新密码</span></p>
+        </div>
+    </div>
+
+    <!-- 老师-密码 (复选框) -->
+    <div id="u142" class="ax_default checkbox ax_default_hidden" data-label="老师-密码" style="display:none; visibility: hidden">
+        <label for="u142_input" style="position: absolute; left: 0px;">
+            <div id="u142_text" class="text ">
+                <p><span>密码：</span></p>
+            </div>
+        </label>
+        <input id="u142_input" type="checkbox" value="checkbox"/>
+    </div>
+
+    <!-- 老师-邮箱 (矩形) -->
+    <div id="u143" class="ax_default box_1 ax_default_hidden" data-label="老师-邮箱" style="display:none; visibility: hidden">
+        <div id="u143_div" class=""></div>
+        <div id="u143_text" class="text ">
+            <p><span>在此输入新邮箱</span></p>
+        </div>
+    </div>
+
+    <!-- 老师-邮箱 (复选框) -->
+    <div id="u144" class="ax_default checkbox ax_default_hidden" data-label="老师-邮箱" style="display:none; visibility: hidden">
+        <label for="u144_input" style="position: absolute; left: 0px;">
+            <div id="u144_text" class="text ">
+                <p><span>邮箱：</span></p>
+            </div>
+        </label>
+        <input id="u144_input" type="checkbox" value="checkbox"/>
+    </div>
+
+    <!-- Unnamed (下拉列表框) -->
+    <div id="u145" class="ax_default droplist ax_default_hidden" style="display:none; visibility: hidden">
+        <select id="u145_input">
+            <option value="教授">教授</option>
+            <option value="副教授">副教授</option>
+            <option value="研究员">研究员</option>
+            <option value="副研究员">副研究员</option>
+            <option value="讲师">讲师</option>
+        </select>
+    </div>
+
+    <!-- 老师-性别 (下拉列表框) -->
+    <div id="u146" class="ax_default droplist ax_default_hidden" data-label="老师-性别" style="display:none; visibility: hidden">
+        <select id="u146_input">
+            <option value="男">男</option>
+            <option value="女">女</option>
+        </select>
+    </div>
+
+    <!-- 老师-职称 (复选框) -->
+    <div id="u147" class="ax_default checkbox ax_default_hidden" data-label="老师-职称" style="display:none; visibility: hidden">
+        <label for="u147_input" style="position: absolute; left: 0px;">
+            <div id="u147_text" class="text ">
+                <p><span>职称：</span></p>
+            </div>
+        </label>
+        <input id="u147_input" type="checkbox" value="checkbox"/>
+    </div>
+
+    <!-- 老师-性别 (复选框) -->
+    <div id="u148" class="ax_default checkbox ax_default_hidden" data-label="老师-性别" style="display:none; visibility: hidden">
+        <label for="u148_input" style="position: absolute; left: 0px;">
+            <div id="u148_text" class="text ">
+                <p><span>性别：</span></p>
+            </div>
+        </label>
+        <input id="u148_input" type="checkbox" value="checkbox"/>
+    </div>
+
+    <!-- 老师-姓名 (复选框) -->
+    <div id="u149" class="ax_default checkbox ax_default_hidden" data-label="老师-姓名" style="display:none; visibility: hidden">
+        <label for="u149_input" style="position: absolute; left: 0px;">
+            <div id="u149_text" class="text ">
+                <p><span>姓名：</span></p>
+            </div>
+        </label>
+        <input id="u149_input" type="checkbox" value="checkbox"/>
+    </div>
+
+    <!-- 老师-姓名 (矩形) -->
+    <div id="u150" class="ax_default box_1 ax_default_hidden" data-label="老师-姓名" style="display:none; visibility: hidden">
+        <div id="u150_div" class=""></div>
+        <div id="u150_text" class="text ">
+            <p><span>在此输入新名字</span></p>
+        </div>
+    </div>
+
+    <!-- Unnamed (矩形) -->
+    <div id="u151" class="ax_default _三级标题 ax_default_hidden" style="display:none; visibility: hidden">
+        <div id="u151_div" class=""></div>
+        <div id="u151_text" class="text ">
+            <p><span>选择待变更属性，并按提示输入变更内容</span></p>
+        </div>
+    </div>
+
+    <!-- Unnamed (矩形) -->
+    <div id="u152" class="ax_default label ax_default_hidden" style="display:none; visibility: hidden">
+        <div id="u152_div" class=""></div>
+        <div id="u152_text" class="text ">
+            <p><span>工号：&nbsp;&nbsp; 001</span></p>
+        </div>
+    </div>
+
+    <!-- 改名成功提示 (矩形) -->
+    <div id="u153" class="ax_default sticky_2 ax_default_hidden" data-label="改名成功提示" style="display:none; visibility: hidden">
+        <div id="u153_div" class=""></div>
+        <div id="u153_text" class="text ">
+            <p><span>信息变更成功！</span></p>
+        </div>
+    </div>
+
+    <!-- 改名成功提示确认 (矩形) -->
+    <div id="u154" class="ax_default button ax_default_hidden" data-label="改名成功提示确认" style="display:none; visibility: hidden">
+        <div id="u154_div" class=""></div>
+        <div id="u154_text" class="text ">
+            <p><span>好的^ ^</span></p>
+        </div>
+    </div>
+
+    <!-- 改名字-返回 (矩形) -->
+    <div id="u155" class="ax_default button ax_default_hidden" data-label="改名字-返回" style="display:none; visibility: hidden">
+        <div id="u155_div" class=""></div>
+        <div id="u155_text" class="text ">
+            <p><span>返回</span></p>
+        </div>
+    </div>
+
+    <!-- 确认改名字 (矩形) -->
+    <div id="u156" class="ax_default button ax_default_hidden" data-label="确认改名字" style="display:none; visibility: hidden">
+        <div id="u156_div" class=""></div>
+        <div id="u156_text" class="text ">
+            <p><span>确认</span></p>
+        </div>
+    </div>
+
+    <!-- Unnamed (复选框) -->
+    <div id="u157" class="ax_default checkbox ax_default_hidden" style="display:none; visibility: hidden">
+        <label for="u157_input" style="position: absolute; left: 0px;">
+            <div id="u157_text" class="text ">
+                <p><span>201521100n</span></p>
+            </div>
+        </label>
+        <input id="u157_input" type="checkbox" value="checkbox"/>
+    </div>
+
+    <!-- 改名字 (矩形) -->
+    <div id="u158" class="ax_default sticky_2 ax_default_hidden" data-label="改名字" style="display:none; visibility: hidden">
+        <div id="u158_div" class=""></div>
+    </div>
+
+    <!-- 老师-密码 (矩形) -->
+    <div id="u159" class="ax_default box_1 ax_default_hidden" data-label="老师-密码" style="display:none; visibility: hidden">
+        <div id="u159_div" class=""></div>
+        <div id="u159_text" class="text ">
+            <p><span>在此输入新密码</span></p>
+        </div>
+    </div>
+
+    <!-- 老师-密码 (复选框) -->
+    <div id="u160" class="ax_default checkbox ax_default_hidden" data-label="老师-密码" style="display:none; visibility: hidden">
+        <label for="u160_input" style="position: absolute; left: 0px;">
+            <div id="u160_text" class="text ">
+                <p><span>密码：</span></p>
+            </div>
+        </label>
+        <input id="u160_input" type="checkbox" value="checkbox"/>
+    </div>
+
+    <!-- 老师-邮箱 (矩形) -->
+    <div id="u161" class="ax_default box_1 ax_default_hidden" data-label="老师-邮箱" style="display:none; visibility: hidden">
+        <div id="u161_div" class=""></div>
+        <div id="u161_text" class="text ">
+            <p><span>在此输入新邮箱</span></p>
+        </div>
+    </div>
+
+    <!-- 老师-邮箱 (复选框) -->
+    <div id="u162" class="ax_default checkbox ax_default_hidden" data-label="老师-邮箱" style="display:none; visibility: hidden">
+        <label for="u162_input" style="position: absolute; left: 0px;">
+            <div id="u162_text" class="text ">
+                <p><span>邮箱：</span></p>
+            </div>
+        </label>
+        <input id="u162_input" type="checkbox" value="checkbox"/>
+    </div>
+
+    <!-- 老师-性别 (下拉列表框) -->
+    <div id="u163" class="ax_default droplist ax_default_hidden" data-label="老师-性别" style="display:none; visibility: hidden">
+        <select id="u163_input">
+            <option value="男">男</option>
+            <option value="女">女</option>
+        </select>
+    </div>
+
+    <!-- 老师-职称 (复选框) -->
+    <div id="u164" class="ax_default checkbox ax_default_hidden" data-label="老师-职称" style="display:none; visibility: hidden">
+        <label for="u164_input" style="position: absolute; left: 0px;">
+            <div id="u164_text" class="text ">
+                <p><span>注册</span></p><p><span>日期</span></p>
+            </div>
+        </label>
+        <input id="u164_input" type="checkbox" value="checkbox"/>
+    </div>
+
+    <!-- 老师-性别 (复选框) -->
+    <div id="u165" class="ax_default checkbox ax_default_hidden" data-label="老师-性别" style="display:none; visibility: hidden">
+        <label for="u165_input" style="position: absolute; left: 0px;">
+            <div id="u165_text" class="text ">
+                <p><span>性别：</span></p>
+            </div>
+        </label>
+        <input id="u165_input" type="checkbox" value="checkbox"/>
+    </div>
+
+    <!-- 老师-姓名 (复选框) -->
+    <div id="u166" class="ax_default checkbox ax_default_hidden" data-label="老师-姓名" style="display:none; visibility: hidden">
+        <label for="u166_input" style="position: absolute; left: 0px;">
+            <div id="u166_text" class="text ">
+                <p><span>姓名：</span></p>
+            </div>
+        </label>
+        <input id="u166_input" type="checkbox" value="checkbox"/>
+    </div>
+
+    <!-- 老师-姓名 (矩形) -->
+    <div id="u167" class="ax_default box_1 ax_default_hidden" data-label="老师-姓名" style="display:none; visibility: hidden">
+        <div id="u167_div" class=""></div>
+        <div id="u167_text" class="text ">
+            <p><span>在此输入新名字</span></p>
+        </div>
+    </div>
+
+    <!-- Unnamed (矩形) -->
+    <div id="u168" class="ax_default _三级标题 ax_default_hidden" style="display:none; visibility: hidden">
+        <div id="u168_div" class=""></div>
+        <div id="u168_text" class="text ">
+            <p><span>选择待变更属性，并按提示输入变更内容</span></p>
+        </div>
+    </div>
+
+    <!-- Unnamed (矩形) -->
+    <div id="u169" class="ax_default label ax_default_hidden" style="display:none; visibility: hidden">
+        <div id="u169_div" class=""></div>
+        <div id="u169_text" class="text ">
+            <p><span>学号：&nbsp;&nbsp; 2015211233</span></p><p><span><br></span></p>
+        </div>
+    </div>
+
+    <!-- 改名字-返回 (矩形) -->
+    <div id="u170" class="ax_default button ax_default_hidden" data-label="改名字-返回" style="display:none; visibility: hidden">
+        <div id="u170_div" class=""></div>
+        <div id="u170_text" class="text ">
+            <p><span>返回</span></p>
+        </div>
+    </div>
+
+    <!-- 确认改名字 (矩形) -->
+    <div id="u171" class="ax_default button ax_default_hidden" data-label="确认改名字" style="display:none; visibility: hidden">
+        <div id="u171_div" class=""></div>
+        <div id="u171_text" class="text ">
+            <p><span>确认</span></p>
+        </div>
+    </div>
+
+    <!-- 老师-邮箱 (矩形) -->
+    <div id="u172" class="ax_default box_1 ax_default_hidden" data-label="老师-邮箱" style="display:none; visibility: hidden">
+        <div id="u172_div" class=""></div>
+        <div id="u172_text" class="text ">
+            <p><span>格式：2018/09/01</span></p>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

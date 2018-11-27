@@ -145,8 +145,9 @@ public class AdminAction extends ActionSupport {
     }
 
     public String addTeacher() throws Exception{
+        System.out.println("teacherName-->"+teacher.getTeacherName());
         teacherBo.addTeacher(teacher);
-        listTeacher();
+        //listTeacher();
         return "success";
     }
 
@@ -157,7 +158,7 @@ public class AdminAction extends ActionSupport {
     }
     public String deleteTeacher() throws Exception{
         teacherBo.deleteTeacher(teacher.getTeacherId());
-        listTeacher();
+        //listTeacher();
         return "success";
     }
 
@@ -167,7 +168,7 @@ public class AdminAction extends ActionSupport {
     }
     public String updateTeacher() throws Exception{
         teacherBo.updateTeacher(teacher);
-        listTeacher();
+        //listTeacher();
         return "success";
     }
 
@@ -196,28 +197,13 @@ public class AdminAction extends ActionSupport {
     }
 
     public String listStudent() throws Exception{
-        if(searchWay.equals("班级"))
-            return listStudentByClass();
-        else if(searchWay.equals("姓名"))
-        {
-            return listStudentByName();
-        }
-        else
-        {
             LinkedHashMap<Object, Object> equals = new LinkedHashMap<>();
             equals.put("studentId", searchStudentWord);
             studentList = studentBo.getList(equals,null,null,null,null,null,0,0);
+            studentList.addAll(studentBo.getStudentsByName(searchStudentWord));
+            studentList.addAll(studentBo.getStudentsByClass(searchStudentWord));
             return "success";
-        }
-    }
-    public String listStudentByName() throws Exception{
-        studentList = studentBo.getStudentsByName(searchStudentWord);
-        return "success";
-    }
 
-    public String listStudentByClass() throws Exception{
-        studentList = studentBo.getStudentsByClass(searchStudentWord);
-        return "success";
     }
 
     public void setStudentName(String studentName) {
@@ -598,11 +584,11 @@ public class AdminAction extends ActionSupport {
     
     public String queryTeacher() throws Exception {
         LinkedHashMap<Object, Object> equals = new LinkedHashMap<>();
-        if(searchWay.equals("工号"))
-            equals.put("teacherId", searchTeacherWord);
-        else if(searchWay.equals("姓名"))
-            equals.put("teacherName", searchTeacherWord);
+        equals.put("teacherId", searchTeacherWord);
         teacherList = teacherBo.getList(equals,null,null,null,null,null,0,0);
+        LinkedHashMap<Object, Object> equals1 = new LinkedHashMap<>();
+        equals1.put("teacherName", searchTeacherWord);
+        teacherList.addAll(teacherBo.getList(equals1,null,null,null,null,null,0,0));
         return "success";
     }
 }

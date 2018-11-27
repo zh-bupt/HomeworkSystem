@@ -1,15 +1,16 @@
 <%--
   Created by IntelliJ IDEA.
   User: kwong
-  Date: 2018/11/20
-  Time: 21:44
+  Date: 2018/11/27
+  Time: 22:47
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <html>
 <head>
-    <title>学生系统</title>
+    <title>教师系统</title>
+
     <link rel="stylesheet" type="text/css" href="../assets/css/main.css"/>
     <link rel="stylesheet" type="text/css" href="../assets/css/common.css"/>
     <link rel="stylesheet" type="text/css" href="../assets/css/pagination.css">
@@ -22,18 +23,14 @@
     </style>
 </head>
 <body>
-
-<html>
-
-<body>
 <div class="topbar-wrap white">
     <div class="topbar-inner clearfix">
         <div class="topbar-logo-wrap clearfix">
             <h1 class="topbar-logo none"><a class="navbar-brand">查询结果</a></h1>
             <ul class="navbar-list clearfix">
                 <%--<li><a class="on" href="/pages/admin_student.jsp">首页</a></li>--%>
-                <li><a class="on" href="/admin/listTeacherAction.action" target="_blank">课程管理</a></li>
-                <li><a href="/pages/admin_student.jsp" target="_blank">学生管理</a></li>
+                <li><a  href="/admin/listTeacherAction.action" target="_blank">教师管理</a></li>
+                <li><a class="on" href="/pages/admin_student.jsp" target="_blank">学生管理</a></li>
 
             </ul>
         </div>
@@ -56,8 +53,9 @@
             <ul class="sidebar-list">
                 <li>
                     <ul class="sub-menu">
-                        <li><a><i class="icon-font">&#xe005;</i>您的课程</a></li>
-
+                        <li><a href="/pages/admin_student.jsp"><i class="icon-font">&#xe005;</i>查找学生</a></li>
+                        <li><a href="/pages/admin_add_student.jsp"><i class="icon-font">&#xe005;</i>添加学生</a></li>
+                        <%--TODO 修改这里--%>
                     </ul>
                 </li>
             </ul>
@@ -66,61 +64,34 @@
     <!--/sidebar-->
     <div class="main-wrap">
         <div class="crumb-wrap">
-            <div class="crumb-list"><i class="icon-font"></i><a href="main.jsp">首页</a><span class="crumb-step">&gt;</span><span class="crumb-name">教师管理</span></div>
+            <div class="crumb-list"><i class="icon-font"></i><a href="main.jsp">首页</a><span class="crumb-step">&gt;</span><span class="crumb-name">学生管理</span></div>
         </div>
         <div class="search-wrap">
             <!--用于查询得表单-->
             <div class="search-content">
                 <%--<form method="post" action="readerManage.jsp" id="searchForm">--%>
-                <h2>搜索课程</h2>
-                <s:form action="addCourseAction" id="searchForm">
+                <s:form action="addStudentForCourseByTypeAction" id="searchForm">
+                    <h3>发布作业</h3>
                     <table class="search-tab">
-                        <s:if test="groupMembers.size() > 0">
-                            <h2>您所在的小组</h2>
-                            <%--<s:if test="true" >--%>
-                            <%--<button onclick="/deleteTeacherAction.action?${teacherId}">删除</button>--%>
-                            <%--<input type="button" name="search" value="删除" onclick="javascript:window.location.href='deleteStudentAction.action?${studentId}'"/>--%>
-                            <table border="1px" cellpadding="8px" class="search-tab">
-                                <tr>
-                                    <th>组号</th>
-                                    <th>组名</th>
-                                    <th>组长</th>
-                                    <th>人数</th>
-                                    <th>成员</th>
-                                    <th>小组成绩</th>
-                                </tr>
-                                <tr>
-                                    <td><s:property value="groupId"/> </td>
-                                    <td><s:property value="name"/> </td>
-                                    <td><s:property value="leader.getStudentName()"/> </td>
-                                    <td><s:property value="num"/> </td>
-                                    <td>
-                                        <s:iterator value="members" >
-                                            <s:property value="memberName"/>
-                                        </s:iterator>
-                                    </td>
-                                    <td><s:property value="groupScore" /></td>
-
-                                </tr>
-                            </table>
-                        </s:if>
-                        <s:else>
-                            <h2>创建小组</h2>
-                            <s:form action="addGroupAction">
-                                <s:textfield name="groupId" label="组号" value=""/>
-                                <s:textfield name="name" label="组名" value=""/>
-                                <s:textfield name="studentIds" label="学号(多个用','隔开)" value=""/>
+                        <tr>  <%--<s:textfield  class="common-text" name="content" label="内容" value=""/>--%>
+                                <%--<s:textfield name="deadline" label="截止日期(yyyy-MM-dd)" value=""/>--%>
+                                <%--<s:textfield name="percentage" label="所占比例" value=""/>--%>
+                                <%--<s:token/>--%>
+                                <%--<s:textfield  name="studentId" label="学号" value="" style="width:150px"/>--%>
+                            <th width="140">内容:</th>
+                            <td><textarea name="content" id="" cols="30" rows="10"></textarea></td>
+                            <th width="140">截止日期:</th>
+                            <td><input class="common-text" placeholder="" name="deadline"  id="deadline"  type="date" style="width:150px"></td><%--TODO 在页面限制输入为日期，可能出错--%>
+                            <th width="140">所占百分比:</th>
+                            <td><input class="common-text" placeholder="" name="percentage"  id="percentage"  type="number" style="width:150px"></td><%--TODO 在页面限制输入为数字，可能出错--%>
+                                <%--<th width="140">姓名:</th>--%>
+                                <%--<td><input class="common-text" placeholder="" name="studentName"  id="studentName"  type="text" style="width:150px"></td>--%>
+                            <td style="padding-left:50px">
                                 <s:token/>
-                                <s:submit/>
-                            </s:form>
-                        </s:else>
-                        <%--TODO 创建小组UI需要改--%>
-                        <%--<tr>--%>
-                            <%--<th width="70">课程ID:</th>--%>
-                            <%--<td><input class="common-text" placeholder="" name="courseId"  id="courseId"  type="text" style="width:150px"></td>--%>
-
-                            <%--<td style="padding-left:50px"><button class="btn btn-primary btn2" type="submit" >查询</button></td>--%>
-                        <%--</tr>--%>
+                                <s:submit  class="btn btn-primary btn2" value="添加"/>
+                                    <%--<button class="btn btn-primary btn2" type="submit" >添加</button>--%>
+                            </td>
+                        </tr>
                     </table>
                 </s:form>
                 <%--</form>--%>
@@ -130,7 +101,7 @@
             <form name="myform" id="myform" method="post">
                 <div class="result-title">
                     <div class="result-list">
-                        <a><i class="icon-font"></i>您的所有课程</a>
+                        <a ><i class="icon-font"></i>作业列表</a>
                     </div>
                 </div>
                 <div class="result-content">
@@ -145,16 +116,19 @@
                                 <th>内容</th>
                                 <th>发布时间</th>
                                 <th>截止时间</th>
-                                <th>提交作业</th>
+                                <th>所占比例 %</th>
+                                <th>操作</th>
                             </tr>
                             <s:iterator value="homeworkList" >
                                 <tr>
                                     <td><input type="checkbox" value="homeworkId" name="homeworkId"></td>
                                     <td><s:property value="homeworkId"/> </td>
                                     <td><s:property value="content"/> </td>
-                                    <td><s:property value="releaseTime"/> </td>
-                                    <td><s:property value="deadline"/> </td>
-                                    <td><input class="link-update btn btn-warning btn2"  type="button" name="delete" value="提交" onclick="javascript:window.location.href='setCurrentHomeworkAction.action?homeworkId=${homeworkId}'"/></td>
+                                    <td><s:date  name="releaseTime"  format="yyyy-MM-dd"/> </td>
+                                    <td><s:date  name="deadline"  format="yyyy-MM-dd"/></td>
+                                    <td><s:property value="percentage"/> </td>
+                                    <td><input  class="link-update btn btn-warning btn2"  type="button" name="update" value="查看提交" onclick="javascript:window.location.href='/teacher/listHomeworkGroupAction.action?homeworkId=${homeworkId}'"/>
+                                    <input  class="link-del btn btn-danger btn2"  type="button" name="delete" value="删除" onclick="javascript:window.location.href='/teacher/deleteHomeworkAction.action?homeworkId=${homeworkId}'"/></td>
                                 </tr>
                             </s:iterator>
                         </table>
@@ -167,3 +141,4 @@
 </div>
 </body>
 </html>
+

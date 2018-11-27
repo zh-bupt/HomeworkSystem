@@ -33,10 +33,7 @@
     <package name="admin" namespace="/" extends="struts-default">
         <action name="addStudentAction"
                 class="com.bupt.se.homework.action.AdminAction" method="addStudent">
-            <interceptor-ref name="defaultStack"/>
-            <interceptor-ref name="token"/>
-            <result name="invalid.token">/pages/admin.jsp</result>
-            <result name="success">/pages/admin.jsp</result>
+            <result name="success">/pages/admin_student.jsp</result>
         </action>
         <action name="addStudentByFileAction"
                 class="com.bupt.se.homework.action.AdminAction" method="addStudentByFile">
@@ -49,34 +46,29 @@
                 <!--<param name="fileUpload.allowedTypes">text/plain,application/vnd.ms-excel</param>-->
                 <param name="fileUpload.allowedExtensions">.txt,.xlsx,.xls,.csv</param>
             </interceptor-ref>
-            <interceptor-ref name="token"/>
-            <result name="invalid.token">/pages/admin.jsp</result>
-            <result name="success">/pages/admin.jsp</result>
+            <result name="success">/pages/admin_student.jsp</result>
             <!-- 出现错误自动会返回input结果，进入结果视图 -->
             <result name="error" >/pages/error.jsp</result>
         </action>
         <action name="searchStudentAction"
                 class="com.bupt.se.homework.action.AdminAction" method="listStudent">
-            <result name="success">/pages/admin.jsp</result>
+            <result name="success">/pages/admin_student.jsp</result>
         </action>
         <action name="searchTeacherAction"
                 class="com.bupt.se.homework.action.AdminAction" method="queryTeacher">
-            <result name="success">/pages/admin.jsp</result>
+            <result name="success">/pages/admin_teacher.jsp</result>
         </action>
         <action name="deleteStudentAction"
                 class="com.bupt.se.homework.action.AdminAction" method="deleteStudent">
-            <result name="success">/pages/admin.jsp</result>
+            <result name="success">/pages/admin_student.jsp</result>
         </action>
         <action name="updateStudentAction"
                 class="com.bupt.se.homework.action.AdminAction" method="updateStudent">
-            <result name="success">/pages/admin.jsp</result>
+            <result name="success">/pages/admin_student.jsp</result>
         </action>
         <action name="addTeacherAction"
                 class="com.bupt.se.homework.action.AdminAction" method="addTeacher">
-            <interceptor-ref name="defaultStack"/>
-            <interceptor-ref name="token"/>
-            <result name="invalid.token">/pages/admin.jsp</result>
-            <result name="success">/pages/admin.jsp</result>
+            <result name="success" type="chain">listTeacherAction</result>
         </action>
         <action name="addTeacherByFileAction"
                 class="com.bupt.se.homework.action.AdminAction" method="addTeacherByFile">
@@ -89,23 +81,21 @@
                 <!--<param name="fileUpload.allowedTypes">text/plain,application/vnd.ms-excel</param>-->
                 <param name="fileUpload.allowedExtensions">.txt,.xlsx,.xls,.csv</param>
             </interceptor-ref>
-            <interceptor-ref name="token"/>
-            <result name="invalid.token">/pages/admin.jsp</result>
-            <result name="success">/pages/admin.jsp</result>
+            <result name="success" type="chain">listTeacherAction</result>
             <!-- 出现错误自动会返回input结果，进入结果视图 -->
             <result name="error" >/pages/error.jsp</result>
         </action>
         <action name="listTeacherAction"
                 class="com.bupt.se.homework.action.AdminAction" method="listTeacher">
-            <result name="success">/pages/admin.jsp</result>
+            <result name="success">/pages/admin_teacher.jsp</result>
         </action>
         <action name="deleteTeacherAction"
                 class="com.bupt.se.homework.action.AdminAction" method="deleteTeacher">
-            <result name="success">/pages/admin.jsp</result>
+            <result name="success" type="chain">listTeacherAction</result>
         </action>
         <action name="updateTeacherAction"
                 class="com.bupt.se.homework.action.AdminAction" method="updateTeacher">
-            <result name="success">/pages/admin.jsp</result>
+            <result name="success" type="chain">listTeacherAction</result>
         </action>
     </package>
 
@@ -235,23 +225,5 @@
                     </result>
         </action>
     </package>
-    <package name="Struts2" extends="struts-default" namespace="/">
 
-        <action name="uploads" class="com.bupt.se.homework.action.UploadFileAction">
-
-            <!-- 指定（限制）上传文件的类型，定义局部拦截器，修改默认拦截器的属性
-                "fileUpload.maximumSize" ：限制上传最大的文件大小。
-                "fileUpload.allowedTypes"：允许上传文件的类型。
-                "fileUpload.allowedExtensions"：允许上传文件的可扩展文件类型。 -->
-            <interceptor-ref name="defaultStack">
-                <param name="fileUpload.maximumSize">500000000</param>
-                <!--<param name="fileUpload.allowedTypes">text/plain,application/vnd.ms-excel,application/octet-stream</param>-->
-                <param name="fileUpload.allowedExtensions">.txt,.xlsx,.csv,.xls,.tmp</param>
-            </interceptor-ref>
-
-            <result name="success">/pages/admin.jsp</result>
-            <!-- 出现错误自动会返回input结果，进入结果视图 -->
-            <result name="input" >/pages/error.jsp</result>
-        </action>
-    </package>
 </struts>

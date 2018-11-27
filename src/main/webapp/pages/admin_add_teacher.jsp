@@ -1,28 +1,22 @@
 <%--
   Created by IntelliJ IDEA.
   User: kwong
-  Date: 2018/11/22
-  Time: 15:36
+  Date: 2018/11/27
+  Time: 20:11
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="s" uri="/struts-tags" %>
 <html>
 <head>
-    <title>小组提交作业</title>
+    <title>教师管理</title>
 </head>
-<body>
-<h1>小组提交作业</h1>
-
-</body>
-</html>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>管理系统</title>
-    <link rel="stylesheet" type="text/css" href="../assets/css/main.css"/>
     <link rel="stylesheet" type="text/css" href="../assets/css/common.css"/>
+    <link rel="stylesheet" type="text/css" href="../assets/css/main.css"/>
     <link rel="stylesheet" type="text/css" href="../assets/css/pagination.css">
     <script type="text/javascript" src="../assets/js/libs/modernizr.min.js"></script>
     <script src="../assets/js/jquery-3.2.1.js"></script>
@@ -63,7 +57,7 @@
             <ul class="sidebar-list">
                 <li>
                     <ul class="sub-menu">
-                        <li><a><i class="icon-font">&#xe005;</i>查找教师</a></li>
+                        <li><a href="/admin/listTeacherAction.action"><i class="icon-font">&#xe005;</i>查找教师</a></li>
                         <li><a href="/pages/admin_add_teacher.jsp"><i class="icon-font">&#xe005;</i>添加教师</a></li>
                     </ul>
                 </li>
@@ -79,13 +73,24 @@
             <!--用于查询得表单-->
             <div class="search-content">
                 <%--<form method="post" action="readerManage.jsp" id="searchForm">--%>
-                <s:form action="searchTeacherAction" id="searchForm">
+                <s:form action="addTeacherAction" id="searchForm">
                     <table class="search-tab">
                         <tr>
-                            <th width="140">姓名/工号:</th>
-<%--TODO 修改这里为显示作业的内容--%>
-                            <td><input class="common-text" placeholder="" name="searchTeacherWord"  id="readername"  type="text" style="width:150px"></td>
-                            <td style="padding-left:50px"><button class="btn btn-primary btn2" type="submit" >查询</button></td>
+                            <th width="140">工号</th>
+                            <td><input class="common-text" placeholder="" name="teacherId"  id="teacherId"  type="text" style="width:150px"></td>
+                            <th width="140">姓名</th>
+                            <td><input class="common-text" placeholder="" name="teacherName"  id="teacherName"  type="text" style="width:150px"></td>
+                            <th width="140">性别</th>
+                            <td><input class="common-text" placeholder="" name="teacherSex"  id="teacherSex"  type="text" style="width:150px"></td>
+                            <th width="140">职称:</th>
+                            <td><input class="common-text" placeholder="" name="profession"  id="profession"  type="text" style="width:150px"></td>
+                            <th width="140">联系电话:</th>
+                            <td><input class="common-text" placeholder="" name="telephone"  id="telephone"  type="text" style="width:150px"></td>
+                            <th width="140">邮箱:</th>
+                            <td><input class="common-text" placeholder="" name="teacherEmail"  id="teacherEmail"  type="text" style="width:150px"></td>
+                            <th width="140">密码:</th>
+                            <td><input class="common-text" placeholder="" name="teacherPassword"  id="teacherPassword"  type="password" style="width:150px"></td>
+                            <td style="padding-left:50px"><button class="btn btn-primary btn2" type="submit" >添加</button></td>
                         </tr>
                     </table>
                 </s:form>
@@ -97,40 +102,18 @@
                 <div class="result-title">
                     <div class="result-list">
                         <%--<a href="addReader.jsp"><i class="icon-font"></i>添加读者</a>--%>
+                            <h3>上传教师名单文件</h3>
+                            <s:form action="addTeacherByFileAction" method="post" enctype="multipart/form-data">
+                                <s:file name="teacherExcel" label="选择上传的文件" />
+                                <s:submit value="上传" />
+                            </s:form>
                     </div>
                 </div>
                 <div class="result-content">
-                    <s:if test="homeworkGroupList.size() > 0">
-                        <%--<s:if test="true" >--%>
-                        <%--<button onclick="/deleteTeacherAction.action?${teacherId}">删除</button>--%>
-                        <%--<input type="button" name="search" value="删除" onclick="javascript:window.location.href='deleteStudentAction.action?${studentId}'"/>--%>
-                        <table border="1px" cellpadding="8px" class="result-tab" width="100%">
-                            <tr id="col-title">
-                                <th>选中</th>
-                                <th>小组编号</th>
-                                <th>作业编号</th>
-                                <th>提交时间</th>
-                                <th>分数</th>
-                                <th>评语</th>
-                                <th>下载</th>
 
-                            </tr>
-                            <s:iterator value="homeworkGroupList" >
-                                <tr>
-                                    <td><input type="checkbox" value="fileDir" name="fileDir"></td>
-                                    <td><s:property value="group_.getGroupId()"/> </td>
-                                    <td><s:property value="homeworkId"/> </td>
-                                    <td><s:date name="submissionTime" format="yyyy-MM-dd"/> </td>
-                                    <td><s:property value="score"/> </td>
-                                    <td><s:property value="comment"/> </td>
-                                        <%--<td><input type="button" name="update" value="查看提交" onclick="javascript:window.location.href='/teacher/listHomeworkGroupAction.action?homeworkId=${homeworkId}'"/></td>--%>
 
-                                    <td><input   class="link-update btn btn-warning btn2"  type="button" name="download" value="下载" onclick="javascript:window.location.href='/teacher/downloadHomeworkAction.action?homeworkId=${homeworkId}&groupId=${group_.getGroupId()}&homeworkFileName=${fileDir}'"/></td>
-                                        <%--<td><a href="/teacher/downloadHomeworkAction.action?fileDir=${fileDir}">下载</a></td>--%>
-                                </tr>
-                            </s:iterator>
-                        </table>
-                    </s:if>
+
+
                 </div>
             </form>
         </div>
@@ -139,3 +122,4 @@
 </div>
 </body>
 </html>
+
