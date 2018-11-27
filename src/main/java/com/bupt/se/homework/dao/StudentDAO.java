@@ -6,5 +6,5 @@ public interface StudentDAO extends BasicDao<Student, String> {
 
     HomeworkGroup getHomeworkGroup(Student student, Homework homework);
 
-    Group_ getCourseGroup(String studentId, String courseId);
+    Group_ getCourseGroup(Student student, Course course);
 }

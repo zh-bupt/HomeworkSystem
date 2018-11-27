@@ -27,12 +27,14 @@ public class HomeworkBoImpl extends BasicBoImpl<Homework, Integer> implements Ho
 
     @Override
     public boolean addHomework(Homework homework) {
-        return this.save(homework);
+        this.save(homework);
+        return true;
     }
 
     @Override
     public boolean updateHomework(Homework homework) {
-        return this.update(homework);
+        this.update(homework);
+        return true;
     }
 
     @Override

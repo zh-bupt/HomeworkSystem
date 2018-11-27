@@ -91,8 +91,12 @@ public class CourseBoImpl extends BasicBoImpl<Course, String> implements CourseB
     }
 
     @Override
-    public boolean addCourse(Course course) {
-        return this.save(course);
+    public void addCourse(Course course) {
+        if (exists(course.getCourseId())) {
+            throw new ServiceException(ServiceExceptionErrorCode.COURSE_DUPLICATED,
+                    "课程 " + course.getCourseId() + " 已存在.");
+        }
+        this.save(course);
     }
 
     @Override
@@ -103,6 +107,10 @@ public class CourseBoImpl extends BasicBoImpl<Course, String> implements CourseB
     @Override
     public List<Homework> listHomework(String courseId) {
         Course course = courseDAO.get(courseId);
+        if (course == null) {
+            throw new ServiceException(ServiceExceptionErrorCode.COURSE_NOT_FOUND,
+                    "课程 " + courseId + " 不存在.");
+        }
         List<Homework> list = null;
         if (course != null) {
             List<Homework> homeworkSet = course.getHomework();
@@ -118,18 +126,23 @@ public class CourseBoImpl extends BasicBoImpl<Course, String> implements CourseB
 
     /**
      * @Description: 计算对应课程每个学生的成绩
-     * @param course
+     * @param courseId
      * @return: void
      * @Author: zh
      * @Date: 2018/11/25
      **/
     @Override
-    public void calculateScore(Course course) throws Exception {
+    public void calculateScore(String courseId) throws Exception {
+        Course course = this.get(courseId);
+        if (course == null) {
+            throw new ServiceException(ServiceExceptionErrorCode.COURSE_NOT_FOUND,
+                    "课程 " + courseId + " 不存在.");
+        }
         List<Group_> groups = course.getGroups();
         if (groups != null && groups.size() > 0) {
             for (Group_ g:groups) {
                 // 先计算小组成绩
-                groupBo.calculateScore(g.getGroupId());
+                groupBo.calculateScore(g);
                 // 再计算课程成绩
                 List<GroupStudent> groupStudents = g.getGroupStudentList();
                 if (groupStudents != null && groupStudents.size() > 0) {

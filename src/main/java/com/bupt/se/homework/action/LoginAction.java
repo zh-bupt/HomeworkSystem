@@ -134,22 +134,6 @@ public class LoginAction extends ActionSupport {
 
     }
 
-    public void testAddHomework() {
-//        TeacherBo teacherBo = super.getBean("teacherBo");
-        Teacher teacher = teacherBo.get("2011211211");
-        List<Course> courses = new ArrayList<>();
-        courses.addAll(teacher.getCourses());
-        Course course = courses.get(0);
-        if (course != null) {
-            System.out.println(course.getCourseName());
-            Homework homework = new Homework();
-            homework.setDeadline(new Date());
-            homework.setContent("test homework content");
-            System.out.println(teacherBo.AssignHomework(course, homework));
-        }
-
-    }
-
     /**
      * @Author KRF
      * @Description 用来判断response的

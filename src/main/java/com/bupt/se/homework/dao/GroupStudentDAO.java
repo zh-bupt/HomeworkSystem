@@ -10,5 +10,5 @@ import java.util.List;
 
 public interface GroupStudentDAO extends BasicDao<GroupStudent, GroupStudentPK> {
 
-    public List<Student> findResultList(String courseID);
+    List<Student> findResultList(String courseID);
 }

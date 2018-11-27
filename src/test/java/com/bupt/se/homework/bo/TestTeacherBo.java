@@ -32,13 +32,13 @@ public class TestTeacherBo extends UnitTestBase {
         t1.setTeacherId("1990211111");
         t1.setTeacherName("t1");
         t1.setPassword("11111111");
-        teacherBo.addTeacher(t1);
+//        teacherBo.addTeacher(t1);
         System.out.println(teacherBo.login("1990211111", "11111111"));
         Teacher t2 = new Teacher();
         t2.setTeacherId("1990211112");
         t2.setPassword("11111111");
         t2.setTeacherName("t2");
-        teacherBo.addTeacher(t2);
+//        teacherBo.addTeacher(t2);
         List<Teacher> list = teacherBo.listTeacher();
         if (list != null && list.size() > 0) {
             for (Teacher t:list) {
@@ -46,7 +46,7 @@ public class TestTeacherBo extends UnitTestBase {
             }
         }
         t1.setTeacherName("tt1");
-        teacherBo.updateTeacher(t1);
+//        teacherBo.updateTeacher(t1);
         list = teacherBo.listTeacher();
         if (list != null && list.size() > 0) {
             for (Teacher t:list) {
@@ -67,7 +67,7 @@ public class TestTeacherBo extends UnitTestBase {
             Homework homework = new Homework();
             homework.setDeadline(new Date());
             homework.setContent("test homework content");
-            System.out.println(teacherBo.AssignHomework(course, homework));
+//            System.out.println(teacherBo.assignHomework(course.getCourseId(), homework));
         }
 
     }
@@ -82,7 +82,7 @@ public class TestTeacherBo extends UnitTestBase {
         if (courses != null && courses.size() > 0) {
             for (Course course:courses) {
                 System.out.println(course.getCourseName());
-                System.out.println(teacherBo.getCourseTranscript(teacher.getTeacherId(), course.getCourseId()));
+//                System.out.println(teacherBo.getCourseTranscript(teacher.getTeacherId(), course.getCourseId()));
             }
         }
     }

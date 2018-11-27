@@ -33,17 +33,17 @@ public class GroupBoImpl extends BasicBoImpl<Group_, String> implements GroupBo 
 
     /**
      * @Description: 计算小组的成绩
-     * @param groupId
+     * @param group_
      * @return: void
      * @Author: zh
      * @Date: 2018/11/25
      **/
     @Override
-    public void calculateScore(String groupId) throws Exception {
-        Group_ group_ = this.get(groupId);
-        if (group_ == null) {
-            throw new ServiceException(ServiceExceptionErrorCode.GROUP_NOT_FOUND, "小组 " + groupId + " 不存在!");
-        }
+    public void calculateScore(Group_ group_) {
+//        Group_ group_ = this.get(groupId);
+//        if (group_ == null) {
+//            throw new ServiceException(ServiceExceptionErrorCode.GROUP_NOT_FOUND, "小组 " + groupId + " 不存在!");
+//        }
         List<HomeworkGroup> homeworkGroups = group_.getHomeworkGroups();
         if (homeworkGroups != null && homeworkGroups.size() > 0) {
             double score = 0.;
@@ -60,9 +60,9 @@ public class GroupBoImpl extends BasicBoImpl<Group_, String> implements GroupBo 
     @Override
     public void addGroup(Group_ group_, Course course, Student leader, Set<Student> members) throws Exception {
         if (members.size() > course.getMaxStudentNum()) {
-            throw new ServiceException(ServiceExceptionErrorCode.GROUP_NUM_ERROE, "小组人数过多!");
+            throw new ServiceException(ServiceExceptionErrorCode.GROUP_NUM_ERROR, "小组人数过多!");
         } else if (members.size() < course.getMinStudentNum()) {
-            throw new ServiceException(ServiceExceptionErrorCode.GROUP_NUM_ERROE, "小组人数不足!");
+            throw new ServiceException(ServiceExceptionErrorCode.GROUP_NUM_ERROR, "小组人数不足!");
         }
         group_.setCourse(course);
         group_.setLeader(leader);

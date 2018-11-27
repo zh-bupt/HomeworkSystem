@@ -7,11 +7,11 @@ import java.util.LinkedHashMap;
 import java.util.List;
 
 public interface BasicBo<M extends AbstractEntity, PK extends Serializable> {
-    boolean save(M model);
+    void save(M model);
 
-    boolean save(List<M> models);
+    void save(List<M> models);
 
-    boolean delete(PK key);
+    void delete(PK key);
 
     boolean deleteArray(PK id[]);
 
@@ -19,9 +19,11 @@ public interface BasicBo<M extends AbstractEntity, PK extends Serializable> {
 
     boolean deleteObjectList(List<M> list);
 
-    boolean update(M model);
+    void update(M model);
 
     boolean merge(M model);
+
+    boolean exists(PK key);
 
     M get(PK key);
 

@@ -17,11 +17,11 @@ public interface CourseBo extends BasicBo<Course, String> {
 
     Map<String, Object> getStatistics(Course course);
 
-    boolean addCourse(Course course);
+    void addCourse(Course course) throws Exception;
 
     List<Course> listCourse();
 
-    List<Homework> listHomework(String courseId);
+    List<Homework> listHomework(String courseId) throws Exception;
 
-    void calculateScore(Course course) throws Exception;
+    void calculateScore(String courseId) throws Exception;
 }
