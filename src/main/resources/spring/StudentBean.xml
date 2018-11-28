@@ -8,6 +8,7 @@
         <property name="courseBo" ref="courseBo"/>
         <property name="homeworkBo" ref="homeworkBo"/>
         <property name="groupBo" ref="groupBo"/>
+        <property name="groupStudentBo" ref="groupStudentBo"/>
     </bean>
     <!--<bean id="studentBo" class="com.bupt.se.homework.bo.impl.StudentBoImpl">-->
         <!--<property name="studentDAO" ref="studentDAO"/>-->

@@ -6,6 +6,8 @@ import com.bupt.se.homework.bo.TeacherBo;
 import com.bupt.se.homework.entity.Admin;
 import com.bupt.se.homework.entity.Student;
 import com.bupt.se.homework.entity.Teacher;
+import com.bupt.se.homework.exception.ServiceException;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import org.apache.commons.io.FileUtils;
@@ -42,6 +44,8 @@ public class AdminAction extends ActionSupport {
     private String searchWay;
     private String searchStudentWord;
 
+    private String searchTeacherWord;
+
     private List<Teacher> teacherList = new ArrayList<Teacher>();
     private List<Student> studentList = new ArrayList<Student>();
 
@@ -52,6 +56,23 @@ public class AdminAction extends ActionSupport {
     private String teacherExcelContentType;//上传的文件类型
     private String teacherExcelFileName; //上传的文件名
 
+    private String userId;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getSearchTeacherWord() {
+        return searchTeacherWord;
+    }
+
+    public void setSearchTeacherWord(String searchTeacherWord) {
+        this.searchTeacherWord = searchTeacherWord;
+    }
 
     public String getSearchWay() {
         return searchWay;
@@ -129,14 +150,21 @@ public class AdminAction extends ActionSupport {
     }
 
 
+    // TODO 添加学生可能会抛出学号重复的异常, 你需要捕获了提示一下
     public String addStudent() throws Exception{
-        studentBo.addStudent(student);
+        try {
+            studentBo.addStudent(student);
+        } catch (ServiceException e) {
+            e.printStackTrace();
+            return "error";
+        }
         return "success";
     }
 
     public String addTeacher() throws Exception{
+        System.out.println("teacherName-->"+teacher.getTeacherName());
         teacherBo.addTeacher(teacher);
-        listTeacher();
+        //listTeacher();
         return "success";
     }
 
@@ -147,7 +175,7 @@ public class AdminAction extends ActionSupport {
     }
     public String deleteTeacher() throws Exception{
         teacherBo.deleteTeacher(teacher.getTeacherId());
-        listTeacher();
+        //listTeacher();
         return "success";
     }
 
@@ -157,7 +185,7 @@ public class AdminAction extends ActionSupport {
     }
     public String updateTeacher() throws Exception{
         teacherBo.updateTeacher(teacher);
-        listTeacher();
+        //listTeacher();
         return "success";
     }
 
@@ -185,24 +213,18 @@ public class AdminAction extends ActionSupport {
         return "success";
     }
 
-    public String listStudent() throws Exception{
-        if(searchWay.equals("班级"))
-        {
-            return listStudentByClass();
-        }
-        else
-        {
-            return listStudentByName();
-        }
-    }
-    public String listStudentByName() throws Exception{
-        studentList = studentBo.getStudentsByName(searchStudentWord);
+    public String listStudent() throws Exception {
+        studentList = studentBo.getList(null,null,null,null,null,null,0,20);
         return "success";
     }
+    public String queryStudent() throws Exception{
+            LinkedHashMap<Object, Object> equals = new LinkedHashMap<>();
+            equals.put("studentId", searchStudentWord);
+            studentList = studentBo.getList(equals,null,null,null,null,null,0,0);
+            studentList.addAll(studentBo.getStudentsByName(searchStudentWord));
+            studentList.addAll(studentBo.getStudentsByClass(searchStudentWord));
+            return "success";
 
-    public String listStudentByClass() throws Exception{
-        studentList = studentBo.getStudentsByClass(searchStudentWord);
-        return "success";
     }
 
     public void setStudentName(String studentName) {
@@ -575,6 +597,36 @@ public class AdminAction extends ActionSupport {
             System.out.println("用户类型错误");
             return "error";//既不是老师，也不是学生
         }
+    }
+
+
+    /**
+     * @Author KRF
+     * @Description 按照工号和姓名查询老师
+     * @Date 11:33 2018/11/26
+     * @Param []
+     * @return java.lang.String
+     **/
+    
+    public String queryTeacher() throws Exception {
+        if(searchTeacherWord == null || searchTeacherWord.equals(""))
+        {
+            super.addActionError("查询不能为空！");
+            return "error";
+        }
+        LinkedHashMap<Object, Object> equals = new LinkedHashMap<>();
+        equals.put("teacherId", searchTeacherWord);
+        teacherList = teacherBo.getList(equals,null,null,null,null,null,0,0);
+        LinkedHashMap<Object, Object> equals1 = new LinkedHashMap<>();
+        equals1.put("teacherName", searchTeacherWord);
+        teacherList.addAll(teacherBo.getList(equals1,null,null,null,null,null,0,0));
+        return "success";
+    }
+
+    public String setSessionUser() throws Exception {
+        Map<String, Object> session = ActionContext.getContext().getSession();
+        session.put("userId",userId);
+        return "success";
     }
 
 

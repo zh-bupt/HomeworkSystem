@@ -15,6 +15,7 @@ public class ServiceExceptionErrorCode {
     public static final long GROUP_STUDENT_CONTRIBUTION_ERROR = 0xACE340;
     public static final long HOMEWORK_GROUP_NOT_FOUND = 0xACE341;
     public static final long HOMEWORK_GROUP_SCORE_ERROR = 0xACE342;
+    public static final long STUDENT_DUPLICATED = 0xACE343;
 
     public static final long GROUP_NOT_FOUND = 0xBEE211;
     public static final long GROUP_NUM_ERROR = 0xBEE212;

@@ -7,16 +7,19 @@ import com.bupt.se.homework.entity.GroupStudent;
 import com.bupt.se.homework.entity.GroupStudentPK;
 import com.bupt.se.homework.exception.ServiceException;
 import com.bupt.se.homework.exception.ServiceExceptionErrorCode;
+import com.bupt.se.homework.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * @description: group student 实现类
  * @author: zh
  * @create: 2018-11-22 15:53
  **/
-@Service
+@Service("groupStudentBo")
 public class GroupStudentBoImpl
         extends BasicBoImpl<GroupStudent, GroupStudentPK>
         implements GroupStudentBo {
@@ -53,5 +56,10 @@ public class GroupStudentBoImpl
                     "学生贡献值错误.");
         }
         this.update(groupStudent);
+    }
+
+    @Override
+    public List<Student> findResultList(String courseID) {
+        return groupStudentDAO.findResultList(courseID);
     }
 }
