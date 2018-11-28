@@ -6,11 +6,10 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="s" uri="/struts-tags" %>
+<%@taglib uri="/struts-tags" prefix="s"%>
 <html>
 <head>
-    <title>修改密码</title>
+    <title>课程修改</title>
     <link rel="stylesheet" type="text/css" href="../assets/css/main.css"/>
     <link rel="stylesheet" type="text/css" href="../assets/css/common.css"/>
     <link rel="stylesheet" type="text/css" href="../assets/css/pagination.css">
@@ -23,87 +22,35 @@
     </style>
 </head>
 <body>
-<div class="topbar-wrap white">
-    <div class="topbar-inner clearfix">
-        <div class="topbar-logo-wrap clearfix">
-            <h1 class="topbar-logo none"><a class="navbar-brand">查询结果</a></h1>
-            <ul class="navbar-list clearfix">
-                <%--<li><a class="on" href="/pages/admin_student.jsp">首页</a></li>--%>
-                <li><a  href="/admin/listTeacherAction.action" target="_blank">教师管理</a></li>
-                <li><a class="on" href="/pages/admin_student.jsp" target="_blank">学生管理</a></li>
 
-            </ul>
-        </div>
-        <div class="top-info-wrap">
-            <ul class="top-info-list clearfix">
+<div class="admin_login_wrap">
+    <h1>修改密码</h1>
+    <div class="adming_login_border">
+        <div class="admin_input">
+            <s:form id="form_for_comment" action="updateCourseAction" >
+                <ul class="admin_items">
 
-                <%--<li><a href="adminRank.jsp">排行榜</a></li>--%>
-                <li><a href="/pages/login.jsp">退出</a></li>
-            </ul>
+                    <li>
+                        <label for="password">初始密码</label>
+                        <input type="password" name="password" id="password" size="35" class="admin_input_style" />
+                    </li>
+                    <li>
+                        <label for="newPassword">新密码</label>
+                        <input type="password" name="newPassword"  id="newPassword" size="35" class="admin_input_style" />
+                    </li>
+                    <li>
+                        <label for="rePassword">重复密码</label>
+                        <input type="password" name="rePassword" id="rePassword" size="35" class="admin_input_style" />
+                    </li>
+                    <li>
+                        <button tabindex="3" type="submit" class="btn btn-primary" id="btn-update">修改</button>
+                    </li>
+                </ul>
+            </s:form>
         </div>
     </div>
 </div>
 
-<div class="container clearfix">
-    <div class="sidebar-wrap">
-        <div class="sidebar-title">
-            <h1>菜单</h1>
-        </div>
-        <div class="sidebar-content">
-            <ul class="sidebar-list">
-                <li>
-                    <ul class="sub-menu">
-                        <li><a href="/pages/admin_student.jsp"><i class="icon-font">&#xe005;</i>查找学生</a></li>
-                        <li><a href="/pages/admin_add_student.jsp"><i class="icon-font">&#xe005;</i>添加学生</a></li>
-                        <%--TODO 修改这里--%>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-    </div>
-    <!--/sidebar-->
-    <div class="main-wrap">
-        <div class="crumb-wrap">
-            <div class="crumb-list"><i class="icon-font"></i><a href="main.jsp">首页</a><span class="crumb-step">&gt;</span><span class="crumb-name">学生管理</span></div>
-        </div>
-        <div class="search-wrap">
-            <!--用于查询得表单-->
-            <div class="search-content">
-                <%--<form method="post" action="readerManage.jsp" id="searchForm">--%>
-                <s:form action="addStudentForCourseByTypeAction" id="searchForm">
-                    <table class="search-tab">
-                        <tr>
-                                <%--<th width="140">学号:</th>--%>
-                                <%--<s:textfield  class="common-text" name="studentId" label="学号" value="" style="width:150px"/>--%>
-                                <%--&lt;%&ndash;<td><input class="common-text" placeholder="" name="studentId"  id="studentId"  type="text" style="width:150px"></td>&ndash;%&gt;--%>
-                                <%--&lt;%&ndash;<th width="140">姓名:</th>&ndash;%&gt;--%>
-                                <%--&lt;%&ndash;<td><input class="common-text" placeholder="" name="studentName"  id="studentName"  type="text" style="width:150px"></td>&ndash;%&gt;--%>
-                                <%--<td style="padding-left:50px">--%>
-                                <%--<s:token/>--%>
-                                <%--<s:submit  class="btn btn-primary btn2" value="添加"/>--%>
-                                <%--<button class="btn btn-primary btn2" type="submit" >添加</button>--%>
-                                <%--TODO   这里要显示用户的信息？？--%>
-                            </td>
-                        </tr>
-                    </table>
-                </s:form>
-                <%--</form>--%>
-            </div>
-        </div>
-        <div class="result-wrap">
-            <form name="myform" id="myform" method="post">
-                <div class="result-title">
-                    <div class="result-list">
-                        <%--<a href="addReader.jsp"><i class="icon-font"></i>添加读者</a>--%>
-                       <%--TODO 这里似乎也没啥用--%>
-                    </div>
-                </div>
-                <div class="result-content">
-                </div>
-            </form>
-        </div>
-    </div>
-    <!--/main-->
-</div>
 </body>
 </html>
+

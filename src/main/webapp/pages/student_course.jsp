@@ -56,8 +56,8 @@
             <ul class="sidebar-list">
                 <li>
                     <ul class="sub-menu">
-                        <li><a><i class="icon-font">&#xe005;</i>您的课程</a></li>
-
+                        <li><a href="/student/listCourseAction.action"><i class="icon-font">&#xe005;</i>您的课程</a></li>
+                        <li><a href="/student/listGroupAction.action"><i class="icon-font">&#xe005;</i>您的小组</a></li>
                     </ul>
                 </li>
             </ul>
@@ -66,14 +66,14 @@
     <!--/sidebar-->
     <div class="main-wrap">
         <div class="crumb-wrap">
-            <div class="crumb-list"><i class="icon-font"></i><a href="main.jsp">首页</a><span class="crumb-step">&gt;</span><span class="crumb-name">教师管理</span></div>
+            <div class="crumb-list"><i class="icon-font"></i><a href="main.jsp">首页</a><span class="crumb-step">&gt;</span><span class="crumb-name">课程管理</span><span class="crumb-step">&gt;</span><span class="crumb-name">课程详情</span></div>
         </div>
         <div class="search-wrap">
             <!--用于查询得表单-->
             <div class="search-content">
                 <%--<form method="post" action="readerManage.jsp" id="searchForm">--%>
-                <h2>搜索课程</h2>
-                <s:form action="addCourseAction" id="searchForm">
+                <%--<h2>搜索课程</h2>--%>
+                <%--<s:form action="Action" id="searchForm">--%>
                     <table class="search-tab">
                         <s:if test="groupMembers.size() > 0">
                             <h2>您所在的小组</h2>
@@ -114,7 +114,7 @@
                                 <s:submit/>
                             </s:form>
                         </s:else>
-                        <%--TODO 创建小组UI需要改--%>
+
                         <%--<tr>--%>
                             <%--<th width="70">课程ID:</th>--%>
                             <%--<td><input class="common-text" placeholder="" name="courseId"  id="courseId"  type="text" style="width:150px"></td>--%>
@@ -122,7 +122,7 @@
                             <%--<td style="padding-left:50px"><button class="btn btn-primary btn2" type="submit" >查询</button></td>--%>
                         <%--</tr>--%>
                     </table>
-                </s:form>
+                <%--</s:form>--%>
                 <%--</form>--%>
             </div>
         </div>
@@ -130,7 +130,7 @@
             <form name="myform" id="myform" method="post">
                 <div class="result-title">
                     <div class="result-list">
-                        <a><i class="icon-font"></i>您的所有课程</a>
+                        <a><i class="icon-font"></i>该课程的所有作业</a>
                     </div>
                 </div>
                 <div class="result-content">

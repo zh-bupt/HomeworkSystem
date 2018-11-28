@@ -29,7 +29,7 @@
             <ul class="navbar-list clearfix">
                 <%--<li><a class="on" href="admin_student.jsp">首页</a></li>--%>
                 <li><a href="/admin/listTeacherAction.action" target="_blank">教师管理</a></li>
-                <li><a class="on" href="/pages/admin_student.jsp" target="_blank">学生管理</a></li>
+                <li><a class="on" href="/admin/listStudentAction.action" target="_blank">学生管理</a></li>
 
 
             </ul>
@@ -103,8 +103,8 @@
             <ul class="sidebar-list">
                 <li>
                     <ul class="sub-menu">
-                        <li><a><i class="icon-font">&#xe005;</i>查找学生</a></li>
-                        <li><a><i class="icon-font">&#xe005;</i>添加学生</a></li>
+                        <li><a href="/admin/listStudentAction"><i class="icon-font">&#xe005;</i>查找学生</a></li>
+                        <li><a href="/pages/admin_add_student.jsp"><i class="icon-font">&#xe005;</i>添加学生</a></li>
                     </ul>
                 </li>
             </ul>
@@ -147,7 +147,7 @@
             <form name="myform" id="myform" method="post">
                 <div class="result-title">
                     <div class="result-list">
-                        <a href="addReader.jsp"><i class="icon-font"></i>添加读者</a>
+                        <a><i class="icon-font"></i>学生列表</a>
                     </div>
                 </div>
                 <div class="result-content">
@@ -174,43 +174,13 @@
                                     <td><s:property value="studentName"/> </td>
                                     <td><s:property value="sex"/> </td>
                                     <td><s:property value="email"/> </td>
-                                    <td><s:property value="entranceDate"/> </td>
+                                    <td><s:date name="entranceDate" format="yyyy-MM-dd"/> </td>
                                     <td><input  class="link-update btn btn-warning btn2" type="button" name="update" value="修改" onclick="javascript:window.location.href='/pages/student.jsp?studentId=${studentId}'"/>
                                         <input  class="link-del btn btn-danger btn2" type="button" name="delete" value="删除" onclick="delete_user(${studentId})"/></td>
                                 </tr>
                             </s:iterator>
                         </table>
                     </s:if>
-
-                    <%--<table class="result-tab" width="100%">--%>
-                        <%--<tr id="col-title">--%>
-                            <%--<th>缩略图</th>--%>
-                            <%--<th>ID</th>--%>
-                            <%--<th>姓名</th>--%>
-                            <%--<th>类别</th>--%>
-                            <%--<th>借书上限</th>--%>
-                            <%--<th>邮箱</th>--%>
-                            <%--<th>手机</th>--%>
-                            <%--<th>学院</th>--%>
-                            <%--<th>操作</th>--%>
-                        <%--</tr>--%>
-                        <%--<c:forEach var="row" items="${result.rows}">--%>
-                            <%--<tr>--%>
-                                <%--<td><img src="${row.img}" width="80px" height="85"></td>--%>
-                                <%--<td><c:out value="${row.id}"/></td>--%>
-                                <%--<td><a href="adminReader.jsp?id=${row.id}" ><c:out value="${row.name}"/></a></td>--%>
-                                <%--<td><c:out value="${row.readerType}"/></td>--%>
-                                <%--<td><c:out value="${row.bLimit}"/></td>--%>
-                                <%--<td><c:out value="${row.email}"/></td>--%>
-                                <%--<td><c:out value="${row.telephone}"/></td>--%>
-                                <%--<td><c:out value="${row.department}"/></td>--%>
-                                <%--<td align="center">--%>
-                                    <%--<a class="link-update btn btn-warning btn2" href="updateReaderDetail.jsp?id=${row.id}">修改</a>--%>
-                                    <%--<a class="link-del btn btn-danger btn2" onclick="delete_reader(${row.id})">删除</a>--%>
-                                <%--</td>--%>
-                            <%--</tr>--%>
-                        <%--</c:forEach>--%>
-                    <%--</table>--%>
 
                 </div>
             </form>
@@ -223,7 +193,7 @@
     function delete_user(id) {
         if(confirm("确定要删除该学生？")){
             // window.location.href = "delreader.jsp?id="+id;
-            window.location.href="deleteStudentAction.action?studentId="+id
+            window.location.href="deleteStudentAction.action?studentId="+id;
         }
         document.form1.action("deleteStudentAction.action?studentId="+id);
     }

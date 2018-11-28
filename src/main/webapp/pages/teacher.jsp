@@ -29,8 +29,8 @@
             <h1 class="topbar-logo none"><a class="navbar-brand">查询结果</a></h1>
             <ul class="navbar-list clearfix">
                 <%--<li><a class="on" href="/pages/admin_student.jsp">首页</a></li>--%>
-                <li><a class="on" href="/admin/listTeacherAction.action" target="_blank">课程管理</a></li>
-                <li><a href="/pages/admin_student.jsp" target="_blank">学生管理</a></li>
+                <li><a class="on" href="/teacher/listCourseAction.action" target="_blank">课程管理</a></li>
+                <%--<li><a href="/pages/teacher_add_student.jsp" target="_blank">学生管理</a></li>--%>
 
             </ul>
         </div>
@@ -38,7 +38,7 @@
             <ul class="top-info-list clearfix">
 
                 <%--<li><a href="adminRank.jsp">排行榜</a></li>--%>
-                <li><a href="/pages/login.jsp">退出</a></li>
+                <li><a href="/login/loginPageAction">退出</a></li>
             </ul>
         </div>
     </div>
@@ -63,7 +63,7 @@
     <!--/sidebar-->
     <div class="main-wrap">
         <div class="crumb-wrap">
-            <div class="crumb-list"><i class="icon-font"></i><a href="main.jsp">首页</a><span class="crumb-step">&gt;</span><span class="crumb-name">教师管理</span></div>
+            <div class="crumb-list"><i class="icon-font"></i><a>首页</a></div>
         </div>
         <div class="search-wrap">
             <!--用于查询得表单-->
@@ -80,6 +80,7 @@
                             <td style="padding-left:50px"><button class="btn btn-primary btn2" type="submit" >添加</button></td>
                         </tr>
                     </table>
+                    <s:token/>
                 </s:form>
                 <%--</form>--%>
             </div>
@@ -105,8 +106,8 @@
                                 <tr>
                                     <td><s:property value="courseId"/> </td>
                                     <td><s:property value="courseName"/> </td>
-                                    <td><s:property value="createTime"/> </td>
-                                    <td><input class="link-update btn btn-warning btn2"  type="button" name="update" value="课程详情" onclick="javascript:window.location.href='/teacher/setCurrentCourseAction.action?courseId=${courseId}'"/>
+                                    <td><s:date name="createTime" format="yyyy-MM-dd"/> </td>
+                                    <td><input class="link-update btn btn-success btn2"  type="button" name="update" value="课程详情" onclick="javascript:window.location.href='/teacher/setCurrentCourseAction.action?courseId=${courseId}'"/>
                                     <input class="link-del btn btn-danger btn2" type="button" name="delete" value="删除" onclick="delete_(${courseId})"/></td>
                                 </tr>
                             </s:iterator>

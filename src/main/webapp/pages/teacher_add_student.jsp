@@ -28,8 +28,8 @@
             <h1 class="topbar-logo none"><a class="navbar-brand">查询结果</a></h1>
             <ul class="navbar-list clearfix">
                 <%--<li><a class="on" href="/pages/admin_student.jsp">首页</a></li>--%>
-                <li><a  href="/admin/listTeacherAction.action" target="_blank">教师管理</a></li>
-                <li><a class="on" href="/pages/admin_student.jsp" target="_blank">学生管理</a></li>
+                <li><a  href="/teacher/listCourseAction.action" target="_blank">课程管理</a></li>
+                <%--<li><a class="on" href="/pages/admin_student.jsp" target="_blank">学生管理</a></li>--%>
 
             </ul>
         </div>
@@ -37,7 +37,7 @@
             <ul class="top-info-list clearfix">
 
                 <%--<li><a href="adminRank.jsp">排行榜</a></li>--%>
-                <li><a href="/pages/login.jsp">退出</a></li>
+                <li><a href="/login/loginPageAction">退出</a></li>
             </ul>
         </div>
     </div>
@@ -52,9 +52,10 @@
             <ul class="sidebar-list">
                 <li>
                     <ul class="sub-menu">
-                        <li><a href="/pages/admin_student.jsp"><i class="icon-font">&#xe005;</i>查找学生</a></li>
-                        <li><a href="/pages/admin_add_student.jsp"><i class="icon-font">&#xe005;</i>添加学生</a></li>
-                        <%--TODO 修改这里--%>
+                        <li><a href="/teacher/showCourseAction.action"><i class="icon-font">&#xe005;</i>课程信息</a></li>
+                        <li><a href="/teacher/updateCoursePageAction.action"><i class="icon-font">&#xe005;</i>修改信息</a></li>
+                        <li><a href="/teacher/addStudentPageAction.action"><i class="icon-font">&#xe005;</i>添加学生</a></li>
+                        <li><a href="/teacher/showHomeworkAction.action"><i class="icon-font">&#xe005;</i>作业管理</a></li>
                     </ul>
                 </li>
             </ul>
@@ -63,7 +64,7 @@
     <!--/sidebar-->
     <div class="main-wrap">
         <div class="crumb-wrap">
-            <div class="crumb-list"><i class="icon-font"></i><a href="main.jsp">首页</a><span class="crumb-step">&gt;</span><span class="crumb-name">学生管理</span></div>
+            <div class="crumb-list"><i class="icon-font"></i><a href="/teacher/showCourseAction.action">首页</a><span class="crumb-step">&gt;</span><span class="crumb-name">学生管理</span></div>
         </div>
         <div class="search-wrap">
             <!--用于查询得表单-->
@@ -89,7 +90,7 @@
             </div>
         </div>
         <div class="result-wrap">
-            <form name="myform" id="myform" method="post">
+            <%--<form name="myform" id="myform" method="post">--%>
                 <div class="result-title">
                     <div class="result-list">
                         <%--<a href="addReader.jsp"><i class="icon-font"></i>添加读者</a>--%>
@@ -103,11 +104,8 @@
                 </div>
                 <div class="result-content">
 
-
-
-
                 </div>
-            </form>
+            <%--</form>--%>
         </div>
     </div>
     <!--/main-->

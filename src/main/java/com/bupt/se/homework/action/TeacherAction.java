@@ -483,7 +483,7 @@ public class TeacherAction extends ActionSupport {
      * @return java.lang.String
      **/
 
-    public String listStudentAndHomework() throws Exception {
+    public String listStudent() throws Exception {
         Map<String, Object> session = ActionContext.getContext().getSession();
         System.out.println("Session-->"+session.toString());
         String courseId = session.get("courseId").toString();
@@ -491,6 +491,21 @@ public class TeacherAction extends ActionSupport {
         System.out.println("course-->"+course);
         studentList = courseBo.getStudentList(courseId);
         //homeworkList.addAll(course.getHomework());
+        List<Homework> homeworkSet = course.getHomework();
+        System.out.println("HomeworkList SIZE"+homeworkSet.size());
+
+        if (homeworkSet != null && homeworkSet.size() > 0) {
+
+            homeworkList.addAll(homeworkSet);
+        }
+
+        return "success";
+    }
+    public String listHomework() throws Exception {
+        Map<String, Object> session = ActionContext.getContext().getSession();
+        System.out.println("Session-->"+session.toString());
+        course = courseBo.get(session.get("courseId").toString());
+        System.out.println("course-->"+course);
         List<Homework> homeworkSet = course.getHomework();
         System.out.println("HomeworkList SIZE"+homeworkSet.size());
 

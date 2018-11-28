@@ -6,6 +6,7 @@ import com.bupt.se.homework.bo.TeacherBo;
 import com.bupt.se.homework.entity.Admin;
 import com.bupt.se.homework.entity.Student;
 import com.bupt.se.homework.entity.Teacher;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 import org.apache.commons.io.FileUtils;
@@ -54,6 +55,15 @@ public class AdminAction extends ActionSupport {
     private String teacherExcelContentType;//上传的文件类型
     private String teacherExcelFileName; //上传的文件名
 
+    private String userId;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getSearchTeacherWord() {
         return searchTeacherWord;
@@ -196,7 +206,11 @@ public class AdminAction extends ActionSupport {
         return "success";
     }
 
-    public String listStudent() throws Exception{
+    public String listStudent() throws Exception {
+        studentList = studentBo.getList(null,null,null,null,null,null,0,20);
+        return "success";
+    }
+    public String queryStudent() throws Exception{
             LinkedHashMap<Object, Object> equals = new LinkedHashMap<>();
             equals.put("studentId", searchStudentWord);
             studentList = studentBo.getList(equals,null,null,null,null,null,0,0);
@@ -588,6 +602,11 @@ public class AdminAction extends ActionSupport {
      **/
     
     public String queryTeacher() throws Exception {
+        if(searchTeacherWord == null || searchTeacherWord.equals(""))
+        {
+            super.addActionError("查询不能为空！");
+            return "error";
+        }
         LinkedHashMap<Object, Object> equals = new LinkedHashMap<>();
         equals.put("teacherId", searchTeacherWord);
         teacherList = teacherBo.getList(equals,null,null,null,null,null,0,0);
@@ -596,4 +615,12 @@ public class AdminAction extends ActionSupport {
         teacherList.addAll(teacherBo.getList(equals1,null,null,null,null,null,0,0));
         return "success";
     }
+
+    public String setSessionUser() throws Exception {
+        Map<String, Object> session = ActionContext.getContext().getSession();
+        session.put("userId",userId);
+        return "success";
+    }
+
+
 }

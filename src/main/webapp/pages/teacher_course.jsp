@@ -22,48 +22,15 @@
     </style>
 </head>
 <body>
-<h2>修改课程配置</h2>
-<s:form action="updateCourseAction">
-    <s:textfield name="courseName" label="课程名称" value=""/>
-    <s:textfield name="groupPrefix" label="小组前缀" value=""/>
-    <s:textfield name="minStudentNum" label="小组人数下限" value=""/>
-    <s:textfield name="maxStudentNum" label="小组人数上限" value=""/>
-    <s:token/>
-
-    <s:submit/>
-</s:form>
-<h2>添加学生</h2>
-<s:form action="addStudentForCourseByTypeAction">
-    <s:textfield name="studentId" label="学号" value=""/>
-    <s:token/>
-    <s:submit/>
-</s:form>
-<h3>上传该课程学生名单文件</h3>
-<s:form action="addStudentForCourseByFileAction" method="post" enctype="multipart/form-data">
-    <s:file name="studentExcel" label="选择上传的文件" />
-    <s:token/>
-    <s:submit value="上传" />
-</s:form>
-
-
-</body>
-<input type="button" name="download" value="导出成绩单" onclick="javascript:window.location.href='/teacher/ExportExcelAction'"/>
-</html>
-<html>
-<head>
-    <title>教师系统</title>
-
-</head>
-<body>
 <div class="topbar-wrap white">
     <div class="topbar-inner clearfix">
         <div class="topbar-logo-wrap clearfix">
             <h1 class="topbar-logo none"><a class="navbar-brand">查询结果</a></h1>
             <ul class="navbar-list clearfix">
                 <%--<li><a class="on" href="/pages/admin_student.jsp">首页</a></li>--%>
-                <li><a class="on" href="/admin/listTeacherAction.action" target="_blank">课程管理</a></li>
-                    <%--TODO--%>
-                <li><a href="/pages/admin_student.jsp" target="_blank">学生管理</a></li>
+                <li><a class="on" href="/teacher/listCourseAction.action" target="_blank">课程管理</a></li>
+
+                <%--<li><a href="/pages/admin_student.jsp" target="_blank">学生管理</a></li>--%>
 
             </ul>
         </div>
@@ -86,10 +53,10 @@
             <ul class="sidebar-list">
                 <li>
                     <ul class="sub-menu">
-                        <li><a><i class="icon-font">&#xe005;</i>课程信息</a></li>
-                        <li><a><i class="icon-font">&#xe005;</i>为课程添加学生</a></li>
-                        <li><a href="/pages/teacher_homework.jsp"><i class="icon-font">&#xe005;</i>作业管理</a></li>
-                        <%--TODO 增加跳转时的操作--%>
+                        <li><a href="/teacher/showCourseAction.action"><i class="icon-font">&#xe005;</i>课程信息</a></li>
+                        <li><a href="/teacher/updateCoursePageAction.action"><i class="icon-font">&#xe005;</i>修改信息</a></li>
+                        <li><a href="/teacher/addStudentPageAction.action"><i class="icon-font">&#xe005;</i>添加学生</a></li>
+                        <li><a href="/teacher/showHomeworkAction.action"><i class="icon-font">&#xe005;</i>作业管理</a></li>
                     </ul>
                 </li>
             </ul>
@@ -98,24 +65,24 @@
     <!--/sidebar-->
     <div class="main-wrap">
         <div class="crumb-wrap">
-            <div class="crumb-list"><i class="icon-font"></i><a href="main.jsp">首页</a><span class="crumb-step">&gt;</span><span class="crumb-name">教师管理</span></div>
+            <div class="crumb-list"><i class="icon-font"></i><a href="main.jsp">首页</a><span class="crumb-step">&gt;</span><span class="crumb-name">课程管理</span></div>
         </div>
         <div class="search-wrap">
             <!--用于查询得表单-->
             <div class="search-content">
                 <%--<form method="post" action="readerManage.jsp" id="searchForm">--%>
-                <h2>添加课程</h2>
-                <s:form action="addCourseAction" id="searchForm">
-                    <table class="search-tab">
-                        <tr>
-                            <th width="70">课程ID:</th>
-                            <td><input class="common-text" placeholder="" name="courseId"  id="courseId"  type="text" style="width:150px"></td>
-                            <th width="70">课程名称:</th>
-                            <td><input class="common-text" placeholder="" name="courseName"  id="courseName"  type="text" style="width:150px"></td>
-                            <td style="padding-left:50px"><button class="btn btn-primary btn2" type="submit" >添加</button></td>
-                        </tr>
-                    </table>
-                </s:form>
+                <%--<h2>添加课程</h2>--%>
+                <%--<s:form action="addCourseAction" id="searchForm">--%>
+                    <%--<table class="search-tab">--%>
+                        <%--<tr>--%>
+                            <%--<th width="70">课程ID:</th>--%>
+                            <%--<td><input class="common-text" placeholder="" name="courseId"  id="courseId"  type="text" style="width:150px"></td>--%>
+                            <%--<th width="70">课程名称:</th>--%>
+                            <%--<td><input class="common-text" placeholder="" name="courseName"  id="courseName"  type="text" style="width:150px"></td>--%>
+                            <%--<td style="padding-left:50px"><button class="btn btn-primary btn2" type="submit" >添加</button></td>--%>
+                        <%--</tr>--%>
+                    <%--</table>--%>
+                <%--</s:form>--%>
                 <%--</form>--%>
             </div>
         </div>
@@ -140,6 +107,7 @@
                                 <th>性别</th>
                                 <th>邮箱</th>
                                 <th>入学时间</th>
+                                <th>操作</th>
                             </tr>
                             <s:iterator value="studentList">
                                 <tr>
@@ -171,6 +139,5 @@
 
     }
 </script>
-
 </body>
 </html>

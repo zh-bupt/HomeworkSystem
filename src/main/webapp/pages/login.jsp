@@ -54,6 +54,7 @@
                             <%--<s:radio name="role" list="{ '管理员', '教师','学生' }"  label="用户身份"  class="radio-inline"/>--%>
                         <%--</s:else>--%>
                         <button tabindex="3" type="submit" class="btn btn-primary" id="btn-submit1">登录</button>
+                        <s:actionerror/>
                         <%--<s:submit value="登录" class="btn btn-primary" id="btn-submit1"/>--%>
 
 

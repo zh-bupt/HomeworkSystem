@@ -1,17 +1,18 @@
 <%--
   Created by IntelliJ IDEA.
   User: kwong
-  Date: 2018/11/27
-  Time: 20:11
+  Date: 2018/11/28
+  Time: 10:44
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <html>
 <head>
-    <title>教师管理</title>
-    <link rel="stylesheet" type="text/css" href="../assets/css/common.css"/>
+    <title>教师系统</title>
+
     <link rel="stylesheet" type="text/css" href="../assets/css/main.css"/>
+    <link rel="stylesheet" type="text/css" href="../assets/css/common.css"/>
     <link rel="stylesheet" type="text/css" href="../assets/css/pagination.css">
     <script type="text/javascript" src="../assets/js/libs/modernizr.min.js"></script>
     <script src="../assets/js/jquery-3.2.1.js"></script>
@@ -28,8 +29,8 @@
             <h1 class="topbar-logo none"><a class="navbar-brand">查询结果</a></h1>
             <ul class="navbar-list clearfix">
                 <%--<li><a class="on" href="/pages/admin_student.jsp">首页</a></li>--%>
-                <li><a class="on" href="/admin/listTeacherAction.action" target="_blank">教师管理</a></li>
-                <li><a href="/pages/admin_student.jsp" target="_blank">学生管理</a></li>
+                <li><a class="on" href="/admin/listTeacherAction.action" target="_blank">课程管理</a></li>
+                <%--<li><a href="/pages/teacher_add_student.jsp" target="_blank">学生管理</a></li>--%>
 
             </ul>
         </div>
@@ -52,79 +53,60 @@
             <ul class="sidebar-list">
                 <li>
                     <ul class="sub-menu">
-                        <li><a href="/admin/listTeacherAction.action"><i class="icon-font">&#xe005;</i>查找教师</a></li>
-                        <li><a href="/pages/admin_add_teacher.jsp"><i class="icon-font">&#xe005;</i>添加教师</a></li>
+                        <li><a href="/teacher/showCourseAction.action"><i class="icon-font">&#xe005;</i>课程信息</a></li>
+                        <li><a href="/teacher/updateCoursePageAction.action"><i class="icon-font">&#xe005;</i>修改信息</a></li>
+                        <li><a href="/teacher/addStudentPageAction.action"><i class="icon-font">&#xe005;</i>添加学生</a></li>
+                        <li><a href="/teacher/showHomeworkAction.action"><i class="icon-font">&#xe005;</i>作业管理</a></li>
+
                     </ul>
                 </li>
             </ul>
         </div>
     </div>
     <!--/sidebar-->
-    <!--/sidebar-->
     <div class="main-wrap">
         <div class="crumb-wrap">
-            <div class="crumb-list"><i class="icon-font"></i><a>首页</a><span class="crumb-step">&gt;</span><a class="crumb-name" href="/jscss/admin/design/">教师管理</a><span class="crumb-step">&gt;</span><span>添加教师</span></div>
+            <div class="crumb-list"><i class="icon-font"></i><a href="/teacher/listCourseAction.action">首页</a><span class="crumb-step">&gt;</span><a class="crumb-name" href="/teacher/showCourseAction.action">课程管理</a><span class="crumb-step">&gt;</span><span>修改课程</span></div>
         </div>
 
         <!--add  form-->
         <div class="result-wrap">
             <div class="result-content">
-                <%--<form name="myform" id="myform" method="post">--%>
-                <div class="result-title">
-                    <div class="result-list">
-                        <%--<a href="addReader.jsp"><i class="icon-font"></i>添加读者</a>--%>
-                        <h3>上传教师名单文件</h3>
-                        <s:form action="addTeacherByFileAction" method="post" enctype="multipart/form-data">
-                            <s:file name="teacherExcel" label="选择上传的文件" />
-                            <s:submit value="上传" class="btn btn-primary btn6 mr10"/>
-                        </s:form>
-                    </div>
-                </div>
-                <%--</form>--%>
-                <h3>输入教师信息</h3>
-                <s:form action="addTeacherAction" id="searchForm">
+                <h1>修改课程信息</h1>
+                    <s:form  id="searchForm" action="updateCourseAction" >
                     <%--<form  id="add-book"  enctype="multipart/form-data">--%>
                     <input type="hidden" value="add" name="type">
                     <table class="insert-tab" width="100%">
                         <tbody>
                         <tr>
-                            <th>
-                                <i class="require-red">*</i>工号：</th>
+                            <th>课程ID:</th>
                             <td>
-                                <input class="common-text required" id="teacherId" name="teacherId" size="50" value="" type="text">
+                                <input class="common-text" id="courseId" name="courseId" size="50" value="" type="text">
                             </td>
                         </tr>
                         <tr>
-                            <th width="120">
-                                <i class="require-red">*</i>姓名：</th>
+                            <th >课程名称：</th>
                             <td>
-                                <input class="common-text required" id="teacherName" name="teacherName" size="50" value="" type="text">
+                                <input class="common-text" id="courseName" name="courseName" size="50" value="" type="text">
                             </td>
                         </tr>
 
                         <tr>
-                            <th>性别：</th>
+                            <th>小组名称前缀：</th>
                             <td>
-                                <input type="radio" name="sex" class="radio-inline" style="margin: 10px" value="男">男
-                                <input type="radio" name="sex" class="radio-inline" style="margin: 10px" value="女">女
+                                <input class="common-text" id="groupPrefix" name="groupPrefix" size="50" value="" type="text">
                             </td>
                         </tr>
                         <tr>
-                            <th>联系电话：</th>
+                            <th>小组人数下限：</th>
                             <td>
-                                <input class="common-text required" id="telephone" name="telephone" size="50" value="" type="text">
+                                <input class="common-text" id="groupMin" name="groupMin" size="50" value="" type="text">
                             </td>
                         </tr>
                         <tr>
-                            <th>邮箱：</th>
+                            <th>小组人数上限：</th>
                             <td>
-                                <input class="common-text" name="teacherEmail" size="50"  type="text">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>密码：</th>
-                            <td>
-                                <input class="common-text" name="teacherPassword" size="50" type="password">
+                                <input class="common-text" name="groupMax" size="50"  type="text">
                             </td>
                         </tr>
                         <tr>
@@ -137,7 +119,6 @@
                         </tbody>
                     </table>
                     <%--</form>--%>
-                    <s:token/>
                 </s:form>
             </div>
         </div>

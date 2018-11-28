@@ -33,6 +33,9 @@
     <package name="admin" namespace="/" extends="struts-default">
         <action name="addStudentAction"
                 class="com.bupt.se.homework.action.AdminAction" method="addStudent">
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="token"/>
+            <result name="invalid.token">/pages/admin_student.jsp</result>
             <result name="success">/pages/admin_student.jsp</result>
         </action>
         <action name="addStudentByFileAction"
@@ -46,28 +49,38 @@
                 <!--<param name="fileUpload.allowedTypes">text/plain,application/vnd.ms-excel</param>-->
                 <param name="fileUpload.allowedExtensions">.txt,.xlsx,.xls,.csv</param>
             </interceptor-ref>
+            <interceptor-ref name="token"/>
+            <result name="invalid.token">/pages/admin_student.jsp</result>
             <result name="success">/pages/admin_student.jsp</result>
             <!-- 出现错误自动会返回input结果，进入结果视图 -->
             <result name="error" >/pages/error.jsp</result>
         </action>
-        <action name="searchStudentAction"
+        <action name="listStudentAction"
                 class="com.bupt.se.homework.action.AdminAction" method="listStudent">
+            <result name="success">/pages/admin_student.jsp</result>
+        </action>
+        <action name="searchStudentAction"
+                class="com.bupt.se.homework.action.AdminAction" method="queryStudent">
             <result name="success">/pages/admin_student.jsp</result>
         </action>
         <action name="searchTeacherAction"
                 class="com.bupt.se.homework.action.AdminAction" method="queryTeacher">
+            <result name="error" type="chain">listTeacherAction</result>
             <result name="success">/pages/admin_teacher.jsp</result>
         </action>
         <action name="deleteStudentAction"
                 class="com.bupt.se.homework.action.AdminAction" method="deleteStudent">
-            <result name="success">/pages/admin_student.jsp</result>
+            <result name="success" type="chain">listStudentAction</result>
         </action>
         <action name="updateStudentAction"
                 class="com.bupt.se.homework.action.AdminAction" method="updateStudent">
-            <result name="success">/pages/admin_student.jsp</result>
+            <result name="success" type="chain">listStudentAction</result>
         </action>
         <action name="addTeacherAction"
                 class="com.bupt.se.homework.action.AdminAction" method="addTeacher">
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="token"/>
+            <result name="invalid.token" type="chain">listTeacherAction</result>
             <result name="success" type="chain">listTeacherAction</result>
         </action>
         <action name="addTeacherByFileAction"
@@ -81,6 +94,8 @@
                 <!--<param name="fileUpload.allowedTypes">text/plain,application/vnd.ms-excel</param>-->
                 <param name="fileUpload.allowedExtensions">.txt,.xlsx,.xls,.csv</param>
             </interceptor-ref>
+            <interceptor-ref name="token"/>
+            <result name="invalid.token" type="chain">listTeacherAction</result>
             <result name="success" type="chain">listTeacherAction</result>
             <!-- 出现错误自动会返回input结果，进入结果视图 -->
             <result name="error" >/pages/error.jsp</result>
@@ -96,6 +111,14 @@
         <action name="updateTeacherAction"
                 class="com.bupt.se.homework.action.AdminAction" method="updateTeacher">
             <result name="success" type="chain">listTeacherAction</result>
+        </action>
+        <action name="setCurrentTeacher"
+                class="com.bupt.se.homework.action.AdminAction" method="setSessionUser">
+            <result name="success">/pages/admin_update_teacher.jsp</result>
+        </action>
+        <action name="setCurrentStudent"
+                class="com.bupt.se.homework.action.AdminAction" method="setSessionUser">
+            <result name="success">/pages/admin_update_student.jsp</result>
         </action>
     </package>
 
@@ -116,7 +139,7 @@
             <result name="success" type="chain">showCourseAction</result>
         </action>
         <action name="showCourseAction"
-                class="com.bupt.se.homework.action.TeacherAction" method="listStudentAndHomework">
+                class="com.bupt.se.homework.action.TeacherAction" method="listStudent">
             <result name="success">/pages/teacher_course.jsp</result>
         </action>
         <action name="deleteCourseAction"
@@ -131,6 +154,16 @@
                 <param name="bufferSize">1024</param>
                 <param name="inputName">excelFile</param>
             </result>
+        </action>
+        <action name="addStudentPageAction">
+            <result>/pages/teacher_add_student.jsp</result>
+        </action>
+        <action name="updateCoursePageAction">
+            <result>/pages/teacher_update_course.jsp</result>
+        </action>
+        <action name="showHomeworkAction"
+            class="com.bupt.se.homework.action.TeacherAction" method="listHomework">
+            <result>/pages/teacher_add_homework.jsp</result>
         </action>
 
     </package>
@@ -165,8 +198,8 @@
         <action name="addHomeworkAction"
                 class="com.bupt.se.homework.action.TeacherAction" method="addHomework">
             <interceptor-ref name="defaultStack"/>
-            <interceptor-ref name="token"/>
-            <result name="invalid.token" type="chain">showCourseAction</result>
+            <!--<interceptor-ref name="token"/>-->
+            <!--<result name="invalid.token" type="chain">showCourseAction</result>-->
             <result name="success" type="chain">showCourseAction</result>
         </action>
         <action name="deleteHomeworkAction"
@@ -184,8 +217,12 @@
     </package>
     <package name="student" namespace="/student" extends="struts-default" >
         <action name="listCourseAction"
-                class="com.bupt.se.homework.action.StudentAction" method="listCourseAndGroup">
+                class="com.bupt.se.homework.action.StudentAction" method="listCourse">
             <result name="success">/pages/student.jsp</result>
+        </action>
+        <action name="listGroupAction"
+                class="com.bupt.se.homework.action.StudentAction" method="listGroup">
+            <result name="success">/pages/student_group.jsp</result>
         </action>
         <action name="submitHomeworkAction"
                 class="com.bupt.se.homework.action.StudentAction" method="submitHomework">
@@ -205,8 +242,14 @@
         </action>
         <action name="addGroupAction"
                 class="com.bupt.se.homework.action.StudentAction" method="addGroup">
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="token"/>
             <result name="invalid.token" type="chain">showCourseAction</result>
             <result name="success" type="chain">showCourseAction</result>
+        </action>
+        <action name="searchCourseAction"
+                class="com.bupt.se.homework.action.StudentAction" method="queryCourse">
+            <result name="success">/pages/student.jsp</result>
         </action>
 
     </package>

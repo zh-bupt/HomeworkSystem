@@ -28,8 +28,28 @@ public class StudentAction{
     private GroupBo groupBo;
     private List<String> studentIdList = new ArrayList<>();
     private List<Group_> groupManagedList = new ArrayList<>();
+
+    private List<Group_> groupList = new ArrayList<>();
     private GroupStudentBo groupStudentBo;
     private List<Student> noGroupStudentList =  new ArrayList<>();
+
+    private String searchCourseWord;
+
+    public List<Group_> getGroupList() {
+        return groupList;
+    }
+
+    public void setGroupList(List<Group_> groupList) {
+        this.groupList = groupList;
+    }
+
+    public String getSearchCourseWord() {
+        return searchCourseWord;
+    }
+
+    public void setSearchCourseWord(String searchCourseWord) {
+        this.searchCourseWord = searchCourseWord;
+    }
 
     public List<Student> getNoGroupStudentList() {
         return noGroupStudentList;
@@ -194,22 +214,35 @@ public class StudentAction{
         this.studentBo = studentBo;
     }
 
-    public String listCourseAndGroup() throws Exception {
+    public String listCourse() throws Exception {
         Map<String, Object> session = ActionContext.getContext().getSession();
         student = studentBo.get(session.get("id").toString());
 
         List<StudentCourse> studentCourses = student.getStudentCourses();//TODO 等待张珩封装
         System.out.println("studentCourses.size():"+studentCourses.size());
-        groupManagedList.addAll(student.getGroupsManaged());
+
 //        System.out.println("groupManagedList-->"+groupManagedList+" "+groupManagedList.get(0).getGroupId()+" "+groupManagedList.get(0).getName());
         for(StudentCourse sc : studentCourses)
         {
             courseList.add(sc.getCourse());
         }
+
+        return "success";
+    }
+    public String listGroup() throws Exception{
+        Map<String, Object> session = ActionContext.getContext().getSession();
+        student = studentBo.get(session.get("id").toString());
+        groupManagedList.addAll(student.getGroupsManaged());
         if (groupManagedList == null || groupManagedList.size() == 0) return "success";
         for(GroupStudent gs : groupManagedList.get(0).getGroupStudentList())
         {
             System.out.println(gs.getStudent().getStudentName());
+        }
+
+        List<GroupStudent> gsList = student.getGroupStudentList();
+        for(GroupStudent gs:gsList)
+        {
+            groupList.add(gs.getGroup_());
         }
         return "success";
     }
@@ -369,6 +402,15 @@ public class StudentAction{
         }
         //studentIdList = Arrays.asList(studentIds.split("|"));
         this.group.setNum(studentIdList.size()+1);
+    }
+
+    public String queryCourse() throws Exception {
+
+        LinkedHashMap<Object, Object> equals = new LinkedHashMap<>();
+        equals.put("courseId", searchCourseWord);
+        //TODO 限制只搜索该学生的课程
+        courseList = courseBo.getList(equals,null,null,null,null,null,0,0);
+        return "success";
     }
 //
 //

@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: kwong
-  Date: 2018/11/27
-  Time: 20:11
+  Date: 2018/11/28
+  Time: 11:10
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -69,36 +69,23 @@
         <!--add  form-->
         <div class="result-wrap">
             <div class="result-content">
-                <%--<form name="myform" id="myform" method="post">--%>
-                <div class="result-title">
-                    <div class="result-list">
-                        <%--<a href="addReader.jsp"><i class="icon-font"></i>添加读者</a>--%>
-                        <h3>上传教师名单文件</h3>
-                        <s:form action="addTeacherByFileAction" method="post" enctype="multipart/form-data">
-                            <s:file name="teacherExcel" label="选择上传的文件" />
-                            <s:submit value="上传" class="btn btn-primary btn6 mr10"/>
-                        </s:form>
-                    </div>
-                </div>
-                <%--</form>--%>
                 <h3>输入教师信息</h3>
-                <s:form action="addTeacherAction" id="searchForm">
+                <s:form action="updateTeacherAction" id="searchForm">
                     <%--<form  id="add-book"  enctype="multipart/form-data">--%>
                     <input type="hidden" value="add" name="type">
                     <table class="insert-tab" width="100%">
                         <tbody>
                         <tr>
-                            <th>
-                                <i class="require-red">*</i>工号：</th>
+                            <th>工号：</th>
                             <td>
                                 <input class="common-text required" id="teacherId" name="teacherId" size="50" value="" type="text">
                             </td>
                         </tr>
                         <tr>
-                            <th width="120">
-                                <i class="require-red">*</i>姓名：</th>
+                            <th >姓名：</th>
                             <td>
                                 <input class="common-text required" id="teacherName" name="teacherName" size="50" value="" type="text">
+                            </td>
                             </td>
                         </tr>
 
@@ -137,7 +124,6 @@
                         </tbody>
                     </table>
                     <%--</form>--%>
-                    <s:token/>
                 </s:form>
             </div>
         </div>
@@ -145,4 +131,3 @@
 </div>
 </body>
 </html>
-

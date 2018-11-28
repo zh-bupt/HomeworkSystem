@@ -52,9 +52,10 @@
             <ul class="sidebar-list">
                 <li>
                     <ul class="sub-menu">
-                        <li><a href="/pages/admin_student.jsp"><i class="icon-font">&#xe005;</i>查找学生</a></li>
-                        <li><a href="/pages/admin_add_student.jsp"><i class="icon-font">&#xe005;</i>添加学生</a></li>
-                        <%--TODO 修改这里--%>
+                        <li><a href="/teacher/showCourseAction.action"><i class="icon-font">&#xe005;</i>课程信息</a></li>
+                        <li><a href="/teacher/updateCoursePageAction.action"><i class="icon-font">&#xe005;</i>修改信息</a></li>
+                        <li><a href="/teacher/addStudentPageAction.action"><i class="icon-font">&#xe005;</i>添加学生</a></li>
+                        <li><a href="/teacher/listHomeworkGroupAction.action"><i class="icon-font">&#xe005;</i>作业管理</a></li>
                     </ul>
                 </li>
             </ul>
@@ -63,13 +64,13 @@
     <!--/sidebar-->
     <div class="main-wrap">
         <div class="crumb-wrap">
-            <div class="crumb-list"><i class="icon-font"></i><a href="main.jsp">首页</a><span class="crumb-step">&gt;</span><span class="crumb-name">学生管理</span></div>
+            <div class="crumb-list"><i class="icon-font"></i><a href="main.jsp">首页</a><span class="crumb-step">&gt;</span><span class="crumb-name">课程管理</span><span class="crumb-step">&gt;</span><span class="crumb-name">课程详情</span><span class="crumb-step">&gt;</span><span class="crumb-name">提交作业</span></div>
         </div>
         <div class="search-wrap">
             <!--用于查询得表单-->
             <div class="search-content">
                 <%--<form method="post" action="readerManage.jsp" id="searchForm">--%>
-                <s:form action="addStudentForCourseByTypeAction" id="searchForm">
+                <%--<s:form action="addStudentForCourseByTypeAction" id="searchForm">--%>
                     <table class="search-tab">
                         <tr>
                                 <%--<th width="140">学号:</th>--%>
@@ -81,11 +82,11 @@
                                 <%--<s:token/>--%>
                                 <%--<s:submit  class="btn btn-primary btn2" value="添加"/>--%>
                                     <%--<button class="btn btn-primary btn2" type="submit" >添加</button>--%>
-                                    <%--TODO   这里加点什么呢？？--%>
+
                             </td>
                         </tr>
                     </table>
-                </s:form>
+                <%--</s:form>--%>
                 <%--</form>--%>
             </div>
         </div>
@@ -98,6 +99,7 @@
                             <s:form action="submitHomeworkAction" method="post" enctype="multipart/form-data">
                                 <s:file name="groupHomework" label="选择提交的文件" />
                                 <s:submit value="提交" />
+                                <s:token/>
                             </s:form>
                     </div>
                 </div>

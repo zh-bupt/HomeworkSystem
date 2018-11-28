@@ -29,7 +29,7 @@
             <ul class="navbar-list clearfix">
                 <%--<li><a class="on" href="/pages/admin_student.jsp">首页</a></li>--%>
                 <li><a class="on" href="/admin/listTeacherAction.action" target="_blank">教师管理</a></li>
-                <li><a href="/pages/admin_student.jsp" target="_blank">学生管理</a></li>
+                <li><a href="/admin/listStudentAction.action" target="_blank">学生管理</a></li>
 
             </ul>
         </div>
@@ -52,7 +52,7 @@
             <ul class="sidebar-list">
                 <li>
                     <ul class="sub-menu">
-                        <li><a><i class="icon-font">&#xe005;</i>查找教师</a></li>
+                        <li><a href="/admin/listTeacherAction.action"><i class="icon-font">&#xe005;</i>查找教师</a></li>
                         <li><a href="/pages/admin_add_teacher.jsp"><i class="icon-font">&#xe005;</i>添加教师</a></li>
                     </ul>
                 </li>
@@ -62,7 +62,7 @@
     <!--/sidebar-->
     <div class="main-wrap">
         <div class="crumb-wrap">
-            <div class="crumb-list"><i class="icon-font"></i><a href="main.jsp">首页</a><span class="crumb-step">&gt;</span><span class="crumb-name">教师管理</span></div>
+            <div class="crumb-list"><i class="icon-font"></i><a>首页</a><span class="crumb-step">&gt;</span><span class="crumb-name">教师管理</span></div>
         </div>
         <div class="search-wrap">
             <!--用于查询得表单-->
@@ -72,9 +72,9 @@
                     <table class="search-tab">
                         <tr>
                             <th width="140">姓名/工号:</th>
-
                             <td><input class="common-text" placeholder="" name="searchTeacherWord"  id="readername"  type="text" style="width:150px"></td>
                             <td style="padding-left:50px"><button class="btn btn-primary btn2" type="submit" >查询</button></td>
+                            <s:actionerror/>
                         </tr>
                     </table>
                     </s:form>
@@ -113,7 +113,7 @@
                                     <td><s:property value="profession"/> </td>
                                     <td><s:property value="telephone"/> </td>
                                     <td><s:property value="email"/> </td>
-                                    <td><input  class="link-update btn btn-warning btn2"  type="button" name="update" value="修改" onclick="javascript:window.location.href='/pages/teacher.jsp?teacherId=${teacherId}'"/>
+                                    <td><input  class="link-update btn btn-warning btn2"  type="button" name="update" value="修改" onclick="javascript:window.location.href='/admin/setCurrentTeacher.action?userId=${teacherId}'"/>
                                         <input class="link-del btn btn-danger btn2" type="button" name="delete" value="删除" onclick="delete_user(${teacherId})"/></td>
                                 </tr>
                             </s:iterator>
@@ -126,11 +126,12 @@
     </div>
     <!--/main-->
 </div>
+<p hidden id="formerCateId">${type=="search"?formerCateId:0}</p>
 <script>
     function delete_user(id) {
         if(confirm("确定要删除该教师？")){
             // window.location.href = "delreader.jsp?id="+id;
-            window.location.href="deleteTeacherAction.action?teacherId="+id
+            window.location.href="deleteTeacherAction.action?teacherId="+id;
         }
         document.form1.action("deleteTeacherAction.action?teacherId="+id);
 

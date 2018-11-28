@@ -85,6 +85,10 @@ public class LoginAction extends ActionSupport {
             super.addActionError("密码不能为空！");
             return "login";
         }
+        if(role == null){
+            super.addActionError("登录用户身份不能为空！");
+            return "login";
+        }
         //testAddHomework();
         System.out.println(id+","+password);
         String response;
