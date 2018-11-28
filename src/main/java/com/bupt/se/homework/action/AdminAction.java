@@ -213,6 +213,7 @@ public class AdminAction extends ActionSupport {
         return "success";
     }
 
+    // TODO 是不是要分页显示？？？？？？？？？
     public String listStudent() throws Exception {
         studentList = studentBo.getList(null,null,null,null,null,null,0,20);
         return "success";
