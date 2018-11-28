@@ -198,8 +198,8 @@
         <action name="addHomeworkAction"
                 class="com.bupt.se.homework.action.TeacherAction" method="addHomework">
             <interceptor-ref name="defaultStack"/>
-            <!--<interceptor-ref name="token"/>-->
-            <!--<result name="invalid.token" type="chain">showCourseAction</result>-->
+            <interceptor-ref name="token"/>
+            <result name="invalid.token">/pages/error.jsp</result>
             <result name="success" type="chain">showCourseAction</result>
         </action>
         <action name="deleteHomeworkAction"
