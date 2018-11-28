@@ -6,6 +6,7 @@ import com.bupt.se.homework.bo.TeacherBo;
 import com.bupt.se.homework.entity.Admin;
 import com.bupt.se.homework.entity.Student;
 import com.bupt.se.homework.entity.Teacher;
+import com.bupt.se.homework.exception.ServiceException;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -149,8 +150,14 @@ public class AdminAction extends ActionSupport {
     }
 
 
+    // TODO 添加学生可能会抛出学号重复的异常, 你需要捕获了提示一下
     public String addStudent() throws Exception{
-        studentBo.addStudent(student);
+        try {
+            studentBo.addStudent(student);
+        } catch (ServiceException e) {
+            e.printStackTrace();
+            return "error";
+        }
         return "success";
     }
 
@@ -206,6 +213,7 @@ public class AdminAction extends ActionSupport {
         return "success";
     }
 
+    // TODO 是不是要分页显示？？？？？？？？？
     public String listStudent() throws Exception {
         studentList = studentBo.getList(null,null,null,null,null,null,0,20);
         return "success";

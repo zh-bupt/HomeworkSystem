@@ -8,6 +8,9 @@ import java.util.List;
 
 public interface GroupStudentBo extends BasicBo<GroupStudent, GroupStudentPK> {
     void calculateScore();
-    public List<Student> findResultList(String courseID);
 
-    }
+    void updateGroupStudent(GroupStudent groupStudent) throws Exception;
+
+    List<Student> findResultList(String courseID);
+
+}

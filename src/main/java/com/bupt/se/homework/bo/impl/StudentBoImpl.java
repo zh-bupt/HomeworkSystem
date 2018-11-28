@@ -33,6 +33,10 @@ public class StudentBoImpl extends BasicBoImpl<Student, String> implements Stude
 
     @Override
     public void addStudent(Student student) throws Exception {
+        if (exists(student.getStudentId())) {
+            throw new ServiceException(ServiceExceptionErrorCode.STUDENT_DUPLICATED,
+                    "学生 " + student.getStudentId() + " 已存在.");
+        }
         this.save(student);
     }
 

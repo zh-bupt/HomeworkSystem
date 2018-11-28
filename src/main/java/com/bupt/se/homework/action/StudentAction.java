@@ -369,9 +369,10 @@ public class StudentAction{
         for(String id:studentIdList)
         {
             Student s = studentBo.get(id);
-            studentSet.add(s);
-            System.out.println(id);
-            System.out.print(s);
+            if (s != null) studentSet.add(s);
+//            studentSet.add(s);
+//            System.out.println(id);
+//            System.out.print(s);
 //            GroupStudent groupStudent = new GroupStudent(group,s);
 //            groupStudentSet.add(groupStudent);
         }

@@ -177,7 +177,7 @@ public abstract class BasicBoImpl<M extends AbstractEntity, PK extends Serializa
             LinkedHashMap<String, String> orderByFields,
             String whereHql,
             int firstResult, int maxResult) {
-        TransactionStatus status = getTransactionStatus();
+//        TransactionStatus status = getTransactionStatus();
         List<M> list = null;
 //        try {
             list = basicDao.findResultList(
@@ -197,11 +197,11 @@ public abstract class BasicBoImpl<M extends AbstractEntity, PK extends Serializa
             LinkedHashMap<String, String> nullFields,
             String whereHql
     ) {
-        TransactionStatus status = getTransactionStatus();
+//        TransactionStatus status = getTransactionStatus();
         M m = null;
 //        try {
             m = basicDao.get(equalFields, notEqualFields, LikeFields, nullFields, whereHql);
-            getTransactionManager().commit(status);
+//            getTransactionManager().commit(status);
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
