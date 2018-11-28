@@ -47,8 +47,8 @@ public class StudentDAOImpl extends BasicDAOImpl<Student, String> implements Stu
                 "and ? in gsl.student.studentId)";
         Session session = getSession();
         Query query = session.createQuery(hql);
-        query.setParameter(0, student.getStudentId());
-        query.setParameter(1, course.getCourseId());
+        query.setParameter(0, course.getCourseId());
+        query.setParameter(1, student.getStudentId());
         Group_ group_ = (Group_) query.uniqueResult();
         return group_;
     }

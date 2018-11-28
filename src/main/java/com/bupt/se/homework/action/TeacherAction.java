@@ -52,7 +52,7 @@ public class TeacherAction extends ActionSupport {
 
     private String homeworkFileName;
     private HomeworkGroup homeworkGroup = new HomeworkGroup();//貌似没用
-
+    private HomeworkGroupBo homeworkGroupBo;
     private String groupId;
 
     private String homeworkId;
@@ -86,6 +86,13 @@ public class TeacherAction extends ActionSupport {
     }
 
 
+    public HomeworkGroupBo getHomeworkGroupBo() {
+        return homeworkGroupBo;
+    }
+
+    public void setHomeworkGroupBo(HomeworkGroupBo homeworkGroupBo) {
+        this.homeworkGroupBo = homeworkGroupBo;
+    }
 
     public void setFileDir(String fileDir)
     {
@@ -207,7 +214,15 @@ public class TeacherAction extends ActionSupport {
 //    public void setCapacity(String capacity) {
 //        this.course.setCapacity(Integer.valueOf(capacity));
 //    }
+    public void setScore(Integer score)
+    {
+        this.homeworkGroup.setScore(score);
+    }
 
+    public void setComment(String comment)
+    {
+        this.homeworkGroup.setComment(comment);
+    }
 
     /**
      * @Author KRF
@@ -223,8 +238,14 @@ public class TeacherAction extends ActionSupport {
         course.setCreateTime(new Date());
         course.setTeacher(teacher);
         System.out.println(teacher.getTeacherName());
-        courseBo.addCourse(course);
-
+        try{
+            courseBo.addCourse(course);
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+            super.addActionError("课程ID已存在");
+            return "error";
+        }
         return "success";
     }
 
@@ -296,7 +317,7 @@ public class TeacherAction extends ActionSupport {
         try {
             //保存文件
             FileUtils.copyFile(studentExcel, new File(file,studentExcelFileName));
-            // TODO bug-fix 文件分隔符问题, 应用File.separator代替"\\"
+            // bug-fix 文件分隔符问题, 应用File.separator代替"\\"
             String result = getDataFromExcel(realPath + File.separator + studentExcelFileName);
             return result;
             //传文件给studentBo
@@ -617,11 +638,11 @@ public class TeacherAction extends ActionSupport {
      **/
 
     public String listHomeworkGroup() throws Exception {
-//        Map<String, Object> session = ActionContext.getContext().getSession();
+        Map<String, Object> session = ActionContext.getContext().getSession();
 //        course = courseBo.get(session.get("courseId").toString());
 //        course.getGroups();
-        System.out.println("homeworkId"+homework.getHomeworkId());
-        homework = homeworkBo.get(homework.getHomeworkId());
+        System.out.println("homeworkId-->"+session.get("homeworkId"));
+        homework = homeworkBo.get((Integer) session.get("homeworkId"));
         homeworkGroupList.addAll(homework.getHomeworkGroups());
         return "success";
     }
@@ -725,5 +746,38 @@ public class TeacherAction extends ActionSupport {
             }
         }
         return wb;
+    }
+
+    /**
+     * @Author KRF
+     * @Description 提交批改作业的
+     * @Date 20:24 2018/11/28
+     * @Param []
+     * @return java.lang.String
+     **/
+
+    public String checkHomework() throws Exception {
+        System.out.println(homework.getHomeworkId()+groupId);
+        Map<String, Object> session = ActionContext.getContext().getSession();
+        HomeworkGroup hg = homeworkGroupBo.get(new HomeworkGroupPK((Integer) session.get("homeworkId"),session.get("groupId").toString()));
+        System.out.println("hg-->"+hg);
+        hg.setScore(homeworkGroup.getScore());
+        hg.setComment(homeworkGroup.getComment());
+        System.out.println("HomeworkGroup-->"+hg.getPk()+hg.getScore()+hg.getComment());
+        homeworkGroupBo.update(hg);
+        return "success";
+    }
+
+    public String setSessionGroup() throws Exception {
+        Map<String, Object> session = ActionContext.getContext().getSession();
+        session.put("groupId",groupId);
+        System.out.println("session-->"+groupId);
+        return "success";
+    }
+
+    public String setSessionHomework() throws Exception {
+        Map<String, Object> session = ActionContext.getContext().getSession();
+        session.put("homeworkId",homework.getHomeworkId());
+        return "success";
     }
 }

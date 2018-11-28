@@ -32,7 +32,7 @@
             <h1 class="topbar-logo none"><a class="navbar-brand">查询结果</a></h1>
             <ul class="navbar-list clearfix">
                 <%--<li><a class="on" href="/pages/admin_student.jsp">首页</a></li>--%>
-                <li><a class="on" href="/admin/listTeacherAction.action" target="_blank">课程管理</a></li>
+                <li><a class="on" href="/student/listCourseAction.action" target="_blank">课程管理</a></li>
                 <%--<li><a href="/pages/admin_student.jsp" target="_blank">学生管理</a></li>--%>
 
             </ul>
@@ -74,13 +74,13 @@
                 <%--<form method="post" action="readerManage.jsp" id="searchForm">--%>
                 <%--<h2>搜索课程</h2>--%>
                 <%--<s:form action="Action" id="searchForm">--%>
-                    <table class="search-tab">
-                        <s:if test="groupMembers.size() > 0">
+                    <table  class="result-tab" width="50%" style="margin: 20px">
+                        <s:if test="group != null">
                             <h2>您所在的小组</h2>
                             <%--<s:if test="true" >--%>
                             <%--<button onclick="/deleteTeacherAction.action?${teacherId}">删除</button>--%>
                             <%--<input type="button" name="search" value="删除" onclick="javascript:window.location.href='deleteStudentAction.action?${studentId}'"/>--%>
-                            <table border="1px" cellpadding="8px" class="search-tab">
+                            <%--<table border="1px" cellpadding="8px" class="search-tab">--%>
                                 <tr>
                                     <th>组号</th>
                                     <th>组名</th>
@@ -90,19 +90,19 @@
                                     <th>小组成绩</th>
                                 </tr>
                                 <tr>
-                                    <td><s:property value="groupId"/> </td>
-                                    <td><s:property value="name"/> </td>
-                                    <td><s:property value="leader.getStudentName()"/> </td>
-                                    <td><s:property value="num"/> </td>
+                                    <td><s:property value="group.getGroupId()"/> </td>
+                                    <td><s:property value="group.getName()"/> </td>
+                                    <td><s:property value="group.getLeader().getStudentName()"/> </td>
+                                    <td><s:property value="group.getNum()"/> </td>
                                     <td>
-                                        <s:iterator value="members" >
-                                            <s:property value="memberName"/>
+                                        <s:iterator value="memberList" >
+                                            <s:property value="studentName"/>
                                         </s:iterator>
                                     </td>
-                                    <td><s:property value="groupScore" /></td>
+                                    <td><s:property value="group.getGroupScore()" /></td>
 
                                 </tr>
-                            </table>
+                            <%--</table>--%>
                         </s:if>
                         <s:else>
                             <h2>创建小组</h2>
@@ -152,8 +152,8 @@
                                     <td><input type="checkbox" value="homeworkId" name="homeworkId"></td>
                                     <td><s:property value="homeworkId"/> </td>
                                     <td><s:property value="content"/> </td>
-                                    <td><s:property value="releaseTime"/> </td>
-                                    <td><s:property value="deadline"/> </td>
+                                    <td><s:date name="releaseTime" format="yyyy-MM-dd"/> </td>
+                                    <td><s:date name="deadline" format="yyyy-MM-dd"/> </td>
                                     <td><input class="link-update btn btn-warning btn2"  type="button" name="delete" value="提交" onclick="javascript:window.location.href='setCurrentHomeworkAction.action?homeworkId=${homeworkId}'"/></td>
                                 </tr>
                             </s:iterator>

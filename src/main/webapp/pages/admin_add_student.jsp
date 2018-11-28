@@ -82,6 +82,7 @@
                     <%--</form>--%>
                 <h3>输入学生名单</h3>
                 <s:form action="addStudentAction" id="searchForm">
+                    <s:actionerror/>
                 <%--<form  id="add-book"  enctype="multipart/form-data">--%>
                     <input type="hidden" value="add" name="type">
                     <table class="insert-tab" width="100%">

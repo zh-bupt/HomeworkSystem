@@ -175,7 +175,7 @@
                                     <td><s:property value="sex"/> </td>
                                     <td><s:property value="email"/> </td>
                                     <td><s:date name="entranceDate" format="yyyy-MM-dd"/> </td>
-                                    <td><input  class="link-update btn btn-warning btn2" type="button" name="update" value="修改" onclick="javascript:window.location.href='/pages/student.jsp?studentId=${studentId}'"/>
+                                    <td><input  class="link-update btn btn-warning btn2" type="button" name="update" value="修改" onclick="javascript:window.location.href='/admin/updateStudentPageAction?studentId=${studentId}'"/>
                                         <input  class="link-del btn btn-danger btn2" type="button" name="delete" value="删除" onclick="delete_user(${studentId})"/></td>
                                 </tr>
                             </s:iterator>

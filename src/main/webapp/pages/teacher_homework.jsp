@@ -69,14 +69,30 @@
         <div class="search-wrap">
             <!--用于查询得表单-->
             <div class="search-content">
-                <h2>添加课程</h2>
+                <h2>作业详情</h2>
                 <table class="search-tab">
                     <tr>
-                        <th width="70">课程ID:</th>
-                            <td><s:property value="homework."/><input class="common-text" placeholder="" name="courseId"  id="courseId"  type="text" style="width:150px"></td>
-                            <th width="70">课程名称:</th>
-                            <td><input class="common-text" placeholder="" name="courseName"  id="courseName"  type="text" style="width:150px"></td>
-                            <td style="padding-left:50px"><button class="btn btn-primary btn2" type="submit" >添加</button></td>
+                        <th width="70">作业ID:</th>
+                            <td><s:property value="homework.getHomeworkId()"/>
+                                <%--<input class="common-text" placeholder="" name="courseId"  id="courseId"  type="text" style="width:150px">--%>
+                            </td>
+                        <th width="70">发布时间:</th>
+                            <td><s:property value="homework.getReleaseTime()"/>
+                                <%--<input class="common-text" placeholder="" name="courseName"  id="courseName"  type="text" style="width:150px">--%>
+                            </td>
+                            <th width="70">截至时间:</th>
+                            <td><s:property value="homework.getDeadline()"/>
+                                <%--<input class="common-text" placeholder="" name="courseName"  id="courseName"  type="text" style="width:150px">--%>
+                            </td>
+                        <th width="100">所占百分比:</th>
+                        <td><s:property value="homework.getPecentage()"/>
+                            <%--<input class="common-text" placeholder="" name="courseName"  id="courseName"  type="text" style="width:150px">--%>
+                        </td>
+                        <th width="70">内容:</th>
+                        <td><s:property value="homework.getContent()"/>
+                            <%--<input class="common-text" placeholder="" name="courseName"  id="courseName"  type="text" style="width:150px">--%>
+                        </td>
+
                     </tr>
                 </table>
             </div>
