@@ -6,7 +6,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="s" uri="/struts-tags" %>
 <html>
 
@@ -114,7 +113,7 @@
                                         <s:property value="student.getStudentName()"/>
                                     </s:iterator>
                                     </td>
-                                    <td><input  class="link-update btn btn-warning btn2" type="button" name="update" value="打分" onclick="javascript:window.location.href='/student/getContributionPageAction?groupId=${groupId}'"/> </td>
+                                    <td><input  class="link-update btn btn-warning btn2" type="button" name="update" value="打分" onclick="javascript:window.location.href='/student/setCurrentGroupAction?groupId=${groupId}'"/> </td>
                                         <%--d使用JS弹出文本框，输入分配后传给action--%>
                                 </tr>
                             </s:iterator>

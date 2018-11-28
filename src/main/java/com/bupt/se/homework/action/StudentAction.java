@@ -35,6 +35,28 @@ public class StudentAction{
     private List<Student> memberList = new ArrayList<>();
     private String searchCourseWord;
 
+    private Integer contribution;
+    private String studentId;
+
+
+    public Integer getContribution() {
+        return contribution;
+    }
+
+    public void setContribution(Integer contribution) {
+        this.contribution = contribution;
+    }
+
+    public String getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
+    }
+
+
+
     public List<Student> getMemberList() {
         return memberList;
     }
@@ -447,6 +469,29 @@ public class StudentAction{
         likes2.put("courseName", searchCourseWord);
         courseSet.addAll(courseBo.getList(null,null,likes2,null,null,null,0,0));
         courseList.addAll(courseSet);
+        return "success";
+    }
+
+    public String setSessionGroup() throws Exception {
+        Map<String,Object> session = ActionContext.getContext().getSession();
+        session.put("groupId",group.getGroupId());
+        group = groupBo.get(group.getGroupId());
+        List<GroupStudent> gsList = group.getGroupStudentList();
+        memberList = new ArrayList<>();//清空
+        for(GroupStudent gs:gsList)
+        {
+            memberList.add(gs.getStudent());
+        }
+        System.out.println("memberList-->size:"+memberList.size());
+
+        return "success";
+    }
+
+    public String setMemberContribution() throws Exception {
+        Map<String,Object> session = ActionContext.getContext().getSession();
+        GroupStudent gs = groupStudentBo.get(new GroupStudentPK(session.get("groupId").toString(),studentId));
+        gs.setContribution(contribution);
+        groupStudentBo.updateGroupStudent(gs);//TODO 这里出错
         return "success";
     }
 //
