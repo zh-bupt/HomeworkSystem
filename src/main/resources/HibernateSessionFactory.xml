@@ -63,25 +63,26 @@
         <aop:advisor advice-ref="txAdvice" pointcut-ref="pointCut1"/>
     </aop:config>
 
-    <tx:advice id="txAdvice3" transaction-manager="transactionManager">
-        <tx:attributes>
-            <tx:method name="*"/>
-        </tx:attributes>
-    </tx:advice>
+    <!--<tx:advice id="txAdvice3" transaction-manager="transactionManager">-->
+        <!--<tx:attributes>-->
+            <!--<tx:method name="*"/>-->
+        <!--</tx:attributes>-->
+    <!--</tx:advice>-->
 
-    <aop:config>
-        <aop:pointcut expression="execution(* com.bupt.se.homework.dao.impl.*.*(..))" id="pointCut3"/>
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="pointCut3"/>
-    </aop:config>
+    <!--<aop:config>-->
+        <!--<aop:pointcut expression="execution(* com.bupt.se.homework.dao.impl.*.*(..))" id="pointCut3"/>-->
+        <!--<aop:advisor advice-ref="txAdvice" pointcut-ref="pointCut3"/>-->
+    <!--</aop:config>-->
 
     <tx:advice id="txAdvice2" transaction-manager="transactionManager">
         <tx:attributes>
-            <tx:method name="list*" read-only="true"/>
-            <tx:method name="get*"/>
-            <tx:method name="query*"/>
-            <tx:method name="set*"/>
-            <tx:method name="submitHomework"/>
-            <tx:method name="setSessionGroup" read-only="true"/>
+            <!--<tx:method name="list*" read-only="true"/>-->
+            <!--<tx:method name="get*"/>-->
+            <!--<tx:method name="query*"/>-->
+            <!--<tx:method name="set*"/>-->
+            <!--<tx:method name="submitHomework"/>-->
+            <!--<tx:method name="setSessionGroup" read-only="true"/>-->
+            <tx:method name="*" rollback-for="java.lang.Exception"/>
         </tx:attributes>
     </tx:advice>
 

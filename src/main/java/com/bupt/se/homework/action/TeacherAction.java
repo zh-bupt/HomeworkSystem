@@ -264,7 +264,11 @@ public class TeacherAction extends ActionSupport {
         System.out.println(courseId);
 
         System.out.println("deadline---->" + homework.getDeadline());
-        teacherBo.assignHomework(courseId ,homework);
+        try {
+            teacherBo.assignHomework(courseId, homework);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return "success";
     }
 
