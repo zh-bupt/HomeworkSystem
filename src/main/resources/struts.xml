@@ -37,6 +37,7 @@
             <interceptor-ref name="token"/>
             <result name="invalid.token">/pages/admin_student.jsp</result>
             <result name="success">/pages/admin_student.jsp</result>
+            <result name="error">/pages/error.jsp</result>
         </action>
         <action name="addStudentByFileAction"
                 class="com.bupt.se.homework.action.AdminAction" method="addStudentByFile">

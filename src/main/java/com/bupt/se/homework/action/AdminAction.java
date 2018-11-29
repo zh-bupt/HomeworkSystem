@@ -18,6 +18,7 @@ import org.apache.struts2.ServletActionContext;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.transaction.UnexpectedRollbackException;
 
 
 import java.io.File;
@@ -155,6 +156,7 @@ public class AdminAction extends ActionSupport {
         try {
             studentBo.addStudent(student);
         } catch (ServiceException e) {
+//            throw new Exception(e);
             e.printStackTrace();
             return "error";
         }

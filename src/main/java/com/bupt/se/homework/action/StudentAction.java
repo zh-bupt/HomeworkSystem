@@ -335,7 +335,12 @@ public class StudentAction{
 
             homeworkList.addAll(homeworkSet);
         }
-        //TODO BUG Group_ group_ = studentBo.getCourseGroup(session.get("id").toString(),session.get("courseId").toString());
+        Group_ group_ = studentBo.getCourseGroup(session.get("id").toString(),session.get("courseId").toString());
+        if (group_ == null) {
+            System.out.println("啊啊啊啊啊啊！！！！group是空.");
+        } else {
+            System.out.println("耶耶耶耶耶耶！！！！group不是空.");
+        }
         // System.out.println(group_.getGroupId());
         // TODO BUG noGroupStudentList = groupStudentBo.findResultList(course.getCourseId());
         // System.out.println("noGroupStudentList-->"+noGroupStudentList);
