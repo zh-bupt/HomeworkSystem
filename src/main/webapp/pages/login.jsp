@@ -47,23 +47,25 @@
                 <s:form id="form_for_login" action="loginAction">
                     <ul class="admin_items">
 
-                            <label for="account">用户ID：</label>
-                            <input type="text" name="id" id="account" size="35" class="admin_input_style" />
+                            <li><label for="account">用户ID：</label></li>
+                            <li><input type="text" name="id" id="account" size="35" class="admin_input_style" /></li>
                             <%--<s:textfield name="id" value="" id="account" size="35" class="admin_input_style"/>--%>
 
-                            <label for="password">密码：</label>
-                            <input type="password" name="password"  id="password" size="35" class="admin_input_style" />
+                            <li><label for="password">密码：</label></li>
+                            <li><input type="password" name="password"  id="password" size="35" class="admin_input_style" /></li>
                             <%--<s:password name="password" value="" id="password" size="35" class="admin_input_style"/>--%>
                             <%--<s:if test="role==null">--%>
                             <%--<radio name="role" list="{ '管理员', '教师','学生' }" value="'学生'"  label="用户身份"  class="radio-inline"  class="admin_input_style"></radio>--%>
-                            <input type="radio" name="role" class="radio-inline" style="margin: 10px;color: #1A1A1A" value="管理员">管理员
-                            <input type="radio" name="role" class="radio-inline" style="margin: 10px;color: #1A1A1A" value="教师">教师
-                            <input type="radio" name="role" class="radio-inline" style="margin: 10px;color: #1A1A1A" value="学生" checked>学生
+                            <li>
+                                <input type="radio" name="role" class="radio-inline" style="margin: 10px;color: #1A1A1A" value="管理员">管理员
+                                <input type="radio" name="role" class="radio-inline" style="margin: 10px;color: #1A1A1A" value="教师">教师
+                                <input type="radio" name="role" class="radio-inline" style="margin: 10px;color: #1A1A1A" value="学生" checked>学生
+                            </li>
                             <%--</s:if>--%>
                             <%--<s:else>--%>
                                 <%--<s:radio name="role" list="{ '管理员', '教师','学生' }"  label="用户身份"  class="radio-inline"/>--%>
                             <%--</s:else>--%>
-                            <button tabindex="3" type="submit" class="btn btn-primary" id="btn-submit1">登录</button>
+                            <li><button tabindex="3" type="submit" class="btn btn-primary" id="btn-submit1">登录</button></li>
                             <s:actionerror/>
                             <%--<s:submit value="登录" class="btn btn-primary" id="btn-submit1"/>--%>
 
