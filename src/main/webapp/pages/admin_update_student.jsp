@@ -77,19 +77,19 @@
                         <tr>
                             <th>学号：</th>
                             <td>
-                                <input class="common-text required" id="studentId" name="studentId" size="50" value="" type="text">
+                                <input class="common-text required" placeholder="" id="studentId" name="studentId" size="50" value="" type="text">
                             </td>
                         </tr>
                         <tr>
                             <th>姓名：</th>
                             <td>
-                                <input class="common-text required" id="studentName" name="studentName" size="50" value="" type="text">
+                                <input class="common-text required" placeholder="${student.getStudentName()}" id="studentName" name="studentName" size="50" value="" type="text">
                             </td>
                         </tr>
                         <tr>
                             <th>班级：</th>
                             <td>
-                                <input class="common-text required" id="classId" name="classId" size="50" value="" type="text">
+                                <input class="common-text required" placeholder="${student.getClassId()}" id="classId" name="classId" size="50" value="" type="text">
                             </td>
                         </tr>
                         <tr>
@@ -102,19 +102,19 @@
                         <tr>
                             <th>邮箱：</th>
                             <td>
-                                <input class="common-text" name="email" size="50"  type="text">
+                                <input class="common-text" placeholder="${student.getEmail()}" name="email" size="50"  type="text">
                             </td>
                         </tr>
                         <tr>
                             <th>入学日期：</th>
                             <td>
-                                <input type="date" name="entranceDate" id="entranceDate" min="1900-01-01" class="common-text">
+                                <input type="date" placeholder="${student.getEntranceDate()}" name="entranceDate" id="entranceDate" min="1900-01-01" class="common-text">
                             </td>
                         </tr>
                         <tr>
                             <th>密码：</th>
                             <td>
-                                <input class="common-text" name="password" size="50" type="password">
+                                <input class="common-text" placeholder="${student.getPassword()}" name="password" size="50" type="password">
                             </td>
                         </tr>
                         <tr>

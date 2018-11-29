@@ -13,4 +13,6 @@ public interface GroupStudentBo extends BasicBo<GroupStudent, GroupStudentPK> {
 
     List<Student> findResultList(String courseID);
 
+    void changeContribution(String groupId, String studentId, int contribution) throws Exception;
+
 }

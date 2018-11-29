@@ -30,7 +30,7 @@
             <h1 class="topbar-logo none"><a class="navbar-brand">查询结果</a></h1>
             <ul class="navbar-list clearfix">
                 <%--<li><a class="on" href="/pages/admin_student.jsp">首页</a></li>--%>
-                <li><a class="on" href="/admin/listCourseAction.action" target="_blank">课程管理</a></li>
+                <li><a class="on" href="/student/listCourseAction.action" target="_blank">课程管理</a></li>
                 <%--<li><a href="/pages/admin_student.jsp" target="_blank">学生管理</a></li>--%>
 
             </ul>
@@ -74,9 +74,8 @@
                 <s:form action="searchCourseAction" id="searchForm">
                     <table class="search-tab">
                         <tr>
-                            <th width="70">课程ID/课程名称:</th>
+                            <th width="210">课程ID/课程名称:</th>
                             <td><input class="common-text" placeholder="" name="searchCourseWord"  id="searchCourseWord"  type="text" style="width:150px"></td>
-                           <%--TODO 增加查询课程Action--%>
                             <td style="padding-left:50px"><button class="btn btn-primary btn2" type="submit" >查询</button></td>
                         </tr>
                     </table>
@@ -99,6 +98,7 @@
                                 <th>课程名</th>
                                 <th>授课老师</th>
                                 <th>创建时间</th>
+                                <th>操作</th>
                             </tr>
                             <s:iterator value="courseList" status="userStatus">
                                 <%--点击某一个课程即进入到该课程的详情页--%>
@@ -106,9 +106,8 @@
                                     <td><s:property value="courseId"/> </td>
                                     <td><s:property value="courseName"/> </td>
                                     <td><s:property value="teacher.getTeacherName()"/> </td>
-                                    <td><s:property value="capacity"/> </td>
                                     <td><s:date name="createTime" format="yyyy-MM-dd"/> </td>
-                                    <td><input  class="link-update btn btn-warning btn2" type="button" name="update" value="课程详情" onclick="javascript:window.location.href='/student/setCurrentCourseAction.action?courseId=${courseId}'"/> </td>
+                                    <td><input  class="link-update btn btn-success btn2" type="button" name="update" value="课程详情" onclick="javascript:window.location.href='/student/setCurrentCourseAction.action?courseId=${courseId}'"/> </td>
                                 </tr>
                             </s:iterator>
                         </table>

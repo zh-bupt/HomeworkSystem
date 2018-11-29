@@ -10,17 +10,6 @@
 <html>
 <head>
     <title>小组提交作业</title>
-</head>
-<body>
-<h1>小组提交作业</h1>
-
-</body>
-</html>
-<%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<html>
-<head>
-    <title>管理系统</title>
     <link rel="stylesheet" type="text/css" href="../assets/css/main.css"/>
     <link rel="stylesheet" type="text/css" href="../assets/css/common.css"/>
     <link rel="stylesheet" type="text/css" href="../assets/css/pagination.css">
@@ -80,18 +69,32 @@
         <div class="search-wrap">
             <!--用于查询得表单-->
             <div class="search-content">
-                <%--<form method="post" action="readerManage.jsp" id="searchForm">--%>
-                <s:form action="searchTeacherAction" id="searchForm">
-                    <table class="search-tab">
-                        <tr>
-                            <th width="140">姓名/工号:</th>
-<%--TODO 修改这里为显示作业的内容--%>
-                            <td><input class="common-text" placeholder="" name="searchTeacherWord"  id="readername"  type="text" style="width:150px"></td>
-                            <td style="padding-left:50px"><button class="btn btn-primary btn2" type="submit" >查询</button></td>
-                        </tr>
-                    </table>
-                </s:form>
-                <%--</form>--%>
+                <h2>作业详情</h2>
+                <table class="search-tab">
+                    <tr>
+                        <th width="70">作业ID:</th>
+                            <td><s:property value="homework.getHomeworkId()"/>
+                                <%--<input class="common-text" placeholder="" name="courseId"  id="courseId"  type="text" style="width:150px">--%>
+                            </td>
+                        <th width="70">发布时间:</th>
+                            <td><s:property value="homework.getReleaseTime()"/>
+                                <%--<input class="common-text" placeholder="" name="courseName"  id="courseName"  type="text" style="width:150px">--%>
+                            </td>
+                            <th width="70">截至时间:</th>
+                            <td><s:property value="homework.getDeadline()"/>
+                                <%--<input class="common-text" placeholder="" name="courseName"  id="courseName"  type="text" style="width:150px">--%>
+                            </td>
+                        <th width="100">所占百分比:</th>
+                        <td><s:property value="homework.getPecentage()"/>
+                            <%--<input class="common-text" placeholder="" name="courseName"  id="courseName"  type="text" style="width:150px">--%>
+                        </td>
+                        <th width="70">内容:</th>
+                        <td><s:property value="homework.getContent()"/>
+                            <%--<input class="common-text" placeholder="" name="courseName"  id="courseName"  type="text" style="width:150px">--%>
+                        </td>
+
+                    </tr>
+                </table>
             </div>
         </div>
         <div class="result-wrap">

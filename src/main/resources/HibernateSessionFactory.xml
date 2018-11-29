@@ -51,6 +51,7 @@
             <tx:method name="modify*" propagation="REQUIRED"/>
             <tx:method name="update*" propagation="REQUIRED"/>
             <tx:method name="calculate*" propagation="REQUIRED"/>
+            <tx:method name="change*" propagation="REQUIRED"/>
             <tx:method name="assignHomework" rollback-for="java.lang.Exception" propagation="REQUIRED"/>
             <!--<tx:method name="*" no-rollback-for="com.bupt.se.homework.exception.ServiceException"/>-->
             <tx:method name="*" no-rollback-for="com.bupt.se.homework.exception.ServiceException" propagation="REQUIRED" read-only="true"/>
@@ -62,18 +63,25 @@
         <aop:advisor advice-ref="txAdvice" pointcut-ref="pointCut1"/>
     </aop:config>
 
-    <!--<aop:config>-->
-        <!--<aop:pointcut expression="execution(* com.bupt.se.homework.dao.impl.*.*(..))" id="pointCut3"/>-->
-        <!--<aop:advisor advice-ref="txAdvice" pointcut-ref="pointCut3"/>-->
-    <!--</aop:config>-->
+    <tx:advice id="txAdvice3" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="*"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config>
+        <aop:pointcut expression="execution(* com.bupt.se.homework.dao.impl.*.*(..))" id="pointCut3"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="pointCut3"/>
+    </aop:config>
 
     <tx:advice id="txAdvice2" transaction-manager="transactionManager">
         <tx:attributes>
             <tx:method name="list*" read-only="true"/>
-            <tx:method name="get*" read-only="true"/>
-            <tx:method name="query*" read-only="true"/>
-            <tx:method name="set*" read-only="true"/>
+            <tx:method name="get*"/>
+            <tx:method name="query*"/>
+            <tx:method name="set*"/>
             <tx:method name="submitHomework"/>
+            <tx:method name="setSessionGroup" read-only="true"/>
         </tx:attributes>
     </tx:advice>
 

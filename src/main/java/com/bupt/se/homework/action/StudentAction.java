@@ -2,6 +2,7 @@ package com.bupt.se.homework.action;
 
 import com.bupt.se.homework.bo.*;
 import com.bupt.se.homework.entity.*;
+import com.bupt.se.homework.exception.ServiceException;
 import com.opensymphony.xwork2.ActionContext;
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
@@ -32,8 +33,38 @@ public class StudentAction{
     private List<Group_> groupList = new ArrayList<>();
     private GroupStudentBo groupStudentBo;
     private List<Student> noGroupStudentList =  new ArrayList<>();
-
+    private List<Student> memberList = new ArrayList<>();
     private String searchCourseWord;
+
+    private Integer contribution;
+    private String studentId;
+
+
+    public Integer getContribution() {
+        return contribution;
+    }
+
+    public void setContribution(Integer contribution) {
+        this.contribution = contribution;
+    }
+
+    public String getStudentId() {
+        return studentId;
+    }
+
+    public void setStudentId(String studentId) {
+        this.studentId = studentId;
+    }
+
+
+
+    public List<Student> getMemberList() {
+        return memberList;
+    }
+
+    public void setMemberList(List<Student> memberList) {
+        this.memberList = memberList;
+    }
 
     public List<Group_> getGroupList() {
         return groupList;
@@ -218,7 +249,7 @@ public class StudentAction{
         Map<String, Object> session = ActionContext.getContext().getSession();
         student = studentBo.get(session.get("id").toString());
 
-        List<StudentCourse> studentCourses = student.getStudentCourses();//TODO 等待张珩封装
+        List<StudentCourse> studentCourses = student.getStudentCourses();
         System.out.println("studentCourses.size():"+studentCourses.size());
 
 //        System.out.println("groupManagedList-->"+groupManagedList+" "+groupManagedList.get(0).getGroupId()+" "+groupManagedList.get(0).getName());
@@ -335,14 +366,37 @@ public class StudentAction{
 
             homeworkList.addAll(homeworkSet);
         }
-        Group_ group_ = studentBo.getCourseGroup(session.get("id").toString(),session.get("courseId").toString());
-        if (group_ == null) {
-            System.out.println("啊啊啊啊啊啊！！！！group是空.");
-        } else {
-            System.out.println("耶耶耶耶耶耶！！！！group不是空.");
-        }
+//        Group_ group_ = studentBo.getCourseGroup(session.get("id").toString(),session.get("courseId").toString());
+//        if (group_ == null) {
+//            System.out.println("啊啊啊啊啊啊！！！！group是空.");
+//        } else {
+//            System.out.println("耶耶耶耶耶耶！！！！group不是空.");
+//        }
         // System.out.println(group_.getGroupId());
         // TODO BUG noGroupStudentList = groupStudentBo.findResultList(course.getCourseId());
+        group = studentBo.getCourseGroup(session.get("id").toString(),session.get("courseId").toString());//TODO bug 一直空
+        System.out.println("group-->" + group);
+//        student = studentBo.get(session.get("id").toString());
+//        List<GroupStudent> gsList = student.getGroupStudentList();
+//        for(GroupStudent gs:gsList)
+//        {
+//            if(gs.getGroup_().getCourse().getCourseId().equals(course.getCourseId()))
+//            {
+//                group = gs.getGroup_();
+//                break;
+//            }
+//        }
+        if (group != null) {
+            List<GroupStudent> gsList = group.getGroupStudentList();
+
+            for(GroupStudent gs:gsList)
+            {
+                memberList.add(gs.getStudent());
+            }
+            System.out.println("memberList-->size:"+memberList.size());
+        }
+        //.out.println(group_.getGroupId());
+        //noGroupStudentList = groupStudentBo.findResultList(course.getCourseId());//TODO bug 好像还是一直为空
         // System.out.println("noGroupStudentList-->"+noGroupStudentList);
         return "success";
     }
@@ -415,7 +469,46 @@ public class StudentAction{
         LinkedHashMap<Object, Object> equals = new LinkedHashMap<>();
         equals.put("courseId", searchCourseWord);
         //TODO 限制只搜索该学生的课程
-        courseList = courseBo.getList(equals,null,null,null,null,null,0,0);
+        HashSet<Course> courseSet = new HashSet<>();
+        courseSet.addAll(courseBo.getList(equals,null,null,null,null,null,0,0));
+        LinkedHashMap<Object, Object> equals2 = new LinkedHashMap<>();
+        equals2.put("courseName", searchCourseWord);
+        courseSet.addAll(courseBo.getList(equals,null,null,null,null,null,0,0));
+        LinkedHashMap<String, String> likes = new LinkedHashMap<>();
+        courseSet.addAll(courseBo.getList(null,null,likes,null,null,null,0,0));
+        LinkedHashMap<String, String> likes2 = new LinkedHashMap<>();
+        likes2.put("courseName", searchCourseWord);
+        courseSet.addAll(courseBo.getList(null,null,likes2,null,null,null,0,0));
+        courseList.addAll(courseSet);
+        return "success";
+    }
+
+    public String setSessionGroup() throws Exception {
+        Map<String,Object> session = ActionContext.getContext().getSession();
+        session.put("groupId",group.getGroupId());
+        group = groupBo.get(group.getGroupId());
+        List<GroupStudent> gsList = group.getGroupStudentList();
+        memberList = new ArrayList<>();//清空
+        for(GroupStudent gs:gsList)
+        {
+            memberList.add(gs.getStudent());
+        }
+        System.out.println("memberList-->size:"+memberList.size());
+
+        return "success";
+    }
+
+    public String setMemberContribution() throws Exception {
+        Map<String,Object> session = ActionContext.getContext().getSession();
+        try {
+            groupStudentBo.changeContribution(session.get("groupId").toString(),
+                    studentId, contribution);
+        } catch (ServiceException se) {
+            se.printStackTrace();
+        }
+//        GroupStudent gs = groupStudentBo.get(new GroupStudentPK(session.get("groupId").toString(),studentId));
+//        gs.setContribution(contribution);
+//        groupStudentBo.updateGroupStudent(gs);//TODO 这里出错
         return "success";
     }
 //

@@ -29,39 +29,50 @@
     <%--</s:else>--%>
     <%--<s:submit/>--%>
 <%--</s:form>--%>
-<div class="admin_login_wrap">
-    <h1>系统登录</h1>
-    <div class="adming_login_border">
-        <div class="admin_input">
-            <%--<form id="form_for_login" action="login.jsp" method="post" onsubmit="return submitCheck();">--%>
-            <s:form id="form_for_login" action="loginAction">
-                <ul class="admin_items">
+<div style=" background:url(../assets/images/background.jpg) no-repeat;
+    background-attachment:fixed;
+    background-position: center;
+    background-size:100% 100%;
+    -webkit-background-size:100% 100%;
+    -moz-background-size: 100% 100%;
+    -o-background-size: 100% 100%;
+    padding:200px 0;
+    /*color:#fff;*/
+    height: 1080px"  >
+    <div class="admin_login_wrap" >
+        <h1 style="color: #FFFFFF">系统登录</h1>
+        <div class="adming_login_border">
+            <div class="admin_input">
+                <%--<form id="form_for_login" action="login.jsp" method="post" onsubmit="return submitCheck();">--%>
+                <s:form id="form_for_login" action="loginAction">
+                    <ul class="admin_items">
 
-                        <label for="account">用户ID：</label>
-                        <input type="text" name="id" id="account" size="35" class="admin_input_style" />
-                        <%--<s:textfield name="id" value="" id="account" size="35" class="admin_input_style"/>--%>
+                            <label for="account">用户ID：</label>
+                            <input type="text" name="id" id="account" size="35" class="admin_input_style" />
+                            <%--<s:textfield name="id" value="" id="account" size="35" class="admin_input_style"/>--%>
 
-                        <label for="password">密码：</label>
-                        <input type="password" name="password"  id="password" size="35" class="admin_input_style" />
-                        <%--<s:password name="password" value="" id="password" size="35" class="admin_input_style"/>--%>
-                        <%--<s:if test="role==null">--%>
-                        <%--<radio name="role" list="{ '管理员', '教师','学生' }" value="'学生'"  label="用户身份"  class="radio-inline"  class="admin_input_style"></radio>--%>
-                        <input type="radio" name="role" class="radio-inline" style="margin: 10px" value="管理员">管理员
-                        <input type="radio" name="role" class="radio-inline" style="margin: 10px" value="教师">教师
-                        <input type="radio" name="role" class="radio-inline" style="margin: 10px" value="学生">学生
-                        <%--</s:if>--%>
-                        <%--<s:else>--%>
-                            <%--<s:radio name="role" list="{ '管理员', '教师','学生' }"  label="用户身份"  class="radio-inline"/>--%>
-                        <%--</s:else>--%>
-                        <button tabindex="3" type="submit" class="btn btn-primary" id="btn-submit1">登录</button>
-                        <s:actionerror/>
-                        <%--<s:submit value="登录" class="btn btn-primary" id="btn-submit1"/>--%>
+                            <label for="password">密码：</label>
+                            <input type="password" name="password"  id="password" size="35" class="admin_input_style" />
+                            <%--<s:password name="password" value="" id="password" size="35" class="admin_input_style"/>--%>
+                            <%--<s:if test="role==null">--%>
+                            <%--<radio name="role" list="{ '管理员', '教师','学生' }" value="'学生'"  label="用户身份"  class="radio-inline"  class="admin_input_style"></radio>--%>
+                            <input type="radio" name="role" class="radio-inline" style="margin: 10px;color: #1A1A1A" value="管理员">管理员
+                            <input type="radio" name="role" class="radio-inline" style="margin: 10px;color: #1A1A1A" value="教师">教师
+                            <input type="radio" name="role" class="radio-inline" style="margin: 10px;color: #1A1A1A" value="学生">学生
+                            <%--</s:if>--%>
+                            <%--<s:else>--%>
+                                <%--<s:radio name="role" list="{ '管理员', '教师','学生' }"  label="用户身份"  class="radio-inline"/>--%>
+                            <%--</s:else>--%>
+                            <button tabindex="3" type="submit" class="btn btn-primary" id="btn-submit1">登录</button>
+                            <s:actionerror/>
+                            <%--<s:submit value="登录" class="btn btn-primary" id="btn-submit1"/>--%>
 
 
 
-                </ul>
-            <%--</form>--%>
-            </s:form>
+                    </ul>
+                <%--</form>--%>
+                </s:form>
+            </div>
         </div>
     </div>
 </div>

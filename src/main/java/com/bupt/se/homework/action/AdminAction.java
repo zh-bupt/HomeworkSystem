@@ -156,8 +156,12 @@ public class AdminAction extends ActionSupport {
         try {
             studentBo.addStudent(student);
         } catch (ServiceException e) {
+            super.addActionError(e.getMessage());
+            return "error";
 //            throw new Exception(e);
-            e.printStackTrace();
+        } catch (Exception e1) {
+            super.addActionError(e1.getMessage());
+            e1.printStackTrace();
             return "error";
         }
         return "success";
@@ -215,7 +219,7 @@ public class AdminAction extends ActionSupport {
         return "success";
     }
 
-    // TODO 是不是要分页显示？？？？？？？？？
+    // TODO 分页显示还没搞完
     public String listStudent() throws Exception {
         studentList = studentBo.getList(null,null,null,null,null,null,0,20);
         return "success";
@@ -223,9 +227,11 @@ public class AdminAction extends ActionSupport {
     public String queryStudent() throws Exception{
             LinkedHashMap<Object, Object> equals = new LinkedHashMap<>();
             equals.put("studentId", searchStudentWord);
-            studentList = studentBo.getList(equals,null,null,null,null,null,0,0);
-            studentList.addAll(studentBo.getStudentsByName(searchStudentWord));
-            studentList.addAll(studentBo.getStudentsByClass(searchStudentWord));
+            Set<Student> studentSet = new HashSet<>();
+            studentSet.addAll(studentBo.getList(equals,null,null,null,null,null,0,0));
+            studentSet.addAll(studentBo.getStudentsByName(searchStudentWord));
+            studentSet.addAll(studentBo.getStudentsByClass(searchStudentWord));
+            studentList.addAll(studentSet);
             return "success";
 
     }
@@ -633,4 +639,8 @@ public class AdminAction extends ActionSupport {
     }
 
 
+    public String setCurrentStudent() throws Exception {
+        student = studentBo.get(student.getStudentId());
+        return "success";
+    }
 }

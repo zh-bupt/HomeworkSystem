@@ -91,7 +91,7 @@
             </div>
         </div>
         <div class="result-wrap">
-            <form name="myform" id="myform" method="post">
+            <%--<form name="myform" id="myform" method="post">--%>
                 <div class="result-title">
                     <div class="result-list">
                         <%--<a href="addReader.jsp"><i class="icon-font"></i>添加读者</a>--%>
@@ -105,7 +105,7 @@
                 </div>
                 <div class="result-content">
                 </div>
-            </form>
+            <%--</form>--%>
         </div>
     </div>
     <!--/main-->

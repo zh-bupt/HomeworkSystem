@@ -29,8 +29,7 @@
             <h1 class="topbar-logo none"><a class="navbar-brand">查询结果</a></h1>
             <ul class="navbar-list clearfix">
                 <%--<li><a class="on" href="/pages/admin_student.jsp">首页</a></li>--%>
-                <li><a  href="/admin/listTeacherAction.action" target="_blank">教师管理</a></li>
-                <li><a class="on" href="/pages/admin_student.jsp" target="_blank">学生管理</a></li>
+                <li><a class="on" href="/teacher/listCourseAction.action" target="_blank">课程管理</a></li>
 
             </ul>
         </div>
@@ -67,37 +66,6 @@
         <div class="crumb-wrap">
             <div class="crumb-list"><i class="icon-font"></i><a href="main.jsp">首页</a><span class="crumb-step">&gt;</span><span class="crumb-name">学生管理</span></div>
         </div>
-        <%--<div class="search-wrap">--%>
-            <!--用于查询得表单-->
-            <%--<div class="search-content">--%>
-                <%--<form method="post" action="readerManage.jsp" id="searchForm">--%>
-                <%--<s:form action="addStudentForCourseByTypeAction" id="searchForm">--%>
-                    <%--<h3>发布作业</h3>--%>
-                    <%--<table class="search-tab">--%>
-                        <%--<tr>  &lt;%&ndash;<s:textfield  class="common-text" name="content" label="内容" value=""/>&ndash;%&gt;--%>
-                                <%--&lt;%&ndash;<s:textfield name="deadline" label="截止日期(yyyy-MM-dd)" value=""/>&ndash;%&gt;--%>
-                                <%--&lt;%&ndash;<s:textfield name="percentage" label="所占比例" value=""/>&ndash;%&gt;--%>
-                                <%--&lt;%&ndash;<s:token/>&ndash;%&gt;--%>
-                                <%--&lt;%&ndash;<s:textfield  name="studentId" label="学号" value="" style="width:150px"/>&ndash;%&gt;--%>
-                            <%--<th width="140">内容:</th>--%>
-                            <%--<td><textarea name="content" id="" cols="30" rows="10"></textarea></td>--%>
-                            <%--<th width="140">截止日期:</th>--%>
-                            <%--<td><input class="common-text" placeholder="" name="deadline"  id="deadline"  type="date" style="width:150px"></td>&lt;%&ndash;TODO 在页面限制输入为日期，可能出错&ndash;%&gt;--%>
-                            <%--<th width="140">所占百分比:</th>--%>
-                            <%--<td><input class="common-text" placeholder="" name="percentage"  id="percentage"  type="number" style="width:150px"></td>&lt;%&ndash;TODO 在页面限制输入为数字，可能出错&ndash;%&gt;--%>
-                                <%--&lt;%&ndash;<th width="140">姓名:</th>&ndash;%&gt;--%>
-                                <%--&lt;%&ndash;<td><input class="common-text" placeholder="" name="studentName"  id="studentName"  type="text" style="width:150px"></td>&ndash;%&gt;--%>
-                            <%--<td style="padding-left:50px">--%>
-                                <%--<s:token/>--%>
-                                <%--<s:submit  class="btn btn-primary btn2" value="添加"/>--%>
-                                    <%--&lt;%&ndash;<button class="btn btn-primary btn2" type="submit" >添加</button>&ndash;%&gt;--%>
-                            <%--</td>--%>
-                        <%--</tr>--%>
-                    <%--</table>--%>
-                <%--</s:form>--%>
-                <%--</form>--%>
-            <%--</div>--%>
-        <%--</div>--%>
         <div class="result-wrap">
             <%--<form name="myform" id="myform" method="post">--%>
                 <div class="result-title">
@@ -169,7 +137,7 @@
                                     <td><s:date  name="releaseTime"  format="yyyy-MM-dd"/> </td>
                                     <td><s:date  name="deadline"  format="yyyy-MM-dd"/></td>
                                     <td><s:property value="percentage"/> </td>
-                                    <td><input  class="link-update btn btn-success btn2"  type="button" name="update" value="查看提交" onclick="javascript:window.location.href='/teacher/listHomeworkGroupAction.action?homeworkId=${homeworkId}'"/>
+                                    <td><input  class="link-update btn btn-success btn2"  type="button" name="update" value="查看提交" onclick="javascript:window.location.href='/teacher/setCurrentHomeworkAction.action?homeworkId=${homeworkId}'"/>
                                         <input  class="link-del btn btn-danger btn2"  type="button" name="delete" value="删除" onclick="javascript:window.location.href='/teacher/deleteHomeworkAction.action?homeworkId=${homeworkId}'"/></td>
                                 </tr>
                             </s:iterator>

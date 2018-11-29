@@ -80,6 +80,7 @@
                             <td style="padding-left:50px"><button class="btn btn-primary btn2" type="submit" >添加</button></td>
                         </tr>
                     </table>
+                    <s:actionerror/>
                     <s:token/>
                 </s:form>
                 <%--</form>--%>

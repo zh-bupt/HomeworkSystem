@@ -65,7 +65,7 @@
     <!--/sidebar-->
     <div class="main-wrap">
         <div class="crumb-wrap">
-            <div class="crumb-list"><i class="icon-font"></i><a href="main.jsp">首页</a><span class="crumb-step">&gt;</span><span class="crumb-name">课程管理</span></div>
+            <div class="crumb-list"><i class="icon-font"></i><a>首页</a><span class="crumb-step">&gt;</span><span class="crumb-name">课程管理</span></div>
         </div>
         <div class="search-wrap">
             <!--用于查询得表单-->
@@ -117,7 +117,7 @@
                                     <td><s:property value="studentName"/> </td>
                                     <td><s:property value="sex"/> </td>
                                     <td><s:property value="email"/> </td>
-                                    <td><s:property value="entranceDate"/> </td>
+                                    <td><s:date name="entranceDate" format="yyyy-MM-dd"/> </td>
                                     <td><input class="link-del btn btn-danger btn2"  type="button" name="delete" value="删除" onclick="delete_(${studentId})"/></td>
                                 </tr>
                             </s:iterator>

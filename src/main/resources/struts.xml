@@ -37,7 +37,7 @@
             <interceptor-ref name="token"/>
             <result name="invalid.token">/pages/admin_student.jsp</result>
             <result name="success">/pages/admin_student.jsp</result>
-            <result name="error">/pages/error.jsp</result>
+            <result name="error">/pages/admin_add_student.jsp</result>
         </action>
         <action name="addStudentByFileAction"
                 class="com.bupt.se.homework.action.AdminAction" method="addStudentByFile">
@@ -76,6 +76,10 @@
         <action name="updateStudentAction"
                 class="com.bupt.se.homework.action.AdminAction" method="updateStudent">
             <result name="success" type="chain">listStudentAction</result>
+        </action>
+        <action name="updateStudentPageAction"
+                class="com.bupt.se.homework.action.AdminAction" method="setCurrentStudent">
+            <result name="success">/pages/admin_update_student.jsp</result>
         </action>
         <action name="addTeacherAction"
                 class="com.bupt.se.homework.action.AdminAction" method="addTeacher">
@@ -134,6 +138,7 @@
             <interceptor-ref name="token"/>
             <result name="invalid.token" type="chain">listCourseAction</result>
             <result name="success" type="chain">listCourseAction</result>
+            <result name="error" type="chain">listCourseAction</result>
         </action>
         <action name="setCurrentCourseAction"
                 class="com.bupt.se.homework.action.TeacherAction" method="setSessionCourse">
@@ -162,11 +167,22 @@
         <action name="updateCoursePageAction">
             <result>/pages/teacher_update_course.jsp</result>
         </action>
+        <action name="setCurrentHomeworkAction"
+                class="com.bupt.se.homework.action.TeacherAction" method="setSessionHomework">
+            <result name="success" type="chain">listHomeworkGroupAction</result>
+        </action>
         <action name="showHomeworkAction"
             class="com.bupt.se.homework.action.TeacherAction" method="listHomework">
             <result>/pages/teacher_add_homework.jsp</result>
         </action>
-
+        <action name="checkHomeworkPageAction"
+            class="com.bupt.se.homework.action.TeacherAction" method="setSessionGroup">
+            <result>/pages/teacher_check_homework.jsp</result>
+        </action>
+        <action name="checkHomeworkAction"
+                class="com.bupt.se.homework.action.TeacherAction" method="checkHomework">
+            <result name="success" type="chain">listHomeworkGroupAction</result>
+        </action>
     </package>
     <package name="course" namespace="/teacher" extends="struts-default">
         <action name="addStudentForCourseByFileAction"
@@ -199,8 +215,8 @@
         <action name="addHomeworkAction"
                 class="com.bupt.se.homework.action.TeacherAction" method="addHomework">
             <interceptor-ref name="defaultStack"/>
-            <!--<interceptor-ref name="token"/>-->
-            <!--<result name="invalid.token" type="chain">showCourseAction</result>-->
+            <interceptor-ref name="token"/>
+            <result name="invalid.token">/pages/error.jsp</result>
             <result name="success" type="chain">showCourseAction</result>
         </action>
         <action name="deleteHomeworkAction"
@@ -227,7 +243,10 @@
         </action>
         <action name="submitHomeworkAction"
                 class="com.bupt.se.homework.action.StudentAction" method="submitHomework">
-            <result name="success" type="chain">listCourseAction</result>
+            <interceptor-ref name="defaultStack"/>
+            <interceptor-ref name="token"/>
+            <result name="invalid.token" type="chain">showCourseAction</result>
+            <result name="success" type="chain">showCourseAction</result>
         </action>
         <action name="showCourseAction"
                 class="com.bupt.se.homework.action.StudentAction" method="listHomeworkAndGroup">
@@ -241,6 +260,10 @@
                 class="com.bupt.se.homework.action.StudentAction" method="setSessionHomework">
             <result name="success">/pages/student_homework.jsp</result>
         </action>
+        <action name="setCurrentGroupAction"
+                class="com.bupt.se.homework.action.StudentAction" method="setSessionGroup">
+            <result name="success">/pages/student_group_contribution.jsp</result>
+        </action>
         <action name="addGroupAction"
                 class="com.bupt.se.homework.action.StudentAction" method="addGroup">
             <interceptor-ref name="defaultStack"/>
@@ -252,7 +275,10 @@
                 class="com.bupt.se.homework.action.StudentAction" method="queryCourse">
             <result name="success">/pages/student.jsp</result>
         </action>
-
+        <action name="setContributionAction"
+                class="com.bupt.se.homework.action.StudentAction" method="setMemberContribution">
+            <result name="success">/pages/student_group_contribution.jsp</result>
+        </action>
     </package>
     <package name="homework" namespace="/teacher" extends="struts-default">
         <action name="downloadHomeworkAction"
@@ -268,6 +294,7 @@
                         <param name="bufferSize">1024</param>  
                     </result>
         </action>
+
     </package>
 
 </struts>

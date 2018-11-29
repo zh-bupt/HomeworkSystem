@@ -29,8 +29,6 @@
             <ul class="navbar-list clearfix">
                 <%--<li><a class="on" href="/pages/admin_student.jsp">首页</a></li>--%>
                 <li><a class="on" href="/admin/listTeacherAction.action" target="_blank">课程管理</a></li>
-                <%--TODO--%>
-                <li><a href="/pages/admin_student.jsp" target="_blank">学生管理</a></li>
 
             </ul>
         </div>
