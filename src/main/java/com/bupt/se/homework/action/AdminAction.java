@@ -37,6 +37,7 @@ public class AdminAction extends ActionSupport {
     private AdminBo adminBo;
     private StudentBo studentBo;
     private TeacherBo teacherBo;
+
     private Student student = new Student();
     private Teacher teacher = new Teacher();
     private Admin admin = new Admin();
@@ -57,6 +58,23 @@ public class AdminAction extends ActionSupport {
     private String teacherExcelFileName; //上传的文件名
 
     private String userId;
+
+
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public Teacher getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    }
 
     public String getUserId() {
         return userId;
@@ -627,15 +645,16 @@ public class AdminAction extends ActionSupport {
         return "success";
     }
 
-    public String setSessionUser() throws Exception {
-        Map<String, Object> session = ActionContext.getContext().getSession();
-        session.put("userId",userId);
-        return "success";
-    }
 
 
     public String setCurrentStudent() throws Exception {
         student = studentBo.get(student.getStudentId());
+        System.out.println("入学时间--》"+student.getEntranceDate().toString().split(" ")[0]);
+        return "success";
+    }
+
+    public String setCurrentTeacher() throws Exception {
+        teacher = teacherBo.get(teacher.getTeacherId());
         return "success";
     }
 }

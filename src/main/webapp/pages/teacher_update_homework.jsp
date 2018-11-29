@@ -1,8 +1,8 @@
 <%--
   Created by IntelliJ IDEA.
   User: kwong
-  Date: 2018/11/28
-  Time: 10:44
+  Date: 2018/11/29
+  Time: 13:19
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -73,46 +73,40 @@
         <div class="result-wrap">
             <div class="result-content">
                 <h1>修改课程信息</h1>
-                    <s:form  id="searchForm" action="updateCourseAction" >
+                <s:form  id="searchForm" action="updateHomeworkAction" >
                     <%--<form  id="add-book"  enctype="multipart/form-data">--%>
                     <input type="hidden" value="add" name="type">
                     <table class="insert-tab" width="100%">
                         <tbody>
                         <tr>
-                            <th>课程ID:</th>
+                            <th>作业ID:</th>
                             <td>
-                                <input class="common-text" id="courseId" name="courseId" size="50" value="${course.getCourseId()}" type="text">
+                                <input class="common-text" id="homeworkId" name="homeworkId" size="50" value="${homework.getHomeworkId()}" disabled type="text">
                             </td>
                         </tr>
                         <tr>
-                            <th>创建时间:</th>
+                            <th >发布日期：</th>
                             <td>
-                                <input class="common-text" id="createTime" name="createTime" size="50" value="${course.getCreateTime().toString().split(" ")[0]}" type="date">
+                                <input class="date" id="releaseTime" name="releaseTime" min="1900-01-01" size="50" value="${homework.getReleaseTime().toString().split(" ")[0]}" disabled type="text">
                             </td>
                         </tr>
                         <tr>
-                            <th >课程名称：</th>
+                            <th >截止日期：</th>
                             <td>
-                                <input class="common-text" id="courseName" name="courseName" size="50" value="${course.getCourseName()}" type="text">
+                                <input class="date" id="deadline" name="deadline" min="1900-01-01" size="50" value="${homework.getDeadline().toString().split(" ")[0]}" type="text">
                             </td>
                         </tr>
 
                         <tr>
-                            <th>小组名称前缀：</th>
+                            <th>所占百分比：</th>
                             <td>
-                                <input class="common-text" id="groupPrefix" name="groupPrefix" size="50" value="${course.getGroupPrefix()}" type="text">
+                                <input class="common-text" id="percentage" name="percentage" size="50" min="0" max="100" value="${homework.getPercentage()}" type="number">
                             </td>
                         </tr>
                         <tr>
-                            <th>小组人数下限：</th>
+                            <th>内容：</th>
                             <td>
-                                <input class="common-text" id="minStudentNum" name="groupMin" size="50" value="${course.getMinStudentNum()}" type="number">
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>小组人数上限：</th>
-                            <td>
-                                <input class="common-text" name="maxStudentNum" size="50"  type="number" value="${course.getMaxStudentNum()}">
+                                <textarea name="content" class="common-textarea" id="content"   cols="30" style="width: 98%;" rows="10">${homework.getContent()}</textarea>
                             </td>
                         </tr>
                         <tr>
@@ -125,7 +119,7 @@
                         </tbody>
                     </table>
                     <%--</form>--%>
-                        <s:token/>
+                    <s:token/>
                 </s:form>
             </div>
         </div>
@@ -133,4 +127,3 @@
 </div>
 </body>
 </html>
-

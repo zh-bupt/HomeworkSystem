@@ -78,13 +78,13 @@
                         <tr>
                             <th>工号：</th>
                             <td>
-                                <input class="common-text required" id="teacherId" name="teacherId" size="50" value="" type="text">
+                                <input class="common-text required" id="teacherId" name="teacherId" size="50" value="${teacher.getTeacherId()}" type="text">
                             </td>
                         </tr>
                         <tr>
                             <th >姓名：</th>
                             <td>
-                                <input class="common-text required" id="teacherName" name="teacherName" size="50" value="" type="text">
+                                <input class="common-text required" id="teacherName" name="teacherName" size="50" value="${teacher.getTeacherName()}" type="text">
                             </td>
                             </td>
                         </tr>
@@ -92,26 +92,32 @@
                         <tr>
                             <th>性别：</th>
                             <td>
-                                <input type="radio" name="sex" class="radio-inline" style="margin: 10px" value="男">男
-                                <input type="radio" name="sex" class="radio-inline" style="margin: 10px" value="女">女
+                                <s:if test="teacher.getSex().equals(\"男\")">
+                                    <input type="radio" name="sex" class="radio-inline" style="margin: 10px" value="男" checked>男
+                                    <input type="radio" name="sex" class="radio-inline" style="margin: 10px" value="女">女
+                                </s:if>
+                                <s:else>
+                                    <input type="radio" name="sex" class="radio-inline" style="margin: 10px" value="男">男
+                                    <input type="radio" name="sex" class="radio-inline" style="margin: 10px" value="女" checked>女
+                                </s:else>
                             </td>
                         </tr>
                         <tr>
                             <th>联系电话：</th>
                             <td>
-                                <input class="common-text required" id="telephone" name="telephone" size="50" value="" type="text">
+                                <input class="common-text required" id="telephone" name="telephone" size="50" value="${teacher.getTelephone()}" type="text">
                             </td>
                         </tr>
                         <tr>
                             <th>邮箱：</th>
                             <td>
-                                <input class="common-text" name="teacherEmail" size="50"  type="text">
+                                <input class="common-text" name="teacherEmail" size="50"  type="text" value="${teacher.getEmail()}">
                             </td>
                         </tr>
                         <tr>
                             <th>密码：</th>
                             <td>
-                                <input class="common-text" name="teacherPassword" size="50" type="password">
+                                <input class="common-text" name="teacherPassword" size="50" type="password" value="${teacher.getPassword()}">
                             </td>
                         </tr>
                         <tr>

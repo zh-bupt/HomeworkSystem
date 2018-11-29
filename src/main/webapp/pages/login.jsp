@@ -58,7 +58,7 @@
                             <%--<radio name="role" list="{ '管理员', '教师','学生' }" value="'学生'"  label="用户身份"  class="radio-inline"  class="admin_input_style"></radio>--%>
                             <input type="radio" name="role" class="radio-inline" style="margin: 10px;color: #1A1A1A" value="管理员">管理员
                             <input type="radio" name="role" class="radio-inline" style="margin: 10px;color: #1A1A1A" value="教师">教师
-                            <input type="radio" name="role" class="radio-inline" style="margin: 10px;color: #1A1A1A" value="学生">学生
+                            <input type="radio" name="role" class="radio-inline" style="margin: 10px;color: #1A1A1A" value="学生" checked>学生
                             <%--</s:if>--%>
                             <%--<s:else>--%>
                                 <%--<s:radio name="role" list="{ '管理员', '教师','学生' }"  label="用户身份"  class="radio-inline"/>--%>

@@ -322,6 +322,8 @@ public class StudentAction{
             FileUtils.copyFile(groupHomework, new File(file,groupHomeworkFileName));
             //String result = getDataFromExcel(realPath+"\\"+studentExcelFileName);
             homeworkGroup.setFileDir(groupHomeworkFileName);
+            homeworkGroup.setScore(0);
+            homeworkGroup.setComment("");
 //            homeworkGroup.setHomework(homework);
 //            homeworkGroup.setGroup_(group_);
             homeworkGroup.setSubmissionTime(new Date());
@@ -489,9 +491,15 @@ public class StudentAction{
 
     public String setMemberContribution() throws Exception {
         Map<String,Object> session = ActionContext.getContext().getSession();
-        GroupStudent gs = groupStudentBo.get(new GroupStudentPK(session.get("groupId").toString(),studentId));
+        //GroupStudent gs = groupStudentBo.get(new GroupStudentPK(session.get("groupId").toString(),studentId));
+        GroupStudent gs = new GroupStudent();
+        gs.setPk(new GroupStudentPK(session.get("groupId").toString(),studentId));
+        group=groupBo.get(session.get("groupId").toString());
+        student=studentBo.get(studentId);
+        gs.setGroup_(group);
+        gs.setStudent(student);
         gs.setContribution(contribution);
-        groupStudentBo.updateGroupStudent(gs);//TODO 这里出错
+        groupStudentBo.merge(gs);//TODO 这里出错
         return "success";
     }
 //

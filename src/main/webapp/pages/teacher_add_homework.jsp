@@ -108,7 +108,7 @@
                             </tbody>
                         </table>
                         <%--</form>--%>
-                        <%--<s:token/>--%>
+                        <s:token/>
                     </s:form>
                     <div class="result-title">
                         <div class="result-list">
@@ -138,6 +138,7 @@
                                     <td><s:date  name="deadline"  format="yyyy-MM-dd"/></td>
                                     <td><s:property value="percentage"/> </td>
                                     <td><input  class="link-update btn btn-success btn2"  type="button" name="update" value="查看提交" onclick="javascript:window.location.href='/teacher/setCurrentHomeworkAction.action?homeworkId=${homeworkId}'"/>
+                                        <input  class="link-update btn btn-warning btn2"  type="button" name="update" value="修改" onclick="javascript:window.location.href='/teacher/updateHomeworkPageAction.action?homeworkId=${homeworkId}'"/>
                                         <input  class="link-del btn btn-danger btn2"  type="button" name="delete" value="删除" onclick="javascript:window.location.href='/teacher/deleteHomeworkAction.action?homeworkId=${homeworkId}'"/></td>
                                 </tr>
                             </s:iterator>
