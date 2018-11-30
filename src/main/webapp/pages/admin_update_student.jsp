@@ -77,7 +77,7 @@
                         <tr>
                             <th>学号：</th>
                             <td>
-                                <input class="common-text required"  id="studentId" name="studentId" size="50" value="${student.getStudentId()}" type="text">
+                                <input class="common-text required"  id="studentId" name="studentId" size="50" value="${student.getStudentId()}" type="text" readonly>
                             </td>
                         </tr>
                         <tr>

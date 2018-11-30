@@ -81,13 +81,13 @@
                         <tr>
                             <th>课程ID:</th>
                             <td>
-                                <input class="common-text" id="courseId" name="courseId" size="50" value="${course.getCourseId()}" type="text">
+                                <input class="common-text" id="courseId" name="courseId" size="50" value="${course.getCourseId()}" type="text" readonly>
                             </td>
                         </tr>
                         <tr>
                             <th>创建时间:</th>
                             <td>
-                                <input class="common-text" id="createTime" name="createTime" size="50" value="${course.getCreateTime().toString().split(" ")[0]}" type="date">
+                                <input class="common-text" id="createTime" name="createTime" size="50" value="${course.getCreateTime().toString().split(" ")[0]}" type="date" readonly>
                             </td>
                         </tr>
                         <tr>
