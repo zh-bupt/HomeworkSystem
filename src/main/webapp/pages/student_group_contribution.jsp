@@ -104,10 +104,10 @@
                                             <s:property value="studentName"/>
                                         </td>
                                         <td>
-                                            <input class="common-text" id="contribution" name="contribution" size="50" min="0" max="100" value="" type="number">
+                                            <input class="common-text" id="${studentId}" name="contribution" size="50" min="0" max="100" value="${scoreList.get(studentId)}" type="number">
                                         </td>
                                         <%--<td><input class="link-update btn btn-warning btn2" type="button" name="update" value="确定" onclick="set_contribution(${studentId})"/></td>--%>
-                                            <td><input class="link-update btn btn-warning btn2" type="button" name="update" value="确定" onclick="window.location.href='/student/setContributionAction?studentId=${studentId}&contribution='+document.getElementById('contribution').value"/></td>
+                                            <td><input class="link-update btn btn-warning btn2" type="button" name="update" value="确定" onclick="window.location.href='/student/setContributionAction?studentId=${studentId}&contribution='+document.getElementById('${studentId}').value"/></td>
                                         <%--</s:form>--%>
                                     </tr>
                             </s:iterator>

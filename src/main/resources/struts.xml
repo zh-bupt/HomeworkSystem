@@ -268,6 +268,10 @@
         </action>
         <action name="setCurrentGroupAction"
                 class="com.bupt.se.homework.action.StudentAction" method="setSessionGroup">
+            <result name="success" type="chain">setContributionPageAction</result>
+        </action>
+        <action name="setContributionPageAction"
+                class="com.bupt.se.homework.action.StudentAction" method="listGroupStudent">
             <result name="success">/pages/student_group_contribution.jsp</result>
         </action>
         <action name="addGroupAction"
@@ -283,7 +287,7 @@
         </action>
         <action name="setContributionAction"
                 class="com.bupt.se.homework.action.StudentAction" method="setMemberContribution">
-            <result name="success">/pages/student_group_contribution.jsp</result>
+            <result name="success" type="chain">setContributionPageAction</result>
         </action>
     </package>
     <package name="homework" namespace="/teacher" extends="struts-default">

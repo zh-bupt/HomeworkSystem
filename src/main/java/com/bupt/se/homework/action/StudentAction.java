@@ -37,6 +37,7 @@ public class StudentAction{
     private List<Student> memberList = new ArrayList<>();
     private String searchCourseWord;
 
+    private Map<String,Integer> scoreList = new HashMap<>();
     private Integer contribution;
     private String studentId;
 
@@ -244,6 +245,14 @@ public class StudentAction{
 
     public void setStudentBo(StudentBo studentBo) {
         this.studentBo = studentBo;
+    }
+
+    public Map<String, Integer> getScoreList() {
+        return scoreList;
+    }
+
+    public void setScoreList(Map<String, Integer> scoreList) {
+        this.scoreList = scoreList;
     }
 
     public String listCourse() throws Exception {
@@ -489,20 +498,27 @@ public class StudentAction{
     public String setSessionGroup() throws Exception {
         Map<String,Object> session = ActionContext.getContext().getSession();
         session.put("groupId",group.getGroupId());
-        group = groupBo.get(group.getGroupId());
+
+        return "success";
+    }
+
+    public String listGroupStudent() throws Exception {
+        Map<String,Object> session = ActionContext.getContext().getSession();
+        group = groupBo.get(session.get("groupId").toString());
         List<GroupStudent> gsList = group.getGroupStudentList();
         memberList = new ArrayList<>();//清空
         for(GroupStudent gs:gsList)
         {
             memberList.add(gs.getStudent());
+            scoreList.put(gs.getStudent().getStudentId(), gs.getContribution());
         }
         System.out.println("memberList-->size:"+memberList.size());
 
         return "success";
     }
-
     public String setMemberContribution() throws Exception {
         Map<String,Object> session = ActionContext.getContext().getSession();
+        System.out.println("他的贡献-->"+studentId+" "+contribution);
         try {
             groupStudentBo.setContribution(session.get("groupId").toString(),
                     studentId, contribution);
