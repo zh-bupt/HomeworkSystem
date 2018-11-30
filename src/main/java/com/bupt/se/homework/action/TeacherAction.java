@@ -5,6 +5,7 @@ import com.bupt.se.homework.bo.impl.CourseBoImpl;
 import com.bupt.se.homework.bo.impl.StudentBoImpl;
 import com.bupt.se.homework.bo.impl.StudentCourseBoImpl;
 import com.bupt.se.homework.entity.*;
+import com.bupt.se.homework.exception.ServiceException;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import org.apache.commons.io.FileUtils;
@@ -838,10 +839,20 @@ public class TeacherAction extends ActionSupport {
     }
 
     public String updateHomework() throws Exception {
-        Map<String, Object> session = ActionContext.getContext().getSession();
-        homework.setCourse(courseBo.get(session.get("courseId").toString()));
-        System.out.println("homeworkId == "+homework.getHomeworkId());
-        homeworkBo.update(homework);
+        Homework modified = homeworkBo.getHomework(homework.getHomeworkId());
+        modified.setReleaseTime(homework.getReleaseTime());
+        modified.setDeadline(homework.getDeadline());
+        modified.setContent(homework.getContent());
+        modified.setPercentage(homework.getPercentage());
+        try {
+            homeworkBo.updateHomework(modified);
+        } catch (ServiceException se) {
+            se.printStackTrace();
+            return "error";
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "error";
+        }
         return "success";
     }
 }

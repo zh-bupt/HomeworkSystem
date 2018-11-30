@@ -16,6 +16,8 @@ public class ServiceExceptionErrorCode {
     public static final long HOMEWORK_GROUP_NOT_FOUND = 0xACE341;
     public static final long HOMEWORK_GROUP_SCORE_ERROR = 0xACE342;
     public static final long STUDENT_DUPLICATED = 0xACE343;
+    public static final long HOMEWORK_PERCENTAGE_EXCEED = 0xACE344;
+    public static final long HOMEWORK_PERCENTAGE_ERROR = 0xACE345;
 
     public static final long GROUP_NOT_FOUND = 0xBEE211;
     public static final long GROUP_NUM_ERROR = 0xBEE212;

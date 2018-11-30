@@ -13,9 +13,6 @@ public class TeacherDAOImpl extends BasicDAOImpl<Teacher, String> implements Tea
 
     @Override
     public void assignHomework(Course course, Homework homework) throws Exception {
-        if (CalculateHomePercentage(course) > 100) {
-            throw new Exception("作业比例超过100%.");
-        }
         Session session = getSession();
         // 保存作业
         homework.setCourse(course);
@@ -32,15 +29,5 @@ public class TeacherDAOImpl extends BasicDAOImpl<Teacher, String> implements Tea
             session.save(hg);
         }
         session.update(homework);
-    }
-
-    private int CalculateHomePercentage(Course course) {
-        List<Homework> homeworkSet = course.getHomework();
-        int total = 0;
-        for (Homework homework:homeworkSet) {
-            total += homework.getPercentage();
-            System.out.println("total: " + total);
-        }
-        return total;
     }
 }

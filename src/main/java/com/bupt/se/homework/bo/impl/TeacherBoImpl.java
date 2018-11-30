@@ -137,13 +137,27 @@ public class TeacherBoImpl extends BasicBoImpl<Teacher, String> implements Teach
             throw new ServiceException(ServiceExceptionErrorCode.COURSE_NOT_FOUND,
                     "课程 " + courseId + " 不存在");
         }
-        try {
-            course.getHomework().add(homework);
-            homework.setCourse(course);
+        course.getHomework().add(homework);
+        homework.setCourse(course);
+        if (CalculateHomePercentage(course) > 100) {
+            throw new ServiceException(ServiceExceptionErrorCode.HOMEWORK_PERCENTAGE_ERROR,
+                    "作业比例超过100%. 请重新设置作业比例.");
+        }
+        try{
             teacherDAO.assignHomework(course, homework);
             logger.info("Assigned homework for course " + courseId);
         } catch (Exception e) {
             throw new ServiceException(ServiceExceptionErrorCode.ASSIGN_HOMEWORK_ERROR, e.getMessage());
         }
+    }
+
+    private int CalculateHomePercentage(Course course) {
+        List<Homework> homeworkSet = course.getHomework();
+        int total = 0;
+        for (Homework homework:homeworkSet) {
+            total += homework.getPercentage();
+            System.out.println("total: " + total);
+        }
+        return total;
     }
 }
