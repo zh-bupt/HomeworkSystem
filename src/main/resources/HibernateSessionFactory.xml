@@ -43,6 +43,7 @@
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>
             <tx:method name="get*" read-only="true"/>
+            <tx:method name="*" no-rollback-for="com.bupt.se.homework.exception.ServiceException" propagation="REQUIRED" read-only="true"/>
             <!--<tx:method name="*"  rollback-for="java.lang.Exception" propagation="REQUIRED" />-->
             <tx:method name="getHomeworkGroup" propagation="REQUIRED" read-only="false"/>
             <tx:method name="add*" propagation="REQUIRED"/>
@@ -51,10 +52,9 @@
             <tx:method name="modify*" propagation="REQUIRED"/>
             <tx:method name="update*" propagation="REQUIRED"/>
             <tx:method name="calculate*" propagation="REQUIRED"/>
-            <tx:method name="change*" propagation="REQUIRED"/>
+            <tx:method name="set*" propagation="REQUIRES_NEW"/>
             <tx:method name="assignHomework" rollback-for="java.lang.Exception" propagation="REQUIRED"/>
             <!--<tx:method name="*" no-rollback-for="com.bupt.se.homework.exception.ServiceException"/>-->
-            <tx:method name="*" no-rollback-for="com.bupt.se.homework.exception.ServiceException" propagation="REQUIRED" read-only="true"/>
         </tx:attributes>
     </tx:advice>
 
@@ -79,7 +79,6 @@
             <!--<tx:method name="list*" read-only="true"/>-->
             <!--<tx:method name="get*"/>-->
             <!--<tx:method name="query*"/>-->
-            <!--<tx:method name="set*"/>-->
             <!--<tx:method name="submitHomework"/>-->
             <!--<tx:method name="setSessionGroup" read-only="true"/>-->
             <tx:method name="*" rollback-for="java.lang.Exception"/>

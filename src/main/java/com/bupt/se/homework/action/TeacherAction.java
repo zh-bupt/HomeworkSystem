@@ -40,6 +40,7 @@ public class TeacherAction extends ActionSupport {
     private Student student = new Student();
     private StudentBo studentBo;
 
+
     private Homework homework = new Homework();
     private HomeworkBo homeworkBo;
 
@@ -64,6 +65,43 @@ public class TeacherAction extends ActionSupport {
     private InputStream excelFile;
     private String fileName;
 
+    public  void setCreateTime(Date createTime)
+    {
+        this.course.setCreateTime(createTime);
+    }
+    public void setReleaseTime(Date releaseTime)
+    {
+        this.homework.setReleaseTime(releaseTime);
+    }
+    public void setDeadline(Date deadline)
+    {
+        this.homework.setDeadline(deadline);
+    }
+
+    public Homework getHomework() {
+        return homework;
+    }
+
+    public void setHomework(Homework homework) {
+        this.homework = homework;
+    }
+
+    public void setMaxStudentNum(Integer maxStudentNum)
+    {
+        this.course.setMaxStudentNum(maxStudentNum);
+    }
+    public void setMinStudentNum(Integer minStudentNum)
+    {
+        this.course.setMinStudentNum(minStudentNum);
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
 
     public InputStream getIs() {
         return is;
@@ -597,7 +635,10 @@ public class TeacherAction extends ActionSupport {
 
     public String updateCourse() throws Exception {
         Map<String, Object> session = ActionContext.getContext().getSession();
-        course.setCourseId(session.get("courseId").toString());
+        //course.setCourseId(session.get("courseId").toString());
+        //course = courseBo.get(session.get("courseId").toString());
+        System.out.println("COURSE-->"+course.getCourseName()+course.getCourseId());
+        course.setTeacher(teacherBo.get(session.get("id").toString()));
         courseBo.update(course);
         return "success";
     }
@@ -782,6 +823,24 @@ public class TeacherAction extends ActionSupport {
     public String setSessionHomework() throws Exception {
         Map<String, Object> session = ActionContext.getContext().getSession();
         session.put("homeworkId",homework.getHomeworkId());
+        return "success";
+    }
+
+    public String setCurrentCourse() throws Exception {
+        Map<String, Object> session = ActionContext.getContext().getSession();
+        course = courseBo.get(session.get("courseId").toString());
+        return "success";
+    }
+
+    public String setCurrentHomework() throws Exception {
+        homework = homeworkBo.get(homework.getHomeworkId());
+        return "success";
+    }
+
+    public String updateHomework() throws Exception {
+        Map<String, Object> session = ActionContext.getContext().getSession();
+        homework.setCourse(courseBo.get(session.get("courseId").toString()));
+        homeworkBo.update(homework);
         return "success";
     }
 }

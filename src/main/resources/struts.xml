@@ -117,14 +117,11 @@
                 class="com.bupt.se.homework.action.AdminAction" method="updateTeacher">
             <result name="success" type="chain">listTeacherAction</result>
         </action>
-        <action name="setCurrentTeacher"
-                class="com.bupt.se.homework.action.AdminAction" method="setSessionUser">
+        <action name="updateTeacherPageAction"
+                class="com.bupt.se.homework.action.AdminAction" method="setCurrentTeacher">
             <result name="success">/pages/admin_update_teacher.jsp</result>
         </action>
-        <action name="setCurrentStudent"
-                class="com.bupt.se.homework.action.AdminAction" method="setSessionUser">
-            <result name="success">/pages/admin_update_student.jsp</result>
-        </action>
+
     </package>
 
     <package name="teacher" namespace="/teacher" extends="struts-default">
@@ -164,7 +161,8 @@
         <action name="addStudentPageAction">
             <result>/pages/teacher_add_student.jsp</result>
         </action>
-        <action name="updateCoursePageAction">
+        <action name="updateCoursePageAction"
+            class="com.bupt.se.homework.action.TeacherAction" method="setCurrentCourse">
             <result>/pages/teacher_update_course.jsp</result>
         </action>
         <action name="setCurrentHomeworkAction"
@@ -218,6 +216,14 @@
             <interceptor-ref name="token"/>
             <result name="invalid.token">/pages/error.jsp</result>
             <result name="success" type="chain">showCourseAction</result>
+        </action>
+        <action name="updateHomeworkPageAction"
+                class="com.bupt.se.homework.action.TeacherAction" method="setCurrentHomework">
+            <result name="success">/pages/teacher_update_homework.jsp</result>
+        </action>
+        <action name="updateHomeworkAction"
+                class="com.bupt.se.homework.action.TeacherAction" method="updateHomework">
+            <result name="success" type="chain">showHomeworkAction</result>
         </action>
         <action name="deleteHomeworkAction"
                 class="com.bupt.se.homework.action.TeacherAction" method="deleteHomework">

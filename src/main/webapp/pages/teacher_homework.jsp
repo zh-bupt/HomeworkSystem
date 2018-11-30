@@ -77,15 +77,15 @@
                                 <%--<input class="common-text" placeholder="" name="courseId"  id="courseId"  type="text" style="width:150px">--%>
                             </td>
                         <th width="70">发布时间:</th>
-                            <td><s:property value="homework.getReleaseTime()"/>
+                            <td><s:date name="homework.getReleaseTime()" format="yyyy-MM-dd"/>
                                 <%--<input class="common-text" placeholder="" name="courseName"  id="courseName"  type="text" style="width:150px">--%>
                             </td>
                             <th width="70">截至时间:</th>
-                            <td><s:property value="homework.getDeadline()"/>
+                            <td><s:date name="homework.getDeadline()" format="yyyy-MM-dd"/>
                                 <%--<input class="common-text" placeholder="" name="courseName"  id="courseName"  type="text" style="width:150px">--%>
                             </td>
                         <th width="100">所占百分比:</th>
-                        <td><s:property value="homework.getPecentage()"/>
+                        <td><s:property value="homework.getPercentage()"/>%
                             <%--<input class="common-text" placeholder="" name="courseName"  id="courseName"  type="text" style="width:150px">--%>
                         </td>
                         <th width="70">内容:</th>

@@ -6,6 +6,7 @@ import com.bupt.se.homework.exception.ServiceException;
 import com.opensymphony.xwork2.ActionContext;
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.io.IOException;
@@ -323,6 +324,8 @@ public class StudentAction{
             FileUtils.copyFile(groupHomework, new File(file,groupHomeworkFileName));
             //String result = getDataFromExcel(realPath+"\\"+studentExcelFileName);
             homeworkGroup.setFileDir(groupHomeworkFileName);
+            homeworkGroup.setScore(0);
+            homeworkGroup.setComment("");
 //            homeworkGroup.setHomework(homework);
 //            homeworkGroup.setGroup_(group_);
             homeworkGroup.setSubmissionTime(new Date());
@@ -501,14 +504,11 @@ public class StudentAction{
     public String setMemberContribution() throws Exception {
         Map<String,Object> session = ActionContext.getContext().getSession();
         try {
-            groupStudentBo.changeContribution(session.get("groupId").toString(),
+            groupStudentBo.setContribution(session.get("groupId").toString(),
                     studentId, contribution);
         } catch (ServiceException se) {
             se.printStackTrace();
         }
-//        GroupStudent gs = groupStudentBo.get(new GroupStudentPK(session.get("groupId").toString(),studentId));
-//        gs.setContribution(contribution);
-//        groupStudentBo.updateGroupStudent(gs);//TODO 这里出错
         return "success";
     }
 //

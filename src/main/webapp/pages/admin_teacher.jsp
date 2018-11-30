@@ -113,7 +113,7 @@
                                     <td><s:property value="profession"/> </td>
                                     <td><s:property value="telephone"/> </td>
                                     <td><s:property value="email"/> </td>
-                                    <td><input  class="link-update btn btn-warning btn2"  type="button" name="update" value="修改" onclick="javascript:window.location.href='/admin/setCurrentTeacher.action?userId=${teacherId}'"/>
+                                    <td><input  class="link-update btn btn-warning btn2"  type="button" name="update" value="修改" onclick="javascript:window.location.href='/admin/updateTeacherPageAction.action?teacherId=${teacherId}'"/>
                                         <input class="link-del btn btn-danger btn2" type="button" name="delete" value="删除" onclick="delete_user(${teacherId})"/></td>
                                 </tr>
                             </s:iterator>

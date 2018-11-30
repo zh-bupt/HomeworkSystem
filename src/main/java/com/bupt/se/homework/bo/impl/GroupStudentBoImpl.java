@@ -14,6 +14,7 @@ import com.bupt.se.homework.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -79,7 +80,7 @@ public class GroupStudentBoImpl
     }
 
     @Override
-    public void changeContribution(String groupId, String studentId, int contribution) throws Exception {
+    public void setContribution(String groupId, String studentId, int contribution) throws Exception {
         Group_ g = groupDAO.get(groupId);
         if (contribution < 0 || contribution > 100) {
             throw new ServiceException(ServiceExceptionErrorCode.GROUP_STUDENT_CONTRIBUTION_ERROR,
@@ -100,8 +101,7 @@ public class GroupStudentBoImpl
             throw new ServiceException(ServiceExceptionErrorCode.NOT_IN_GROUP,
                     "学生 " + studentId + " 不在小组 " + groupId);
         }
-        gs.setContribution(contribution);
-        groupStudentDAO.update(gs);
+        groupStudentDAO.setContribution(g, s, contribution);
         logger.info("Update GroupStudent: " + groupId + ", " + studentId);
     }
 }
