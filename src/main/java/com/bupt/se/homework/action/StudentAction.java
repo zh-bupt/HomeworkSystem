@@ -6,7 +6,6 @@ import com.bupt.se.homework.exception.ServiceException;
 import com.opensymphony.xwork2.ActionContext;
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.io.IOException;
