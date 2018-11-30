@@ -10,6 +10,7 @@ import com.bupt.se.homework.entity.StudentCoursePK;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @description:
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
  * @create: 2018-11-16 14:39
  **/
 @Service("studentCourseBo")
+@Transactional
 public class StudentCourseBoImpl
         extends BasicBoImpl<StudentCourse, StudentCoursePK>
         implements StudentCourseBo {

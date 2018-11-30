@@ -10,6 +10,7 @@ import com.bupt.se.homework.exception.ServiceExceptionErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @description:
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Service;
  * @create: 2018-11-16 14:27
  **/
 @Service("homeworkGroupBo")
+@Transactional
 public class HomeworkGroupBoImpl
         extends BasicBoImpl<HomeworkGroup, HomeworkGroupPK>
         implements HomeworkGroupBo {
@@ -38,6 +40,7 @@ public class HomeworkGroupBoImpl
      * @Date: 2018/11/27
      **/
     @Override
+    @Transactional(noRollbackFor = {ServiceException.class})
     public void updateHomeworkGroup(HomeworkGroup homeworkGroup) throws Exception {
         if (!this.exists(homeworkGroup.getPk())){
             throw new ServiceException(ServiceExceptionErrorCode.HOMEWORK_GROUP_NOT_FOUND,

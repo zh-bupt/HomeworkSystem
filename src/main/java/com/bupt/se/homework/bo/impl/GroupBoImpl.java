@@ -9,6 +9,7 @@ import com.bupt.se.homework.exception.ServiceExceptionErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Set;
@@ -19,6 +20,7 @@ import java.util.Set;
  * @create: 2018-11-16 15:07
  **/
 @Service("groupBo")
+@Transactional
 public class GroupBoImpl extends BasicBoImpl<Group_, String> implements GroupBo {
 
     private GroupDAO groupDAO;
@@ -39,7 +41,8 @@ public class GroupBoImpl extends BasicBoImpl<Group_, String> implements GroupBo 
      * @Date: 2018/11/25
      **/
     @Override
-    public void calculateScore(Group_ group_) throws Exception {
+    @Transactional(noRollbackFor = {ServiceException.class})
+    public void calculateScore(Group_ group_) {
 //        Group_ group_ = this.get(groupId);
 //        if (group_ == null) {
 //            throw new ServiceException(ServiceExceptionErrorCode.GROUP_NOT_FOUND, "小组 " + groupId + " 不存在!");
@@ -58,6 +61,7 @@ public class GroupBoImpl extends BasicBoImpl<Group_, String> implements GroupBo 
     }
 
     @Override
+    @Transactional(noRollbackFor = {ServiceException.class})
     public void addGroup(Group_ group_, Course course, Student leader, Set<Student> members) throws Exception {
         if (members.size() > course.getMaxStudentNum()) {
             throw new ServiceException(ServiceExceptionErrorCode.GROUP_NUM_ERROR, "小组人数过多!");

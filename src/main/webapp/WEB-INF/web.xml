@@ -15,15 +15,6 @@
   </context-param>
 
   <filter>
-    <filter-name>struts2</filter-name>
-    <filter-class>org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter</filter-class>
-  </filter>
-  <filter-mapping>
-    <filter-name>struts2</filter-name>
-    <url-pattern>/*</url-pattern>
-  </filter-mapping>
-
-  <filter>
     <filter-name>hibernateFilter</filter-name>
     <filter-class>org.springframework.orm.hibernate5.support.OpenSessionInViewFilter</filter-class>
     <init-param>
@@ -31,13 +22,22 @@
       <param-value>true</param-value>
     </init-param>
     <!--<init-param>-->
-      <!--<param-name>sessionFactoryBeanName</param-name>-->
-      <!--<param-value>sessionFactory</param-value>-->
+    <!--<param-name>sessionFactoryBeanName</param-name>-->
+    <!--<param-value>sessionFactory</param-value>-->
     <!--</init-param>-->
   </filter>
 
   <filter-mapping>
     <filter-name>hibernateFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <filter>
+    <filter-name>struts2</filter-name>
+    <filter-class>org.apache.struts2.dispatcher.filter.StrutsPrepareAndExecuteFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>struts2</filter-name>
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 

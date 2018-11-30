@@ -11,6 +11,7 @@ import com.bupt.se.homework.exception.ServiceExceptionErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -20,6 +21,7 @@ import java.util.*;
  * @create: 2018-11-15 16:38
  **/
 @Service("courseBo")
+@Transactional
 public class CourseBoImpl extends BasicBoImpl<Course, String> implements CourseBo {
 
     private CourseDAO courseDAO;
@@ -49,6 +51,7 @@ public class CourseBoImpl extends BasicBoImpl<Course, String> implements CourseB
 //    }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Student> getStudentList(String courseId) throws Exception {
         Course course = this.get(courseId);
         if (course == null) {
@@ -91,6 +94,7 @@ public class CourseBoImpl extends BasicBoImpl<Course, String> implements CourseB
     }
 
     @Override
+    @Transactional(noRollbackFor = {ServiceException.class})
     public void addCourse(Course course) {
         if (exists(course.getCourseId())) {
             throw new ServiceException(ServiceExceptionErrorCode.COURSE_DUPLICATED,
@@ -100,11 +104,13 @@ public class CourseBoImpl extends BasicBoImpl<Course, String> implements CourseB
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Course> listCourse() {
         return this.getList(null, null, null, null, null, null, 0, 0);
     }
 
     @Override
+    @Transactional(readOnly = true, noRollbackFor = {ServiceException.class})
     public List<Homework> listHomework(String courseId) {
         Course course = courseDAO.get(courseId);
         if (course == null) {
@@ -132,6 +138,7 @@ public class CourseBoImpl extends BasicBoImpl<Course, String> implements CourseB
      * @Date: 2018/11/25
      **/
     @Override
+    @Transactional(noRollbackFor = {ServiceException.class})
     public void calculateScore(String courseId) throws Exception {
         logger.info("Calculate score for course " + courseId);
         Course course = this.get(courseId);

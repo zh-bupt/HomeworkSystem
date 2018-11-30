@@ -12,6 +12,7 @@ import com.bupt.se.homework.exception.ServiceExceptionErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -21,6 +22,7 @@ import java.util.*;
  * @Date: 2018/11/10
  **/
 @Service("teacherBo")
+@Transactional
 public class TeacherBoImpl extends BasicBoImpl<Teacher, String> implements TeacherBo {
 
     TeacherDAO teacherDAO;
@@ -45,6 +47,7 @@ public class TeacherBoImpl extends BasicBoImpl<Teacher, String> implements Teach
     }
 
     @Override
+    @Transactional(noRollbackFor = {ServiceException.class})
     public void addTeacher(Teacher teacher) throws Exception {
         if (this.exists(teacher.getTeacherId())) {
             throw new ServiceException(ServiceExceptionErrorCode.TEACHER_DUPLICATED,
@@ -55,6 +58,7 @@ public class TeacherBoImpl extends BasicBoImpl<Teacher, String> implements Teach
     }
 
     @Override
+    @Transactional(noRollbackFor = {ServiceException.class})
     public void updateTeacher(Teacher teacher) throws Exception {
         if (!this.exists(teacher.getTeacherId())) {
             throw new ServiceException(ServiceExceptionErrorCode.TEACHER_NOT_FOUND,
@@ -65,22 +69,26 @@ public class TeacherBoImpl extends BasicBoImpl<Teacher, String> implements Teach
     }
 
     @Override
+    @Transactional(noRollbackFor = {ServiceException.class})
     public void deleteTeacher(String id) throws Exception {
         this.delete(id);
         logger.info("Delete teacher " + id);
     }
 
     @Override
+    @Transactional(readOnly = true, noRollbackFor = {ServiceException.class})
     public List<Teacher> listTeacher() {
         return teacherDAO.findResultList(null, null, null, null, null, null, 0, 0);
     }
 
     @Override
+    @Transactional(noRollbackFor = {ServiceException.class})
     public List<Course> getCourseSet(Teacher teacher) {
         return teacher.getCourses();
     }
 
     @Override
+    @Transactional(readOnly = true, noRollbackFor = {ServiceException.class})
     public String login(String id, String password) {
         Teacher teacher = teacherDAO.get(id);
         if (teacher == null) return ReturnCode.USER_NOT_FOUNT;
@@ -96,6 +104,7 @@ public class TeacherBoImpl extends BasicBoImpl<Teacher, String> implements Teach
      * @Date: 2018/11/16
      **/
     @Override
+    @Transactional(readOnly = true, noRollbackFor = {ServiceException.class})
     public Map<Student, Double> getCourseTranscript(String teacherId, String courseId) {
         if (!this.exists(teacherId)) {
             throw new ServiceException(ServiceExceptionErrorCode.TEACHER_NOT_FOUND,
@@ -131,6 +140,7 @@ public class TeacherBoImpl extends BasicBoImpl<Teacher, String> implements Teach
      * @Date: 2018/11/27
      **/
     @Override
+    @Transactional(noRollbackFor = {ServiceException.class})
     public void assignHomework(String courseId, Homework homework) throws Exception {
         Course course = courseDAO.get(courseId);
         if (course == null) {

@@ -11,9 +11,12 @@ import com.bupt.se.homework.exception.ServiceExceptionErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.*;
 
 @Service("studentBo")
+@Transactional
 public class StudentBoImpl extends BasicBoImpl<Student, String> implements StudentBo {
 
     private StudentDAO studentDAO;
@@ -32,6 +35,7 @@ public class StudentBoImpl extends BasicBoImpl<Student, String> implements Stude
     }
 
     @Override
+    @Transactional(noRollbackFor = {ServiceException.class})
     public void addStudent(Student student) throws Exception {
         if (exists(student.getStudentId())) {
             throw new ServiceException(ServiceExceptionErrorCode.STUDENT_DUPLICATED,
@@ -41,16 +45,19 @@ public class StudentBoImpl extends BasicBoImpl<Student, String> implements Stude
     }
 
     @Override
+    @Transactional(noRollbackFor = {ServiceException.class})
     public void deleteStudent(String id) throws Exception {
         this.delete(id);
     }
 
     @Override
+    @Transactional(noRollbackFor = {ServiceException.class})
     public void updateStudent(Student student) throws Exception {
         this.update(student);
     }
 
     @Override
+    @Transactional(readOnly = true, noRollbackFor = {ServiceException.class})
     public List<Student> getStudentsByClass(String classId) {
         LinkedHashMap<Object, Object> equals = new LinkedHashMap<>();
         equals.put("classId", classId);
@@ -58,6 +65,7 @@ public class StudentBoImpl extends BasicBoImpl<Student, String> implements Stude
     }
 
     @Override
+    @Transactional(readOnly = true, noRollbackFor = {ServiceException.class})
     public List<Student> getStudentsByName(String name) {
         LinkedHashMap<Object, Object> equals = new LinkedHashMap<>();
         equals.put("studentName", name);
@@ -65,11 +73,13 @@ public class StudentBoImpl extends BasicBoImpl<Student, String> implements Stude
     }
 
     @Override
+    @Transactional(readOnly = true, noRollbackFor = {ServiceException.class})
     public List<StudentCourse> getStudentCourse(Student student) {
         return student.getStudentCourses();
     }
 
     @Override
+    @Transactional(readOnly = true, noRollbackFor = {ServiceException.class})
     public List<Course> getCourseList(Student student) {
         List<Course> list = null;
         List<StudentCourse> studentCourses = this.getStudentCourse(student);
@@ -83,6 +93,7 @@ public class StudentBoImpl extends BasicBoImpl<Student, String> implements Stude
     }
 
     @Override
+    @Transactional(readOnly = true, noRollbackFor = {ServiceException.class})
     public String login(String id, String password) {
         Student student = studentDAO.get(id);
         if (student == null) return ReturnCode.USER_NOT_FOUNT;
@@ -99,6 +110,7 @@ public class StudentBoImpl extends BasicBoImpl<Student, String> implements Stude
      * @Date: 2018/11/16
      **/
     @Override
+    @Transactional(readOnly = true, noRollbackFor = {ServiceException.class})
     public Map<Course, Double> getTranscript(String studentId) {
         Map<Course, Double> map = null;
         Student s = studentDAO.get(studentId);
@@ -117,11 +129,13 @@ public class StudentBoImpl extends BasicBoImpl<Student, String> implements Stude
     }
 
     @Override
+    @Transactional(readOnly = true, noRollbackFor = {ServiceException.class})
     public List<Homework> getHomeworkList(String studentId, String courseId) {
         return null;
     }
 
     @Override
+    @Transactional(readOnly = true, noRollbackFor = {ServiceException.class})
     public Group_ getCourseGroup(String studentId, String courseId) {
         logger.info("getCourseGroup(" + studentId + ", " + courseId + ")");
         Student student = this.get(studentId);
@@ -138,6 +152,7 @@ public class StudentBoImpl extends BasicBoImpl<Student, String> implements Stude
     }
 
     @Override
+    @Transactional(readOnly = true, noRollbackFor = {ServiceException.class})
     public List<Group_> getManagedGroups(String studentId) throws Exception {
         Student student = this.get(studentId);
         if (student == null) {
@@ -156,6 +171,7 @@ public class StudentBoImpl extends BasicBoImpl<Student, String> implements Stude
     }
 
     @Override
+    @Transactional(readOnly = true, noRollbackFor = {ServiceException.class})
     public HomeworkGroup getHomeworkGroup(Student student, Homework homework) {
         return studentDAO.getHomeworkGroup(student, homework);
     }

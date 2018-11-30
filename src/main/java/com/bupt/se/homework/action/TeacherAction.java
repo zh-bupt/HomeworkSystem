@@ -19,12 +19,17 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.struts2.ServletActionContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class TeacherAction extends ActionSupport {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
 
     private List<Course> courseList = new ArrayList<Course>();
     private List<Student> studentList = new ArrayList<Student>();
