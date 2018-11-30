@@ -6,8 +6,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Repository("groupStudentDAO")
@@ -73,5 +78,25 @@ public class GroupStudentDAOImpl
         }
 
         return lastList;
+    }
+
+    @Override
+    public void setContribution(Group_ g, Student s, int contribution) {
+        String hql = "update GroupStudent gs set gs.contribution = ? " +
+                "where gs.group_.groupId = ? " +
+                "and gs.student.studentId = ?";
+        Session session = getSession();
+        Transaction tx = session.beginTransaction();
+        try {
+            Query query = session.createQuery(hql);
+            query.setParameter(0, contribution);
+            query.setParameter(1, g.getGroupId());
+            query.setParameter(2, s.getStudentId());
+            query.executeUpdate();
+            tx.commit();
+        } catch (Exception e) {
+            logger.error(e);
+            tx.rollback();
+        }
     }
 }

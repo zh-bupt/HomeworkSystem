@@ -2,9 +2,11 @@ package com.bupt.se.homework.action;
 
 import com.bupt.se.homework.bo.*;
 import com.bupt.se.homework.entity.*;
+import com.bupt.se.homework.exception.ServiceException;
 import com.opensymphony.xwork2.ActionContext;
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.File;
 import java.io.IOException;
@@ -367,6 +369,14 @@ public class StudentAction{
 
             homeworkList.addAll(homeworkSet);
         }
+//        Group_ group_ = studentBo.getCourseGroup(session.get("id").toString(),session.get("courseId").toString());
+//        if (group_ == null) {
+//            System.out.println("啊啊啊啊啊啊！！！！group是空.");
+//        } else {
+//            System.out.println("耶耶耶耶耶耶！！！！group不是空.");
+//        }
+        // System.out.println(group_.getGroupId());
+        // TODO BUG noGroupStudentList = groupStudentBo.findResultList(course.getCourseId());
         group = studentBo.getCourseGroup(session.get("id").toString(),session.get("courseId").toString());//TODO bug 一直空
         System.out.println("group-->" + group);
 //        student = studentBo.get(session.get("id").toString());
@@ -379,13 +389,15 @@ public class StudentAction{
 //                break;
 //            }
 //        }
-        List<GroupStudent> gsList = group.getGroupStudentList();
+        if (group != null) {
+            List<GroupStudent> gsList = group.getGroupStudentList();
 
-        for(GroupStudent gs:gsList)
-        {
-            memberList.add(gs.getStudent());
+            for(GroupStudent gs:gsList)
+            {
+                memberList.add(gs.getStudent());
+            }
+            System.out.println("memberList-->size:"+memberList.size());
         }
-        System.out.println("memberList-->size:"+memberList.size());
         //.out.println(group_.getGroupId());
         //noGroupStudentList = groupStudentBo.findResultList(course.getCourseId());//TODO bug 好像还是一直为空
         // System.out.println("noGroupStudentList-->"+noGroupStudentList);
@@ -491,15 +503,12 @@ public class StudentAction{
 
     public String setMemberContribution() throws Exception {
         Map<String,Object> session = ActionContext.getContext().getSession();
-        //GroupStudent gs = groupStudentBo.get(new GroupStudentPK(session.get("groupId").toString(),studentId));
-        GroupStudent gs = new GroupStudent();
-        gs.setPk(new GroupStudentPK(session.get("groupId").toString(),studentId));
-        group=groupBo.get(session.get("groupId").toString());
-        student=studentBo.get(studentId);
-        gs.setGroup_(group);
-        gs.setStudent(student);
-        gs.setContribution(contribution);
-        groupStudentBo.merge(gs);//TODO 这里出错
+        try {
+            groupStudentBo.setContribution(session.get("groupId").toString(),
+                    studentId, contribution);
+        } catch (ServiceException se) {
+            se.printStackTrace();
+        }
         return "success";
     }
 //

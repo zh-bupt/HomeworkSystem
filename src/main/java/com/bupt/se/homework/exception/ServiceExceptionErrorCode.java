@@ -25,4 +25,5 @@ public class ServiceExceptionErrorCode {
 
     public static final long COURSE_NOT_FOUND = 0xFEE432;
     public static final long COURSE_DUPLICATED = 0xFEE433;
+    public static final long NOT_IN_GROUP = 0xACE344;
 }

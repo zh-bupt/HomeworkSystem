@@ -18,6 +18,7 @@ import org.apache.struts2.ServletActionContext;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.transaction.UnexpectedRollbackException;
 
 
 import java.io.File;
@@ -172,9 +173,13 @@ public class AdminAction extends ActionSupport {
     public String addStudent() throws Exception{
         try {
             studentBo.addStudent(student);
-        } catch (Exception e) {
-            super.addActionError("学号已存在");
-            e.printStackTrace();
+        } catch (ServiceException e) {
+            super.addActionError(e.getMessage());
+            return "error";
+//            throw new Exception(e);
+        } catch (Exception e1) {
+            super.addActionError(e1.getMessage());
+            e1.printStackTrace();
             return "error";
         }
         return "success";

@@ -213,4 +213,18 @@ public abstract class BasicBoImpl<M extends AbstractEntity, PK extends Serializa
         def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
         return getTransactionManager().getTransaction(def);
     }
+
+    protected void commitSession() {
+        DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+        def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+        TransactionStatus status = getTransactionManager().getTransaction(def);
+        getTransactionManager().commit(status);
+    }
+
+    protected void rollbackSession() {
+        DefaultTransactionDefinition def = new DefaultTransactionDefinition();
+        def.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRES_NEW);
+        TransactionStatus status = getTransactionManager().getTransaction(def);
+        getTransactionManager().rollback(status);
+    }
 }

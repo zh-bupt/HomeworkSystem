@@ -76,7 +76,7 @@
                 <div class="result-content">
                     <s:form  id="searchForm" action="addHomeworkAction" >
                         <%--<form  id="add-book"  enctype="multipart/form-data">--%>
-                        <input type="hidden" value="add" name="type">
+                        <%--<input type="hidden" value="add" name="type">--%>
                         <table class="insert-tab" width="100%">
                             <tbody>
                             <tr>
