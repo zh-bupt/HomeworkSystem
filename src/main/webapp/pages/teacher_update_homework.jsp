@@ -81,13 +81,13 @@
                         <tr>
                             <th>作业ID:</th>
                             <td>
-                                <input class="common-text" id="homeworkId" name="homeworkId" size="50" value="${homework.getHomeworkId()}" disabled type="text">
+                                <input class="common-text" id="homeworkId" name="homeworkId" size="50" value="${homework.getHomeworkId()}" readonly type="text">
                             </td>
                         </tr>
                         <tr>
                             <th >发布日期：</th>
                             <td>
-                                <input class="date" id="releaseTime" name="releaseTime" min="1900-01-01" size="50" value="${homework.getReleaseTime().toString().split(" ")[0]}" disabled type="text">
+                                <input class="date" id="releaseTime" name="releaseTime" min="1900-01-01" size="50" value="${homework.getReleaseTime().toString().split(" ")[0]}" readonly type="text">
                             </td>
                         </tr>
                         <tr>

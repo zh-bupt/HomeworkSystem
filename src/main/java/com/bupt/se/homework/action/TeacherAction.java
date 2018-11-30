@@ -840,6 +840,7 @@ public class TeacherAction extends ActionSupport {
     public String updateHomework() throws Exception {
         Map<String, Object> session = ActionContext.getContext().getSession();
         homework.setCourse(courseBo.get(session.get("courseId").toString()));
+        System.out.println("homeworkId == "+homework.getHomeworkId());
         homeworkBo.update(homework);
         return "success";
     }

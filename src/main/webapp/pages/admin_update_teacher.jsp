@@ -78,7 +78,7 @@
                         <tr>
                             <th>工号：</th>
                             <td>
-                                <input class="common-text required" id="teacherId" name="teacherId" size="50" value="${teacher.getTeacherId()}" type="text">
+                                <input class="common-text required" id="teacherId" name="teacherId" size="50" value="${teacher.getTeacherId()}" type="text" readonly>
                             </td>
                         </tr>
                         <tr>
