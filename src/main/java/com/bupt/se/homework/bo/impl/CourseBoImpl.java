@@ -133,6 +133,7 @@ public class CourseBoImpl extends BasicBoImpl<Course, String> implements CourseB
      **/
     @Override
     public void calculateScore(String courseId) throws Exception {
+        logger.info("Calculate score for course " + courseId);
         Course course = this.get(courseId);
         if (course == null) {
             throw new ServiceException(ServiceExceptionErrorCode.COURSE_NOT_FOUND,

@@ -39,7 +39,7 @@ public class GroupBoImpl extends BasicBoImpl<Group_, String> implements GroupBo 
      * @Date: 2018/11/25
      **/
     @Override
-    public void calculateScore(Group_ group_) {
+    public void calculateScore(Group_ group_) throws Exception {
 //        Group_ group_ = this.get(groupId);
 //        if (group_ == null) {
 //            throw new ServiceException(ServiceExceptionErrorCode.GROUP_NOT_FOUND, "小组 " + groupId + " 不存在!");
