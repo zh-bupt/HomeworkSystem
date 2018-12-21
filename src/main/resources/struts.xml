@@ -237,6 +237,11 @@
                 class="com.bupt.se.homework.action.TeacherAction" method="listHomeworkGroup">
             <result name="success">/pages/teacher_homework.jsp</result>
         </action>
+
+        <action name="searchHomeworkGroupAction"
+                class="com.bupt.se.homework.action.TeacherAction" method="searchHomeworkGroup">
+            <result name="success">/pages/teacher_homework.jsp</result>
+        </action>
     </package>
     <package name="student" namespace="/student" extends="struts-default" >
         <action name="listCourseAction"

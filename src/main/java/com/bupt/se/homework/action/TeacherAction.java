@@ -66,6 +66,37 @@ public class TeacherAction extends ActionSupport {
     private InputStream excelFile;
     private String fileName;
 
+
+
+    private String searchHomeworkGroupWord;
+    private Date searchHomeworkGroupStartTime;
+    private Date searchHomeworkGroupEndTime;
+
+    public Date getSearchHomeworkGroupStartTime() {
+        return searchHomeworkGroupStartTime;
+    }
+
+    public void setSearchHomeworkGroupStartTime(Date searchHomeworkGroupStartTime) {
+        this.searchHomeworkGroupStartTime = searchHomeworkGroupStartTime;
+    }
+
+    public Date getSearchHomeworkGroupEndTime() {
+        return searchHomeworkGroupEndTime;
+    }
+
+    public void setSearchHomeworkGroupEndTime(Date searchHomeworkGroupEndTime) {
+        this.searchHomeworkGroupEndTime = searchHomeworkGroupEndTime;
+    }
+
+
+    public String getSearchHomeworkGroupWord() {
+        return searchHomeworkGroupWord;
+    }
+
+    public void setSearchHomeworkGroupWord(String searchHomeworkGroupWord) {
+        this.searchHomeworkGroupWord = searchHomeworkGroupWord;
+    }
+
     public  void setCreateTime(Date createTime)
     {
         this.course.setCreateTime(createTime);
@@ -690,6 +721,16 @@ public class TeacherAction extends ActionSupport {
         System.out.println("homeworkId-->"+session.get("homeworkId"));
         homework = homeworkBo.get((Integer) session.get("homeworkId"));
         homeworkGroupList.addAll(homework.getHomeworkGroups());
+        if(homeworkGroupList != null && homeworkGroupList.size() > 1)
+            Collections.sort(homeworkGroupList, new Comparator<HomeworkGroup>() {
+                @Override
+                public int compare(HomeworkGroup o1, HomeworkGroup o2) {
+                    if(o1.getSubmissionTime()!= null && o2.getSubmissionTime()!=null)
+                        return (int) (o1.getSubmissionTime().getTime() - o2.getSubmissionTime().getTime());
+                    else
+                        return 1;//如果没有提交就按照默认排序 TODO 这里可能排序出错
+                }
+            });
         return "success";
     }
 
@@ -853,6 +894,31 @@ public class TeacherAction extends ActionSupport {
             e.printStackTrace();
             return "error";
         }
+        return "success";
+    }
+
+    public String searchHomeworkGroup() throws Exception {
+        Map<String, Object> session = ActionContext.getContext().getSession();
+
+        homework = homeworkBo.get((Integer) session.get("homeworkId"));
+        List<HomeworkGroup> tmpHomeworkGroupList = homework.getHomeworkGroups();
+
+        System.out.println("searchHomeworkGroupWord:"+searchHomeworkGroupWord);
+        System.out.println("searchHomeworkGroupStart:"+searchHomeworkGroupStartTime);
+        System.out.println("searchHomeworkGroupEnd:"+searchHomeworkGroupEndTime);
+        for(HomeworkGroup hg : tmpHomeworkGroupList)
+        {
+            if(searchHomeworkGroupWord == null || searchHomeworkGroupWord.equals("") || hg.getGroup_().getGroupId().equals(searchHomeworkGroupWord))
+            {
+                    if(searchHomeworkGroupStartTime == null || hg.getSubmissionTime().getTime() >= searchHomeworkGroupStartTime.getTime())
+                    {
+                        if(searchHomeworkGroupEndTime == null || hg.getSubmissionTime().getTime() <= searchHomeworkGroupEndTime.getTime())
+                            homeworkGroupList.add(hg);
+                    }
+            }
+        }
+
+
         return "success";
     }
 }

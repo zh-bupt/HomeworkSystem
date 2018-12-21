@@ -67,23 +67,23 @@
             <div class="crumb-list"><i class="icon-font"></i><a href="main.jsp">首页</a><span class="crumb-step">&gt;</span><span class="crumb-name">课程管理</span></div>
         </div>
         <div class="search-wrap">
-            <!--用于查询得表单-->
+        <!--用于查询得表单-->
             <div class="search-content">
                 <h2>作业详情</h2>
                 <table class="search-tab">
                     <tr>
                         <th width="70">作业ID:</th>
-                            <td><s:property value="homework.getHomeworkId()"/>
-                                <%--<input class="common-text" placeholder="" name="courseId"  id="courseId"  type="text" style="width:150px">--%>
-                            </td>
+                        <td><s:property value="homework.getHomeworkId()"/>
+                            <%--<input class="common-text" placeholder="" name="courseId"  id="courseId"  type="text" style="width:150px">--%>
+                        </td>
                         <th width="70">发布时间:</th>
-                            <td><s:date name="homework.getReleaseTime()" format="yyyy-MM-dd"/>
-                                <%--<input class="common-text" placeholder="" name="courseName"  id="courseName"  type="text" style="width:150px">--%>
-                            </td>
-                            <th width="70">截至时间:</th>
-                            <td><s:date name="homework.getDeadline()" format="yyyy-MM-dd"/>
-                                <%--<input class="common-text" placeholder="" name="courseName"  id="courseName"  type="text" style="width:150px">--%>
-                            </td>
+                        <td><s:date name="homework.getReleaseTime()" format="yyyy-MM-dd"/>
+                            <%--<input class="common-text" placeholder="" name="courseName"  id="courseName"  type="text" style="width:150px">--%>
+                        </td>
+                        <th width="70">截至时间:</th>
+                        <td><s:date name="homework.getDeadline()" format="yyyy-MM-dd"/>
+                            <%--<input class="common-text" placeholder="" name="courseName"  id="courseName"  type="text" style="width:150px">--%>
+                        </td>
                         <th width="100">所占百分比:</th>
                         <td><s:property value="homework.getPercentage()"/>%
                             <%--<input class="common-text" placeholder="" name="courseName"  id="courseName"  type="text" style="width:150px">--%>
@@ -97,6 +97,42 @@
                 </table>
             </div>
         </div>
+        <div class="search-wrap">
+            <!--用于查询得表单-->
+            <div class="search-content">
+                <s:form id="searchForm" action="searchHomeworkGroupAction">
+                <table class="search-tab">
+                    <tr>
+                        <th width="210">查询组号:</th>
+                        <%--<td>--%>
+                            <%--<li>--%>
+                                <%--<input type="radio" name="searchType" class="radio-inline" style="margin: 10px;color: #1A1A1A" value="按组号" checked>按组号--%>
+                                <%--<input type="radio" name="searchType" class="radio-inline" style="margin: 10px;color: #1A1A1A" value="按时间">按时间--%>
+                            <%--</li>--%>
+                        <%--</td>--%>
+                        <%--<s:actionerror/>--%>
+                        <%--<s:textfield name="searchTeacherWord" label="查询" value=""/>--%>
+                        <%--<s:if test="searchWay==null">--%>
+                        <%--<s:radio name="searchWay" list="{ '班级','学号', '姓名' }" value="'学号'"  label="搜索方式"/>--%>
+                        <%--</s:if>--%>
+                        <%--<s:else>--%>
+                        <%--<s:radio name="searchWay" list="{ '班级', '学号', '姓名' }"  label="搜索方式"/>--%>
+                        <%--</s:else>--%>
+                        <%--<s:submit/>--%>
+
+                        <td><input class="common-text" placeholder="" name="searchHomeworkGroupWord"  id="readername"  type="text" style="width:150px"></td>
+                        <th width="210">查询开始时间:</th>
+                        <td><input class="common-text" placeholder="" name="searchHomeworkGroupStartTime"    type="date" style="width:150px"></td>
+                        <th width="210">查询截止时间:</th>
+                        <td><input class="common-text" placeholder="" name="searchHomeworkGroupEndTime"    type="date" style="width:150px"></td>
+                        <td style="padding-left:50px"><button class="btn btn-primary btn2" type="submit" >确定</button></td>
+                    </tr>
+                </table>
+                </s:form>
+            </div>
+        </div>
+
+
         <div class="result-wrap">
             <form name="myform" id="myform" method="post">
                 <div class="result-title">
@@ -113,7 +149,7 @@
                             <tr id="col-title">
                                 <th>选中</th>
                                 <th>小组编号</th>
-                                <th>作业编号</th>
+                                <%--<th>作业编号</th>--%>
                                 <th>提交时间</th>
                                 <th>分数</th>
                                 <th>评语</th>
@@ -123,7 +159,7 @@
                             <s:iterator value="homeworkGroupList" >
                                 <tr>
                                     <td><input type="checkbox" value="fileDir" name="fileDir"></td>
-                                    <td><s:property value="group_.getGroupId()"/> </td>
+                                    <%--<td><s:property value="group_.getGroupId()"/> </td>--%>
                                     <td><s:property value="homeworkId"/> </td>
                                     <td><s:date name="submissionTime" format="yyyy-MM-dd"/> </td>
                                     <td><s:property value="score"/> </td>
