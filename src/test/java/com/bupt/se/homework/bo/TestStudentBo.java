@@ -34,7 +34,7 @@ public class TestStudentBo extends UnitTestBase {
 //        StudentDAO studentDAO = super.getBean("studentDAO");
 //        LinkedHashMap<Object, Object> equals = new LinkedHashMap<>();
 //        equals.put("classId", "2015211303");
-//        List<Student> list = studentDAO.findResultList(equals, null, null, null, null, null, 0, 0);
+//        List<Student> list = studentDAO.findLeftStudentList(equals, null, null, null, null, null, 0, 0);
 //        if (list != null && list.size() > 0) {
 //            for (Student s:list) {
 //                System.out.println(s.getStudentName());

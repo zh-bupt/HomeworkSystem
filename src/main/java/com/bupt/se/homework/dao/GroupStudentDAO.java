@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface GroupStudentDAO extends BasicDao<GroupStudent, GroupStudentPK> {
 
-    List<Student> findResultList(String courseID);
+    List<Student> findLeftStudentList(String courseID);
 
     void setContribution(Group_ g, Student s, int contribution);
 }

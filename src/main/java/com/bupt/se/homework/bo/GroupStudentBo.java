@@ -11,7 +11,7 @@ public interface GroupStudentBo extends BasicBo<GroupStudent, GroupStudentPK> {
 
     void updateGroupStudent(GroupStudent groupStudent) throws Exception;
 
-    List<Student> findResultList(String courseID);
+    List<Student> findLeftStudentList(String courseID);
 
     void setContribution(String groupId, String studentId, int contribution) throws Exception;
 

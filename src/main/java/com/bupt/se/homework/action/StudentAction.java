@@ -397,7 +397,8 @@ public class StudentAction  extends ActionSupport {
 //            System.out.println("耶耶耶耶耶耶！！！！group不是空.");
 //        }
         // System.out.println(group_.getGroupId());
-        // TODO BUG noGroupStudentList = groupStudentBo.findResultList(course.getCourseId());
+        noGroupStudentList = groupStudentBo.findLeftStudentList(course.getCourseId());
+        System.out.println("left students"+noGroupStudentList);
         group = studentBo.getCourseGroup(session.get("id").toString(),session.get("courseId").toString());
         System.out.println("group-->" + group);
 //        student = studentBo.get(session.get("id").toString());
@@ -425,7 +426,7 @@ public class StudentAction  extends ActionSupport {
 
         }
         //.out.println(group_.getGroupId());
-        //noGroupStudentList = groupStudentBo.findResultList(course.getCourseId());//TODO bug 好像还是一直为空
+        //noGroupStudentList = groupStudentBo.findLeftStudentList(course.getCourseId());//TODO bug 好像还是一直为空
         // System.out.println("noGroupStudentList-->"+noGroupStudentList);
         return "success";
     }

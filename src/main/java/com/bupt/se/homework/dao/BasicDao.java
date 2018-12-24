@@ -45,7 +45,7 @@ public interface BasicDao<M extends AbstractEntity, PK extends Serializable>{
     );
 //
 //
-//    public List<M> findResultList(LinkedHashMap<Object, Object> equalFields,
+//    public List<M> findLeftStudentList(LinkedHashMap<Object, Object> equalFields,
 //                                  LinkedHashMap<Object, Object> notEqualFields,
 //                                  LinkedHashMap<String, String> LikeFields,
 //                                  LinkedHashMap<String, String> nullFields,

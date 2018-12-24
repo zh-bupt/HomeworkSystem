@@ -14,7 +14,6 @@ import com.bupt.se.homework.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -75,8 +74,8 @@ public class GroupStudentBoImpl
     }
 
     @Override
-    public List<Student> findResultList(String courseID) {
-        return groupStudentDAO.findResultList(courseID);
+    public List<Student> findLeftStudentList(String courseID) {
+        return groupStudentDAO.findLeftStudentList(courseID);
     }
 
     @Override

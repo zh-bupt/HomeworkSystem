@@ -134,7 +134,7 @@
 
 
         <div class="result-wrap">
-            <form name="myform" id="myform" method="post">
+            <%--<form name="myform" id="myform" method="post">--%>
                 <div class="result-title">
                     <div class="result-list">
                         <%--<a href="addReader.jsp"><i class="icon-font"></i>添加读者</a>--%>
@@ -149,18 +149,18 @@
                             <tr id="col-title">
                                 <th>选中</th>
                                 <th>小组编号</th>
-                                <%--<th>作业编号</th>--%>
+                                <th>小组名称</th>
                                 <th>提交时间</th>
                                 <th>分数</th>
                                 <th>评语</th>
                                 <th>下载</th>
                                 <th>批阅</th>
                             </tr>
-                            <s:iterator value="homeworkGroupList" >
+                            <s:iterator value="homeworkGroupList" status="status" >
                                 <tr>
                                     <td><input type="checkbox" value="fileDir" name="fileDir"></td>
-                                    <%--<td><s:property value="group_.getGroupId()"/> </td>--%>
-                                    <td><s:property value="homeworkId"/> </td>
+                                    <td><s:property value="%{groupList[#status.index].groupId}"/> </td>
+                                    <td><s:property value="%{groupList[#status.index].name}"/> </td>
                                     <td><s:date name="submissionTime" format="yyyy-MM-dd"/> </td>
                                     <td><s:property value="score"/> </td>
                                     <td><s:property value="comment"/> </td>
@@ -175,7 +175,7 @@
                         </table>
                     </s:if>
                 </div>
-            </form>
+            <%--</form>--%>
         </div>
     </div>
     <!--/main-->

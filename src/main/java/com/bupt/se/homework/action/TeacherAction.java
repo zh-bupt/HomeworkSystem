@@ -30,7 +30,7 @@ public class TeacherAction extends ActionSupport {
     private List<Student> studentList = new ArrayList<Student>();
     private List<Homework> homeworkList = new ArrayList<Homework>();
     private List<HomeworkGroup> homeworkGroupList = new ArrayList<>();
-
+    private List<Group_> groupList = new ArrayList<>();
 
     private TeacherBo teacherBo;// = new TeacherBoImpl();
     private Teacher teacher = new Teacher();
@@ -71,6 +71,14 @@ public class TeacherAction extends ActionSupport {
     private String searchHomeworkGroupWord;
     private Date searchHomeworkGroupStartTime;
     private Date searchHomeworkGroupEndTime;
+
+    public List<Group_> getGroupList() {
+        return groupList;
+    }
+
+    public void setGroupList(List<Group_> groupList) {
+        this.groupList = groupList;
+    }
 
     public Date getSearchHomeworkGroupStartTime() {
         return searchHomeworkGroupStartTime;
@@ -412,7 +420,7 @@ public class TeacherAction extends ActionSupport {
     public String getDataFromExcel(String filePath)
     {
 
-        FileInputStream fis =null;
+        FileInputStream fis = null;
         Workbook workbook = null;
         int flag = 0;
 
@@ -731,6 +739,10 @@ public class TeacherAction extends ActionSupport {
                         return 1;//如果没有提交就按照默认排序 TODO 这里可能排序出错
                 }
             });
+        for(HomeworkGroup hg : homeworkGroupList)
+        {
+            groupList.add(hg.getGroup_());
+        }
         return "success";
     }
 
@@ -743,6 +755,7 @@ public class TeacherAction extends ActionSupport {
      **/
 
     public String downloadHomework() throws Exception {
+
         this.setIs(getDownloadFile());
         return "success";
     }

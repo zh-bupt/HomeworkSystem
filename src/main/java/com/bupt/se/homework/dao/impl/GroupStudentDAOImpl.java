@@ -11,6 +11,7 @@ import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Repository("groupStudentDAO")
@@ -35,40 +36,47 @@ public class GroupStudentDAOImpl
 
     }
 
-    public List<Student> findResultList(String courseID) {
+    public List<Student> findLeftStudentList(String courseID) {
         // 获取实体名
         //String entityName = entityClass.getSimpleName();
         Session session = getSession();
         //Transaction transaction = session.beginTransaction();
-        List<Student> firstList = null;
-        List<Student> secondList = null;
-        List<Student> lastList = null;
+        List<Student> firstList = new ArrayList<>();
+        List<Student> secondList = new ArrayList<>();
+        List<Student> lastList = new ArrayList<>();
+        String EntiName = "StudentCourse";
+        String hql = "select sc from " + EntiName + " as sc";
         //TODO BY LEE java.lang.NullPointerException at org.hibernate.hql.internal.NameGenerator.generateColumnNames(NameGenerator.java:27)
-        List<List> allStuCou = session.createQuery("select new list(student,course) from StudentCourse").list();
-        List<List> allGroStu = session.createQuery("select new list(group_,student) from GroupStudent").list();
+        List<StudentCourse> allStuCou = session.createQuery(hql).list();
+        EntiName = "GroupStudent";
+        hql = "select gs from " + EntiName + " as gs";
+        List<GroupStudent> allGroStu = session.createQuery(hql).list();
         //transaction.commit();
 		int isChosen = 0;
-
-        for(List StuCou : allStuCou){
-            Course course = (Course)StuCou.get(1);
-            if(course.getCourseId() == courseID){
-                firstList.add((Student)StuCou.get(0));
+        for(StudentCourse StuCou: allStuCou) {
+            Course course = StuCou.getCourse();
+            if (course.getCourseId().equals(courseID)) {
+                firstList.add(StuCou.getStudent());
             }
         }
-        for(List GroStu : allGroStu){
-            Group_ group = (Group_)GroStu.get(0);
+        for(GroupStudent GroStu : allGroStu){
+            Group_ group = GroStu.getGroup_();
             Course course = group.getCourse();
-            if(course.getCourseId() == courseID){
-                secondList.add((Student)GroStu.get(1));
+            if(course.getCourseId().equals(courseID)){
+                secondList.add(GroStu.getStudent());
             }
         }
+        for(Student student : firstList)
+            System.out.println(student.getStudentId());
+        for(Student student : secondList)
+            System.out.println(student.getStudentId());
+
         for(Student student : firstList){
 
 			isChosen = 0;
             for(Student student2 : secondList){
-                if(student.getStudentId() == student2.getStudentId())
+                if(student.getStudentId().equals(student2.getStudentId()))
 						isChosen = 1;
-						break;
             }
 			if(isChosen == 0)
 				lastList.add(student);
