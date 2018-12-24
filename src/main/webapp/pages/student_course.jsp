@@ -145,16 +145,33 @@
                                 <th>内容</th>
                                 <th>发布时间</th>
                                 <th>截止时间</th>
+                                <th>是否已提交</th>
+                                <th>提交文件名</th>
+                                <th>提交时间</th>
+                                <th>分数</th>
                                 <th>提交作业</th>
                             </tr>
-                            <s:iterator value="homeworkList" >
+                            <s:iterator value="homeworkList" status="status">
                                 <tr>
                                     <td><input type="checkbox" value="homeworkId" name="homeworkId"></td>
                                     <td><s:property value="homeworkId"/> </td>
                                     <td><s:property value="content"/> </td>
                                     <td><s:date name="releaseTime" format="yyyy-MM-dd"/> </td>
                                     <td><s:date name="deadline" format="yyyy-MM-dd"/> </td>
-                                    <td><input class="link-update btn btn-warning btn2"  type="button" name="delete" value="提交" onclick="javascript:window.location.href='setCurrentHomeworkAction.action?homeworkId=${homeworkId}'"/></td>
+                                    <td><s:if test="homeworkGroupList[#status.index].fileDir != null">
+                                            <s:text name="YES"/>
+                                        </s:if>
+                                        <s:else>
+                                            <s:text name="NO"/>
+                                        </s:else>
+                                    </td>
+                                    <td><s:property value="%{homeworkGroupList[#status.index].fileDir}" /></td>
+                                    <td><s:date name="%{homeworkGroupList[#status.index].submissionTime}" format="yyyy-MM-dd"/></td>
+                                    <td><s:property value="%{homeworkGroupList[#status.index].score}" /></td>
+                                    <td>
+                                        <input class="link-update btn btn-warning btn2"  type="button" name="delete" value="提交" onclick="javascript:window.location.href='setCurrentHomeworkAction.action?homeworkId=${homeworkId}'" />
+                                    </td>
+
                                 </tr>
                             </s:iterator>
                         </table>

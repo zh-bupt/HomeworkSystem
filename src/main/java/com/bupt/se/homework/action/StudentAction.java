@@ -4,6 +4,7 @@ import com.bupt.se.homework.bo.*;
 import com.bupt.se.homework.entity.*;
 import com.bupt.se.homework.exception.ServiceException;
 import com.opensymphony.xwork2.ActionContext;
+import com.opensymphony.xwork2.ActionSupport;
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 
@@ -11,7 +12,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
-public class StudentAction{
+public class StudentAction  extends ActionSupport {
     private Student student = new Student();
     private StudentBo studentBo;
     private CourseBo courseBo;
@@ -23,6 +24,7 @@ public class StudentAction{
     private String groupHomeworkFileName; //上传的文件名
     private HomeworkGroup homeworkGroup = new HomeworkGroup();
     private List<Homework> homeworkList = new ArrayList<>();
+    private List<HomeworkGroup> homeworkGroupList = new ArrayList<>();
     private Homework homework = new Homework();
     private HomeworkBo homeworkBo;
     private Group_ group = new Group_();
@@ -39,7 +41,6 @@ public class StudentAction{
     private Map<String,Integer> scoreList = new HashMap<>();
     private Integer contribution;
     private String studentId;
-
 
     public Integer getContribution() {
         return contribution;
@@ -91,6 +92,13 @@ public class StudentAction{
         this.noGroupStudentList = noGroupStudentList;
     }
 
+    public List<HomeworkGroup> getHomeworkGroupList() {
+        return homeworkGroupList;
+    }
+
+    public void setHomeworkGroupList(List<HomeworkGroup> homeworkGroupList) {
+        this.homeworkGroupList = homeworkGroupList;
+    }
 
     public GroupStudentBo getGroupStudentBo() {
         return groupStudentBo;
@@ -331,7 +339,12 @@ public class StudentAction{
             //保存文件
             FileUtils.copyFile(groupHomework, new File(file,groupHomeworkFileName));
             //String result = getDataFromExcel(realPath+"\\"+studentExcelFileName);
-            homeworkGroup.setFileDir(groupHomeworkFileName);
+//            homeworkGroup.setFileDir(groupHomeworkFileName);
+            String fdir = homeworkGroup.getFileDir();
+            if(fdir==null || fdir.equals(""))
+                homeworkGroup.setFileDir(groupHomeworkFileName);
+            else
+                homeworkGroup.setFileDir(fdir+","+groupHomeworkFileName);//多个文件名之间用逗号隔开
             homeworkGroup.setScore(0);
             homeworkGroup.setComment("");
 //            homeworkGroup.setHomework(homework);
@@ -385,7 +398,7 @@ public class StudentAction{
 //        }
         // System.out.println(group_.getGroupId());
         // TODO BUG noGroupStudentList = groupStudentBo.findResultList(course.getCourseId());
-        group = studentBo.getCourseGroup(session.get("id").toString(),session.get("courseId").toString());//TODO bug 一直空
+        group = studentBo.getCourseGroup(session.get("id").toString(),session.get("courseId").toString());
         System.out.println("group-->" + group);
 //        student = studentBo.get(session.get("id").toString());
 //        List<GroupStudent> gsList = student.getGroupStudentList();
@@ -405,6 +418,11 @@ public class StudentAction{
                 memberList.add(gs.getStudent());
             }
             System.out.println("memberList-->size:"+memberList.size());
+            for(Homework h:homeworkList)
+            {
+                homeworkGroupList.add(homeworkGroupBo.get(new HomeworkGroupPK(h.getHomeworkId(), group.getGroupId())));
+            }
+
         }
         //.out.println(group_.getGroupId());
         //noGroupStudentList = groupStudentBo.findResultList(course.getCourseId());//TODO bug 好像还是一直为空
@@ -415,6 +433,7 @@ public class StudentAction{
     public String setSessionHomework() throws Exception {
         Map<String, Object> session = ActionContext.getContext().getSession();
         session.put("homeworkId",homework.getHomeworkId());
+
         return "success";
     }
 
@@ -523,6 +542,80 @@ public class StudentAction{
                     studentId, contribution);
         } catch (ServiceException se) {
             se.printStackTrace();
+        }
+        return "success";
+    }
+    /**
+     * @Author KRF
+     * @Description 重新提交作业
+     * @Date 16:21 2018/12/24
+     * @Param []
+     * @return java.lang.String
+     **/
+
+    public String renewHomework() throws Exception {
+
+        System.out.println("FileName:"+this.getGroupHomeworkFileName());
+        System.out.println("ContentType:"+this.getGroupHomeworkContentType());
+        System.out.println("File:"+this.getGroupHomework());
+
+        Map<String, Object> session = ActionContext.getContext().getSession();
+        //course = courseBo.get(session.get("courseId").toString());
+        homework = homeworkBo.get(Integer.valueOf(session.get("homeworkId").toString()));
+        student = studentBo.get(session.get("id").toString());
+        homeworkGroup = studentBo.getHomeworkGroup(student,homework);
+        if(homeworkGroup.getFileDir()!=null)
+        {
+            String[] fdirs = homeworkGroup.getFileDir().split(",");
+            boolean flag = false;
+            for(int i = 0;i<fdirs.length;i++)
+            {
+                if(fdirs[i].equals(groupHomeworkFileName))
+                    flag = true;
+            }
+            if(!flag)
+            {
+                super.addActionError("无同名文件可覆盖！");
+                return "error";
+            }
+
+        }
+        System.out.print(homeworkGroup);
+
+        Group_ group_ = studentBo.getCourseGroup(session.get("id").toString(),session.get("courseId").toString());
+
+        //获取要保存文件夹的物理路径(绝对路径)
+        String relativePath = "/upload/course/"+session.get("courseId").toString()+"/"+session.get("homeworkId").toString()+"/";
+        String realPath= ServletActionContext.getServletContext().getRealPath(relativePath);
+        File file = new File(realPath);
+        System.out.print(realPath);
+        //测试此抽象路径名表示的文件或目录是否存在。若不存在，创建此抽象路径名指定的目录，包括所有必需但不存在的父目录。
+//        if(!file.exists())
+//        {
+//            file.mkdirs();
+//            System.out.println("创建了作业的目录");
+//        }
+        try {
+            //保存文件
+            FileUtils.copyFile(groupHomework, new File(file,groupHomeworkFileName));
+            //String result = getDataFromExcel(realPath+"\\"+studentExcelFileName);
+
+            homeworkGroup.setScore(0);
+            homeworkGroup.setComment("");
+//            homeworkGroup.setHomework(homework);
+//            homeworkGroup.setGroup_(group_);
+            homeworkGroup.setSubmissionTime(new Date());
+            // HomeworkGroupPK homeworkGroupPK = new HomeworkGroupPK(homework.getHomeworkId(),group_.getGroupId());
+            // homeworkGroup.setPk(homeworkGroupPK);
+
+            //homeworkGroupBo.update(homeworkGroup);
+
+            homeworkGroupBo.merge(homeworkGroup);
+
+            //传文件给studentBo
+        } catch (IOException e) {
+            e.printStackTrace();
+            return "error";
         }
         return "success";
     }

@@ -97,7 +97,19 @@
                             <s:form action="submitHomeworkAction" method="post" enctype="multipart/form-data">
                                 <s:file name="groupHomework" label="选择提交的文件" />
                                 <s:submit value="提交" />
-                                <s:token/>
+                                <%--<s:token/>--%>
+                            </s:form>
+                    </div>
+                </div>
+                <div class="result-title">
+                    <div class="result-list">
+                        <%--<a href="addReader.jsp"><i class="icon-font"></i>添加读者</a>--%>
+                        <h3>重新提交</h3>
+                            <s:actionerror/>
+                            <s:form action="renewHomeworkAction" method="post" enctype="multipart/form-data">
+                                <s:file name="groupHomework" label="选择与需覆盖文件的同名文件" />
+                                <s:submit value="覆盖" />
+                                <%--<s:token/>--%>
                             </s:form>
                     </div>
                 </div>
