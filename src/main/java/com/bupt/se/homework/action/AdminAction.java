@@ -21,6 +21,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.transaction.UnexpectedRollbackException;
 
 
+import javax.annotation.Resource;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -35,8 +36,14 @@ import java.util.*;
 
 
 public class AdminAction extends ActionSupport {
+
+    @Resource
     private AdminBo adminBo;
+
+    @Resource
     private StudentBo studentBo;
+
+    @Resource
     private TeacherBo teacherBo;
 
     private Student student = new Student();

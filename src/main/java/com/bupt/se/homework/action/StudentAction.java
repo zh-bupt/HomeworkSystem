@@ -7,31 +7,46 @@ import com.opensymphony.xwork2.ActionContext;
 import org.apache.commons.io.FileUtils;
 import org.apache.struts2.ServletActionContext;
 
+import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
 import java.util.*;
 
 public class StudentAction{
-    private Student student = new Student();
+
+    @Resource
     private StudentBo studentBo;
+
+    @Resource
     private CourseBo courseBo;
+
+    @Resource
+    private HomeworkBo homeworkBo;
+
+    @Resource
+    private GroupBo groupBo;
+
+    @Resource
+    private GroupStudentBo groupStudentBo;
+
+    @Resource
+    private HomeworkGroupBo homeworkGroupBo;
+
+    private Student student = new Student();
     private List<Course> courseList = new ArrayList<>();
     private Course course = new Course();
-    private HomeworkGroupBo homeworkGroupBo;
     private File groupHomework;//上传的文件
     private String groupHomeworkContentType;//上传的文件类型
     private String groupHomeworkFileName; //上传的文件名
     private HomeworkGroup homeworkGroup = new HomeworkGroup();
     private List<Homework> homeworkList = new ArrayList<>();
     private Homework homework = new Homework();
-    private HomeworkBo homeworkBo;
     private Group_ group = new Group_();
-    private GroupBo groupBo;
+
     private List<String> studentIdList = new ArrayList<>();
     private List<Group_> groupManagedList = new ArrayList<>();
-
     private List<Group_> groupList = new ArrayList<>();
-    private GroupStudentBo groupStudentBo;
+
     private List<Student> noGroupStudentList =  new ArrayList<>();
     private List<Student> memberList = new ArrayList<>();
     private String searchCourseWord;

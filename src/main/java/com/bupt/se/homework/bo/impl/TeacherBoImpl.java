@@ -41,16 +41,6 @@ public class TeacherBoImpl extends BasicBoImpl<Teacher, String> implements Teach
         this.teacherDAO = (TeacherDAO) basicDao;
     }
 
-//    @Autowired
-//    public void setCourseDAO(CourseDAO courseDAO) {
-//        this.courseDAO = courseDAO;
-//    }
-//
-//    @Autowired
-//    public void setHomeworkDAO(HomeworkDAO homeworkDAO) {
-//        this.homeworkDAO = homeworkDAO;
-//    }
-
     @Override
     @Transactional(noRollbackFor = {ServiceException.class})
     public void addTeacher(Teacher teacher) throws Exception {
@@ -172,13 +162,13 @@ public class TeacherBoImpl extends BasicBoImpl<Teacher, String> implements Teach
             throw new ServiceException(ServiceExceptionErrorCode.COURSE_NOT_FOUND,
                     "课程 " + courseId + " 不存在");
         }
-        course.getHomework().add(homework);
-        homework.setCourse(course);
-        if (CalculateHomePercentage(course) > 100) {
+        if (CalculateHomePercentage(course) > 100 - homework.getPercentage()) {
             throw new ServiceException(ServiceExceptionErrorCode.HOMEWORK_PERCENTAGE_ERROR,
                     "作业比例超过100%. 请重新设置作业比例.");
         }
         try{
+            course.getHomework().add(homework);
+            homework.setCourse(course);
             teacherDAO.assignHomework(course, homework);
             logger.info("Assigned homework for course " + courseId);
         } catch (Exception e) {

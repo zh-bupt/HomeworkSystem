@@ -22,6 +22,7 @@ import org.apache.struts2.ServletActionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -30,6 +31,24 @@ public class TeacherAction extends ActionSupport {
 
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
+    @Resource
+    private TeacherBo teacherBo;
+
+    @Resource
+    private StudentBo studentBo;
+
+    @Resource
+    private CourseBo courseBo;
+
+    @Resource
+    private HomeworkBo homeworkBo;
+
+    @Resource
+    private StudentCourseBo studentCourseBo;
+
+    @Resource
+    private HomeworkGroupBo homeworkGroupBo;
+
 
     private List<Course> courseList = new ArrayList<Course>();
     private List<Student> studentList = new ArrayList<Student>();
@@ -37,29 +56,18 @@ public class TeacherAction extends ActionSupport {
     private List<HomeworkGroup> homeworkGroupList = new ArrayList<>();
 
 
-    private TeacherBo teacherBo;// = new TeacherBoImpl();
     private Teacher teacher = new Teacher();
-
     private Course course = new Course();
-    private CourseBo courseBo;
-
     private Student student = new Student();
-    private StudentBo studentBo;
-
-
     private Homework homework = new Homework();
-    private HomeworkBo homeworkBo;
-
     private StudentCourse studentCourse = new StudentCourse();
     private List<StudentCourse> studentCourseList = new ArrayList<>();
-    private StudentCourseBo studentCourseBo;
     private File studentExcel;//上传的文件
     private String studentExcelContentType;//上传的文件类型
     private String studentExcelFileName; //上传的文件名
 
     private String homeworkFileName;
     private HomeworkGroup homeworkGroup = new HomeworkGroup();//貌似没用
-    private HomeworkGroupBo homeworkGroupBo;
     private String groupId;
 
     private String homeworkId;
