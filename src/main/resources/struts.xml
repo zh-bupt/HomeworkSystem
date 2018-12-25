@@ -312,7 +312,7 @@
                         例如取值为inputStream的属性需要编写getInputStream()方法-->  
                         <param name="inputName">is</param>  
                         <!--下载时，客户端显示的下载的文件名 -->  
-                        <param name="contentDisposition"> attachment; filename=${homeworkFileName}</param>  
+                        <param name="contentDisposition"> attachment; filename=${fileNameforAll}</param>  
                         <!-- 数据的缓冲大小 -->  
                         <param name="bufferSize">1024</param>  
                     </result>

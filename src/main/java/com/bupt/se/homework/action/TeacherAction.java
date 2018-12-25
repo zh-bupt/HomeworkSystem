@@ -72,6 +72,16 @@ public class TeacherAction extends ActionSupport {
     private Date searchHomeworkGroupStartTime;
     private Date searchHomeworkGroupEndTime;
 
+    public String getFileNameforAll() {
+        return fileNameforAll;
+    }
+
+    public void setFileNameforAll(String fileNameforAll) {
+        this.fileNameforAll = fileNameforAll;
+    }
+
+    private String fileNameforAll;
+
     public List<Group_> getGroupList() {
         return groupList;
     }
@@ -755,10 +765,60 @@ public class TeacherAction extends ActionSupport {
      **/
 
     public String downloadHomework() throws Exception {
-
-        this.setIs(getDownloadFile());
+        String[] fdirs = homeworkFileName.split(" ");
+        if(fdirs.length == 1)
+            this.setIs(getDownloadFile());
+        else if (fdirs.length>1)
+            downloadFileAll();
         return "success";
     }
+    /**
+     * 文件打包下载
+     * @return
+     */
+    public String downloadFileAll() {
+        Map<String, Object> session = ActionContext.getContext().getSession();
+        String[] fdirs = homeworkFileName.split(" ");
+//        System.out.println(fdirs[0]+fdirs[1]);
+        //查询出后台的文件列表
+
+        //获取上传到服务器的文件夹/upload
+        String prefix = ServletActionContext.getServletContext().getRealPath("/upload/course/"+session.get("courseId").toString()+"/"+homeworkId);
+        System.out.println("Prefix-->"+prefix);
+        //new一个ArrayList用来存放具体的文件
+        ArrayList<String> zipFile = new ArrayList<String>();
+        //遍历出集合中的文件
+        for (int i=0;i < fdirs.length;i++) {
+
+//            String filePath = ServletActionContext.getServletContext().getRealPath("/upload/course/"+session.get("courseId").toString()+"/"+homeworkId+"/"+fdirs[i]);
+            //把文件存储到我们之前定义的ArrayList集合中
+            zipFile.add(prefix+File.separator+fdirs[i] );
+//            zipFile.add(filePath);
+        }
+        //使用一个临时目录uploadZip用来存放打包好的ZIP文件
+        String zipPath = ServletActionContext.getServletContext().getRealPath("/upload/course/"+session.get("courseId").toString()+"/"+homeworkId+"/");
+        //为打包的zip文件创建一个名称,以时间戳区分
+        String formatDate =new  SimpleDateFormat("yyyyMMdd").format(new Date());
+        //添加文件名的后缀
+        String fileName = session.get("courseId").toString()+"_"+homeworkId+"_"+groupId +"_"+formatDate + ".zip";
+        //定义文件的输出路径
+        String path = zipPath +File.separator +fileName;
+        //使用ZIP工具类来压缩zipFile集合中添加的列表文件
+        ZipUtilToFile.compressFile(zipFile, path);
+        //保存到临时目录
+        String inputPathforAll = zipPath+ "\\uploadZip\\" + fileName;
+        try {
+            //文件名称
+            fileNameforAll =  new String(fileName.getBytes(), "ISO8859-1");
+            System.out.println("path-->" + path);
+            this.setIs(new FileInputStream(new File(path)));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "success";
+    }
+
+
     /**
      * @Author KRF
      * @Description 获取所选小组的该课程的该次作业

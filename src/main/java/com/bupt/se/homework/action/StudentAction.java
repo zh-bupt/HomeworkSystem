@@ -344,7 +344,7 @@ public class StudentAction  extends ActionSupport {
             if(fdir==null || fdir.equals(""))
                 homeworkGroup.setFileDir(groupHomeworkFileName);
             else
-                homeworkGroup.setFileDir(fdir+","+groupHomeworkFileName);//多个文件名之间用逗号隔开
+                homeworkGroup.setFileDir(fdir+" "+groupHomeworkFileName);//多个文件名之间用逗号隔开
             homeworkGroup.setScore(0);
             homeworkGroup.setComment("");
 //            homeworkGroup.setHomework(homework);
@@ -567,7 +567,7 @@ public class StudentAction  extends ActionSupport {
         homeworkGroup = studentBo.getHomeworkGroup(student,homework);
         if(homeworkGroup.getFileDir()!=null)
         {
-            String[] fdirs = homeworkGroup.getFileDir().split(",");
+            String[] fdirs = homeworkGroup.getFileDir().split(" ");
             boolean flag = false;
             for(int i = 0;i<fdirs.length;i++)
             {
