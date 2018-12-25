@@ -35,9 +35,9 @@
                 class="com.bupt.se.homework.action.AdminAction" method="addStudent">
             <interceptor-ref name="defaultStack"/>
             <interceptor-ref name="token"/>
-            <result name="invalid.token">/pages/admin_student.jsp</result>
-            <result name="success">/pages/admin_student.jsp</result>
-            <result name="error">/pages/admin_add_student.jsp</result>
+            <result name="invalid.token" type="chain">listStudentAction</result>
+            <result name="success" type="chain">listStudentAction</result>
+            <result name="error" type="chain">listStudentAction</result>
         </action>
         <action name="addStudentByFileAction"
                 class="com.bupt.se.homework.action.AdminAction" method="addStudentByFile">
@@ -51,8 +51,8 @@
                 <param name="fileUpload.allowedExtensions">.txt,.xlsx,.xls,.csv</param>
             </interceptor-ref>
             <interceptor-ref name="token"/>
-            <result name="invalid.token">/pages/admin_student.jsp</result>
-            <result name="success">/pages/admin_student.jsp</result>
+            <result name="invalid.token" type="chain">listStudentAction</result>
+            <result name="success" type="chain">listStudentAction</result>
             <!-- 出现错误自动会返回input结果，进入结果视图 -->
             <result name="error" >/pages/error.jsp</result>
         </action>

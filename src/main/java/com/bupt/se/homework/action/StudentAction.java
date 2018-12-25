@@ -42,6 +42,16 @@ public class StudentAction  extends ActionSupport {
     private Integer contribution;
     private String studentId;
 
+    private List checkList;
+
+    public List getCheckList() {
+        return checkList;
+    }
+
+    public void setCheckList(List checkList) {
+        this.checkList = checkList;
+    }
+
     public Integer getContribution() {
         return contribution;
     }
@@ -398,6 +408,15 @@ public class StudentAction  extends ActionSupport {
 //        }
         // System.out.println(group_.getGroupId());
         noGroupStudentList = groupStudentBo.findLeftStudentList(course.getCourseId());
+        Student tmpS = null;
+        for(Student s : noGroupStudentList)
+            if(s.getStudentId().equals(session.get("id").toString()))
+            {
+                tmpS = s;
+                break;
+            }
+        noGroupStudentList.remove(tmpS);
+
         System.out.println("left students"+noGroupStudentList);
         group = studentBo.getCourseGroup(session.get("id").toString(),session.get("courseId").toString());
         System.out.println("group-->" + group);
@@ -456,9 +475,13 @@ public class StudentAction  extends ActionSupport {
 //        group.setLeader(student);
 //        Set<GroupStudent> groupStudentSet =  new HashSet<>();
         Set<Student> studentSet = new HashSet<>();
+        System.out.println("选中了->"+studentIdList.size());
+        group.setNum(studentIdList.size() + 1);
         for(String id:studentIdList)
         {
+            System.out.println(id);
             Student s = studentBo.get(id);
+            System.out.println(s.getStudentName());
             if (s != null) studentSet.add(s);
 //            studentSet.add(s);
 //            System.out.println(id);

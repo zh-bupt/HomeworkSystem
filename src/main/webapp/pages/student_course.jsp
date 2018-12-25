@@ -81,7 +81,7 @@
                             <%--<button onclick="/deleteTeacherAction.action?${teacherId}">删除</button>--%>
                             <%--<input type="button" name="search" value="删除" onclick="javascript:window.location.href='deleteStudentAction.action?${studentId}'"/>--%>
                             <%--<table border="1px" cellpadding="8px" class="search-tab">--%>
-                                <tr>
+                                <tr id="col-title">
                                     <th>组号</th>
                                     <th>组名</th>
                                     <th>组长</th>
@@ -107,9 +107,25 @@
                         <s:else>
                             <h2>创建小组</h2>
                             <s:form action="addGroupAction">
+                                <%--组号自动生成吧--%>
                                 <s:textfield name="groupId" label="组号" value=""/>
                                 <s:textfield name="name" label="组名" value=""/>
-                                <s:textfield name="studentIds" label="学号(多个用','隔开)" value=""/>
+                                <%--<s:textfield name="studentIds" label="学号(多个用','隔开)" value=""/>--%>
+                                <tr id="col-title">
+                                    <th>选中</th>
+                                    <th>班级</th>
+                                    <th>学号</th>
+                                    <th>姓名</th>
+                                </tr>
+                                <s:iterator value="noGroupStudentList" status="status">
+                                    <tr>
+                                        <td><input type="checkbox" value="<s:property value="studentId"/>" name="studentIdList"></td>
+                                        <td><s:property value="classId"/> </td>
+                                        <td><s:property value="studentId"/> </td>
+                                        <td><s:property value="studentName"/> </td>
+                                    </tr>
+                                </s:iterator>
+
                                 <s:token/>
                                 <s:submit/>
                             </s:form>
