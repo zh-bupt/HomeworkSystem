@@ -583,6 +583,10 @@ public class TeacherAction extends ActionSupport {
             homeworkList.addAll(homeworkSet);
         }
 
+        courseBo.calculateScore(session.get("courseId").toString());
+        Map<Student,List<Double>> scoreList = teacherBo.getCourseTranscript(session.get("id").toString(),session.get("courseId").toString());
+        logger.info(scoreList.toString());
+
         return "success";
     }
 
@@ -750,14 +754,15 @@ public class TeacherAction extends ActionSupport {
     public String exportExcel() throws Exception {
         Map<String, Object> session = ActionContext.getContext().getSession();
         // TODO 数据库的问题应该解决了, 但是有新的错误, 应该是写文件的问题
-        Map<Student,Double> scoreList = teacherBo.getCourseTranscript(session.get("id").toString(),session.get("courseId").toString());
-        HSSFWorkbook workbook = exportExcel(scoreList);
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
-        workbook.write(output);
-        byte[] ba = output.toByteArray();
-        excelFile = new ByteArrayInputStream(ba);
-        output.flush();
-        output.close();
+        Map<Student,List<Double>> scoreList = teacherBo.getCourseTranscript(session.get("id").toString(),session.get("courseId").toString());
+        logger.info(scoreList.toString());
+//        HSSFWorkbook workbook = exportExcel(scoreList);
+//        ByteArrayOutputStream output = new ByteArrayOutputStream();
+//        workbook.write(output);
+//        byte[] ba = output.toByteArray();
+//        excelFile = new ByteArrayInputStream(ba);
+//        output.flush();
+//        output.close();
         return "exportExcel";
     }
     public HSSFWorkbook exportExcel(Map<Student,Double> scoreList) throws Exception {

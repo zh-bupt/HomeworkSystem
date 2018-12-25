@@ -14,7 +14,7 @@ public class StudentHomework extends AbstractEntity {
     private StudentHomeworkPK pk;
     private Homework homework;
     private Student student;
-    private Integer groupScore = 0;
+    private Double groupScore = 0.;
     private Integer score = 0;
 
     public StudentHomework() {
@@ -67,11 +67,11 @@ public class StudentHomework extends AbstractEntity {
 
     @Basic
     @Column(length = 3)
-    public Integer getGroupScore() {
+    public Double getGroupScore() {
         return groupScore;
     }
 
-    public void setGroupScore(Integer groupScore) {
+    public void setGroupScore(Double groupScore) {
         this.groupScore = groupScore;
     }
 }

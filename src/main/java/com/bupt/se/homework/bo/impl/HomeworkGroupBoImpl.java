@@ -3,14 +3,18 @@ package com.bupt.se.homework.bo.impl;
 import com.bupt.se.homework.bo.HomeworkGroupBo;
 import com.bupt.se.homework.dao.BasicDao;
 import com.bupt.se.homework.dao.HomeworkGroupDAO;
-import com.bupt.se.homework.entity.HomeworkGroup;
-import com.bupt.se.homework.entity.HomeworkGroupPK;
+import com.bupt.se.homework.dao.StudentHomeworkDAO;
+import com.bupt.se.homework.dao.impl.StudentHomeworkDAOImpl;
+import com.bupt.se.homework.entity.*;
 import com.bupt.se.homework.exception.ServiceException;
 import com.bupt.se.homework.exception.ServiceExceptionErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @description:
@@ -24,6 +28,9 @@ public class HomeworkGroupBoImpl
         implements HomeworkGroupBo {
 
     private HomeworkGroupDAO homeworkGroupDAO;
+
+    @Resource
+    private StudentHomeworkDAO studentHomeworkDAO;
 
     @Autowired
     @Qualifier("homeworkGroupDAO")

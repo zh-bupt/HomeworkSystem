@@ -3,6 +3,7 @@ package com.bupt.se.homework.bo.impl;
 import com.bupt.se.homework.bo.GroupBo;
 import com.bupt.se.homework.dao.BasicDao;
 import com.bupt.se.homework.dao.GroupDAO;
+import com.bupt.se.homework.dao.StudentHomeworkDAO;
 import com.bupt.se.homework.entity.*;
 import com.bupt.se.homework.exception.ServiceException;
 import com.bupt.se.homework.exception.ServiceExceptionErrorCode;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import java.util.List;
 import java.util.Set;
 
@@ -24,6 +26,9 @@ import java.util.Set;
 public class GroupBoImpl extends BasicBoImpl<Group_, String> implements GroupBo {
 
     private GroupDAO groupDAO;
+
+    @Resource
+    private StudentHomeworkDAO studentHomeworkDAO;
 
 
     @Autowired
@@ -54,6 +59,16 @@ public class GroupBoImpl extends BasicBoImpl<Group_, String> implements GroupBo 
             for (HomeworkGroup hg:homeworkGroups) {
                 score += (double)(hg.getScore() * hg.getHomework().getPercentage());
                 temp += hg.getHomework().getPercentage();
+                // 计算机每个学生每次作业的成绩
+                Homework homework = hg.getHomework();
+                List<GroupStudent> groupStudentList = hg.getGroup_().getGroupStudentList();
+                for (GroupStudent gs:groupStudentList) {
+                    Student student = gs.getStudent();
+                    StudentHomework studentHomework = new StudentHomework(homework, student);
+                    studentHomework.setScore(hg.getScore());
+                    studentHomework.setGroupScore(hg.getScore() * gs.getContribution() / 100.);
+                    studentHomeworkDAO.saveOrUpdate(studentHomework);
+                }
             }
             group_.setGroupScore(score / (double)(temp));
             groupDAO.update(group_);
