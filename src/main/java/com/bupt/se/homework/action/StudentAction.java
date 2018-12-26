@@ -11,6 +11,7 @@ import org.apache.struts2.ServletActionContext;
 import javax.annotation.Resource;
 import java.io.File;
 import java.io.IOException;
+import java.security.acl.Group;
 import java.util.*;
 
 public class StudentAction  extends ActionSupport {
@@ -46,6 +47,9 @@ public class StudentAction  extends ActionSupport {
     private Homework homework = new Homework();
     private Group_ group = new Group_();
 
+    private List<List<Student>> groupStudentLists = new ArrayList<>();
+    private List<List<Student>> managedStudentLists = new ArrayList<>();
+
     private List<String> studentIdList = new ArrayList<>();
     private List<Group_> groupManagedList = new ArrayList<>();
     private List<Group_> groupList = new ArrayList<>();
@@ -58,14 +62,20 @@ public class StudentAction  extends ActionSupport {
     private Integer contribution;
     private String studentId;
 
-    private List checkList;
-
-    public List getCheckList() {
-        return checkList;
+    public List<List<Student>> getManagedStudentLists() {
+        return managedStudentLists;
     }
 
-    public void setCheckList(List checkList) {
-        this.checkList = checkList;
+    public void setManagedStudentLists(List<List<Student>> managedStudentLists) {
+        this.managedStudentLists = managedStudentLists;
+    }
+
+    public List<List<Student>> getGroupStudentLists() {
+        return groupStudentLists;
+    }
+
+    public void setGroupStudentLists(List<List<Student>> groupStudentLists) {
+        this.groupStudentLists = groupStudentLists;
     }
 
     public Integer getContribution() {
@@ -308,15 +318,28 @@ public class StudentAction  extends ActionSupport {
         student = studentBo.get(session.get("id").toString());
         groupManagedList.addAll(student.getGroupsManaged());
         if (groupManagedList == null || groupManagedList.size() == 0) return "success";
-        for(GroupStudent gs : groupManagedList.get(0).getGroupStudentList())
+        for(int i = 0;i < groupManagedList.size();i++)
         {
-            System.out.println(gs.getStudent().getStudentName());
+            List<Student> tmpStudents = new ArrayList<>();
+            for(GroupStudent gs : groupManagedList.get(i).getGroupStudentList())
+            {
+                System.out.println(gs.getStudent().getStudentName());
+                tmpStudents.add(gs.getStudent());
+            }
+            managedStudentLists.add(tmpStudents);
         }
 
         List<GroupStudent> gsList = student.getGroupStudentList();
         for(GroupStudent gs:gsList)
         {
-            groupList.add(gs.getGroup_());
+            Group_ g = gs.getGroup_();
+            groupList.add(g);
+            List<Student> tmpStudents = new ArrayList<>();
+            for(int i = 0;i < g.getNum()-1;i++)
+            {
+                tmpStudents.add(g.getGroupStudentList().get(i).getStudent());//TODO 懒加载可不可以 ！！！我发现懒加载后根本不需要groupStudentLists了
+            }
+            groupStudentLists.add(tmpStudents);
         }
         return "success";
     }
@@ -541,14 +564,19 @@ public class StudentAction  extends ActionSupport {
         //TODO 限制只搜索该学生的课程
         HashSet<Course> courseSet = new HashSet<>();
         courseSet.addAll(courseBo.getList(equals,null,null,null,null,null,0,0));
+        System.out.println("equal id num : "+courseSet.size());
         LinkedHashMap<Object, Object> equals2 = new LinkedHashMap<>();
         equals2.put("courseName", searchCourseWord);
         courseSet.addAll(courseBo.getList(equals,null,null,null,null,null,0,0));
+        System.out.println("equal name num : "+courseSet.size());
         LinkedHashMap<String, String> likes = new LinkedHashMap<>();
+        likes.put("courseId",searchCourseWord);
         courseSet.addAll(courseBo.getList(null,null,likes,null,null,null,0,0));
+        System.out.println("like id num : "+courseSet.size());
         LinkedHashMap<String, String> likes2 = new LinkedHashMap<>();
         likes2.put("courseName", searchCourseWord);
         courseSet.addAll(courseBo.getList(null,null,likes2,null,null,null,0,0));
+        System.out.println("like name num : "+courseSet.size());
         courseList.addAll(courseSet);
         return "success";
     }

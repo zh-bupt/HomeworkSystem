@@ -242,6 +242,20 @@
                 class="com.bupt.se.homework.action.TeacherAction" method="searchHomeworkGroup">
             <result name="success">/pages/teacher_homework.jsp</result>
         </action>
+
+        <action name="showTranscriptAction"
+                class="com.bupt.se.homework.action.TeacherAction" method="getCourseTranscript">
+            <result name="success">/pages/teacher_transcript.jsp</result>
+        </action>
+        <action name="calculateTranscriptAction"
+                class="com.bupt.se.homework.action.TeacherAction" method="calculateScore">
+            <!--不需要跳转-->
+            <result name="success" type="chain">showCourseAction</result>
+        </action>
+        <action name="downloadTranscriptAction"
+                class="com.bupt.se.homework.action.TeacherAction" method="downloadTranscript">
+            <result name="success" type="chain">showTranscriptAction</result>
+        </action>
     </package>
     <package name="student" namespace="/student" extends="struts-default" >
         <action name="listCourseAction"

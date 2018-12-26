@@ -126,8 +126,9 @@ public class TeacherBoImpl extends BasicBoImpl<Teacher, String> implements Teach
             });
             if (studentCourses != null && studentCourses.size() > 0) {
                 map = new HashMap<>();
-                List<Double> gradeList = new ArrayList<>();
+
                 for (StudentCourse sc:studentCourses) {
+                    List<Double> gradeList = new ArrayList<>();
                     Student student = sc.getStudent();
                     for (Homework h:homeworkList) {
                         StudentHomeworkPK pk = new StudentHomeworkPK(h.getHomeworkId(), student.getStudentId());

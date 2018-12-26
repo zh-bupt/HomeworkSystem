@@ -71,8 +71,12 @@ public class TeacherAction extends ActionSupport {
     private String groupId;
 
     private String homeworkId;
+    private Integer homeworkNum;
+    Map<Student,List<Double> > transcript =  new HashMap<>();
 
     private InputStream is;
+
+
 
     //为了下载成绩单
     private static final long serialVersionUID = 1L;
@@ -84,6 +88,22 @@ public class TeacherAction extends ActionSupport {
     private String searchHomeworkGroupWord;
     private Date searchHomeworkGroupStartTime;
     private Date searchHomeworkGroupEndTime;
+
+    public Integer getHomeworkNum() {
+        return homeworkNum;
+    }
+
+    public void setHomeworkNum(Integer homeworkNum) {
+        this.homeworkNum = homeworkNum;
+    }
+
+    public Map<Student, List<Double>> getTranscript() {
+        return transcript;
+    }
+
+    public void setTranscript(Map<Student, List<Double>> transcript) {
+        this.transcript = transcript;
+    }
 
     public String getFileNameforAll() {
         return fileNameforAll;
@@ -905,8 +925,10 @@ public class TeacherAction extends ActionSupport {
         cell.setCellValue("学号");
         cell=row.createCell(2);
         cell.setCellValue("姓名");
+
+        for ()
         cell=row.createCell(3);
-        cell.setCellValue("成绩");
+        cell.setCellValue("总成绩");
         int count = 0;
         if(studentCourseList!=null&&studentCourseList.size()>0){
             for(StudentCourse sc:studentCourseList){
@@ -1025,7 +1047,25 @@ public class TeacherAction extends ActionSupport {
         return "success";
     }
 
-    //TODO 列出所有学生的每次作业的成绩和总成绩
+
+    public String getCourseTranscript() throws Exception {
+        Map<String, Object> session = ActionContext.getContext().getSession();
+
+        transcript = teacherBo.getCourseTranscript(session.get("id").toString(),session.get("courseId").toString());
+        System.out.println("成绩单:"+transcript);
+        List<Double> tmpValue = new ArrayList<>();
+        for (Map.Entry<Student, List<Double>> entry : transcript.entrySet()) {
+            tmpValue= (List<Double>) entry.getValue();
+            if (tmpValue != null) {
+                break;
+            }
+        }
+        session.put("homeworkNum",tmpValue.size());
+        return "success";
+    }
 
 
+    public String downloadTranscript() throws Exception {
+        return "success";
+    }
 }

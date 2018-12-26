@@ -57,6 +57,7 @@
                         <li><a href="/teacher/updateCoursePageAction.action"><i class="icon-font">&#xe005;</i>修改信息</a></li>
                         <li><a href="/teacher/addStudentPageAction.action"><i class="icon-font">&#xe005;</i>添加学生</a></li>
                         <li><a href="/teacher/showHomeworkAction.action"><i class="icon-font">&#xe005;</i>作业管理</a></li>
+
                     </ul>
                 </li>
             </ul>
@@ -84,6 +85,8 @@
                     <%--</table>--%>
                 <%--</s:form>--%>
                 <%--</form>--%>
+                    <td style="padding-left:50px"><button class="btn btn-primary btn2" type="button" onclick="javascript:window.location.href='/teacher/calculateTranscriptAction.action'">计算成绩</button></td>
+                    <td style="padding-left:50px"><button class="btn btn-primary btn2" type="button" onclick="javascript:window.location.href='/teacher/showTranscriptAction.action'">查看成绩单</button></td>
             </div>
         </div>
         <div class="result-wrap">
