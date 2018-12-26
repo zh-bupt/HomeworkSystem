@@ -19,12 +19,36 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.apache.struts2.ServletActionContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import javax.annotation.Resource;
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class TeacherAction extends ActionSupport {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
+
+    @Resource
+    private TeacherBo teacherBo;
+
+    @Resource
+    private StudentBo studentBo;
+
+    @Resource
+    private CourseBo courseBo;
+
+    @Resource
+    private HomeworkBo homeworkBo;
+
+    @Resource
+    private StudentCourseBo studentCourseBo;
+
+    @Resource
+    private HomeworkGroupBo homeworkGroupBo;
+
 
     private List<Course> courseList = new ArrayList<Course>();
     private List<Student> studentList = new ArrayList<Student>();
@@ -32,29 +56,18 @@ public class TeacherAction extends ActionSupport {
     private List<HomeworkGroup> homeworkGroupList = new ArrayList<>();
     private List<Group_> groupList = new ArrayList<>();
 
-    private TeacherBo teacherBo;// = new TeacherBoImpl();
     private Teacher teacher = new Teacher();
-
     private Course course = new Course();
-    private CourseBo courseBo;
-
     private Student student = new Student();
-    private StudentBo studentBo;
-
-
     private Homework homework = new Homework();
-    private HomeworkBo homeworkBo;
-
     private StudentCourse studentCourse = new StudentCourse();
     private List<StudentCourse> studentCourseList = new ArrayList<>();
-    private StudentCourseBo studentCourseBo;
     private File studentExcel;//上传的文件
     private String studentExcelContentType;//上传的文件类型
     private String studentExcelFileName; //上传的文件名
 
     private String homeworkFileName;
     private HomeworkGroup homeworkGroup = new HomeworkGroup();//貌似没用
-    private HomeworkGroupBo homeworkGroupBo;
     private String groupId;
 
     private String homeworkId;
@@ -627,6 +640,10 @@ public class TeacherAction extends ActionSupport {
             homeworkList.addAll(homeworkSet);
         }
 
+        courseBo.calculateScore(session.get("courseId").toString());
+        Map<Student,List<Double>> scoreList = teacherBo.getCourseTranscript(session.get("id").toString(),session.get("courseId").toString());
+        logger.info(scoreList.toString());
+
         return "success";
     }
 
@@ -859,14 +876,15 @@ public class TeacherAction extends ActionSupport {
     public String exportExcel() throws Exception {
         Map<String, Object> session = ActionContext.getContext().getSession();
         // TODO 数据库的问题应该解决了, 但是有新的错误, 应该是写文件的问题
-        Map<Student,Double> scoreList = teacherBo.getCourseTranscript(session.get("id").toString(),session.get("courseId").toString());
-        HSSFWorkbook workbook = exportExcel(scoreList);
-        ByteArrayOutputStream output = new ByteArrayOutputStream();
-        workbook.write(output);
-        byte[] ba = output.toByteArray();
-        excelFile = new ByteArrayInputStream(ba);
-        output.flush();
-        output.close();
+        Map<Student,List<Double>> scoreList = teacherBo.getCourseTranscript(session.get("id").toString(),session.get("courseId").toString());
+        logger.info(scoreList.toString());
+//        HSSFWorkbook workbook = exportExcel(scoreList);
+//        ByteArrayOutputStream output = new ByteArrayOutputStream();
+//        workbook.write(output);
+//        byte[] ba = output.toByteArray();
+//        excelFile = new ByteArrayInputStream(ba);
+//        output.flush();
+//        output.close();
         return "exportExcel";
     }
     public HSSFWorkbook exportExcel(Map<Student,Double> scoreList) throws Exception {

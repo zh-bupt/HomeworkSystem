@@ -14,6 +14,7 @@ import org.apache.struts2.ServletActionContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,8 +30,13 @@ import java.util.Map;
 //@Transactional
 public class LoginAction extends ActionSupport {
 
+    @Resource
     StudentBo studentBo;
+
+    @Resource
     TeacherBo teacherBo;
+
+    @Resource
     AdminBo adminBo;
 
     private String role;

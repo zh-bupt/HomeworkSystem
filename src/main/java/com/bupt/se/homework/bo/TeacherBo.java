@@ -24,7 +24,7 @@ public interface TeacherBo extends BasicBo<Teacher, String> {
 
     String login(String id, String password);
 
-    Map<Student, Double> getCourseTranscript(String teacherId, String courseId) throws Exception;
+    Map<Student, List<Double>> getCourseTranscript(String teacherId, String courseId) throws Exception;
 
     void assignHomework(String courseId, Homework homework) throws Exception;
 }

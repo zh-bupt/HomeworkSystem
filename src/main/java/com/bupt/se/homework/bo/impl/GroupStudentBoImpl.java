@@ -14,6 +14,7 @@ import com.bupt.se.homework.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -23,6 +24,7 @@ import java.util.List;
  * @create: 2018-11-22 15:53
  **/
 @Service("groupStudentBo")
+@Transactional
 public class GroupStudentBoImpl
         extends BasicBoImpl<GroupStudent, GroupStudentPK>
         implements GroupStudentBo {
@@ -61,6 +63,7 @@ public class GroupStudentBoImpl
      * @Date: 2018/11/27
      **/
     @Override
+    @Transactional(noRollbackFor = {ServiceException.class})
     public void updateGroupStudent(GroupStudent groupStudent) throws Exception {
         if (!this.exists(groupStudent.getPk())){
             throw new ServiceException(ServiceExceptionErrorCode.GROUP_STUDENT_NOT_FOUND,
@@ -74,11 +77,18 @@ public class GroupStudentBoImpl
     }
 
     @Override
+//<<<<<<< HEAD
     public List<Student> findLeftStudentList(String courseID) {
         return groupStudentDAO.findLeftStudentList(courseID);
+//=======
+//    @Transactional
+//    public List<Student> findResultList(String courseID) {
+//        return groupStudentDAO.findResultList(courseID);
+//>>>>>>> e957788ae66d5c217a5c28b8dbfff4538e85fd4a
     }
 
     @Override
+    @Transactional(noRollbackFor = {ServiceException.class})
     public void setContribution(String groupId, String studentId, int contribution) throws Exception {
         Group_ g = groupDAO.get(groupId);
         if (contribution < 0 || contribution > 100) {

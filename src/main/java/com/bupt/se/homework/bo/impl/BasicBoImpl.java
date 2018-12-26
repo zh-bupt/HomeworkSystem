@@ -23,6 +23,7 @@ import java.util.List;
  * @author: zh
  * @create: 2018-11-13 15:12
  **/
+@Transactional
 @Service
 public abstract class BasicBoImpl<M extends AbstractEntity, PK extends Serializable> implements BasicBo<M, PK> {
 
@@ -46,6 +47,7 @@ public abstract class BasicBoImpl<M extends AbstractEntity, PK extends Serializa
         this.basicDao = basicDao;
     }
 
+    @Transactional
     @Override
     public void save(M model) {
 //        TransactionStatus status = getTransactionStatus();
@@ -59,6 +61,7 @@ public abstract class BasicBoImpl<M extends AbstractEntity, PK extends Serializa
 //        }
     }
 
+    @Transactional
     @Override
     public boolean merge(M model) {
 //        TransactionStatus status = getTransactionStatus();
@@ -72,6 +75,7 @@ public abstract class BasicBoImpl<M extends AbstractEntity, PK extends Serializa
 //        }
     }
 
+    @Transactional
     @Override
     public void delete(PK key) {
 //        TransactionStatus status = getTransactionStatus();
@@ -85,6 +89,7 @@ public abstract class BasicBoImpl<M extends AbstractEntity, PK extends Serializa
 //        }
     }
 
+    @Transactional
     @Override
     public boolean deleteArray(PK[] id) {
 //        TransactionStatus status = getTransactionStatus();
@@ -98,11 +103,13 @@ public abstract class BasicBoImpl<M extends AbstractEntity, PK extends Serializa
 //        }
     }
 
+    @Transactional
     @Override
     public boolean exists(PK key) {
         return basicDao.exists(key);
     }
 
+    @Transactional
     @Override
     public boolean deleteObject(M model) {
 //        TransactionStatus status = getTransactionStatus();
@@ -116,6 +123,7 @@ public abstract class BasicBoImpl<M extends AbstractEntity, PK extends Serializa
 //        }
     }
 
+    @Transactional
     @Override
     public boolean deleteObjectList(List<M> list) {
 //        TransactionStatus status = getTransactionStatus();
@@ -129,6 +137,7 @@ public abstract class BasicBoImpl<M extends AbstractEntity, PK extends Serializa
 //        }
     }
 
+    @Transactional
     @Override
     public void update(M model) {
 //        TransactionStatus status = getTransactionStatus();
@@ -169,6 +178,7 @@ public abstract class BasicBoImpl<M extends AbstractEntity, PK extends Serializa
     }
 
     @Override
+    @Transactional
     public List<M> getList (
             LinkedHashMap<Object, Object> equalFields,
             LinkedHashMap<Object, Object> notEqualFields,
@@ -189,6 +199,7 @@ public abstract class BasicBoImpl<M extends AbstractEntity, PK extends Serializa
         return list;
     }
 
+    @Transactional
     @Override
     public M get(
             LinkedHashMap<Object, Object> equalFields,

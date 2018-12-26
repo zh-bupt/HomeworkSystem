@@ -10,6 +10,7 @@ import com.bupt.se.homework.exception.ServiceExceptionErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ import java.util.List;
  * @Create: 2018/11/11 20:26
  **/
 @Service("homeworkBo")
+@Transactional
 public class HomeworkBoImpl extends BasicBoImpl<Homework, Integer> implements HomeworkBo {
     HomeworkDAO homeworkDAO;
 
@@ -31,6 +33,7 @@ public class HomeworkBoImpl extends BasicBoImpl<Homework, Integer> implements Ho
     }
 
     @Override
+    @Transactional(noRollbackFor = {ServiceException.class})
     public void updateHomework(Homework homework) throws Exception {
         if (!this.exists(homework.getHomeworkId())) {
             throw new ServiceException(ServiceExceptionErrorCode.HOMEWORK_NOT_FOUND,
@@ -57,6 +60,7 @@ public class HomeworkBoImpl extends BasicBoImpl<Homework, Integer> implements Ho
     }
 
     @Override
+    @Transactional(readOnly = true, noRollbackFor = {ServiceException.class})
     public Homework getHomework(int homeworkId) {
         return this.get(homeworkId);
     }

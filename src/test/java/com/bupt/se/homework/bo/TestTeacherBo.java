@@ -75,14 +75,18 @@ public class TestTeacherBo extends UnitTestBase {
     @Test
     public void testGetTranscript() {
         TeacherBo teacherBo = super.getBean("teacherBo");
-        Teacher teacher = teacherBo.get("2011211211");
+        Teacher teacher = teacherBo.get("2011211212");
         List<Course> courses = new ArrayList<>();
         courses.addAll(teacher.getCourses());
 //        Course course = courses.get(0);
         if (courses != null && courses.size() > 0) {
             for (Course course:courses) {
                 System.out.println(course.getCourseName());
-//                System.out.println(teacherBo.getCourseTranscript(teacher.getTeacherId(), course.getCourseId()));
+                try {
+                    System.out.println(teacherBo.getCourseTranscript(teacher.getTeacherId(), course.getCourseId()));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         }
     }

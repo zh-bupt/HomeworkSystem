@@ -10,8 +10,10 @@ import com.bupt.se.homework.exception.ServiceExceptionErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service("adminBo")
+@Transactional
 public class AdminBoImpl extends BasicBoImpl<Admin, String> implements AdminBo {
 
 
@@ -36,6 +38,7 @@ public class AdminBoImpl extends BasicBoImpl<Admin, String> implements AdminBo {
      * @Date: 2018/11/10
      **/
     @Override
+    @Transactional(readOnly = true)
     public String login(String id, String password) {
         Admin admin = adminDAO.get(id);
         if (admin == null) return ReturnCode.USER_NOT_FOUNT;
@@ -44,6 +47,7 @@ public class AdminBoImpl extends BasicBoImpl<Admin, String> implements AdminBo {
     }
 
     @Override
+    @Transactional(noRollbackFor = {ServiceException.class})
     public void updateAdmin(Admin admin) throws Exception {
         if (!exists(admin.getAdminId())) {
             throw new ServiceException(ServiceExceptionErrorCode.ADMIN_NOT_FOUND,
@@ -53,6 +57,7 @@ public class AdminBoImpl extends BasicBoImpl<Admin, String> implements AdminBo {
     }
 
     @Override
+    @Transactional(noRollbackFor = {ServiceException.class})
     public void addAdmin(Admin admin) throws Exception {
         if (exists(admin.getAdminId())) {
             throw new ServiceException(ServiceExceptionErrorCode.ADMIN_DUPLICATED,

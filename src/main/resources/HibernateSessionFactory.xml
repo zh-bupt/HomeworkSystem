@@ -38,30 +38,30 @@
         <property name="dataSource" ref="dataSource"/>
     </bean>
 
-    <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 
-    <tx:advice id="txAdvice" transaction-manager="transactionManager">
-        <tx:attributes>
-            <tx:method name="get*" read-only="true"/>
-            <tx:method name="*" no-rollback-for="com.bupt.se.homework.exception.ServiceException" propagation="REQUIRED" read-only="true"/>
-            <!--<tx:method name="*"  rollback-for="java.lang.Exception" propagation="REQUIRED" />-->
-            <tx:method name="getHomeworkGroup" propagation="REQUIRED" read-only="false"/>
-            <tx:method name="add*" propagation="REQUIRED"/>
-            <tx:method name="save*" propagation="REQUIRED"/>
-            <tx:method name="del*" propagation="REQUIRED"/>
-            <tx:method name="modify*" propagation="REQUIRED"/>
-            <tx:method name="update*" propagation="REQUIRED"/>
-            <tx:method name="calculate*" propagation="REQUIRED"/>
-            <tx:method name="set*" propagation="REQUIRES_NEW"/>
-            <tx:method name="assignHomework" rollback-for="java.lang.Exception" propagation="REQUIRED"/>
-            <!--<tx:method name="*" no-rollback-for="com.bupt.se.homework.exception.ServiceException"/>-->
-        </tx:attributes>
-    </tx:advice>
+    <!--<tx:advice id="txAdvice" transaction-manager="transactionManager">-->
+        <!--<tx:attributes>-->
+            <!--<tx:method name="get*" read-only="true"/>-->
+            <!--<tx:method name="*" no-rollback-for="com.bupt.se.homework.exception.ServiceException" propagation="REQUIRED" read-only="true"/>-->
+            <!--&lt;!&ndash;<tx:method name="*"  rollback-for="java.lang.Exception" propagation="REQUIRED" />&ndash;&gt;-->
+            <!--<tx:method name="getHomeworkGroup" propagation="REQUIRED" read-only="false"/>-->
+            <!--<tx:method name="add*" propagation="REQUIRED"/>-->
+            <!--<tx:method name="save*" propagation="REQUIRED"/>-->
+            <!--<tx:method name="del*" propagation="REQUIRED"/>-->
+            <!--<tx:method name="modify*" propagation="REQUIRED"/>-->
+            <!--<tx:method name="update*" propagation="REQUIRED"/>-->
+            <!--<tx:method name="calculate*" propagation="REQUIRED"/>-->
+            <!--<tx:method name="set*" propagation="REQUIRES_NEW"/>-->
+            <!--<tx:method name="assignHomework" rollback-for="java.lang.Exception" propagation="REQUIRED"/>-->
+            <!--&lt;!&ndash;<tx:method name="*" no-rollback-for="com.bupt.se.homework.exception.ServiceException"/>&ndash;&gt;-->
+        <!--</tx:attributes>-->
+    <!--</tx:advice>-->
 
-    <aop:config>
-        <aop:pointcut expression="execution(* com.bupt.se.homework.bo.impl.*.*(..))" id="pointCut1"/>
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="pointCut1"/>
-    </aop:config>
+    <!--<aop:config>-->
+        <!--<aop:pointcut expression="execution(* com.bupt.se.homework.bo.impl.*.*(..))" id="pointCut1"/>-->
+        <!--<aop:advisor advice-ref="txAdvice" pointcut-ref="pointCut1"/>-->
+    <!--</aop:config>-->
 
     <!--<tx:advice id="txAdvice3" transaction-manager="transactionManager">-->
         <!--<tx:attributes>-->
@@ -74,19 +74,19 @@
         <!--<aop:advisor advice-ref="txAdvice" pointcut-ref="pointCut3"/>-->
     <!--</aop:config>-->
 
-    <tx:advice id="txAdvice2" transaction-manager="transactionManager">
-        <tx:attributes>
-            <!--<tx:method name="list*" read-only="true"/>-->
-            <!--<tx:method name="get*"/>-->
-            <!--<tx:method name="query*"/>-->
-            <!--<tx:method name="submitHomework"/>-->
-            <!--<tx:method name="setSessionGroup" read-only="true"/>-->
-            <tx:method name="*" rollback-for="java.lang.Exception"/>
-        </tx:attributes>
-    </tx:advice>
+    <!--<tx:advice id="txAdvice2" transaction-manager="transactionManager">-->
+        <!--<tx:attributes>-->
+            <!--&lt;!&ndash;<tx:method name="list*" read-only="true"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<tx:method name="get*"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<tx:method name="query*"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<tx:method name="submitHomework"/>&ndash;&gt;-->
+            <!--&lt;!&ndash;<tx:method name="setSessionGroup" read-only="true"/>&ndash;&gt;-->
+            <!--<tx:method name="*" rollback-for="java.lang.Exception"/>-->
+        <!--</tx:attributes>-->
+    <!--</tx:advice>-->
 
-    <aop:config>
-        <aop:pointcut expression="execution(* com.bupt.se.homework.action.*.*(..))" id="pointCut2"/>
-        <aop:advisor advice-ref="txAdvice2" pointcut-ref="pointCut2"/>
-    </aop:config>
+    <!--<aop:config>-->
+        <!--<aop:pointcut expression="execution(* com.bupt.se.homework.action.*.*(..))" id="pointCut2"/>-->
+        <!--<aop:advisor advice-ref="txAdvice2" pointcut-ref="pointCut2"/>-->
+    <!--</aop:config>-->
 </beans>

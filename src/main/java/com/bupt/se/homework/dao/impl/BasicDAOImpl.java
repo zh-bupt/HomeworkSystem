@@ -134,6 +134,11 @@ public abstract class BasicDAOImpl<M extends AbstractEntity, PK extends Serializ
     }
 
     @Override
+    public void saveOrUpdate(M model) {
+        getSession().saveOrUpdate(model);
+    }
+
+    @Override
     public void merge(M model) {
         getSession().merge(model);
     }

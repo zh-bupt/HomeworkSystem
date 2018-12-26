@@ -19,6 +19,8 @@ public interface BasicDao<M extends AbstractEntity, PK extends Serializable>{
 
     void update(M model);
 
+    void saveOrUpdate(M model);
+
     void merge(M model);
 
     void delete(PK id) ;
