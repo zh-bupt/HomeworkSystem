@@ -990,8 +990,24 @@ public class TeacherAction extends ActionSupport {
                     }
             }
         }
-
-
         return "success";
     }
+
+    /**
+     * @Author KRF
+     * @Description 通过页面点击计算成绩的按钮来计算成绩，最好还能返回成绩结果
+     * @Date 13:06 2018/12/26
+     * @Param []
+     * @return java.lang.String
+     **/
+
+    public String calculateScore() throws Exception {
+        Map<String, Object> session = ActionContext.getContext().getSession();
+        courseBo.calculateScore(session.get("courseId").toString());
+        return "success";
+    }
+
+    //TODO 列出所有学生的每次作业的成绩和总成绩
+
+
 }
