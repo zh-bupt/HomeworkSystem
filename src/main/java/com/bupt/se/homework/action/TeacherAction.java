@@ -83,7 +83,23 @@ public class TeacherAction extends ActionSupport {
     private InputStream excelFile;
     private String fileName;
 
+    public String getFileName() {
+        return fileName;
+    }
 
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
+
+
+    public InputStream getExcelFile() {
+        return excelFile;
+    }
+
+    public void setExcelFile(InputStream excelFile) {
+        this.excelFile = excelFile;
+    }
 
     private String searchHomeworkGroupWord;
     private Date searchHomeworkGroupStartTime;
@@ -893,25 +909,25 @@ public class TeacherAction extends ActionSupport {
      * @return java.lang.String
      **/
 
-    public String exportExcel() throws Exception {
+    public String exportTranscript() throws Exception {
         Map<String, Object> session = ActionContext.getContext().getSession();
         // TODO 数据库的问题应该解决了, 但是有新的错误, 应该是写文件的问题
         Map<Student,List<Double>> scoreList = teacherBo.getCourseTranscript(session.get("id").toString(),session.get("courseId").toString());
         logger.info(scoreList.toString());
-//        HSSFWorkbook workbook = exportExcel(scoreList);
-//        ByteArrayOutputStream output = new ByteArrayOutputStream();
-//        workbook.write(output);
-//        byte[] ba = output.toByteArray();
-//        excelFile = new ByteArrayInputStream(ba);
-//        output.flush();
-//        output.close();
-        return "exportExcel";
+        HSSFWorkbook workbook = exportTranscript(scoreList);
+        ByteArrayOutputStream output = new ByteArrayOutputStream();
+        workbook.write(output);
+        byte[] ba = output.toByteArray();
+        excelFile = new ByteArrayInputStream(ba);
+        output.flush();
+        output.close();
+        return "exportTranscript";
     }
-    public HSSFWorkbook exportExcel(Map<Student,Double> scoreList) throws Exception {
+    public HSSFWorkbook exportTranscript(Map<Student,List<Double>> scoreList) throws Exception {
         Map<String, Object> session = ActionContext.getContext().getSession();
         course = courseBo.get(session.get("courseId").toString());
         studentCourseList.addAll(course.getStudentCourses());
-        fileName = course.getCourseName()+"成绩单.xls";
+        fileName = course.getCourseId()+course.getCourseName()+"成绩单.xls";
         //设置字符，防止乱码
         fileName= new String(fileName.getBytes("UTF-8"),"ISO8859-1");
         HSSFWorkbook wb;
@@ -926,9 +942,16 @@ public class TeacherAction extends ActionSupport {
         cell=row.createCell(2);
         cell.setCellValue("姓名");
 
-        for ()
-        cell=row.createCell(3);
+        int homeworkNum = (Integer)session.get("homeworkNum");
+        for (int i = 0; i < homeworkNum-1;i++)
+        {
+            cell=row.createCell(i+3);
+            cell.setCellValue("作业 "+String.valueOf(i+1)+" 成绩");
+        }
+
+        cell=row.createCell(homeworkNum+2);
         cell.setCellValue("总成绩");
+
         int count = 0;
         if(studentCourseList!=null&&studentCourseList.size()>0){
             for(StudentCourse sc:studentCourseList){
@@ -940,8 +963,13 @@ public class TeacherAction extends ActionSupport {
                 cell.setCellValue(s.getStudentId());
                 cell=row.createCell(2);
                 cell.setCellValue(s.getStudentName());
-                cell=row.createCell(3);
-                cell.setCellValue(scoreList.get(s));
+
+                List<Double> scores = scoreList.get(s);
+                for (int i = 0; i < homeworkNum;i++)
+                {
+                    cell=row.createCell(i+3);
+                    cell.setCellValue(scores.get(i));
+                }
                 count+=1;
             }
         }
@@ -1065,7 +1093,5 @@ public class TeacherAction extends ActionSupport {
     }
 
 
-    public String downloadTranscript() throws Exception {
-        return "success";
-    }
+
 }

@@ -149,11 +149,11 @@
                 class="com.bupt.se.homework.action.TeacherAction" method="deleteCourse">
             <result name="success" type="chain">listCourseAction</result>
         </action>
-        <action name="ExportExcelAction"
-                class="com.bupt.se.homework.action.TeacherAction" method="exportExcel">
-            <result name="exportExcel" type="stream">
+        <action name="exportTranscriptAction"
+                class="com.bupt.se.homework.action.TeacherAction" method="exportTranscript">
+            <result name="exportTranscript" type="stream">
                 <param name="contentType">application/vnd.ms-excel</param>
-                <param name="contentDisposition">attachment;filename="${fileName}"</param>
+                <param name="contentDisposition">attachment;filename=${fileName}</param>
                 <param name="bufferSize">1024</param>
                 <param name="inputName">excelFile</param>
             </result>
@@ -252,10 +252,7 @@
             <!--不需要跳转-->
             <result name="success" type="chain">showCourseAction</result>
         </action>
-        <action name="downloadTranscriptAction"
-                class="com.bupt.se.homework.action.TeacherAction" method="downloadTranscript">
-            <result name="success" type="chain">showTranscriptAction</result>
-        </action>
+
     </package>
     <package name="student" namespace="/student" extends="struts-default" >
         <action name="listCourseAction"

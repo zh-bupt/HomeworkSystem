@@ -87,7 +87,7 @@
                 <%--</table>--%>
                 <%--</s:form>--%>
                 <%--</form>--%>
-                    <td style="padding-left:50px"><button class="btn btn-primary btn2" type="button" onclick="javascript:window.location.href='/teacher/calculateTranscriptAction.action'">下载成绩单</button></td>
+                    <td style="padding-left:50px"><button class="btn btn-primary btn2" type="button" onclick="javascript:window.location.href='/teacher/exportTranscriptAction.action'">下载成绩单</button></td>
             </div>
         </div>
         <div class="result-wrap">
