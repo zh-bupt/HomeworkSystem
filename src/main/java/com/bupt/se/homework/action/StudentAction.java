@@ -62,6 +62,16 @@ public class StudentAction  extends ActionSupport {
     private Integer contribution;
     private String studentId;
 
+    private List<Double> courseScoreList = new ArrayList<>();
+
+    public List<Double> getCourseScoreList() {
+        return courseScoreList;
+    }
+
+    public void setCourseScoreList(List<Double> courseScoreList) {
+        this.courseScoreList = courseScoreList;
+    }
+
     public List<List<Student>> getManagedStudentLists() {
         return managedStudentLists;
     }
@@ -301,6 +311,7 @@ public class StudentAction  extends ActionSupport {
     public String listCourse() throws Exception {
         Map<String, Object> session = ActionContext.getContext().getSession();
         student = studentBo.get(session.get("id").toString());
+        Map<Course, Double> courseTranscript = studentBo.getTranscript(session.get("id").toString());
 
         List<StudentCourse> studentCourses = student.getStudentCourses();
         System.out.println("studentCourses.size():"+studentCourses.size());
@@ -309,6 +320,7 @@ public class StudentAction  extends ActionSupport {
         for(StudentCourse sc : studentCourses)
         {
             courseList.add(sc.getCourse());
+            courseScoreList.add(courseTranscript.get(sc.getCourse()));
         }
 
         return "success";

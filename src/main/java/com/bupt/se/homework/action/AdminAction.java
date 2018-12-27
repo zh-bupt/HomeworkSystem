@@ -66,7 +66,7 @@ public class AdminAction extends ActionSupport {
     private String teacherExcelFileName; //上传的文件名
 
     private String userId;
-
+    private String password;
 
     public Student getStudent() {
         return student;
@@ -661,7 +661,7 @@ public class AdminAction extends ActionSupport {
 
     public String setCurrentStudent() throws Exception {
         student = studentBo.get(student.getStudentId());
-        System.out.println("入学时间--》"+student.getEntranceDate().toString().split(" ")[0]);
+//        System.out.println("入学时间--》"+student.getEntranceDate().toString().split(" ")[0]);
         return "success";
     }
 

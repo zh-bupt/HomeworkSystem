@@ -98,15 +98,17 @@
                                 <th>课程名</th>
                                 <th>授课老师</th>
                                 <th>创建时间</th>
+                                <th>课程分数</th>
                                 <th>操作</th>
                             </tr>
-                            <s:iterator value="courseList" status="userStatus">
+                            <s:iterator value="courseList" status="status">
                                 <%--点击某一个课程即进入到该课程的详情页--%>
                                 <tr>
                                     <td><s:property value="courseId"/> </td>
                                     <td><s:property value="courseName"/> </td>
                                     <td><s:property value="teacher.getTeacherName()"/> </td>
                                     <td><s:date name="createTime" format="yyyy-MM-dd"/> </td>
+                                    <td><s:property value="%{courseScoreList[#status.index]}"/></td>
                                     <td><input  class="link-update btn btn-success btn2" type="button" name="update" value="课程详情" onclick="javascript:window.location.href='/student/setCurrentCourseAction.action?courseId=${courseId}'"/> </td>
                                 </tr>
                             </s:iterator>
