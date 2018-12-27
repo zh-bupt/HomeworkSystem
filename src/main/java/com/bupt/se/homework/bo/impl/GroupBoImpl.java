@@ -78,10 +78,14 @@ public class GroupBoImpl extends BasicBoImpl<Group_, String> implements GroupBo 
     @Override
     @Transactional(noRollbackFor = {ServiceException.class})
     public void addGroup(Group_ group_, Course course, Student leader, Set<Student> members) throws Exception {
+//        group_.setGroupId(course.getGroupPrefix() + group_.getGroupId() + group_.getName());
         if (members.size() > course.getMaxStudentNum()) {
             throw new ServiceException(ServiceExceptionErrorCode.GROUP_NUM_ERROR, "小组人数过多!");
         } else if (members.size() < course.getMinStudentNum()) {
             throw new ServiceException(ServiceExceptionErrorCode.GROUP_NUM_ERROR, "小组人数不足!");
+        }
+        if (groupDAO.exists(group_.getGroupId())) {
+            throw new ServiceException(ServiceExceptionErrorCode.GROUP_NAME_ERROR, "小组名已存在!");
         }
         group_.setCourse(course);
         group_.setLeader(leader);

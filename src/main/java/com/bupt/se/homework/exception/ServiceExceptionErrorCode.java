@@ -21,6 +21,7 @@ public class ServiceExceptionErrorCode {
 
     public static final long GROUP_NOT_FOUND = 0xBEE211;
     public static final long GROUP_NUM_ERROR = 0xBEE212;
+    public static final long GROUP_NAME_ERROR = 0xBEE213;
 
     public static final long ADMIN_NOT_FOUND = 0xBEEF336;
     public static final long ADMIN_DUPLICATED = 0xBEEF336;

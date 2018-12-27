@@ -224,6 +224,7 @@
         <action name="updateHomeworkAction"
                 class="com.bupt.se.homework.action.TeacherAction" method="updateHomework">
             <result name="success" type="chain">showHomeworkAction</result>
+            <result name="error">/pages/error.jsp</result>
         </action>
         <action name="deleteHomeworkAction"
                 class="com.bupt.se.homework.action.TeacherAction" method="deleteHomework">
