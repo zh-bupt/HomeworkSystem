@@ -33,6 +33,13 @@
                 class="com.bupt.se.homework.action.AdminAction" method="setCurrentStudent">
             <result name="success">/pages/changePW.jsp</result>
         </action>
+        <action name="updateStudentPasswordAction"
+                class="com.bupt.se.homework.action.AdminAction" method="updateStudent">
+            <result name="success" type="chain">
+                <param name="actionName">listCourseAction</param>
+                <param name="namespace">/student</param>
+            </result>
+        </action>
     </package>
 
     <package name="admin" namespace="/" extends="struts-default">
@@ -82,10 +89,7 @@
                 class="com.bupt.se.homework.action.AdminAction" method="updateStudent">
             <result name="success" type="chain">listStudentAction</result>
         </action>
-        <action name="updateStudentPasswordAction"
-                class="com.bupt.se.homework.action.AdminAction" method="updateStudent">
-            <result name="success" type="chain">/student/listCourseAction</result>
-        </action>
+
         <action name="updateStudentPageAction"
                 class="com.bupt.se.homework.action.AdminAction" method="setCurrentStudent">
             <result name="success">/pages/admin_update_student.jsp</result>

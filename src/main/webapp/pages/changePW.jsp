@@ -49,7 +49,7 @@
                     <%--</li>--%>
                 <%--</ul>--%>
             <%--</s:form>--%>
-            <form action="updateStudentAction" id="searchForm" name="form1">
+            <form action="updateStudentPasswordAction" id="searchForm" name="form1">
                 <%--<form  id="add-book"  enctype="multipart/form-data">--%>
                 <input type="hidden" value="add" name="type">
                 <table class="insert-tab" width="100%">
