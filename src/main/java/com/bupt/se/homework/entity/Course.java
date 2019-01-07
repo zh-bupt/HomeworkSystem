@@ -140,4 +140,18 @@ public class Course extends AbstractEntity {
     public void setGroupPrefix(String groupPrefix) {
         this.groupPrefix = groupPrefix;
     }
+
+    @Override
+    public String toString() {
+        return "Course{" +
+                "courseId='" + courseId + '\'' +
+                ", courseName='" + courseName + '\'' +
+                ", minStudentNum=" + minStudentNum +
+                ", maxStudentNum=" + maxStudentNum +
+                ", createTime=" + createTime +
+                ", groupCapacity=" + groupCapacity +
+                ", groupPrefix='" + groupPrefix + '\'' +
+                ", teacher=" + teacher.getTeacherId() +
+                '}';
+    }
 }

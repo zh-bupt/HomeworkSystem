@@ -675,11 +675,6 @@ public class TeacherAction extends ActionSupport {
 
             homeworkList.addAll(homeworkSet);
         }
-
-        courseBo.calculateScore(session.get("courseId").toString());
-        Map<Student,List<Double>> scoreList = teacherBo.getCourseTranscript(session.get("id").toString(),session.get("courseId").toString());
-        logger.info(scoreList.toString());
-
         return "success";
     }
 
@@ -740,8 +735,9 @@ public class TeacherAction extends ActionSupport {
         Map<String, Object> session = ActionContext.getContext().getSession();
         //course.setCourseId(session.get("courseId").toString());
         //course = courseBo.get(session.get("courseId").toString());
-        System.out.println("COURSE-->"+course.getCourseName()+course.getCourseId());
+//        System.out.println("COURSE-->"+course.getCourseName()+course.getCourseId());
         course.setTeacher(teacherBo.get(session.get("id").toString()));
+        logger.info(course.toString());
         courseBo.update(course);
         return "success";
     }

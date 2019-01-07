@@ -33,7 +33,7 @@ public class HomeworkBoImpl extends BasicBoImpl<Homework, Integer> implements Ho
     }
 
     @Override
-    @Transactional(noRollbackFor = {ServiceException.class})
+//    @Transactional(noRollbackFor = {ServiceException.class})
     public void updateHomework(Homework homework) throws Exception {
         if (!this.exists(homework.getHomeworkId())) {
             throw new ServiceException(ServiceExceptionErrorCode.HOMEWORK_NOT_FOUND,

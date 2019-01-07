@@ -106,13 +106,13 @@
                         <tr>
                             <th>小组人数下限：</th>
                             <td>
-                                <input class="common-text" id="minStudentNum" name="groupMin" size="50" value="${course.getMinStudentNum()}" type="number">
+                                <input class="common-text" id="minStudentNum" name="minStudentNum" size="50" value="${course.getMinStudentNum()}" type="number">
                             </td>
                         </tr>
                         <tr>
                             <th>小组人数上限：</th>
                             <td>
-                                <input class="common-text" name="maxStudentNum" size="50"  type="number" value="${course.getMaxStudentNum()}">
+                                <input class="common-text" id="maxStudentNum" name="maxStudentNum" size="50"  type="number" value="${course.getMaxStudentNum()}">
                             </td>
                         </tr>
                         <tr>
