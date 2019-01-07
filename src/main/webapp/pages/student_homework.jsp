@@ -62,7 +62,7 @@
     <!--/sidebar-->
     <div class="main-wrap">
         <div class="crumb-wrap">
-            <div class="crumb-list"><i class="icon-font"></i><a href="main.jsp">首页</a><span class="crumb-step">&gt;</span><span class="crumb-name">课程管理</span><span class="crumb-step">&gt;</span><span class="crumb-name">课程详情</span><span class="crumb-step">&gt;</span><span class="crumb-name">提交作业</span></div>
+            <div class="crumb-list"><i class="icon-font"></i><a >首页</a><span class="crumb-step">&gt;</span><span class="crumb-name">课程管理</span><span class="crumb-step">&gt;</span><span class="crumb-name">课程详情</span><span class="crumb-step">&gt;</span><span class="crumb-name">提交作业</span></div>
         </div>
         <div class="search-wrap">
             <!--用于查询得表单-->

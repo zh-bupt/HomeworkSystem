@@ -65,7 +65,7 @@
     <!--/sidebar-->
     <div class="main-wrap">
         <div class="crumb-wrap">
-            <div class="crumb-list"><i class="icon-font"></i><a href="main.jsp">首页</a><span class="crumb-step">&gt;</span><span class="crumb-name">学生管理</span></div>
+            <div class="crumb-list"><i class="icon-font"></i><a >首页</a><span class="crumb-step">&gt;</span><span class="crumb-name">学生管理</span></div>
         </div>
         <div class="result-wrap">
             <%--<form name="myform" id="myform" method="post">--%>
