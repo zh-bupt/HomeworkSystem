@@ -882,7 +882,7 @@ public class TeacherAction extends ActionSupport {
 
 //        course = courseBo.get(session.get("courseId").toString());
         String filePath = ServletActionContext.getServletContext().getRealPath("/upload/course/"+session.get("courseId").toString()+"/"+homeworkId+"/"+homeworkFileName);
-
+        fileNameforAll  = homeworkFileName;
         InputStream is = new FileInputStream(new File(filePath));
         return is;
     }
@@ -1053,6 +1053,10 @@ public class TeacherAction extends ActionSupport {
                             homeworkGroupList.add(hg);
                     }
             }
+        }
+        for(HomeworkGroup hg : homeworkGroupList)
+        {
+            groupList.add(hg.getGroup_());
         }
         return "success";
     }
